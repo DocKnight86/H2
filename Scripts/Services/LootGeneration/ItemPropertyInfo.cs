@@ -386,8 +386,8 @@ namespace Server.Items
             Register(45, new ItemPropertyInfo(AosArmorAttribute.LowerStatReq, 1079757, 100, typeof(EnchantedEssence), typeof(Amethyst), typeof(ElvenFletching), 10, 10, 100, 1111998,
                 new PropInfo(3, 0, 100), new PropInfo(4, 0, 100), new PropInfo(5, 0, 100)));
 
-            Register(49, new ItemPropertyInfo(AosArmorAttribute.MageArmor, 1079758, 0, typeof(EnchantedEssence), typeof(Diamond), typeof(AbyssalCloth), 0, 1, 1, 1112000,
-                new PropInfo(3, 1, 1)));
+            /*Register(49, new ItemPropertyInfo(AosArmorAttribute.MageArmor, 1079758, 0, typeof(EnchantedEssence), typeof(Diamond), typeof(AbyssalCloth), 0, 1, 1, 1112000,
+                new PropInfo(3, 1, 1)));*/
 
             Register(51, new ItemPropertyInfo(AosElementAttribute.Physical, 1061158, 100, typeof(MagicalResidue), typeof(Diamond), typeof(BouraPelt), 1, 1, 15, 1112010,
                 new PropInfo(1, 10, 100, 100), new PropInfo(2, 10, 100, 100), new PropInfo(3, 15, 15, new[] { 20, 25, 30 }), new PropInfo(4, 15, 15), new PropInfo(5, 15, 15, new[] { 20, 25, 30 }), new PropInfo(6, 15, 15, new[] { 20 })));
@@ -522,9 +522,6 @@ namespace Server.Items
 
             Register(204, new ItemPropertyInfo(AosWeaponAttribute.HitManaDrain, 1154669, 140, 1, 2, 50, 1152436,
                  new PropInfo(1, 0, 70), new PropInfo(2, 0, 70)));
-
-            Register(205, new ItemPropertyInfo(AosWeaponAttribute.SplinteringWeapon, 1154670, 140, 5, 5, 30, 1152396,
-                 new PropInfo(1, 0, 20, new[] { 25, 30 })));
 
             Register(206, new ItemPropertyInfo(AosWeaponAttribute.ReactiveParalyze, 1154660, 140, 0, 1, 1, 1152400,
                  new PropInfo(1, 0, 1)));

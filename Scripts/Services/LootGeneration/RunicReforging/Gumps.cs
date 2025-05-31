@@ -364,7 +364,7 @@ namespace Server.Gumps
                                 suffix = (ReforgedSuffix)pre;
                             }
 
-                            RunicReforging.ApplyReforgedProperties(m_ToReforge, prefix, suffix, budget, min, max, RunicReforging.GetPropertyCount(m_Tool), 0, m_Tool, m_Options);
+                            RunicReforging.ApplyReforgedProperties(m_ToReforge, prefix, suffix, budget, min, max, RunicReforging.GetPropertyCount(m_Tool), m_Tool, m_Options);
 
                             OnAfterReforged(m_ToReforge);
                             from.SendLocalizedMessage(1152286); // You re-forge the item!

@@ -13,7 +13,6 @@ namespace Server.Items
         public HelmOfVirtuousEpiphany()
         {
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -87,7 +86,6 @@ namespace Server.Items
         public GorgetOfVirtuousEpiphany()
         {
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -161,7 +159,6 @@ namespace Server.Items
         public BreastplateOfVirtuousEpiphany()
         {
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -235,7 +232,6 @@ namespace Server.Items
         public ArmsOfVirtuousEpiphany()
         {
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -309,7 +305,6 @@ namespace Server.Items
         public GauntletsOfVirtuousEpiphany()
         {
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -383,7 +378,6 @@ namespace Server.Items
         public LegsOfVirtuousEpiphany()
         {
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)

@@ -45,7 +45,7 @@ namespace Server.Items
             else
                 Hue = 448;
 
-            Attributes.Brittle = 1;
+            NegativeAttributes.Brittle = 1;
 
             switch (Utility.Random(5))
             {

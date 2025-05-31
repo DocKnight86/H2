@@ -99,7 +99,7 @@ namespace Server.Engines.Points
         {
             typeof(LegacyOfTheDreadLord),       typeof(TheTaskmaster),              typeof(HelmOfInsight),
             typeof(HolyKnightsBreastplate),     typeof(JackalsCollar),              typeof(LeggingsOfBane),
-            typeof(MidnightBracers),            typeof(OrnateCrownOfTheHarrower),   typeof(ShadowDancerLeggings),
+            typeof(OrnateCrownOfTheHarrower),   typeof(ShadowDancerLeggings),
             typeof(TunicOfFire),                typeof(VoiceOfTheFallenKing),       typeof(BraceletOfHealth),
             typeof(OrnamentOfTheMagician),      typeof(RingOfTheVile),
             typeof(Aegis),                      typeof(ArcaneShield),               typeof(AxeOfTheHeavens),
@@ -114,7 +114,7 @@ namespace Server.Engines.Points
         {
             new[] { typeof(HatOfTheMagi) },            new[] { typeof(StaffOfTheMagi) },      new[] { typeof(OrnamentOfTheMagician) },
             new[] { typeof(ShadowDancerLeggings) },      
-            new[] { typeof(LeggingsOfBane) },          new[] { typeof(MidnightBracers) },     new[] { typeof(Glenda) },
+            new[] { typeof(LeggingsOfBane) },          new[] { typeof(Glenda) },
             new[] { typeof(BowOfTheInfiniteSwarm) },   new[] { typeof(TheDeceiver) },         new[] { typeof(TheScholarsHalo) },
             new[] { typeof(DoomRecipeScroll) },
             new[]

@@ -72,9 +72,13 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (IsChildOf(from.Backpack))
+            {
                 from.Target = new InternalTarget(this);
+            }
             else
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
         }
 
         private class InternalTarget : Target
@@ -107,36 +111,45 @@ namespace Server.Items
 
                     if (item is BaseWeapon weapon)
                     {
-                        if (weapon.Attributes.Brittle > 0 || weapon.NegativeAttributes.Brittle > 0)
+                        if (weapon.NegativeAttributes.Brittle > 0)
+                        {
                             noGo = true;
+                        }
 
                         antique = weapon.NegativeAttributes.Antique;
                     }
                     else if (item is BaseArmor armor)
                     {
-                        if (armor.Attributes.Brittle > 0 || armor.NegativeAttributes.Brittle > 0)
+                        if (armor.NegativeAttributes.Brittle > 0)
+                        {
                             noGo = true;
+                        }
 
                         antique = armor.NegativeAttributes.Antique;
                     }
                     else if (item is BaseClothing clothing)
                     {
-                        if (clothing.Attributes.Brittle > 0 || clothing.NegativeAttributes.Brittle > 0)
+                        if (clothing.NegativeAttributes.Brittle > 0)
+                        {
                             noGo = true;
+                        }
 
                         antique = clothing.NegativeAttributes.Antique;
                     }
                     else if (item is BaseJewel jewel)
                     {
-                        if (jewel.Attributes.Brittle > 0 || jewel.NegativeAttributes.Brittle > 0)
+                        if (jewel.NegativeAttributes.Brittle > 0)
+                        {
                             noGo = true;
+                        }
 
                         antique = jewel.NegativeAttributes.Antique;
                     }
-                    else if (item is BaseTalisman talisman && talisman.Attributes.Brittle > 0)
+                    else if (item is BaseTalisman talisman && talisman.NegativeAttributes.Brittle > 0)
                     {
                         noGo = true;
                     }
+
                     if (noGo)
                     {
                         from.SendLocalizedMessage(1149799); //That cannot be used on brittle items.
@@ -174,7 +187,9 @@ namespace Server.Items
                                         int bonus = initMaxHP - wearable.MaxHitPoints;
 
                                         if (bonus > 10)
+                                        {
                                             bonus = 10;
+                                        }
 
                                         wearable.MaxHitPoints += bonus;
                                         wearable.HitPoints += bonus;
@@ -183,9 +198,14 @@ namespace Server.Items
                                     wearable.ScaleDurability();
 
                                     if (wearable.MaxHitPoints > 255)
+                                    {
                                         wearable.MaxHitPoints = 255;
+                                    }
+
                                     if (wearable.HitPoints > 255)
+                                    {
                                         wearable.HitPoints = 255;
+                                    }
 
                                     if (wearable.MaxHitPoints > origMaxHP)
                                     {
@@ -202,10 +222,25 @@ namespace Server.Items
 
                                         if (antique > 0)
                                         {
-                                            if (wearable is BaseWeapon bw) bw.NegativeAttributes.Antique++;
-                                            if (wearable is BaseArmor ba) ba.NegativeAttributes.Antique++;
-                                            if (wearable is BaseJewel bj) bj.NegativeAttributes.Antique++;
-                                            if (wearable is BaseClothing bc) bc.NegativeAttributes.Antique++;
+                                            if (wearable is BaseWeapon bw)
+                                            {
+                                                bw.NegativeAttributes.Antique++;
+                                            }
+
+                                            if (wearable is BaseArmor ba)
+                                            {
+                                                ba.NegativeAttributes.Antique++;
+                                            }
+
+                                            if (wearable is BaseJewel bj)
+                                            {
+                                                bj.NegativeAttributes.Antique++;
+                                            }
+
+                                            if (wearable is BaseClothing bc)
+                                            {
+                                                bc.NegativeAttributes.Antique++;
+                                            }
                                         }
                                     }
                                     else

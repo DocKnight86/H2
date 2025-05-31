@@ -241,201 +241,33 @@ namespace Server.Items
             }
         }
 
-        public double ArmorRatingScaled => ArmorRating * ArmorScalar;
-
         #region Publish 81 Armor Refinement
-        private int m_RefinedPhysical;
-        private int m_RefinedFire;
-        private int m_RefinedCold;
-        private int m_RefinedPoison;
-        private int m_RefinedEnergy;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RefinedPhysical { get => m_RefinedPhysical; set { m_RefinedPhysical = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RefinedFire { get => m_RefinedFire; set { m_RefinedFire = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RefinedCold { get => m_RefinedCold; set { m_RefinedCold = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RefinedPoison { get => m_RefinedPoison; set { m_RefinedPoison = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RefinedEnergy { get => m_RefinedEnergy; set { m_RefinedEnergy = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RefinedDefenseChance => -(m_RefinedPhysical + m_RefinedFire + m_RefinedCold + m_RefinedPoison + m_RefinedEnergy);
-
-        public static int GetRefinedResist(Mobile from, ResistanceType attr)
-        {
-            int value = 0;
-
-            for (var index = 0; index < from.Items.Count; index++)
-            {
-                Item item = from.Items[index];
-
-                if (item is BaseArmor armor)
-                {
-                    switch (attr)
-                    {
-                        case ResistanceType.Physical:
-                            value += armor.m_RefinedPhysical;
-                            break;
-                        case ResistanceType.Fire:
-                            value += armor.m_RefinedFire;
-                            break;
-                        case ResistanceType.Cold:
-                            value += armor.m_RefinedCold;
-                            break;
-                        case ResistanceType.Poison:
-                            value += armor.m_RefinedPoison;
-                            break;
-                        case ResistanceType.Energy:
-                            value += armor.m_RefinedEnergy;
-                            break;
-                    }
-                }
-            }
-
-            return value;
-        }
-
-        public static int GetRefinedDefenseChance(Mobile from)
-        {
-            int value = 0;
-
-            for (var index = 0; index < from.Items.Count; index++)
-            {
-                Item item = from.Items[index];
-
-                if (item is BaseArmor armor)
-                {
-                    value += armor.RefinedDefenseChance;
-                }
-            }
-
-            return value;
-        }
-
-        public static bool HasRefinedResist(Mobile from)
-        {
-            for (var index = 0; index < from.Items.Count; index++)
-            {
-                Item item = from.Items[index];
-
-                if (item is BaseArmor armor && (armor.m_RefinedPhysical > 0 || armor.m_RefinedFire > 0 || armor.m_RefinedCold > 0 || armor.m_RefinedPoison > 0 || armor.m_RefinedEnergy > 0))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public override void AddResistanceProperties(ObjectPropertyList list)
         {
-            if (PhysicalResistance != 0 || m_RefinedPhysical != 0)
+            if (PhysicalResistance != 0)
             {
-                if (m_RefinedPhysical != 0)
-                {
-                    list.Add(1153735, string.Format("{0}\t{1}\t{2}", PhysicalResistance.ToString(), "", m_RefinedPhysical.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
-                }
-                else
-                {
-                    list.Add(1060448, PhysicalResistance.ToString()); // physical resist ~1_val~%
-                }
+                list.Add(1060448, PhysicalResistance.ToString()); // physical resist ~1_val~%
             }
 
-            if (FireResistance != 0 || m_RefinedFire != 0)
+            if (FireResistance != 0)
             {
-                if (m_RefinedFire != 0)
-                {
-                    list.Add(1153737, string.Format("{0}\t{1}\t{2}", FireResistance.ToString(), "", m_RefinedFire.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
-                }
-                else
-                {
-                    list.Add(1060447, FireResistance.ToString()); // physical resist ~1_val~%
-                }
+                list.Add(1060447, FireResistance.ToString()); // physical resist ~1_val~%
             }
 
-            if (ColdResistance != 0 || m_RefinedCold != 0)
+            if (ColdResistance != 0)
             {
-                if (m_RefinedCold != 0)
-                {
-                    list.Add(1153739, string.Format("{0}\t{1}\t{2}", ColdResistance.ToString(), "", m_RefinedCold.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
-                }
-                else
-                {
-                    list.Add(1060445, ColdResistance.ToString()); // physical resist ~1_val~%
-                }
+                list.Add(1060445, ColdResistance.ToString()); // physical resist ~1_val~%
             }
 
-            if (PoisonResistance != 0 || m_RefinedPoison != 0)
+            if (PoisonResistance != 0)
             {
-                if (m_RefinedPoison != 0)
-                {
-                    list.Add(1153736, string.Format("{0}\t{1}\t{2}", PoisonResistance.ToString(), "", m_RefinedPoison.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
-                }
-                else
-                {
-                    list.Add(1060449, PoisonResistance.ToString()); // physical resist ~1_val~%
-                }
+                list.Add(1060449, PoisonResistance.ToString()); // physical resist ~1_val~%
             }
 
-            if (EnergyResistance != 0 || m_RefinedEnergy != 0)
+            if (EnergyResistance != 0)
             {
-                if (m_RefinedEnergy != 0)
-                {
-                    list.Add(1153738, string.Format("{0}\t{1}\t{2}", EnergyResistance.ToString(), "", m_RefinedEnergy.ToString()));// physical resist ~1_val~% / ~2_symb~~3_val~% Max
-                }
-                else
-                {
-                    list.Add(1060446, EnergyResistance.ToString()); // physical resist ~1_val~%
-                }
+                list.Add(1060446, EnergyResistance.ToString()); // physical resist ~1_val~%
             }
-
-            if (RefinedDefenseChance != 0)
-            {
-                list.Add(1153733, string.Format("{0}\t{1}", "", RefinedDefenseChance.ToString()));
-            }
-        }
-
-        public static int GetInherentLowerManaCost(Mobile from)
-        {
-            int toReduce = 0;
-
-            for (var index = 0; index < from.Items.Count; index++)
-            {
-                Item item = from.Items[index];
-
-                if (item is BaseArmor armor)
-                {
-                    if (armor.ArmorAttributes.MageArmor > 0 || armor.MaterialType == AMT.Wood ||
-                        armor is BaseShield)
-                    {
-                        continue;
-                    }
-
-                    switch (armor.MaterialType)
-                    {
-                        case AMT.Studded:
-                        case AMT.Bone:
-                        case AMT.Stone:
-                            toReduce += 3;
-                            break;
-                        case AMT.Ringmail:
-                        case AMT.Chainmail:
-                        case AMT.Plate:
-                        case AMT.Dragon:
-                            toReduce += 1;
-                            break;
-                    }
-                }
-            }
-
-            return Math.Min(15, toReduce);
         }
 
         public static double GetInherentStaminaLossReduction(Mobile from)
@@ -1279,23 +1111,11 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(16); // version
-
-            // Version 16 - Removed Pre-AOS Armor Properties
-            // Version 14 - removed VvV Item (handled in VvV System) and BlockRepair (Handled as negative attribute)
 
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
-            //Version 11
-            writer.Write(m_RefinedPhysical);
-            writer.Write(m_RefinedFire);
-            writer.Write(m_RefinedCold);
-            writer.Write(m_RefinedPoison);
-            writer.Write(m_RefinedEnergy);
-
-            //Version 10
             writer.Write(m_IsImbued);
 
             // Version 9
@@ -1571,24 +1391,11 @@ namespace Server.Items
                 case 13:
                 case 12:
                     {
-                        if (version == 13)
-                        {
-                            reader.ReadBool();
-                        }
-
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
                         goto case 11;
                     }
                 case 11:
-                    {
-                        m_RefinedPhysical = reader.ReadInt();
-                        m_RefinedFire = reader.ReadInt();
-                        m_RefinedCold = reader.ReadInt();
-                        m_RefinedPoison = reader.ReadInt();
-                        m_RefinedEnergy = reader.ReadInt();
-                        goto case 10;
-                    }
                 case 10:
                     {
                         m_IsImbued = reader.ReadBool();
@@ -2752,11 +2559,6 @@ namespace Server.Items
 
             AddResistanceProperties(list);
 
-            if ((prop = m_AosArmorAttributes.MageArmor) != 0)
-            {
-                list.Add(1060437); // mage armor
-            }
-
             if ((prop = GetLowerStatReq()) != 0)
             {
                 list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%
@@ -2912,12 +2714,6 @@ namespace Server.Items
             m_PoisonNonImbuing = m_PoisonBonus;
             m_EnergyNonImbuing = m_EnergyBonus;
 
-            // Gives MageArmor property for certain armor types
-            if (m_AosArmorAttributes.MageArmor <= 0 && IsMageArmorType(this))
-            {
-                m_AosArmorAttributes.MageArmor = 1;
-            }
-
             InvalidateProperties();
         }
 
@@ -3000,31 +2796,6 @@ namespace Server.Items
 
             return info.AttributeInfo;
         }
-
-        public static bool IsMageArmorType(BaseArmor armor)
-        {
-            Type t = armor.GetType();
-
-            for (var index = 0; index < _MageArmorTypes.Length; index++)
-            {
-                Type type = _MageArmorTypes[index];
-
-                if (type == t || t.IsSubclassOf(type))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static Type[] _MageArmorTypes =
-        {
-            typeof(HeavyPlateJingasa),  typeof(LightPlateJingasa),
-            typeof(PlateMempo),         typeof(PlateDo),
-            typeof(PlateHiroSode),      typeof(PlateSuneate),
-            typeof(PlateHaidate)
-        };
         #endregion
 
         public override bool OnDragLift(Mobile from)

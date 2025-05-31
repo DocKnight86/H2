@@ -42,7 +42,9 @@ namespace Server.Items
                 m_BaitType = value;
 
                 if (m_BaitType == null)
+                {
                     m_EnhancedBait = false;
+                }
 
                 InvalidateProperties();
             }
@@ -60,7 +62,9 @@ namespace Server.Items
                 m_HookType = value;
 
                 if (m_HookType == HookType.None)
+                {
                     Hue = m_OriginalHue;
+                }
 
                 InvalidateProperties();
             }
@@ -178,7 +182,9 @@ namespace Server.Items
         public int GetUsesScalar()
         {
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 return 200;
+            }
 
             return 100;
         }
@@ -209,7 +215,9 @@ namespace Server.Items
         public override bool AllowEquipedCast(Mobile from)
         {
             if (base.AllowEquipedCast(from))
+            {
                 return true;
+            }
 
             return (m_AosAttributes.SpellChanneling != 0);
         }
@@ -250,13 +258,19 @@ namespace Server.Items
                 string modName = Serial.ToString();
 
                 if (strBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero));
+                }
 
                 if (dexBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero));
+                }
 
                 if (intBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero));
+                }
             }
 
             return true;
@@ -291,10 +305,14 @@ namespace Server.Items
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (m_Crafter != null)
+            {
                 list.Add(1050043, m_Crafter.Name); // crafted by ~1_NAME~
+            }
 
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 list.Add(1060636); // exceptional
+            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -309,84 +327,129 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            if (m_AosAttributes.Brittle != 0)
-                list.Add(1116209); // Brittle
-
             if (m_AosSkillBonuses != null)
+            {
                 m_AosSkillBonuses.GetProperties(list);
+            }
 
             base.AddResistanceProperties(list);
 
             int prop = 0;
 
             if ((prop = (m_AosAttributes.WeaponDamage)) != 0)
+            {
                 list.Add(1060401, prop.ToString()); // damage increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.DefendChance) != 0)
+            {
                 list.Add(1060408, prop.ToString()); // defense chance increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.EnhancePotions) != 0)
+            {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.CastRecovery) != 0)
+            {
                 list.Add(1060412, prop.ToString()); // faster cast recovery ~1_val~
+            }
 
             if ((prop = m_AosAttributes.CastSpeed) != 0)
+            {
                 list.Add(1060413, prop.ToString()); // faster casting ~1_val~
+            }
 
             if ((prop = m_AosAttributes.AttackChance) != 0)
+            {
                 list.Add(1060415, prop.ToString()); // hit chance increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.BonusDex) != 0)
+            {
                 list.Add(1060409, prop.ToString()); // dexterity bonus ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusHits) != 0)
+            {
                 list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusInt) != 0)
+            {
                 list.Add(1060432, prop.ToString()); // intelligence bonus ~1_val~
+            }
 
             if ((prop = m_AosAttributes.LowerManaCost) != 0)
+            {
                 list.Add(1060433, prop.ToString()); // lower mana cost ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.LowerRegCost) != 0)
+            {
                 list.Add(1060434, prop.ToString()); // lower reagent cost ~1_val~%
+            }
 
             if ((prop = m_LowerStatReq) != 0)
+            {
                 list.Add(1060435, m_LowerStatReq.ToString()); // lower requirements ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.SpellChanneling) != 0)
+            {
                 list.Add(1060482); // spell channeling	
+            }
 
             if (!CraftResources.IsStandard(m_Resource))
+            {
                 list.Add(CraftResources.GetName(m_Resource));
+            }
 
             if ((prop = m_AosAttributes.BonusMana) != 0)
+            {
                 list.Add(1060439, prop.ToString()); // mana increase ~1_val~
+            }
 
             if ((prop = m_AosAttributes.RegenMana) != 0)
+            {
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
+            }
 
             if ((prop = m_AosAttributes.NightSight) != 0)
+            {
                 list.Add(1060441); // night sight
+            }
 
             if ((prop = m_AosAttributes.ReflectPhysical) != 0)
+            {
                 list.Add(1060442, prop.ToString()); // reflect physical damage ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.RegenStam) != 0)
+            {
                 list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
+            }
 
             if ((prop = m_AosAttributes.RegenHits) != 0)
+            {
                 list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
+            }
 
             if ((prop = m_AosAttributes.SpellDamage) != 0)
+            {
                 list.Add(1060483, prop.ToString()); // spell damage increase ~1_val~%
+            }
 
             if ((prop = m_AosAttributes.BonusStam) != 0)
+            {
                 list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
+            }
 
             if ((prop = m_AosAttributes.BonusStr) != 0)
+            {
                 list.Add(1060485, prop.ToString()); // strength bonus ~1_val~
+            }
 
             //if ( (prop = m_AosAttributes.WeaponSpeed) != 0 )
             //	list.Add( 1060486, prop.ToString() ); // swing speed increase ~1_val~%
@@ -403,9 +466,13 @@ namespace Server.Items
             {
                 object label = FishInfo.GetFishLabel(m_BaitType);
                 if (label is int i)
+                {
                     list.Add(1116468, $"#{i}"); //baited to attract: ~1_val~
+                }
                 else if (label is string s)
+                {
                     list.Add(1116468, s);
+                }
             }
 
             list.Add(1061170, GetStrRequirement().ToString()); // strength requirement ~1_val~
@@ -419,7 +486,9 @@ namespace Server.Items
         private static void SetSaveFlag(ref SaveFlag flags, SaveFlag toSet, bool setIf)
         {
             if (setIf)
+            {
                 flags |= toSet;
+            }
         }
 
         private static bool GetSaveFlag(SaveFlag flags, SaveFlag toGet)
@@ -454,10 +523,14 @@ namespace Server.Items
             writer.Write((int)flags);
 
             if (GetSaveFlag(flags, SaveFlag.xAttributes))
+            {
                 m_AosAttributes.Serialize(writer);
+            }
 
             if (GetSaveFlag(flags, SaveFlag.SkillBonuses))
+            {
                 m_AosSkillBonuses.Serialize(writer);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -487,21 +560,32 @@ namespace Server.Items
                     m_HookUses = reader.ReadInt();
 
                     if (version < 5)
+                    {
                         reader.ReadInt();
+                    }
 
                     m_EnhancedBait = reader.ReadBool();
 
                     SaveFlag flags = (SaveFlag)reader.ReadInt();
 
                     if (GetSaveFlag(flags, SaveFlag.xAttributes))
+                    {
                         m_AosAttributes = new AosAttributes(this, reader);
+                    }
                     else
+                    {
                         m_AosAttributes = new AosAttributes(this);
+                    }
 
                     if (GetSaveFlag(flags, SaveFlag.SkillBonuses))
+                    {
                         m_AosSkillBonuses = new AosSkillBonuses(this, reader);
+                    }
                     else
+                    {
                         m_AosSkillBonuses = new AosSkillBonuses(this);
+                    }
+
                     break;
                 case 1:
                     m_AosAttributes = new AosAttributes(this);
@@ -510,7 +594,9 @@ namespace Server.Items
             }
 
             if (Parent is Mobile)
+            {
                 m_AosSkillBonuses.AddTo((Mobile)Parent);
+            }
 
             int strBonus = m_AosAttributes.BonusStr;
             int dexBonus = m_AosAttributes.BonusDex;
@@ -523,27 +609,39 @@ namespace Server.Items
                 string modName = Serial.ToString();
 
                 if (strBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero));
+                }
 
                 if (dexBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero));
+                }
 
                 if (intBonus != 0)
+                {
                     m.AddStatMod(new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero));
+                }
             }
 
             if (Parent is Mobile parent)
+            {
                 parent.CheckStatTimers();
+            }
 
             if (m_HookType != HookType.None && m_HookUses <= 0)
+            {
                 HookType = HookType.None;
+            }
 
             if (version < 3 && m_Crafter != null)
             {
                 m_PlayerConstructed = true;
 
                 if (m_Resource == CraftResource.None)
+                {
                     Resource = CraftResource.RegularWood;
+                }
                 else
                 {
                     DistributeMaterialBonus();
@@ -565,12 +663,16 @@ namespace Server.Items
             PlayerConstructed = true;
 
             if (makersMark) // Add to CraftItem.cs mark table
+            {
                 Crafter = from;
+            }
 
             Type resourceType = typeRes;
 
             if (resourceType == null)
+            {
                 resourceType = craftItem.Resources.GetAt(0).ItemType;
+            }
 
             Resource = CraftResources.GetFromType(resourceType);
             DistributeMaterialBonus();
@@ -583,12 +685,16 @@ namespace Server.Items
             CraftResourceInfo resInfo = CraftResources.GetInfo(m_Resource);
 
             if (resInfo == null)
+            {
                 return;
+            }
 
             CraftAttributeInfo attrInfo = resInfo.AttributeInfo;
 
             if (attrInfo != null)
+            {
                 DistributeMaterialBonus(attrInfo);
+            }
         }
 
         public void DistributeMaterialBonus(CraftAttributeInfo attrInfo)

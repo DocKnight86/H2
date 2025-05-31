@@ -50,16 +50,6 @@ namespace Server.Engines.CleanUpBritannia
             Rewards.Add(new CollectionItem(typeof(KnightsPlateHelm), 0x1412, 1151246, 1150, 10000));
             Rewards.Add(new CollectionItem(typeof(KnightsPlateLegs), 0x1411, 1151251, 1150, 10000));
 
-            Rewards.Add(new CollectionItem(typeof(ScoutArms), 0x13DC, 1151257, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutBustier), 0x1C0C, 1151262, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutChest), 0x13DB, 1151258, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutCirclet), 0x2B6E, 1151254, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutFemaleChest), 0x1C02, 1151261, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutGloves), 0x13D5, 1151259, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutGorget), 0x13D6, 1151256, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutLegs), 0x13DA, 1151260, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutSmallPlateJingasa), 0x2784, 1151255, 1148, 10000));
-
             Rewards.Add(new CollectionItem(typeof(SorcererArms), 0x13CD, 1151265, 1165, 10000));
             Rewards.Add(new CollectionItem(typeof(SorcererChest), 0x13CC, 1151266, 1165, 10000));
             Rewards.Add(new CollectionItem(typeof(SorcererFemaleChest), 0x1C06, 1151267, 1165, 10000));

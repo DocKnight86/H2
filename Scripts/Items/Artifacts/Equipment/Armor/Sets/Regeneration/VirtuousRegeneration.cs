@@ -17,7 +17,6 @@ namespace Server.Items
         {
             Quality = ItemQuality.Exceptional;
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -102,7 +101,6 @@ namespace Server.Items
             Quality = ItemQuality.Exceptional;
             Weight = 1.0;
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -182,7 +180,6 @@ namespace Server.Items
             Quality = ItemQuality.Exceptional;
             Weight = 6.0;
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -261,7 +258,6 @@ namespace Server.Items
         {
             Quality = ItemQuality.Exceptional;
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -339,7 +335,6 @@ namespace Server.Items
         {
             Quality = ItemQuality.Exceptional;
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -417,7 +412,6 @@ namespace Server.Items
         {
             Quality = ItemQuality.Exceptional;
             Hue = 2076;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)

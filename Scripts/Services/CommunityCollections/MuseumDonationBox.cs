@@ -70,14 +70,11 @@ namespace Server.Items
             Rewards.Add(new CollectionItem(typeof(MeerEternalStatuette), 0x25F8, 1075021, 0x0, 350000.0));
             Rewards.Add(new CollectionItem(typeof(SolenQueenStatuette), 0x2602, 1075022, 0x0, 350000.0));
             Rewards.Add(new CollectionTitle(1073237, 1073639, 350000.0)); // Honored Vesper Museum Contributor
-            Rewards.Add(new CollectionItem(typeof(MinaxsArmor), 0x1C02, 1073257, 0x281, 550000.0));
-
+            
             hues = new int[] { 0x281, 0x173, 0x581, 0x300 };
             Rewards.Add(new CollectionHuedItem(typeof(GypsyHeaddress), 0x1544, 1073254, 0x453, 550000.0, hues));
             Rewards.Add(new CollectionHuedItem(typeof(NystulsWizardsHat), 0x1718, 1073255, 0x453, 550000.0, hues));
-            Rewards.Add(new CollectionItem(typeof(KeeoneansChainMail), 0x13BF, 1073264, 0x84E, 550000.0));
             Rewards.Add(new CollectionTitle(1073238, 1073640, 550000.0)); // Prominent Vesper Museum Contributor	
-            Rewards.Add(new CollectionItem(typeof(VesperChaosShield), 0x1BC3, 1073259, 0xFA, 800000.0));
             Rewards.Add(new CollectionItem(typeof(VesperSpecialAchievementReplica), 0x2D4E, 1073265, 0x0, 800000.0));
             Rewards.Add(new CollectionTitle(1073239, 1073641, 800000.0)); // Eminent Vesper Museum Contributor
         }

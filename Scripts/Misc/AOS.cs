@@ -464,8 +464,8 @@ namespace Server
                 case 2: return from.GetMaxResistance(ResistanceType.Cold);
                 case 3: return from.GetMaxResistance(ResistanceType.Poison);
                 case 4: return from.GetMaxResistance(ResistanceType.Energy);
-                case 5: return Math.Min(45 + BaseArmor.GetRefinedDefenseChance(from), AosAttributes.GetValue(from, AosAttribute.DefendChance));
-                case 6: return 45 + BaseArmor.GetRefinedDefenseChance(from) + WhiteTigerFormSpell.GetDefenseCap(from);
+                case 5: return Math.Min(45, AosAttributes.GetValue(from, AosAttribute.DefendChance));
+                case 6: return 45 + WhiteTigerFormSpell.GetDefenseCap(from);
                 case 7: return Math.Min(45, AosAttributes.GetValue(from, AosAttribute.AttackChance));
                 case 8: return Math.Min(60, AosAttributes.GetValue(from, AosAttribute.WeaponSpeed));
                 case 9: return Math.Min(100, AosAttributes.GetValue(from, AosAttribute.WeaponDamage));
@@ -521,13 +521,11 @@ namespace Server
         LowerRegCost = 0x00020000,
         ReflectPhysical = 0x00040000,
         EnhancePotions = 0x00080000,
-        UNUSED = 0x00100000,
-        SpellChanneling = 0x00200000,
-        NightSight = 0x00400000,
-        IncreasedKarmaLoss = 0x00800000,
-        Brittle = 0x01000000,
-        LowerAmmoCost = 0x02000000,
-        BalancedWeapon = 0x04000000
+        SpellChanneling = 0x00100000,
+        NightSight = 0x00200000,
+        IncreasedKarmaLoss = 0x00400000,
+        LowerAmmoCost = 0x00800000,
+        BalancedWeapon = 0x01000000
     }
 
     public sealed class AosAttributes : BaseAttributes
@@ -934,8 +932,6 @@ namespace Server
                     value = 40;
                 }
 
-                value += BaseArmor.GetInherentLowerManaCost(m);
-
                 if (CrazedMage.IsUnderDivertEffects(m))
                 {
                     value -= (int)(value*0.3);
@@ -1088,9 +1084,6 @@ namespace Server
         public int IncreasedKarmaLoss { get => this[AosAttribute.IncreasedKarmaLoss]; set => this[AosAttribute.IncreasedKarmaLoss] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Brittle { get => this[AosAttribute.Brittle]; set => this[AosAttribute.Brittle] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int LowerAmmoCost { get => this[AosAttribute.LowerAmmoCost]; set => this[AosAttribute.LowerAmmoCost] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1130,8 +1123,7 @@ namespace Server
         HitCurse = 0x08000000,
         HitFatigue = 0x10000000,
         HitManaDrain = 0x20000000,
-        SplinteringWeapon = 0x40000000,
-        ReactiveParalyze = 0x80000000
+        ReactiveParalyze = 0x40000000
     }
 
     public sealed class AosWeaponAttributes : BaseAttributes
@@ -1379,9 +1371,6 @@ namespace Server
         public int HitManaDrain { get => this[AosWeaponAttribute.HitManaDrain]; set => this[AosWeaponAttribute.HitManaDrain] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int SplinteringWeapon { get => this[AosWeaponAttribute.SplinteringWeapon]; set => this[AosWeaponAttribute.SplinteringWeapon] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int ReactiveParalyze { get => this[AosWeaponAttribute.ReactiveParalyze]; set => this[AosWeaponAttribute.ReactiveParalyze] = value; }
     }
 
@@ -1476,10 +1465,9 @@ namespace Server
     {
         LowerStatReq = 0x00000001,
         SelfRepair = 0x00000002,
-        MageArmor = 0x00000004,
-        DurabilityBonus = 0x00000008,
-        ReactiveParalyze = 0x00000010,
-        SoulCharge = 0x00000020
+        DurabilityBonus = 0x00000004,
+        ReactiveParalyze = 0x00000008,
+        SoulCharge = 0x00000010
     }
 
     public sealed class AosArmorAttributes : BaseAttributes
@@ -1599,9 +1587,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int SelfRepair { get => this[AosArmorAttribute.SelfRepair]; set => this[AosArmorAttribute.SelfRepair] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int MageArmor { get => this[AosArmorAttribute.MageArmor]; set => this[AosArmorAttribute.MageArmor] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int DurabilityBonus { get => this[AosArmorAttribute.DurabilityBonus]; set => this[AosArmorAttribute.DurabilityBonus] = value; }
@@ -2192,8 +2177,7 @@ namespace Server
                 list.Add(1151782);
             }
 
-            if (Brittle > 0 || item is BaseWeapon weapon && weapon.Attributes.Brittle > 0 || item is BaseArmor armor && armor.Attributes.Brittle > 0 ||
-                item is BaseJewel jewel && jewel.Attributes.Brittle > 0 || item is BaseClothing clothing && clothing.Attributes.Brittle > 0)
+            if (Brittle > 0)
             {
                 list.Add(1116209);
             }

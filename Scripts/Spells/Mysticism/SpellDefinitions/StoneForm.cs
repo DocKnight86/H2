@@ -48,7 +48,9 @@ namespace Server.Spells.Mysticism
             }
 
             if (doCast)
+            {
                 m_ResisMod = GetResBonus(Caster);
+            }
 
             return doCast;
         }
@@ -96,21 +98,22 @@ namespace Server.Spells.Mysticism
             int sec = (int)m.Skills[SkillName.Imbuing].Value;
 
             if (m.Skills[SkillName.Focus].Value > sec)
+            {
                 sec = (int)m.Skills[SkillName.Focus].Value;
+            }
 
             return Math.Max(2, (prim + sec) / 24);
         }
 
         private static int GetMaxResistance(Mobile m)
         {
-            if (Items.BaseArmor.HasRefinedResist(m))
-                return 0;
-
             int prim = (int)m.Skills[SkillName.Mysticism].Value;
             int sec = (int)m.Skills[SkillName.Imbuing].Value;
 
             if (m.Skills[SkillName.Focus].Value > sec)
+            {
                 sec = (int)m.Skills[SkillName.Focus].Value;
+            }
 
             return Math.Max(2, (prim + sec) / 48);
         }
@@ -121,7 +124,9 @@ namespace Server.Spells.Mysticism
             int sec = (int)m.Skills[SkillName.Imbuing].Value;
 
             if (m.Skills[SkillName.Focus].Value > sec)
+            {
                 sec = (int)m.Skills[SkillName.Focus].Value;
+            }
 
             return Math.Max(0, (prim + sec) / 12);
         }
@@ -134,12 +139,16 @@ namespace Server.Spells.Mysticism
                 int sec = (int)from.Skills[SkillName.Imbuing].Value;
 
                 if (from.Skills[SkillName.Focus].Value > sec)
+                {
                     sec = (int)from.Skills[SkillName.Focus].Value;
+                }
 
                 int immunity = (int)(((double)(prim + sec) / 480) * 100);
 
                 if (Necromancy.EvilOmenSpell.TryEndEffect(from))
+                {
                     immunity -= 30;
+                }
 
                 return immunity > Utility.Random(100);
             }

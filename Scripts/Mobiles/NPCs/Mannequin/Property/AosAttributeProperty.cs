@@ -387,16 +387,6 @@ namespace Server.Mobiles.MannequinProperty
         public override int SpriteH => 150;
     }
 
-    public class BrittleProperty : MagicalAttr
-    {
-        public override Catalog Catalog => Catalog.None;
-        public override int LabelNumber => 1116209;  // Brittle
-        public override bool IsSpriteGraph => true;
-        public override int SpriteW => 90;
-        public override int SpriteH => 240;
-        public override AosAttribute Attribute => AosAttribute.Brittle;
-    }
-
     public class LowerAmmoCostProperty : MagicalAttr
     {
         public override Catalog Catalog => Catalog.Misc;

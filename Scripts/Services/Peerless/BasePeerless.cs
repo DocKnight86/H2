@@ -13,7 +13,6 @@ namespace Server.Mobiles
 
         public override bool CanBeParagon => false;
         public virtual bool DropPrimer => true;
-        public virtual bool GiveMLSpecial => true;
         public override bool Unprovokable => true;
 
         public BasePeerless(Serial serial)
@@ -65,14 +64,6 @@ namespace Server.Mobiles
             if (GivesMLMinorArtifact && 0.5 > Utility.RandomDouble())
             {
                 MondainsLegacy.DropPeerlessMinor(c);
-            }
-
-            if (GiveMLSpecial)
-            {
-                if (Utility.RandomDouble() < 0.10)
-                {
-                    c.DropItem(new HumanFeyLeggings());
-                }
             }
 
             if (m_Altar != null)

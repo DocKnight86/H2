@@ -299,17 +299,6 @@ namespace Server.Mobiles.MannequinProperty
         public override int SpriteH => 180;
     }
 
-    public class SplinteringWeaponProperty : WeaponAttr
-    {
-        public override Catalog Catalog => Catalog.HitEffects;
-        public override int LabelNumber => 1154670;  // Splintering Weapon
-        public override int Description => 1152396;  // This property provides a chance to apply a bleed effect and a four second duration forced walk to the target.  Each application of the splintering weapons reduces the durability of the weapon.  This property can be found on melee weapons.
-        public override AosWeaponAttribute Attribute => AosWeaponAttribute.SplinteringWeapon;
-        public override int Hue => 0x43FF;
-        public override int SpriteW => 60;
-        public override int SpriteH => 120;
-    }
-
     public class WeaponReactiveParalyzeProperty : WeaponAttr
     {
         public override Catalog Catalog => Catalog.Combat1;

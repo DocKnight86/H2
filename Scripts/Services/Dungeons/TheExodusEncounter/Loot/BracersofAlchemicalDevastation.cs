@@ -10,7 +10,6 @@ namespace Server.Items
         {
             Attributes.RegenMana = 4;
             Attributes.CastRecovery = 3;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public BracersofAlchemicalDevastation(Serial serial)

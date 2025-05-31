@@ -1247,11 +1247,6 @@ namespace Server.Items
 
             base.AddResistanceProperties(list);
 
-            if ((prop = m_AosClothingAttributes.MageArmor) != 0)
-            {
-                list.Add(1060437); // mage armor
-            }
-
             if ((prop = m_AosClothingAttributes.LowerStatReq) != 0)
             {
                 list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%

@@ -49,7 +49,7 @@ namespace Server.Items
 
                 int count = Math.Min(3, (int)Math.Round(magery * Utility.RandomDouble() / 5));
 
-                BaseRunicTool.ApplyAttributesTo(this, true, 0, count, 70, 80);
+                BaseRunicTool.ApplyAttributesTo(this, true, count, 70, 80);
             }
 
             Attributes.SpellDamage = 25;

@@ -725,7 +725,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            if (Attributes.Brittle > 0)
+            if (NegativeAttributes.Brittle > 0)
             {
                 list.Add(1116209); // Brittle           
             }

@@ -1145,7 +1145,7 @@ namespace Server.Items
                     }
                 }
 
-                BaseRunicTool.ApplyAttributesTo(this, true, 0, propertyCount, minIntensity, maxIntensity);
+                BaseRunicTool.ApplyAttributesTo(this, true, propertyCount, minIntensity, maxIntensity);
             }
 
             if (makersMark)

@@ -71,7 +71,7 @@ namespace Server.Mobiles
         }
 
         public override ChampionSkullType SkullType => ChampionSkullType.Death;
-        public override Type[] UniqueList => new[] { typeof(ShroudOfDeceit) };
+        public override Type[] UniqueList => [];
         public override Type[] SharedList => new[]
                 {
                     typeof(ANecromancerShroud),

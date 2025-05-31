@@ -55,7 +55,6 @@ namespace Server.Engines.VvV
             Rewards.Add(new CollectionItem(typeof(ShameTileDeed), 5360, 1155522, 0, 10000)); // Shame Tile
             Rewards.Add(new CollectionItem(typeof(WrongTileDeed), 5360, 1155523, 0, 10000)); // Wrong Tile
 
-            Rewards.Add(new CollectionItem(typeof(InquisitorsResolution), 5140, 0, 1266, 500));
             Rewards.Add(new CollectionItem(typeof(OrnamentOfTheMagician), 4230, 0, 1364, 500));
             Rewards.Add(new CollectionItem(typeof(CrystallineRing), 4234, 0, 1152, 500));
             Rewards.Add(new CollectionItem(typeof(SpiritOfTheTotem), 5445, 0, 1109, 500));
@@ -63,8 +62,6 @@ namespace Server.Engines.VvV
             Rewards.Add(new CollectionItem(typeof(TomeOfLostKnowledge), 3834, 0, 1328, 500));
             Rewards.Add(new CollectionItem(typeof(HuntersHeaddress), 5447, 0, 1428, 500));
             Rewards.Add(new CollectionItem(typeof(RingOfTheVile), 4234, 0, 1271, 500));
-            Rewards.Add(new CollectionItem(typeof(HumanFeyLeggings), 5054, 0, 0, 500));
-            Rewards.Add(new CollectionItem(typeof(RuneBeetleCarapace), 10109, 0, 0, 500));
             Rewards.Add(new CollectionItem(typeof(KasaOfTheRajin), 10136, 0, 0, 500));
 
             Rewards.Add(new CollectionItem(typeof(VvVWand1), 3571, 0, 0, 500));

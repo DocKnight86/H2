@@ -50,7 +50,6 @@ namespace Server.Items
         private static readonly int[] m_Possible = new int[MaxProperties];
 
         private static bool m_PlayerMade;
-        private static int m_LuckChance;
 
         private const int MaxProperties = 32;
 
@@ -187,7 +186,7 @@ namespace Server.Items
             }
             else if (item is Spellbook spellbook)
             {
-                ApplyAttributesTo(spellbook, isRunicTool, luckChance, attributeCount, min, max);
+                ApplyAttributesTo(spellbook, isRunicTool, attributeCount, min, max);
             }
         }
 
@@ -222,7 +221,6 @@ namespace Server.Items
             }
 
             m_PlayerMade = playerMade;
-            m_LuckChance = luckChance;
 
             AosAttributes primary = pole.Attributes;
             AosSkillBonuses skills = pole.SkillBonuses;
@@ -278,12 +276,11 @@ namespace Server.Items
 
             if (!playerMade)
             {
-                RandomItemGenerator.GenerateRandomItem(weapon, luckChance, attributeCount, min, max);
+                RandomItemGenerator.GenerateRandomItem(weapon, attributeCount, min, max);
                 return;
             }
 
             m_PlayerMade = true;
-            m_LuckChance = luckChance;
 
             AosAttributes primary = weapon.Attributes;
             AosWeaponAttributes secondary = weapon.WeaponAttributes;
@@ -488,12 +485,11 @@ namespace Server.Items
 
             if (!playerMade)
             {
-                RandomItemGenerator.GenerateRandomItem(armor, luckChance, attributeCount, min, max);
+                RandomItemGenerator.GenerateRandomItem(armor, attributeCount, min, max);
                 return;
             }
 
             m_PlayerMade = true;
-            m_LuckChance = luckChance;
 
             AosAttributes primary = armor.Attributes;
             AosArmorAttributes secondary = armor.ArmorAttributes;
@@ -501,13 +497,8 @@ namespace Server.Items
             m_Props.SetAll(false);
 
             bool isShield = (armor is BaseShield);
-            int baseCount = isShield ? 7 : 19;
+            int baseCount = isShield ? 7 : 18;
             int baseOffset = isShield ? 0 : 4;
-
-            if (!isShield && armor.MeditationAllowance == ArmorMeditationAllowance.All)
-            {
-                m_Props.Set(3, true); // remove mage armor from possible properties
-            }
 
             if (armor.Resource >= CraftResource.RegularLeather && armor.Resource <= CraftResource.BarbedLeather)
             {
@@ -553,51 +544,48 @@ namespace Server.Items
                         break;
                     /* End Shields */
                     case 7:
-                        ApplyAttribute(secondary, min, max, AosArmorAttribute.MageArmor, 1, 1);
-                        break;
-                    case 8:
                         ApplyAttribute(primary, min, max, AosAttribute.RegenHits, 1, 2);
                         break;
-                    case 9:
+                    case 8:
                         ApplyAttribute(primary, min, max, AosAttribute.RegenStam, 1, 3);
                         break;
-                    case 10:
+                    case 9:
                         ApplyAttribute(primary, min, max, AosAttribute.RegenMana, 1, 2);
                         break;
-                    case 11:
+                    case 10:
                         ApplyAttribute(primary, min, max, AosAttribute.NightSight, 1, 1);
                         break;
-                    case 12:
+                    case 11:
                         ApplyAttribute(primary, min, max, AosAttribute.BonusHits, 1, 5);
                         break;
-                    case 13:
+                    case 12:
                         ApplyAttribute(primary, min, max, AosAttribute.BonusStam, 1, 8);
                         break;
-                    case 14:
+                    case 13:
                         ApplyAttribute(primary, min, max, AosAttribute.BonusMana, 1, 8);
                         break;
-                    case 15:
+                    case 14:
                         ApplyAttribute(primary, min, max, AosAttribute.LowerManaCost, 1, 8);
                         break;
-                    case 16:
+                    case 15:
                         ApplyAttribute(primary, min, max, AosAttribute.LowerRegCost, 1, 20);
                         break;
-                    case 17:
+                    case 16:
                         ApplyAttribute(primary, min, max, AosAttribute.ReflectPhysical, 1, 15);
                         break;
-                    case 18:
+                    case 17:
                         ApplyResistance(armor, min, max, ResistanceType.Physical, 1, 15);
                         break;
-                    case 19:
+                    case 18:
                         ApplyResistance(armor, min, max, ResistanceType.Fire, 1, 15);
                         break;
-                    case 20:
+                    case 19:
                         ApplyResistance(armor, min, max, ResistanceType.Cold, 1, 15);
                         break;
-                    case 21:
+                    case 20:
                         ApplyResistance(armor, min, max, ResistanceType.Poison, 1, 15);
                         break;
-                    case 22:
+                    case 21:
                         ApplyResistance(armor, min, max, ResistanceType.Energy, 1, 15);
                         break;
                         /* End Armor */
@@ -623,12 +611,11 @@ namespace Server.Items
 
             if (!playerMade)
             {
-                RandomItemGenerator.GenerateRandomItem(hat, luckChance, attributeCount, min, max);
+                RandomItemGenerator.GenerateRandomItem(hat, attributeCount, min, max);
                 return;
             }
 
             m_PlayerMade = true;
-            m_LuckChance = luckChance;
 
             AosAttributes primary = hat.Attributes;
             AosArmorAttributes secondary = hat.ClothingAttributes;
@@ -723,12 +710,11 @@ namespace Server.Items
 
             if (!playerMade)
             {
-                RandomItemGenerator.GenerateRandomItem(jewelry, luckChance, attributeCount, min, max);
+                RandomItemGenerator.GenerateRandomItem(jewelry, attributeCount, min, max);
                 return;
             }
 
             m_PlayerMade = true;
-            m_LuckChance = luckChance;
 
             AosAttributes primary = jewelry.Attributes;
             AosElementAttributes resists = jewelry.Resistances;
@@ -822,10 +808,10 @@ namespace Server.Items
 
         public static void ApplyAttributesTo(Spellbook spellbook, int attributeCount, int min, int max)
         {
-            ApplyAttributesTo(spellbook, false, 0, attributeCount, min, max);
+            ApplyAttributesTo(spellbook, false, attributeCount, min, max);
         }
 
-        public static void ApplyAttributesTo(Spellbook spellbook, bool playerMade, int luckChance, int attributeCount, int min, int max)
+        public static void ApplyAttributesTo(Spellbook spellbook, bool playerMade, int attributeCount, int min, int max)
         {
             int delta;
 
@@ -837,7 +823,6 @@ namespace Server.Items
             }
 
             m_PlayerMade = playerMade;
-            m_LuckChance = luckChance;
 
             AosAttributes primary = spellbook.Attributes;
             AosSkillBonuses skills = spellbook.SkillBonuses;
@@ -991,11 +976,6 @@ namespace Server.Items
 
                 v = (int)Math.Sqrt(v);
                 v = 100 - v;
-
-                if (LootPack.CheckLuck(m_LuckChance))
-                {
-                    v += 10;
-                }
 
                 percent = Math.Min(max, min + AOS.Scale((max - min), v));
             }

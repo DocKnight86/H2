@@ -19,21 +19,6 @@ namespace Server.Items
                 ring.Attributes.CastRecovery = 3;
             }
 
-            if (item is HumanFeyLeggings fey)
-            {
-                if (fey.PhysicalBonus != 3)
-                    fey.PhysicalBonus = 3;
-
-                if (fey.FireBonus != 3)
-                    fey.FireBonus = 3;
-
-                if (fey.ColdBonus != 3)
-                    fey.ColdBonus = 3;
-
-                if (fey.EnergyBonus != 3)
-                    fey.EnergyBonus = 3;
-            }
-
             if (item is HuntersHeaddress hunters)
             {
                 if (hunters.Resistances.Physical != 8)
@@ -67,24 +52,6 @@ namespace Server.Items
                 vile.Attributes.AttackChance = 25;
             }
 
-            if (item is RuneBeetleCarapace carapace)
-            {
-                if (carapace.PhysicalBonus != 3)
-                    carapace.PhysicalBonus = 3;
-
-                if (carapace.FireBonus != 3)
-                    carapace.FireBonus = 3;
-
-                if (carapace.ColdBonus != 3)
-                    carapace.ColdBonus = 3;
-
-                if (carapace.PoisonBonus != 3)
-                    carapace.PoisonBonus = 3;
-
-                if (carapace.EnergyBonus != 3)
-                    carapace.EnergyBonus = 3;
-            }
-
             if (item is SpiritOfTheTotem totem)
             {
                 if (totem.Resistances.Fire != 7)
@@ -98,24 +65,6 @@ namespace Server.Items
 
                 if (totem.Resistances.Energy != 6)
                     totem.Resistances.Energy = 6;
-            }
-
-            if (item is InquisitorsResolution inquis)
-            {
-                if (inquis.PhysicalBonus != 5)
-                    inquis.PhysicalBonus = 5;
-
-                if (inquis.FireBonus != 7)
-                    inquis.FireBonus = 7;
-
-                if (inquis.ColdBonus != -2)
-                    inquis.ColdBonus = -2;
-
-                if (inquis.PoisonBonus != 7)
-                    inquis.PoisonBonus = 7;
-
-                if (inquis.EnergyBonus != -7)
-                    inquis.EnergyBonus = -7;
             }
 
             if (item is TomeOfLostKnowledge knowledge && knowledge.Attributes.RegenMana != 3)

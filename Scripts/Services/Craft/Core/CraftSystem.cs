@@ -22,7 +22,7 @@ namespace Server.Engines.Craft
             typeof(Blight), typeof(Corruption), typeof(Muculent), typeof(Scourge), typeof(Putrefaction), typeof(Taint),
 
             // Tailoring
-            typeof(MidnightBracers), typeof(TheScholarsHalo),
+            typeof(TheScholarsHalo),
 
             // Blacksmithy
             typeof(LeggingsOfBane), 

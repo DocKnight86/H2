@@ -15,7 +15,6 @@ namespace Server.Items
             Resource = CraftResource.None;
 
             Hue = 1778;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -93,7 +92,6 @@ namespace Server.Items
         public GorgetOfVillainousEpiphany()
         {
             Hue = 1778;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -173,7 +171,6 @@ namespace Server.Items
             Resource = CraftResource.None;
 
             Hue = 1778;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -253,7 +250,6 @@ namespace Server.Items
             Resource = CraftResource.None;
 
             Hue = 1778;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -333,7 +329,6 @@ namespace Server.Items
             Resource = CraftResource.None;
 
             Hue = 1778;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -413,7 +408,6 @@ namespace Server.Items
             Resource = CraftResource.None;
 
             Hue = 1778;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)

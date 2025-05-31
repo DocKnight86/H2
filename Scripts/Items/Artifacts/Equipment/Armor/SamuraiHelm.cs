@@ -23,7 +23,6 @@ namespace Server.Items
             Attributes.DefendChance = 15;
             ArmorAttributes.SelfRepair = 10;
             ArmorAttributes.LowerStatReq = 100;
-            ArmorAttributes.MageArmor = 1;
         }
 
         public SamuraiHelm(Serial serial)

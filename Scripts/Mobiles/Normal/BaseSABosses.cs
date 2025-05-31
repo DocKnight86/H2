@@ -20,7 +20,6 @@ namespace Server.Mobiles
         public abstract Type[] UniqueSAList { get; }
         public abstract Type[] SharedSAList { get; }
 
-        public override bool GiveMLSpecial => false;
         public virtual bool NoGoodies => false;
         public override bool DropPrimer => false;
 

@@ -451,7 +451,6 @@ namespace Server.Misc
             };
 
             bag.DropItem(new TitansHammer());
-            bag.DropItem(new InquisitorsResolution());
             bag.DropItem(new BladeOfTheRighteous());
             bag.DropItem(new ZyronicClaw());
 
@@ -471,7 +470,6 @@ namespace Server.Misc
             bag.DropItem(new SwordOfTheStampede());
             bag.DropItem(new WindsEdge());
             bag.DropItem(new DarkenedSky());
-            bag.DropItem(new RuneBeetleCarapace());
             bag.DropItem(new KasaOfTheRajin());
             bag.DropItem(new TomeOfLostKnowledge());
             bag.DropItem(new PigmentsOfTokuno(PigmentType.ParagonGold));
@@ -518,7 +516,6 @@ namespace Server.Misc
             bag.DropItem(new RoyalGuardInvestigatorsCloak());
             bag.DropItem(new TongueOfTheBeast());
             bag.DropItem(new TheMostKnowledgePerson());
-            bag.DropItem(new ShroudOfDeceit());
             bag.DropItem(new ANecromancerShroud());
             bag.DropItem(new LightsRampart());
             bag.DropItem(new AcidProofRobe());
@@ -529,7 +526,6 @@ namespace Server.Misc
             bag.DropItem(new CrownOfTalKeesh());
             bag.DropItem(new DjinnisRing());
             bag.DropItem(new EmbroideredOakLeafCloak());
-            bag.DropItem(new GladiatorsCollar());
             bag.DropItem(new CaptainJohnsHat());
             bag.DropItem(new BraveKnightOfTheBritannia());
             bag.DropItem(new OblivionsNeedle());

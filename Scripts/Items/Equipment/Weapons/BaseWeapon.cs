@@ -60,7 +60,9 @@ namespace Server.Items
         public int GetUsesScalar()
         {
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 return 200;
+            }
 
             return 100;
         }
@@ -81,7 +83,12 @@ namespace Server.Items
         public Mobile Owner
         {
             get => _Owner;
-            set { _Owner = value; if (_Owner != null) _OwnerName = _Owner.Name; InvalidateProperties(); }
+            set { _Owner = value; if (_Owner != null)
+                {
+                    _OwnerName = _Owner.Name;
+                }
+
+                InvalidateProperties(); }
         }
 
         public virtual string OwnerName
@@ -195,7 +202,9 @@ namespace Server.Items
             get
             {
                 if (NegativeAttributes == null || NegativeAttributes.Unwieldly == 0)
+                {
                     return base.DefaultWeight;
+                }
 
                 return 50;
             }
@@ -488,16 +497,24 @@ namespace Server.Items
             get
             {
                 if (TimesImbued >= 1 && !m_IsImbued)
+                {
                     m_IsImbued = true;
+                }
 
                 return m_IsImbued;
             }
             set
             {
                 if (TimesImbued >= 1)
+                {
                     m_IsImbued = true;
+                }
                 else
-                    m_IsImbued = value; InvalidateProperties();
+                {
+                    m_IsImbued = value;
+                }
+
+                InvalidateProperties();
             }
         }
 
@@ -603,10 +620,14 @@ namespace Server.Items
             m_MaxHits = (m_MaxHits * scale + 99) / 100;
 
             if (m_MaxHits > 255)
+            {
                 m_MaxHits = 255;
+            }
 
             if (m_Hits > 255)
+            {
                 m_Hits = 255;
+            }
 
             InvalidateProperties();
         }
@@ -883,7 +904,9 @@ namespace Server.Items
                 Spells.Mysticism.EnchantSpell.OnWeaponRemoved(this, m);
 
                 if (FocusWeilder != null)
+                {
                     FocusWeilder = null;
+                }
 
                 SkillMasterySpell.OnWeaponRemoved(m, this);
                 ForceOfNature.Remove(m);
@@ -914,12 +937,16 @@ namespace Server.Items
         public void AddMysticMod(Mobile from)
         {
             if (m_MysticMod != null)
+            {
                 m_MysticMod.Remove();
+            }
 
             int value = m_ExtendedWeaponAttributes.MysticWeapon;
 
             if (Enhancement.GetValue(from, ExtendedWeaponAttribute.MysticWeapon) > value)
+            {
                 value = Enhancement.GetValue(from, ExtendedWeaponAttribute.MysticWeapon);
+            }
 
             m_MysticMod = new DefaultSkillMod(SkillName.Mysticism, true, -30 + value);
             from.AddSkillMod(m_MysticMod);
@@ -1063,7 +1090,7 @@ namespace Server.Items
                 bonus -= info.DefenseChanceMalus;
             }
 
-            int max = 45 + BaseArmor.GetRefinedDefenseChance(defender) + WhiteTigerFormSpell.GetDefenseCap(defender);
+            int max = 45 + WhiteTigerFormSpell.GetDefenseCap(defender);
 
             // Defense Chance Increase = 45%
             if (bonus > max)
@@ -1410,7 +1437,9 @@ namespace Server.Items
                             weapon.OnSwing(defender, attacker);
 
                             if (combatant != null && defender.Combatant != combatant && combatant.Alive)
+                            {
                                 defender.Combatant = combatant;
+                            }
                         }
 
                         CounterAttack.StopCountering(defender);
@@ -1610,9 +1639,13 @@ namespace Server.Items
                 m_InDoubleStrike = value;
 
                 if (m_InDoubleStrike)
+                {
                     ProcessingMultipleHits = true;
+                }
                 else
+                {
                     ProcessingMultipleHits = false;
+                }
             }
         }
 
@@ -1624,7 +1657,9 @@ namespace Server.Items
                 m_ProcessingMultipleHits = value;
 
                 if (!m_ProcessingMultipleHits)
+                {
                     BlockHitEffects = false;
+                }
             }
         }
 
@@ -1661,12 +1696,16 @@ namespace Server.Items
             PlaySwingAnimation(attacker);
 
             if (defender != null)
+            {
                 PlayHurtAnimation(defender);
+            }
 
             attacker.PlaySound(GetHitAttackSound(attacker, defender));
 
             if (defender != null)
+            {
                 defender.PlaySound(GetHitDefendSound(attacker, defender));
+            }
 
             int damage = ComputeDamage(attacker, defender);
 
@@ -1705,11 +1744,26 @@ namespace Server.Items
 
                     phys = fire = cold = pois = nrgy = chaos = direct = 0;
 
-                    if (type == 0) phys = 100;
-                    else if (type == 1) fire = 100;
-                    else if (type == 2) cold = 100;
-                    else if (type == 3) pois = 100;
-                    else if (type == 4) nrgy = 100;
+                    if (type == 0)
+                    {
+                        phys = 100;
+                    }
+                    else if (type == 1)
+                    {
+                        fire = 100;
+                    }
+                    else if (type == 2)
+                    {
+                        cold = 100;
+                    }
+                    else if (type == 3)
+                    {
+                        pois = 100;
+                    }
+                    else if (type == 4)
+                    {
+                        nrgy = 100;
+                    }
                 }
                 else if (ranged && attacker.FindItemOnLayer(Layer.Cloak) is IRangeDamage rangeDamage)
                 {
@@ -1717,18 +1771,10 @@ namespace Server.Items
                 }
             }
 
-            bool splintering = false;
-
-            if (m_AosWeaponAttributes.SplinteringWeapon > 0 && m_AosWeaponAttributes.SplinteringWeapon > Utility.Random(100))
-            {
-                if (SplinteringWeaponContext.CheckHit(attacker, defender, a, this))
-                    splintering = true;
-            }
-
             double chance = NegativeAttributes.Antique > 0 ? 5 : 0;
             bool acidicTarget = MaxRange <= 1 && m_AosAttributes.SpellChanneling == 0 && !(this is Fists) && (defender is Slime || defender is ToxicElemental || defender is CorrosiveSlime);
 
-            if (acidicTarget || defender != null && splintering || Utility.Random(40) <= chance)
+            if (acidicTarget || Utility.Random(40) <= chance)
             {
                 if (MaxRange <= 1 && acidicTarget)
                 {
@@ -1749,14 +1795,7 @@ namespace Server.Items
                     {
                         if (m_Hits >= 1)
                         {
-                            if (splintering)
-                            {
-                                HitPoints = Math.Max(0, HitPoints - 10);
-                            }
-                            else
-                            {
-                                HitPoints--;
-                            }
+                            HitPoints--;
                         }
                         else if (m_MaxHits > 0)
                         {
@@ -1768,7 +1807,9 @@ namespace Server.Items
                             }
 
                             if (m_MaxHits <= 0)
+                            {
                                 Delete();
+                            }
                         }
                     }
                 }
@@ -1841,17 +1882,25 @@ namespace Server.Items
             if (cs1 != CheckSlayerResult.None)
             {
                 if (cs1 == CheckSlayerResult.SuperSlayer)
+                {
                     percentageBonus += 100;
+                }
                 else if (cs1 == CheckSlayerResult.Slayer)
+                {
                     percentageBonus += 200;
+                }
             }
 
             if (cs2 != CheckSlayerResult.None)
             {
                 if (cs2 == CheckSlayerResult.SuperSlayer)
+                {
                     percentageBonus += 100;
+                }
                 else if (cs2 == CheckSlayerResult.Slayer)
+                {
                     percentageBonus += 200;
+                }
             }
 
             if (suit != CheckSlayerResult.None)
@@ -2038,10 +2087,14 @@ namespace Server.Items
             if (a == null && move == null)
             {
                 if (m_ExtendedWeaponAttributes.BoneBreaker > 0 && !AnimalForm.UnderTransformation(attacker))
+                {
                     BoneBreakerContext.CheckHit(attacker, defender);
+                }
 
                 if (m_ExtendedWeaponAttributes.HitSwarm > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSwarm)
+                {
                     SwarmContext.CheckHit(attacker, defender);
+                }
 
                 if (m_ExtendedWeaponAttributes.HitSparks > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSparks)
                 {
@@ -2068,11 +2121,15 @@ namespace Server.Items
             }
 
             if (Feint.Registry.ContainsKey(defender) && Feint.Registry[defender].Enemy == attacker)
+            {
                 damage -= (int)(damage * ((double)Feint.Registry[defender].DamageReduction / 100));
+            }
 
             // Skill Masteries
             if (this is Fists)
+            {
                 damage += (int)(damage * (MasteryInfo.GetKnockoutModifier(attacker, defender is PlayerMobile) / 100.0));
+            }
 
             SkillMasterySpell.OnHit(attacker, defender, ref damage);
 
@@ -2109,7 +2166,11 @@ namespace Server.Items
             if (sparks)
             {
                 int mana = attacker.Mana + damageGiven;
-                if (!defender.Player) mana *= 2;
+                if (!defender.Player)
+                {
+                    mana *= 2;
+                }
+
                 attacker.Mana = Math.Min(attacker.ManaMax, attacker.Mana + mana);
             }
 
@@ -2305,7 +2366,9 @@ namespace Server.Items
                     AosWeaponAttributes attrs = RunicReforging.GetAosWeaponAttributes(helm);
 
                     if (attrs != null)
+                    {
                         hldGlasses = attrs.HitLowerDefend;
+                    }
                 }
 
                 if (hldWep > 0 && hldWep > Utility.Random(100) || hldGlasses > 0 && hldGlasses > Utility.Random(100))
@@ -2370,28 +2433,44 @@ namespace Server.Items
             Direction direction = Direction.Down;
 
             if (d == Direction.West)
+            {
                 direction = Direction.East;
+            }
 
             if (d == Direction.East)
+            {
                 direction = Direction.West;
+            }
 
             if (d == Direction.North)
+            {
                 direction = Direction.South;
+            }
 
             if (d == Direction.South)
+            {
                 direction = Direction.North;
+            }
 
             if (d == Direction.Right)
+            {
                 direction = Direction.Left;
+            }
 
             if (d == Direction.Left)
+            {
                 direction = Direction.Right;
+            }
 
             if (d == Direction.Up)
+            {
                 direction = Direction.Down;
+            }
 
             if (d == Direction.Down)
+            {
                 direction = Direction.Up;
+            }
 
             return direction;
         }
@@ -2410,7 +2489,9 @@ namespace Server.Items
             damage = AOS.Scale(damage, 100 + damageBonus);
 
             if (defender != null && Feint.Registry.ContainsKey(defender) && Feint.Registry[defender].Enemy == attacker)
+            {
                 damage -= (int)(damage * ((double)Feint.Registry[defender].DamageReduction / 100));
+            }
 
             // All hit spells use 80 eval
             int evalScale = 30 + 9 * 800 / 100;
@@ -2438,7 +2519,9 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.FromSeconds(1.0), defender, attacker, damage, 0, 100, 0, 0, 0);
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoHarm(Mobile attacker, Mobile defender)
@@ -2467,7 +2550,9 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.Zero, defender, attacker, damage, 0, 0, 100, 0, 0);
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoFireball(Mobile attacker, Mobile defender)
@@ -2487,7 +2572,9 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.FromSeconds(1.0), defender, attacker, damage, 0, 100, 0, 0, 0);
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoLightning(Mobile attacker, Mobile defender)
@@ -2506,7 +2593,9 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.Zero, defender, attacker, damage, 0, 0, 0, 0, 100);
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoDispel(Mobile attacker, Mobile defender)
@@ -2563,7 +2652,9 @@ namespace Server.Items
             SpellHelper.Damage(TimeSpan.FromSeconds(1.0), defender, attacker, damage, 0, 100, 0, 0, 0);
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoHitVelocity(Mobile attacker, IDamageable damageable)
@@ -2586,7 +2677,9 @@ namespace Server.Items
             }
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         #region Stygian Abyss
@@ -2610,7 +2703,9 @@ namespace Server.Items
             BuffInfo.AddBuff(defender, new BuffInfo(BuffIcon.Curse, 1075835, 1075836, duration, defender, args));
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoFatigue(Mobile attacker, Mobile defender, int damagegiven)
@@ -2620,7 +2715,9 @@ namespace Server.Items
             defender.Stam -= damagegiven * (100 - m_AosWeaponAttributes.HitFatigue) / 100;
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
 
         public virtual void DoManaDrain(Mobile attacker, Mobile defender, int damagegiven)
@@ -2631,7 +2728,9 @@ namespace Server.Items
             defender.Mana -= damagegiven * (100 - m_AosWeaponAttributes.HitManaDrain) / 100;
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
         #endregion
 
@@ -2684,14 +2783,18 @@ namespace Server.Items
             }
 
             if (ProcessingMultipleHits)
+            {
                 BlockHitEffects = true;
+            }
         }
         #endregion
 
         public virtual CheckSlayerResult CheckSlayers(Mobile attacker, Mobile defender, SlayerName slayer)
         {
             if (slayer == SlayerName.None)
+            {
                 return CheckSlayerResult.None;
+            }
 
             BaseWeapon atkWeapon = attacker.Weapon as BaseWeapon;
             SlayerEntry atkSlayer = SlayerGroup.GetEntryByName(slayer);
@@ -2904,7 +3007,9 @@ namespace Server.Items
             attacker.PlaySound(GetMissAttackSound(attacker, defender));
 
             if (defender != null)
+            {
                 defender.PlaySound(GetMissDefendSound(attacker, defender));
+            }
 
             WeaponAbility ability = WeaponAbility.GetCurrentAbility(attacker);
 
@@ -3478,7 +3583,9 @@ namespace Server.Items
                 case 16:
                     {
                         if (version == 17)
+                        {
                             reader.ReadBool();
+                        }
 
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
@@ -3615,9 +3722,13 @@ namespace Server.Items
                         SaveFlag flags;
 
                         if (version < 13)
+                        {
                             flags = (SaveFlag)reader.ReadInt();
+                        }
                         else
+                        {
                             flags = (SaveFlag)reader.ReadLong();
+                        }
 
                         if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty1))
                         {
@@ -3960,10 +4071,14 @@ namespace Server.Items
             }
 
             if (m_Slayer == SlayerName.DaemonDismissal || m_Slayer == SlayerName.BalronDamnation)
+            {
                 m_Slayer = SlayerName.Exorcism;
+            }
 
             if (m_Slayer2 == SlayerName.DaemonDismissal || m_Slayer2 == SlayerName.BalronDamnation)
+            {
                 m_Slayer2 = SlayerName.Exorcism;
+            }
         }
         #endregion
 
@@ -4175,9 +4290,13 @@ namespace Server.Items
                     int prefix = RunicReforging.GetPrefixName(m_ReforgedPrefix);
 
                     if (m_ReforgedSuffix == ReforgedSuffix.None)
+                    {
                         list.Add(1151757, $"#{prefix}\t{GetNameString()}"); // ~1_PREFIX~ ~2_ITEM~
+                    }
                     else
+                    {
                         list.Add(1151756, $"#{prefix}\t{GetNameString()}\t#{RunicReforging.GetSuffixName(m_ReforgedSuffix)}"); // ~1_PREFIX~ ~2_ITEM~ of ~3_SUFFIX~
+                    }
                 }
                 else if (m_ReforgedSuffix != ReforgedSuffix.None)
                 {
@@ -4237,7 +4356,9 @@ namespace Server.Items
             get
             {
                 if (IsVvVItem)
+                {
                     return true;
+                }
 
                 return base.DisplayWeight;
             }
@@ -4276,7 +4397,9 @@ namespace Server.Items
             base.AddWeightProperty(list);
 
             if (IsVvVItem)
+            {
                 list.Add(1154937); // VvV Item
+            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -4297,10 +4420,14 @@ namespace Server.Items
                 list.Add(1073491, Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
 
                 if (SetID == SetItem.Bestial)
+                {
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
+                }
 
                 if (BardMasteryBonus)
+                {
                     list.Add(1151553); // Activate: Bard Mastery Bonus x2<br>(Effect: 1 min. Cooldown: 30 min.)
+                }
 
                 if (m_SetEquipped)
                 {
@@ -4315,13 +4442,10 @@ namespace Server.Items
                 list.Add(1150018); // Focus
             }
 
-            if (m_NegativeAttributes.Brittle == 0 && m_AosAttributes.Brittle != 0)
-            {
-                list.Add(1116209); // Brittle
-            }
-
             if (m_NegativeAttributes != null)
+            {
                 m_NegativeAttributes.GetProperties(list, this);
+            }
 
             if (m_AosSkillBonuses != null)
             {
@@ -4441,11 +4565,6 @@ namespace Server.Items
             if ((prop = m_ExtendedWeaponAttributes.AssassinHoned) != 0)
             {
                 list.Add(1152206); // Assassin Honed
-            }
-
-            if ((prop = m_AosWeaponAttributes.SplinteringWeapon) != 0)
-            {
-                list.Add(1112857, prop.ToString()); //splintering weapon ~1_val~%
             }
 
             if ((fprop = m_AosWeaponAttributes.HitDispel * focusBonus) != 0)
@@ -4931,9 +5050,13 @@ namespace Server.Items
             if (m_ItemPower != ItemPower.None)
             {
                 if (m_ItemPower <= ItemPower.LegendaryArtifact)
+                {
                     list.Add(1151488 + ((int)m_ItemPower - 1));
+                }
                 else
+                {
                     list.Add(1152281 + ((int)m_ItemPower - 9));
+                }
             }
         }
 

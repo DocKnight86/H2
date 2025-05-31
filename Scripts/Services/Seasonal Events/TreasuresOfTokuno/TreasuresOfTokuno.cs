@@ -32,9 +32,9 @@ namespace Server.Misc
 
         private static readonly Type[] m_LesserArtifactsTotal =
         {
-            typeof(AncientFarmersKasa), typeof(AncientSamuraiDo), typeof(ArmsOfTacticalExcellence), typeof(BlackLotusHood),
-            typeof(DaimyosHelm), typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
-            typeof(HanzosBow), typeof(LegsOfStability), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
+            typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence), typeof(BlackLotusHood),
+            typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
+            typeof(HanzosBow), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
             typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords), typeof(PigmentsOfTokuno), typeof(FluteOfRenewal),
             typeof(LesserPigmentsOfTokuno), typeof(MetalPigmentsOfTokuno), typeof(ChestOfHeirlooms)
         };
@@ -53,29 +53,29 @@ namespace Server.Misc
             // ToT One Rewards
             new[]
             {
-                typeof(AncientFarmersKasa), typeof(AncientSamuraiDo), typeof(ArmsOfTacticalExcellence), typeof(BlackLotusHood),
-                typeof(DaimyosHelm), typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
-                typeof(HanzosBow), typeof(LegsOfStability), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
+                typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence), typeof(BlackLotusHood),
+                typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
+                typeof(HanzosBow), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
                 typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords), typeof(PigmentsOfTokuno),
                 typeof(FluteOfRenewal), typeof(ChestOfHeirlooms)
             },
             // ToT Two Rewards
             new[]
             {
-                typeof(MetalPigmentsOfTokuno), typeof(AncientFarmersKasa), typeof(AncientSamuraiDo), typeof(ArmsOfTacticalExcellence),
-                typeof(MetalPigmentsOfTokuno), typeof(BlackLotusHood), typeof(DaimyosHelm), typeof(DemonForks),
+                typeof(MetalPigmentsOfTokuno), typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence),
+                typeof(MetalPigmentsOfTokuno), typeof(BlackLotusHood), typeof(DemonForks),
                 typeof(MetalPigmentsOfTokuno), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun), typeof(HanzosBow),
-                typeof(MetalPigmentsOfTokuno), typeof(LegsOfStability), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
+                typeof(MetalPigmentsOfTokuno), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
                 typeof(MetalPigmentsOfTokuno), typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords),
                 typeof(MetalPigmentsOfTokuno), typeof(FluteOfRenewal), typeof(ChestOfHeirlooms)
             },
             // ToT Three Rewards
             new[]
             {
-                typeof(LesserPigmentsOfTokuno), typeof(AncientFarmersKasa), typeof(AncientSamuraiDo), typeof(ArmsOfTacticalExcellence),
-                typeof(LesserPigmentsOfTokuno), typeof(BlackLotusHood), typeof(DaimyosHelm), typeof(HanzosBow),
+                typeof(LesserPigmentsOfTokuno), typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence),
+                typeof(LesserPigmentsOfTokuno), typeof(BlackLotusHood), typeof(HanzosBow),
                 typeof(LesserPigmentsOfTokuno), typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
-                typeof(LesserPigmentsOfTokuno), typeof(LegsOfStability), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
+                typeof(LesserPigmentsOfTokuno), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
                 typeof(LesserPigmentsOfTokuno), typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords), typeof(FluteOfRenewal),
                 typeof(LesserPigmentsOfTokuno), typeof(ChestOfHeirlooms)
             }
@@ -569,7 +569,6 @@ namespace Server.Gumps
                 new TypeTileButtonInfo(typeof(SwordOfTheStampede), 0x27A2, 1070964, 1070978),
                 new TypeTileButtonInfo(typeof(WindsEdge), 0x27A3, 1070965, 1071003),
                 new TypeTileButtonInfo(typeof(DarkenedSky), 0x27AD, 1070966, 1071004),
-                new TypeTileButtonInfo(typeof(RuneBeetleCarapace), 0x277D, 1070968, 1071006),
                 new TypeTileButtonInfo(typeof(KasaOfTheRajin), 0x2798, 1070969, 1071007),
                 new TypeTileButtonInfo(typeof(TomeOfLostKnowledge), 0x0EFA, 0x530, 1070971, 1071009),
                 new TypeTileButtonInfo(typeof(PigmentsOfTokuno), 0x0EFF, 1070933, 1071011)
@@ -580,7 +579,6 @@ namespace Server.Gumps
                 new TypeTileButtonInfo(typeof(SwordOfTheStampede), 0x27A2, 1070964, 1070978),
                 new TypeTileButtonInfo(typeof(WindsEdge), 0x27A3, 1070965, 1071003),
                 new TypeTileButtonInfo(typeof(DarkenedSky), 0x27AD, 1070966, 1071004),
-                new TypeTileButtonInfo(typeof(RuneBeetleCarapace), 0x277D, 1070968, 1071006),
                 new TypeTileButtonInfo(typeof(KasaOfTheRajin), 0x2798, 1070969, 1071007),
                 new TypeTileButtonInfo(typeof(TomeOfLostKnowledge), 0x0EFA, 0x530, 1070971, 1071009),
                 new TypeTileButtonInfo(typeof(PigmentsOfTokuno), 0x0EFF, 1070933, 1071011)
@@ -591,7 +589,6 @@ namespace Server.Gumps
                 new TypeTileButtonInfo(typeof(SwordOfTheStampede), 0x27A2, 1070964, 1070978),
                 new TypeTileButtonInfo(typeof(WindsEdge), 0x27A3, 1070965, 1071003),
                 new TypeTileButtonInfo(typeof(DarkenedSky), 0x27AD, 1070966, 1071004),
-                new TypeTileButtonInfo(typeof(RuneBeetleCarapace), 0x277D, 1070968, 1071006),
                 new TypeTileButtonInfo(typeof(KasaOfTheRajin), 0x2798, 1070969, 1071007),
                 new TypeTileButtonInfo(typeof(TomeOfLostKnowledge), 0x0EFA, 0x530, 1070971, 1071009)
             }
