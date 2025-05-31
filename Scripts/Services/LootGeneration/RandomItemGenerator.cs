@@ -7,7 +7,6 @@ namespace Server.Items
 {
     public class RandomItemGenerator
     {
-        public static int FeluccaLuckBonus { get; private set; }
         public static int FeluccaBudgetBonus { get; private set; }
 
         public static int MaxBaseBudget { get; private set; }
@@ -19,7 +18,6 @@ namespace Server.Items
 
         public static void Configure()
         {
-            FeluccaLuckBonus = Config.Get("Loot.FeluccaLuckBonus", 1000);
             FeluccaBudgetBonus = Config.Get("Loot.FeluccaBudgetBonus", 100);
 
             MaxBaseBudget = Config.Get("Loot.MaxBaseBudget", 700);

@@ -11,10 +11,9 @@ namespace Server.Mobiles
         public override ChampionSkullType SkullType => ChampionSkullType.Pain;
         public override bool CanGivePowerscrolls => false;
         public override bool DoesGoldShower => false;
-        public override Type[] UniqueList => new Type[] { typeof(Subdue) };
+        public override Type[] UniqueList => [];
         public override Type[] SharedList => new Type[]
                 {
-                    typeof(RoyalGuardSurvivalKnife),
                     typeof(TheMostKnowledgePerson),
                     typeof(OblivionsNeedle)
                 };

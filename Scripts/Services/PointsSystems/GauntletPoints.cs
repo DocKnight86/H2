@@ -97,12 +97,11 @@ namespace Server.Engines.Points
         public static Type[] DoomArtifacts => m_DoomArtifact;
         private static readonly Type[] m_DoomArtifact =
         {
-            typeof(LegacyOfTheDreadLord),       typeof(TheTaskmaster),              typeof(TheDragonSlayer),
-            typeof(ArmorOfFortune),             typeof(GauntletsOfNobility),        typeof(HelmOfInsight),
+            typeof(LegacyOfTheDreadLord),       typeof(TheTaskmaster),              typeof(HelmOfInsight),
             typeof(HolyKnightsBreastplate),     typeof(JackalsCollar),              typeof(LeggingsOfBane),
             typeof(MidnightBracers),            typeof(OrnateCrownOfTheHarrower),   typeof(ShadowDancerLeggings),
             typeof(TunicOfFire),                typeof(VoiceOfTheFallenKing),       typeof(BraceletOfHealth),
-            typeof(OrnamentOfTheMagician),      typeof(RingOfTheElements),          typeof(RingOfTheVile),
+            typeof(OrnamentOfTheMagician),      typeof(RingOfTheVile),
             typeof(Aegis),                      typeof(ArcaneShield),               typeof(AxeOfTheHeavens),
             typeof(BladeOfInsanity),            typeof(BoneCrusher),                typeof(BreathOfTheDead),
             typeof(Frostbringer),               typeof(SerpentsFang),               typeof(StaffOfTheMagi),
@@ -114,16 +113,16 @@ namespace Server.Engines.Points
         private static readonly Type[][] m_RewardTable =
         {
             new[] { typeof(HatOfTheMagi) },            new[] { typeof(StaffOfTheMagi) },      new[] { typeof(OrnamentOfTheMagician) },
-            new[] { typeof(ShadowDancerLeggings) },    new[] {typeof(RingOfTheElements) },    new[] { typeof(GauntletsOfNobility) },
+            new[] { typeof(ShadowDancerLeggings) },      
             new[] { typeof(LeggingsOfBane) },          new[] { typeof(MidnightBracers) },     new[] { typeof(Glenda) },
             new[] { typeof(BowOfTheInfiniteSwarm) },   new[] { typeof(TheDeceiver) },         new[] { typeof(TheScholarsHalo) },
             new[] { typeof(DoomRecipeScroll) },
             new[]
             {
                 typeof(LegacyOfTheDreadLord),       typeof(TheTaskmaster),
-                typeof(ArmorOfFortune),             typeof(HelmOfInsight),
+                typeof(HelmOfInsight),
                 typeof(HolyKnightsBreastplate),     typeof(JackalsCollar),
-                typeof(OrnateCrownOfTheHarrower),   typeof(TheDragonSlayer),
+                typeof(OrnateCrownOfTheHarrower),  
                 typeof(TunicOfFire),                typeof(VoiceOfTheFallenKing),
                 typeof(RingOfTheVile),              typeof(BraceletOfHealth),
                 typeof(Aegis),                      typeof(ArcaneShield),

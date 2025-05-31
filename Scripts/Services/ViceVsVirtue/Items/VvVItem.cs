@@ -14,11 +14,6 @@ namespace Server.Items
                 talisman.Attributes.AttackChance = 10;
             }
 
-            if (item is ClaininsSpellbook spellbook && spellbook.Attributes.LowerManaCost != 10)
-            {
-                spellbook.Attributes.LowerManaCost = 10;
-            }
-
             if (item is CrystallineRing ring && ring.Attributes.CastRecovery != 3)
             {
                 ring.Attributes.CastRecovery = 3;
@@ -37,24 +32,6 @@ namespace Server.Items
 
                 if (fey.EnergyBonus != 3)
                     fey.EnergyBonus = 3;
-            }
-
-            if (item is HeartOfTheLion lion)
-            {
-                if (lion.PhysicalBonus != 5)
-                    lion.PhysicalBonus = 5;
-
-                if (lion.FireBonus != 5)
-                    lion.FireBonus = 5;
-
-                if (lion.ColdBonus != 5)
-                    lion.ColdBonus = 5;
-
-                if (lion.PoisonBonus != 5)
-                    lion.PoisonBonus = 5;
-
-                if (lion.EnergyBonus != 5)
-                    lion.EnergyBonus = 5;
             }
 
             if (item is HuntersHeaddress hunters)
@@ -78,14 +55,6 @@ namespace Server.Items
             if (item is KasaOfTheRajin kasa && kasa.Attributes.DefendChance != 10)
             {
                 kasa.Attributes.DefendChance = 10;
-            }
-
-            if (item is VesperOrderShield shield && shield.Attributes.CastSpeed != 0)
-            {
-                shield.Attributes.CastSpeed = 0;
-
-                if (shield.Name != "Order Shield")
-                    shield.Name = "Order Shield";
             }
 
             if (item is OrnamentOfTheMagician magician && magician.Attributes.RegenMana != 3)
@@ -129,11 +98,6 @@ namespace Server.Items
 
                 if (totem.Resistances.Energy != 6)
                     totem.Resistances.Energy = 6;
-            }
-
-            if (item is Stormgrip stormgrip && stormgrip.Attributes.AttackChance != 10)
-            {
-                stormgrip.Attributes.AttackChance = 10;
             }
 
             if (item is InquisitorsResolution inquis)

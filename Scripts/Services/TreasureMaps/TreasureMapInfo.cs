@@ -598,8 +598,7 @@ namespace Server.Items
         {
             typeof(BurglarsBandana), typeof(DreadPirateHat),
             typeof(GwennosHarp), typeof(IolosLute),
-            typeof(LunaLance), typeof(NightsKiss), typeof(NoxRangersHeavyCrossbow),
-            typeof(PolarBearMask), typeof(VioletCourage), typeof(HeartOfTheLion),
+            typeof(LunaLance), typeof(PolarBearMask), 
             typeof(AlchemistsBauble), typeof(CaptainQuacklebushsCutlass),
             typeof(ShieldOfInvulnerability)
         };

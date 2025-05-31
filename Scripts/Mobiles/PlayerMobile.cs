@@ -3856,17 +3856,8 @@ namespace Server.Mobiles
 
         public List<Mobile> PermaFlags => m_PermaFlags;
 
-        public override int Luck => AosAttributes.GetValue(this, AosAttribute.Luck) + TenthAnniversarySculpture.GetLuckBonus(this) + FountainOfFortune.GetLuckBonus(this);
-
-        public int RealLuck
-        {
-            get
-            {
-                int facetBonus = !Siege.SiegeShard && Map == Map.Felucca ? RandomItemGenerator.FeluccaLuckBonus : 0;
-
-                return Luck + FountainOfFortune.GetLuckBonus(this) + facetBonus;
-            }
-        }
+        public override int Luck => 0;
+        public int RealLuck => Luck;
 
         public override bool IsHarmfulCriminal(IDamageable damageable)
         {

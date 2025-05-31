@@ -521,7 +521,7 @@ namespace Server
         LowerRegCost = 0x00020000,
         ReflectPhysical = 0x00040000,
         EnhancePotions = 0x00080000,
-        Luck = 0x00100000,
+        UNUSED = 0x00100000,
         SpellChanneling = 0x00200000,
         NightSight = 0x00400000,
         IncreasedKarmaLoss = 0x00800000,
@@ -578,7 +578,7 @@ namespace Server
 
             int value = 0;
 
-            if (attribute == AosAttribute.Luck || attribute == AosAttribute.RegenMana || attribute == AosAttribute.DefendChance || attribute == AosAttribute.EnhancePotions)
+            if (attribute == AosAttribute.RegenMana || attribute == AosAttribute.DefendChance || attribute == AosAttribute.EnhancePotions)
             {
                 value += SphynxFortune.GetAosAttributeBonus(m, attribute);
             }
@@ -594,24 +594,6 @@ namespace Server
                 if (attrs != null)
                 {
                     value += attrs[attribute];
-                }
-
-                if (attribute == AosAttribute.Luck)
-                {
-                    if (obj is BaseWeapon weapon)
-                    {
-                        value += weapon.GetLuckBonus();
-                    }
-
-                    if (obj is BaseArmor armor)
-                    {
-                        value += armor.GetLuckBonus();
-                    }
-
-                    if (obj is FishingPole pole)
-                    {
-                        value += pole.GetLuckBonus();
-                    }
                 }
 
                 if (obj is ISetItem setItem)
@@ -1095,9 +1077,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int EnhancePotions { get => this[AosAttribute.EnhancePotions]; set => this[AosAttribute.EnhancePotions] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int Luck { get => this[AosAttribute.Luck]; set => this[AosAttribute.Luck] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int SpellChanneling { get => this[AosAttribute.SpellChanneling]; set => this[AosAttribute.SpellChanneling] = value; }

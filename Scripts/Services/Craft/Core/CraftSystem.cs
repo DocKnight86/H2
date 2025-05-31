@@ -22,16 +22,16 @@ namespace Server.Engines.Craft
             typeof(Blight), typeof(Corruption), typeof(Muculent), typeof(Scourge), typeof(Putrefaction), typeof(Taint),
 
             // Tailoring
-            typeof(MidnightBracers), typeof(LeurociansMempoOfFortune), typeof(TheScholarsHalo),
+            typeof(MidnightBracers), typeof(TheScholarsHalo),
 
             // Blacksmithy
-            typeof(LeggingsOfBane), typeof(GauntletsOfNobility),
+            typeof(LeggingsOfBane), 
 
             // Carpentry
             typeof(StaffOfTheMagi), typeof(BlackrockMoonstone),
 
             // Tinkering
-            typeof(RingOfTheElements), typeof(HatOfTheMagi), typeof(AutomatonActuator),
+            typeof(HatOfTheMagi), typeof(AutomatonActuator),
 
             // Inscription
             typeof(AntiqueDocumentsKit)

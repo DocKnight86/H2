@@ -106,50 +106,6 @@ namespace Server.Items
         }
     }
 
-    public class JesterHatOfChuckles : JesterHat
-    {
-        public override int LabelNumber => 1073256;// Jester Hat of Chuckles - Museum of Vesper Replica
-
-        public override int BasePhysicalResistance => 12;
-        public override int BaseFireResistance => 12;
-        public override int BaseColdResistance => 12;
-        public override int BasePoisonResistance => 12;
-        public override int BaseEnergyResistance => 12;
-
-        public override int InitMinHits => 100;
-        public override int InitMaxHits => 100;
-
-        [Constructable]
-        public JesterHatOfChuckles()
-            : this(0)
-        {
-        }
-
-        [Constructable]
-        public JesterHatOfChuckles(int hue)
-            : base(hue)
-        {
-            Attributes.Luck = 150;
-        }
-
-        public JesterHatOfChuckles(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
     public class NystulsWizardsHat : WizardsHat
     {
         public override int LabelNumber => 1073255;// Nystul's Wizard's Hat - Museum of Vesper Replica

@@ -231,7 +231,7 @@ namespace Server.Items
 
             for (int i = 0; i < attributeCount; ++i)
             {
-                int random = GetUniqueRandom(21);
+                int random = GetUniqueRandom(20);
 
                 switch (random)
                 {
@@ -239,23 +239,22 @@ namespace Server.Items
                     case 1: ApplyAttribute(primary, min, max, AosAttribute.CastSpeed, 1, 1); break;
                     case 2: ApplyAttribute(primary, min, max, AosAttribute.CastRecovery, 1, 1); break;
                     case 3: ApplyAttribute(primary, min, max, AosAttribute.AttackChance, 1, 15); break;
-                    case 4: ApplyAttribute(primary, min, max, AosAttribute.Luck, 1, 100); break;
-                    case 5: ApplyAttribute(primary, min, max, AosAttribute.SpellChanneling, 1, 1); break;
-                    case 6: ApplyAttribute(primary, min, max, AosAttribute.RegenHits, 1, 2); break;
-                    case 7: ApplyAttribute(primary, min, max, AosAttribute.RegenMana, 1, 2); break;
-                    case 8: ApplyAttribute(primary, min, max, AosAttribute.RegenStam, 1, 3); break;
-                    case 9: ApplyAttribute(primary, min, max, AosAttribute.BonusHits, 1, 8); break;
-                    case 10: ApplyAttribute(primary, min, max, AosAttribute.BonusMana, 1, 8); break;
-                    case 11: ApplyAttribute(primary, min, max, AosAttribute.BonusStam, 1, 8); break;
-                    case 12: ApplyAttribute(primary, min, max, AosAttribute.BonusStr, 1, 8); break;
-                    case 13: ApplyAttribute(primary, min, max, AosAttribute.BonusDex, 1, 8); break;
-                    case 14: ApplyAttribute(primary, min, max, AosAttribute.BonusInt, 1, 8); break;
-                    case 15: ApplyAttribute(primary, min, max, AosAttribute.SpellDamage, 1, 12); break;
-                    case 16: ApplySkillBonus(skills, min, max, 0, 1, 15); break;
-                    case 17: ApplySkillBonus(skills, min, max, 1, 1, 15); break;
-                    case 18: ApplySkillBonus(skills, min, max, 2, 1, 15); break;
-                    case 19: ApplySkillBonus(skills, min, max, 3, 1, 15); break;
-                    case 20: ApplySkillBonus(skills, min, max, 4, 1, 15); break;
+                    case 4: ApplyAttribute(primary, min, max, AosAttribute.SpellChanneling, 1, 1); break;
+                    case 5: ApplyAttribute(primary, min, max, AosAttribute.RegenHits, 1, 2); break;
+                    case 6: ApplyAttribute(primary, min, max, AosAttribute.RegenMana, 1, 2); break;
+                    case 7: ApplyAttribute(primary, min, max, AosAttribute.RegenStam, 1, 3); break;
+                    case 8: ApplyAttribute(primary, min, max, AosAttribute.BonusHits, 1, 8); break;
+                    case 9: ApplyAttribute(primary, min, max, AosAttribute.BonusMana, 1, 8); break;
+                    case 10: ApplyAttribute(primary, min, max, AosAttribute.BonusStam, 1, 8); break;
+                    case 11: ApplyAttribute(primary, min, max, AosAttribute.BonusStr, 1, 8); break;
+                    case 12: ApplyAttribute(primary, min, max, AosAttribute.BonusDex, 1, 8); break;
+                    case 13: ApplyAttribute(primary, min, max, AosAttribute.BonusInt, 1, 8); break;
+                    case 14: ApplyAttribute(primary, min, max, AosAttribute.SpellDamage, 1, 12); break;
+                    case 15: ApplySkillBonus(skills, min, max, 0, 1, 15); break;
+                    case 16: ApplySkillBonus(skills, min, max, 1, 1, 15); break;
+                    case 17: ApplySkillBonus(skills, min, max, 2, 1, 15); break;
+                    case 18: ApplySkillBonus(skills, min, max, 3, 1, 15); break;
+                    case 19: ApplySkillBonus(skills, min, max, 4, 1, 15); break;
                 }
             }
         }
@@ -297,13 +296,13 @@ namespace Server.Items
             }
             else
             {
-                m_Props.Set(25, true); // Only bows can be Balanced
-                m_Props.Set(26, true); // Only bows have Velocity
+                m_Props.Set(24, true); // Only bows can be Balanced
+                m_Props.Set(25, true); // Only bows have Velocity
             }
 
             for (int i = 0; i < attributeCount; ++i)
             {
-                int random = GetUniqueRandom(27);
+                int random = GetUniqueRandom(26);
 
                 if (random == -1)
                 {
@@ -385,63 +384,60 @@ namespace Server.Items
                         ApplyAttribute(primary, min, max, AosAttribute.AttackChance, 1, 15);
                         break;
                     case 7:
-                        ApplyAttribute(primary, min, max, AosAttribute.Luck, 1, 100);
-                        break;
-                    case 8:
                         ApplyAttribute(primary, min, max, AosAttribute.WeaponSpeed, 5, 30, 5);
                         break;
-                    case 9:
+                    case 8:
                         ApplyAttribute(primary, min, max, AosAttribute.SpellChanneling, 1, 1);
                         break;
-                    case 10:
+                    case 9:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.HitDispel, 2, 50, 2);
                         break;
-                    case 11:
+                    case 10:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.HitLeechHits, 2, ItemPropertyInfo.GetMaxIntensity(weapon, AosWeaponAttribute.HitLeechHits), 2);
                         break;
-                    case 12:
+                    case 11:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.HitLowerAttack, 2, 50, 2);
                         break;
-                    case 13:
+                    case 12:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.HitLowerDefend, 2, 50, 2);
                         break;
-                    case 14:
+                    case 13:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.HitLeechMana, 2, ItemPropertyInfo.GetMaxIntensity(weapon, AosWeaponAttribute.HitLeechMana), 2);
                         break;
-                    case 15:
+                    case 14:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.HitLeechStam, 2, 50, 2);
                         break;
-                    case 16:
+                    case 15:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.LowerStatReq, 10, 100, 10);
                         break;
-                    case 17:
+                    case 16:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistPhysicalBonus, 1, 15);
                         break;
-                    case 18:
+                    case 17:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistFireBonus, 1, 15);
                         break;
-                    case 19:
+                    case 18:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistColdBonus, 1, 15);
                         break;
-                    case 20:
+                    case 19:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistPoisonBonus, 1, 15);
                         break;
-                    case 21:
+                    case 20:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistEnergyBonus, 1, 15);
                         break;
-                    case 22:
+                    case 21:
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.DurabilityBonus, 10, 100, 10);
                         break;
-                    case 23:
+                    case 22:
                         weapon.Slayer = GetRandomSlayer();
                         break;
-                    case 24:
+                    case 23:
                         ApplyElementalDamage(weapon, min, max);
                         break;
-                    case 25:
+                    case 24:
                         ((BaseRanged)weapon).Balanced = true;
                         break;
-                    case 26:
+                    case 25:
                         ApplyVelocityAttribute((BaseRanged)weapon, min, max, 2, 50, 2);
                         break;
                 }
@@ -505,7 +501,7 @@ namespace Server.Items
             m_Props.SetAll(false);
 
             bool isShield = (armor is BaseShield);
-            int baseCount = isShield ? 7 : 20;
+            int baseCount = isShield ? 7 : 19;
             int baseOffset = isShield ? 0 : 4;
 
             if (!isShield && armor.MeditationAllowance == ArmorMeditationAllowance.All)
@@ -587,24 +583,21 @@ namespace Server.Items
                         ApplyAttribute(primary, min, max, AosAttribute.LowerRegCost, 1, 20);
                         break;
                     case 17:
-                        ApplyAttribute(primary, min, max, AosAttribute.Luck, 1, 100);
-                        break;
-                    case 18:
                         ApplyAttribute(primary, min, max, AosAttribute.ReflectPhysical, 1, 15);
                         break;
-                    case 19:
+                    case 18:
                         ApplyResistance(armor, min, max, ResistanceType.Physical, 1, 15);
                         break;
-                    case 20:
+                    case 19:
                         ApplyResistance(armor, min, max, ResistanceType.Fire, 1, 15);
                         break;
-                    case 21:
+                    case 20:
                         ApplyResistance(armor, min, max, ResistanceType.Cold, 1, 15);
                         break;
-                    case 22:
+                    case 21:
                         ApplyResistance(armor, min, max, ResistanceType.Poison, 1, 15);
                         break;
-                    case 23:
+                    case 22:
                         ApplyResistance(armor, min, max, ResistanceType.Energy, 1, 15);
                         break;
                         /* End Armor */
@@ -645,7 +638,7 @@ namespace Server.Items
 
             for (int i = 0; i < attributeCount; ++i)
             {
-                int random = GetUniqueRandom(19);
+                int random = GetUniqueRandom(18);
 
                 if (random == -1)
                 {
@@ -685,30 +678,27 @@ namespace Server.Items
                         ApplyAttribute(primary, min, max, AosAttribute.LowerRegCost, 1, 20);
                         break;
                     case 10:
-                        ApplyAttribute(primary, min, max, AosAttribute.Luck, 1, 100);
-                        break;
-                    case 11:
                         ApplyAttribute(secondary, min, max, AosArmorAttribute.LowerStatReq, 10, 100, 10);
                         break;
-                    case 12:
+                    case 11:
                         ApplyAttribute(secondary, min, max, AosArmorAttribute.SelfRepair, 1, 5);
                         break;
-                    case 13:
+                    case 12:
                         ApplyAttribute(secondary, min, max, AosArmorAttribute.DurabilityBonus, 10, 100, 10);
                         break;
-                    case 14:
+                    case 13:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Physical, 1, 15);
                         break;
-                    case 15:
+                    case 14:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Fire, 1, 15);
                         break;
-                    case 16:
+                    case 15:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Cold, 1, 15);
                         break;
-                    case 17:
+                    case 16:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Poison, 1, 15);
                         break;
-                    case 18:
+                    case 17:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Energy, 1, 15);
                         break;
                 }
@@ -748,7 +738,7 @@ namespace Server.Items
 
             for (int i = 0; i < attributeCount; ++i)
             {
-                int random = GetUniqueRandom(24);
+                int random = GetUniqueRandom(23);
 
                 if (random == -1)
                 {
@@ -806,27 +796,24 @@ namespace Server.Items
                         ApplyAttribute(primary, min, max, AosAttribute.LowerRegCost, 1, 20);
                         break;
                     case 16:
-                        ApplyAttribute(primary, min, max, AosAttribute.Luck, 1, 100);
-                        break;
-                    case 17:
                         ApplyAttribute(primary, min, max, AosAttribute.SpellDamage, 1, 12);
                         break;
-                    case 18:
+                    case 17:
                         ApplyAttribute(primary, min, max, AosAttribute.NightSight, 1, 1);
                         break;
-                    case 19:
+                    case 18:
                         ApplySkillBonus(skills, min, max, 0, 1, 15);
                         break;
-                    case 20:
+                    case 19:
                         ApplySkillBonus(skills, min, max, 1, 1, 15);
                         break;
-                    case 21:
+                    case 20:
                         ApplySkillBonus(skills, min, max, 2, 1, 15);
                         break;
-                    case 22:
+                    case 21:
                         ApplySkillBonus(skills, min, max, 3, 1, 15);
                         break;
-                    case 23:
+                    case 22:
                         ApplySkillBonus(skills, min, max, 4, 1, 15);
                         break;
                 }

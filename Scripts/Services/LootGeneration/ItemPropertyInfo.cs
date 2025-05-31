@@ -314,8 +314,8 @@ namespace Server.Items
             Register(20, new ItemPropertyInfo(AosAttribute.EnhancePotions, 1075624, 100, typeof(EnchantedEssence), typeof(Citrine), typeof(CrushedGlass), 5, 5, 25, 1111950,
                 new PropInfo(1, 0, 15), new PropInfo(2, 0, 15), new PropInfo(3, 0, 5), new PropInfo(5, 0, 5), new PropInfo(6, 25, 25, new[] { 30, 35 })));
 
-            Register(21, new ItemPropertyInfo(AosAttribute.Luck, 1061153, 100, typeof(MagicalResidue), typeof(Citrine), typeof(ChagaMushroom), 1, 1, 100, 1111999,
-                new PropInfo(1, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(2, 120, 120, new[] { 130, 140, 150, 160, 170 }), new PropInfo(3, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(4, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(5, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(6, 100, 100, new[] { 110, 120, 130, 140, 150 })));
+            /*Register(21, new ItemPropertyInfo(AosAttribute.Luck, 1061153, 100, typeof(MagicalResidue), typeof(Citrine), typeof(ChagaMushroom), 1, 1, 100, 1111999,
+                new PropInfo(1, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(2, 120, 120, new[] { 130, 140, 150, 160, 170 }), new PropInfo(3, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(4, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(5, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(6, 100, 100, new[] { 110, 120, 130, 140, 150 })));*/
 
             Register(22, new ItemPropertyInfo(AosAttribute.SpellChanneling, 1079766, 100, typeof(MagicalResidue), typeof(Diamond), typeof(SilverSnakeSkin), 0, 1, 1, 1112040,
                 new PropInfo(1, 1, 1), new PropInfo(2, 1, 1), new PropInfo(4, 1, 1)));

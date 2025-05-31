@@ -25,10 +25,7 @@ namespace Server.Mobiles
             typeof(GwennosHarp),
             typeof(IolosLute),
             typeof(LunaLance),
-            typeof(NightsKiss),
-            typeof(NoxRangersHeavyCrossbow),
-            typeof(PolarBearMask),
-            typeof(VioletCourage)
+            typeof(PolarBearMask)
         };
 
         private Mobile m_Fisher;

@@ -44,9 +44,6 @@ namespace Server.Engines.RisingTide
             PackItem(new FirstMateRewardDeed());
             PackItem(new SeaWaspRewardDeed());
             PackItem(new LandlubberRewardDeed());
-            PackItem(new SpikedWhipOfPlundering());
-            PackItem(new BladedWhipOfPlundering());
-            PackItem(new BarbedWhipOfPlundering());
             PackItem(new TritonStatue());
             PackItem(new PirateShieldRecipeScroll());
             PackItem(new HooksShield());

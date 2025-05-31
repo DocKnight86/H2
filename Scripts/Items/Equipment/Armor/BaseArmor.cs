@@ -2366,18 +2366,6 @@ namespace Server.Items
             return m_AosAttributes.SpellChanneling != 0 || Enhancement.GetValue(from, AosAttribute.SpellChanneling) != 0;
         }
 
-        public virtual int GetLuckBonus()
-        {
-            CraftAttributeInfo attrInfo = GetResourceAttrs(Resource);
-
-            if (attrInfo == null || Resource == CraftResource.Heartwood)
-            {
-                return 0;
-            }
-
-            return attrInfo.ArmorLuck;
-        }
-
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (OwnerName != null)
@@ -2697,11 +2685,6 @@ namespace Server.Items
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
             }
 
-            if ((prop = GetLuckBonus() + m_AosAttributes.Luck) != 0)
-            {
-                list.Add(1060436, prop.ToString()); // luck ~1_val~
-            }
-
             if ((prop = m_AosAttributes.EnhancePotions) != 0)
             {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
@@ -2997,12 +2980,11 @@ namespace Server.Items
             }
             else
             {
-                switch (Utility.Random(4))
+                switch (Utility.Random(3))
                 {
                     case 0: m_AosAttributes.WeaponDamage += attrInfo.ArmorDamage; break;
                     case 1: m_AosAttributes.AttackChance += attrInfo.ArmorHitChance; break;
-                    case 2: m_AosAttributes.Luck += attrInfo.ArmorLuck; break;
-                    case 3: m_AosArmorAttributes.LowerStatReq += attrInfo.ArmorLowerRequirements; break;
+                    case 2: m_AosArmorAttributes.LowerStatReq += attrInfo.ArmorLowerRequirements; break;
                 }
             }
         }

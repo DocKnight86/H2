@@ -95,7 +95,6 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(Misc.NotAntique, 1156479),
                 new SearchCriterionEntry(AosAttribute.EnhancePotions, 1075624, 1060411),
                 new SearchCriterionEntry(AosArmorAttribute.LowerStatReq, 1079757, 1060435),
-                new SearchCriterionEntry(AosAttribute.Luck, 1061153, 1060436),
                 new SearchCriterionEntry(AosAttribute.ReflectPhysical, 1075626, 1060442),
                 new SearchCriterionEntry(AosArmorAttribute.SelfRepair, 1079709, 1060450),
                 new SearchCriterionEntry("ArtifactRarity", 1154693, 1061078)

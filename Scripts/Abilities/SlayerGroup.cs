@@ -363,9 +363,8 @@ namespace Server.Items
                     typeof(Mephitis), typeof(Scorpion),
                     typeof(TerathanAvenger), typeof(TerathanDrone),
                     typeof(TerathanMatriarch), typeof(TerathanWarrior),
-                    typeof(Miasma),
                     typeof(LadyLissith), typeof(LadySabrix),
-                    typeof(Virulent), typeof(Silk),
+                    typeof(Silk),
                     typeof(Malefic), typeof(Navrey),
                     typeof(SentinelSpider), typeof(WolfSpider),
                     typeof(TrapdoorSpider), typeof(Anlorzen),
@@ -378,8 +377,7 @@ namespace Server.Items
                     (
                         SlayerName.ScorpionsBane,
 
-                        typeof(Scorpion), typeof(Miasma),
-                        typeof(DesertScorpion)
+                        typeof(Scorpion), typeof(DesertScorpion)
                     ),
 
                 new SlayerEntry
@@ -389,7 +387,7 @@ namespace Server.Items
                         typeof(DreadSpider),        typeof(FrostSpider),
                         typeof(GiantBlackWidow),    typeof(GiantSpider),
                         typeof(Mephitis),           typeof(LadyLissith),
-                        typeof(LadySabrix),         typeof(Virulent),
+                        typeof(LadySabrix),       
                         typeof(Silk),               typeof(Malefic),
                         typeof(Navrey),             typeof(SentinelSpider),
                         typeof(WolfSpider),         typeof(TrapdoorSpider),

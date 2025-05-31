@@ -405,13 +405,6 @@ namespace Server.Engines.Craft
             AddRecipe(index, (int)CraftRecipes.IronwoodCrown);
             ForceNonExceptional(index);
 
-            index = AddCraft(typeof(BrambleCoat), 1062760, 1072925, 85.0, 120.0, typeof(Board), 1044041, 10, 1044351);
-            AddRes(index, typeof(DiseasedBark), 1032683, 1, 1053098);
-            AddRes(index, typeof(Taint), 1032679, 10, 1053098);
-            AddRes(index, typeof(Scourge), 1032677, 10, 1053098);
-            AddRecipe(index, (int)CraftRecipes.BrambleCoat);
-            ForceNonExceptional(index);
-
             index = AddCraft(typeof(DarkwoodCrown), 1062760, 1073481, 85.0, 120.0, typeof(Board), 1044041, 10, 1044351);
             AddRes(index, typeof(LardOfParoxysmus), 1032681, 1, 1053098);
             AddRes(index, typeof(Blight), 1032675, 10, 1053098);

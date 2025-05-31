@@ -4243,30 +4243,6 @@ namespace Server.Items
             }
         }
 
-        public virtual int GetLuckBonus()
-        {
-            if (m_Resource == CraftResource.Heartwood)
-            {
-                return 0;
-            }
-
-            CraftResourceInfo resInfo = CraftResources.GetInfo(m_Resource);
-
-            if (resInfo == null)
-            {
-                return 0;
-            }
-
-            CraftAttributeInfo attrInfo = resInfo.AttributeInfo;
-
-            if (attrInfo == null)
-            {
-                return 0;
-            }
-
-            return attrInfo.WeaponLuck;
-        }
-
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (OwnerName != null)
@@ -4649,11 +4625,6 @@ namespace Server.Items
             if (m_AosAttributes.BalancedWeapon > 0 && Layer == Layer.TwoHanded)
             {
                 list.Add(1072792); // Balanced
-            }
-
-            if ((prop = GetLuckBonus() + m_AosAttributes.Luck) != 0)
-            {
-                list.Add(1060436, prop.ToString()); // luck ~1_val~
             }
 
             if ((prop = m_AosAttributes.EnhancePotions) != 0)
@@ -5080,14 +5051,13 @@ namespace Server.Items
             }
             else
             {
-                switch (Utility.Random(6))
+                switch (Utility.Random(5))
                 {
                     case 0: m_AosAttributes.WeaponDamage += attrInfo.WeaponDamage; break;
                     case 1: m_AosAttributes.WeaponSpeed += attrInfo.WeaponSwingSpeed; break;
                     case 2: m_AosAttributes.AttackChance += attrInfo.WeaponHitChance; break;
-                    case 3: m_AosAttributes.Luck += attrInfo.WeaponLuck; break;
-                    case 4: m_AosWeaponAttributes.LowerStatReq += attrInfo.WeaponLowerRequirements; break;
-                    case 5: m_AosWeaponAttributes.HitLeechHits = attrInfo.WeaponHitLifeLeech; break;
+                    case 3: m_AosWeaponAttributes.LowerStatReq += attrInfo.WeaponLowerRequirements; break;
+                    case 4: m_AosWeaponAttributes.HitLeechHits = attrInfo.WeaponHitLifeLeech; break;
                 }
             }
         }

@@ -81,45 +81,6 @@ namespace Server.Items
         }
     }
 
-    public class VesperOrderShield : OrderShield
-    {
-        public override bool IsArtifact => true;
-        [Constructable]
-        public VesperOrderShield()
-            : base()
-        {
-            Hue = 0x835;
-            Attributes.SpellChanneling = 1;
-            Attributes.Luck = 80;
-            Attributes.CastSpeed = -1;
-            Attributes.AttackChance = 15;
-            Attributes.DefendChance = 15;
-        }
-
-        public VesperOrderShield(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override int LabelNumber => 1073258;// Order Shield - Museum of Vesper Replica
-        public override int BasePhysicalResistance => 1;
-        public override int InitMinHits => 80;
-        public override int InitMaxHits => 80;
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-
-            writer.Write(0); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-
-            int version = reader.ReadInt();
-        }
-    }
-
     public class VesperChaosShield : ChaosShield
     {
         public override bool IsArtifact => true;

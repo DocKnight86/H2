@@ -55,7 +55,6 @@ namespace Server.Items
         private int m_WeaponChaosDamage;
         private int m_WeaponDirectDamage;
         private int m_WeaponDurability;
-        private int m_WeaponLuck;
         private int m_WeaponLowerRequirements;
         private int m_WeaponDamage;
         private int m_WeaponHitChance;
@@ -69,7 +68,6 @@ namespace Server.Items
         private int m_ArmorPoisonResist;
         private int m_ArmorEnergyResist;
         private int m_ArmorDurability;
-        private int m_ArmorLuck;
         private int m_ArmorLowerRequirements;
         private int m_ArmorDamage;
         private int m_ArmorHitChance;
@@ -84,7 +82,6 @@ namespace Server.Items
         private int m_ShieldPhysicalRandom;
         private int m_ShieldColdRandom;
         private int m_ShieldSpellChanneling;
-        private int m_ShieldLuck;
         private int m_ShieldLowerRequirements;
         private int m_ShieldRegenHits;
         private int m_ShieldBonusDex;
@@ -93,7 +90,6 @@ namespace Server.Items
         private int m_SelfRepair;
 
         private int m_OtherSpellChanneling;
-        private int m_OtherLuck;
         private int m_OtherRegenHits;
         private int m_OtherLowerRequirements;
 
@@ -109,7 +105,6 @@ namespace Server.Items
         public int WeaponChaosDamage { get => m_WeaponChaosDamage; set => m_WeaponChaosDamage = value; }
         public int WeaponDirectDamage { get => m_WeaponDirectDamage; set => m_WeaponDirectDamage = value; }
         public int WeaponDurability { get => m_WeaponDurability; set => m_WeaponDurability = value; }
-        public int WeaponLuck { get => m_WeaponLuck; set => m_WeaponLuck = value; }
         public int WeaponLowerRequirements { get => m_WeaponLowerRequirements; set => m_WeaponLowerRequirements = value; }
         public int WeaponDamage { get => m_WeaponDamage; set => m_WeaponDamage = value; }
         public int WeaponHitChance { get => m_WeaponHitChance; set => m_WeaponHitChance = value; }
@@ -123,7 +118,6 @@ namespace Server.Items
         public int ArmorPoisonResist { get => m_ArmorPoisonResist; set => m_ArmorPoisonResist = value; }
         public int ArmorEnergyResist { get => m_ArmorEnergyResist; set => m_ArmorEnergyResist = value; }
         public int ArmorDurability { get => m_ArmorDurability; set => m_ArmorDurability = value; }
-        public int ArmorLuck { get => m_ArmorLuck; set => m_ArmorLuck = value; }
         public int ArmorLowerRequirements { get => m_ArmorLowerRequirements; set => m_ArmorLowerRequirements = value; }
         public int ArmorDamage { get => m_ArmorDamage; set => m_ArmorDamage = value; }
         public int ArmorHitChance { get => m_ArmorHitChance; set => m_ArmorHitChance = value; }
@@ -138,7 +132,6 @@ namespace Server.Items
         public int ShieldPhysicalRandom { get => m_ShieldPhysicalRandom; set => m_ShieldPhysicalRandom = value; }
         public int ShieldColdRandom { get => m_ShieldColdRandom; set => m_ShieldColdRandom = value; }
         public int ShieldSpellChanneling { get => m_ShieldSpellChanneling; set => m_ShieldSpellChanneling = value; }
-        public int ShieldLuck { get => m_ShieldLuck; set => m_ShieldLuck = value; }
         public int ShieldLowerRequirements { get => m_ShieldLowerRequirements; set => m_ShieldLowerRequirements = value; }
         public int ShieldRegenHits { get => m_ShieldRegenHits; set => m_ShieldRegenHits = value; }
         public int ShieldBonusDex { get => m_ShieldBonusDex; set => m_ShieldBonusDex = value; }
@@ -147,7 +140,6 @@ namespace Server.Items
         public int ShieldSelfRepair { get => m_SelfRepair; set => m_SelfRepair = value; }
 
         public int OtherSpellChanneling { get => m_OtherSpellChanneling; set => m_OtherSpellChanneling = value; }
-        public int OtherLuck { get => m_OtherLuck; set => m_OtherLuck = value; }
         public int OtherRegenHits { get => m_OtherRegenHits; set => m_OtherRegenHits = value; }
         public int OtherLowerRequirements { get => m_OtherLowerRequirements; set => m_OtherLowerRequirements = value; }
 
@@ -228,9 +220,7 @@ namespace Server.Items
             golden.ArmorFireResist = 2;
             golden.ArmorColdResist = 2;
             golden.ArmorEnergyResist = 3;
-            golden.ArmorLuck = 40;
             golden.ArmorLowerRequirements = 30;
-            golden.WeaponLuck = 40;
             golden.WeaponLowerRequirements = 50;
             golden.RunicMinAttributes = 3;
             golden.RunicMaxAttributes = 4;
@@ -288,7 +278,6 @@ namespace Server.Items
             CraftAttributeInfo spined = Spined = new CraftAttributeInfo();
 
             spined.ArmorPhysicalResist = 9;
-            spined.ArmorLuck = 40;
             spined.RunicMinAttributes = 1;
             spined.RunicMaxAttributes = 3;
 
@@ -335,7 +324,6 @@ namespace Server.Items
             yellow.ArmorColdResist = 1;
             yellow.ArmorPoisonResist = 1;
             yellow.ArmorEnergyResist = 1;
-            yellow.ArmorLuck = 20;
 
             CraftAttributeInfo black = BlackScales = new CraftAttributeInfo();
 
@@ -375,7 +363,6 @@ namespace Server.Items
             oak.ArmorFireResist = 3;
             oak.ArmorPoisonResist = 2;
             oak.ArmorEnergyResist = 3;
-            oak.ArmorLuck = 40;
 
             oak.ShieldPhysicalResist = 1;
             oak.ShieldFireResist = 1;
@@ -383,7 +370,6 @@ namespace Server.Items
             oak.ShieldPoisonResist = 1;
             oak.ShieldEnergyResist = 1;
 
-            oak.WeaponLuck = 40;
             oak.WeaponDamage = 5;
 
             oak.RunicMinAttributes = 1;
@@ -444,7 +430,6 @@ namespace Server.Items
             // one of below
             heartwood.ArmorDamage = 10;
             heartwood.ArmorHitChance = 5;
-            heartwood.ArmorLuck = 40;
             heartwood.ArmorLowerRequirements = 20;
             heartwood.ArmorMage = 1;
 
@@ -452,7 +437,6 @@ namespace Server.Items
             heartwood.WeaponDamage = 10;
             heartwood.WeaponHitChance = 5;
             heartwood.WeaponHitLifeLeech = 13;
-            heartwood.WeaponLuck = 40;
             heartwood.WeaponLowerRequirements = 20;
             heartwood.WeaponSwingSpeed = 10;
 
@@ -479,13 +463,11 @@ namespace Server.Items
             bloodwood.ArmorRegenHits = 2;
 
             bloodwood.ShieldFireResist = 3;
-            bloodwood.ShieldLuck = 40;
             bloodwood.ShieldRegenHits = 2;
 
             bloodwood.WeaponRegenHits = 2;
             bloodwood.WeaponHitLifeLeech = 16;
 
-            bloodwood.OtherLuck = 20;
             bloodwood.OtherRegenHits = 2;
 
             CraftAttributeInfo frostwood = Frostwood = new CraftAttributeInfo();

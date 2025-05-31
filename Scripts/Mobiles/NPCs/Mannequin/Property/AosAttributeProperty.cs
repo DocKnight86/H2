@@ -183,19 +183,6 @@ namespace Server.Mobiles.MannequinProperty
         public override int SpriteH => 30;
     }
 
-    public class LuckProperty : MagicalAttr
-    {
-        public override Catalog Catalog => Catalog.Combat1;
-        public override int Order => 9;
-        public override bool AlwaysVisible => true;
-        public override int LabelNumber => 1061153;  // Luck
-        public override int Description => 1152415;  // This property affects the quantity and quality of items spawned on a mobs corpse when it is killed.  A player’s luck score is cumulative from all sources and can be viewed on the character status menu.  Luck provides a chance of receiving more pieces of loot, a chance for the loot to have more magical properties and a chance for the magical properties to be of greater intensity.  It should be noted that luck has no direct effect on what specific items will spawn or what specific properties will spawn on the items.  This property can be found on all armor, shields, accessories or weapons.
-        public override AosAttribute Attribute => AosAttribute.Luck;
-        public override int Hue => 0x5E5D;
-        public override int SpriteW => 270;
-        public override int SpriteH => 0;
-    }
-
     // Attr
 
     public class StrengthBonusProperty : MagicalAttr

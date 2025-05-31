@@ -214,24 +214,6 @@ namespace Server.Items
             return (m_AosAttributes.SpellChanneling != 0);
         }
 
-        public virtual int GetLuckBonus()
-        {
-            if (m_Resource == CraftResource.Heartwood)
-                return 0;
-
-            CraftResourceInfo resInfo = CraftResources.GetInfo(m_Resource);
-
-            if (resInfo == null)
-                return 0;
-
-            CraftAttributeInfo attrInfo = resInfo.AttributeInfo;
-
-            if (attrInfo == null)
-                return 0;
-
-            return attrInfo.WeaponLuck;
-        }
-
         public override void OnDoubleClick(Mobile from)
         {
             Fishing.System.BeginHarvesting(from, this);
@@ -378,9 +360,6 @@ namespace Server.Items
 
             if (!CraftResources.IsStandard(m_Resource))
                 list.Add(CraftResources.GetName(m_Resource));
-
-            if ((prop = GetLuckBonus() + m_AosAttributes.Luck) != 0)
-                list.Add(1060436, prop.ToString()); // luck ~1_val~
 
             if ((prop = m_AosAttributes.BonusMana) != 0)
                 list.Add(1060439, prop.ToString()); // mana increase ~1_val~
@@ -617,19 +596,16 @@ namespace Server.Items
             if (m_Resource != CraftResource.Heartwood)
             {
                 Attributes.SpellChanneling = attrInfo.OtherSpellChanneling;
-                Attributes.Luck = attrInfo.OtherLuck;
                 Attributes.RegenHits = attrInfo.OtherRegenHits;
                 LowerStatReq = attrInfo.OtherLowerRequirements;
             }
             else
             {
-                switch (Utility.Random(5))
+                switch (Utility.Random(3))
                 {
-                    case 0: Attributes.Luck += 40; break;
-                    case 1: Attributes.Luck += 10; break;
-                    case 2: Attributes.RegenHits = attrInfo.OtherRegenHits; break;
-                    case 3: Attributes.SpellChanneling = attrInfo.OtherSpellChanneling; break;
-                    case 4: LowerStatReq = attrInfo.OtherLowerRequirements; break;
+                    case 0: Attributes.RegenHits = attrInfo.OtherRegenHits; break;
+                    case 1: Attributes.SpellChanneling = attrInfo.OtherSpellChanneling; break;
+                    case 2: LowerStatReq = attrInfo.OtherLowerRequirements; break;
                 }
             }
         }

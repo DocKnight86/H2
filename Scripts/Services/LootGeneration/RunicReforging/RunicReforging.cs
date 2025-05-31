@@ -1384,25 +1384,7 @@ namespace Server.Items
                     }
                 };
 
-            m_PrefixSuffixInfo[9] = new[] // Auspicious
-				{
-                    new[] // Weapon
-                    {
-                        new NamedInfoCol(AosAttribute.Luck, LuckTable, RangedLuckTable)
-                    },
-                    new[] // armor
-                    {
-                        new NamedInfoCol(AosAttribute.Luck, LuckTable)
-                    },
-                    new[]
-                    {
-                        new NamedInfoCol(AosAttribute.Luck, LuckTable)
-                    },
-                    new[]
-                    {
-                        new NamedInfoCol(AosAttribute.Luck, LuckTable)
-                    }
-                };
+            m_PrefixSuffixInfo[9] = []; // Auspicious (old luck)
 
             m_PrefixSuffixInfo[10] = new[] // Charmed
 				{
@@ -2968,16 +2950,6 @@ namespace Server.Items
             new[] { 70, 70, 70, 70, 70, 70, 70 }
         };
 
-        public static readonly int[][] LuckTable =
-        {
-            new[] { 80, 100, 100, 120, 140, 150, 150 },
-            new[] { 100, 120, 140, 150, 150, 150, 150 },
-            new[] { 130, 150, 150, 150, 150, 150, 150 },
-            new[] { 100, 120, 140, 150, 150, 150, 150 },
-            new[] { 100, 120, 140, 150, 150, 150, 150 },
-            new[] { 150, 150, 150, 150, 150, 150, 150 }
-        };
-
         public static readonly int[][] MageWeaponTable =
         {
             new[] { 15, 10, 10, 10, 10, 5, 5 },
@@ -3080,16 +3052,6 @@ namespace Server.Items
         #endregion
 
         #region Ranged Weapons
-        public static readonly int[][] RangedLuckTable =
-        {
-            new[] { 90, 120, 120, 140, 170, 170, 170 },
-            new[] { 120, 140, 160, 170, 170, 170, 170 },
-            new[] { 160, 170, 170, 170, 170, 170, 170 },
-            Array.Empty<int>(),
-            new[] { 120, 140, 160, 170, 170, 170, 170 },
-            new[] { 170, 170, 170, 170, 170, 170, 170 }
-        };
-
         public static readonly int[][] RangedHCITable =
         {
             new[] { 15, 25, 25, 30, 35, 35, 35 },

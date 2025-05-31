@@ -8,7 +8,6 @@ namespace Server.Items
         [Constructable]
         public SolesOfProvidence()
         {
-            Attributes.Luck = 80;
             Hue = 1177;
         }
 

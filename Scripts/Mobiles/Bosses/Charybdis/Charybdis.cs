@@ -671,14 +671,13 @@ namespace Server.Mobiles
 
         private Item RandomGoody(IEntity e)
         {
-            switch (Utility.Random(5))
+            switch (Utility.Random(4))
             {
                 default:
                 case 0: return new RecipeScroll(1102);
                 case 1: return new RecipeScroll(1103);
                 case 2: return new HungryCoconutCrabStatue();
-                case 3: return new LeurociansMempoOfFortune();
-                case 4: return new CaptainsHeartyRum();
+                case 3: return new CaptainsHeartyRum();
             }
         }
 

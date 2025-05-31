@@ -364,92 +364,9 @@ namespace Server.Engines.Craft
             AddRecipe(index, (int)CraftRecipes.OverseerSunderedBlade);
             ForceNonExceptional(index);
 
-            index = AddCraft(typeof(LuminousRuneBlade), 1011081, 1072922, 70.0, 120.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(GrizzledBones), 1032684, 1, 1053098);
-            AddRes(index, typeof(Corruption), 1032676, 10, 1053098);
-            AddRes(index, typeof(Putrefaction), 1032678, 10, 1053098);
-            AddRecipe(index, (int)CraftRecipes.LuminousRuneBlade);
-            ForceNonExceptional(index);
-
-            index = AddCraft(typeof(IcySpellblade), 1011081, 1073514, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(Turquoise), 1032691, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.IcySpellblade);
-
-            index = AddCraft(typeof(FierySpellblade), 1011081, 1073515, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(FireRuby), 1032695, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.FierySpellblade);
-
-            index = AddCraft(typeof(ChargedAssassinSpike), 1011081, 1073518, 75.0, 125.0, typeof(IronIngot), 1044036, 9, 1044037);
-            AddRes(index, typeof(EcruCitrine), 1032693, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.ChargedAssassinSpike);
-
-            index = AddCraft(typeof(MagekillerAssassinSpike), 1011081, 1073519, 75.0, 125.0, typeof(IronIngot), 1044036, 9, 1044037);
-            AddRes(index, typeof(BrilliantAmber), 1032697, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.MagekillerAssassinSpike);
-
-            index = AddCraft(typeof(WoundingAssassinSpike), 1011081, 1073520, 75.0, 125.0, typeof(IronIngot), 1044036, 9, 1044037);
-            AddRes(index, typeof(PerfectEmerald), 1032692, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.WoundingAssassinSpike);
-
-            index = AddCraft(typeof(Luckblade), 1011081, 1073522, 75.0, 125.0, typeof(IronIngot), 1044036, 12, 1044037);
-            AddRes(index, typeof(WhitePearl), 1032694, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.Luckblade);
-
-            index = AddCraft(typeof(MagekillerLeafblade), 1011081, 1073523, 75.0, 125.0, typeof(IronIngot), 1044036, 12, 1044037);
-            AddRes(index, typeof(FireRuby), 1032695, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.MagekillerLeafblade);
-
-            index = AddCraft(typeof(LeafbladeOfEase), 1011081, 1073524, 75.0, 125.0, typeof(IronIngot), 1044036, 12, 1044037);
-            AddRes(index, typeof(PerfectEmerald), 1032692, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.LeafbladeOfEase);
-
-            index = AddCraft(typeof(KnightsWarCleaver), 1011081, 1073525, 75.0, 125.0, typeof(IronIngot), 1044036, 18, 1044037);
-            AddRes(index, typeof(PerfectEmerald), 1032692, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.KnightsWarCleaver);
-
             index = AddCraft(typeof(ButchersWarCleaver), 1011081, 1073526, 75.0, 125.0, typeof(IronIngot), 1044036, 18, 1044037);
             AddRes(index, typeof(Turquoise), 1032691, 1, 1044240);
             AddRecipe(index, (int)CraftRecipes.ButchersWarCleaver);
-
-            index = AddCraft(typeof(SerratedWarCleaver), 1011081, 1073527, 75.0, 125.0, typeof(IronIngot), 1044036, 18, 1044037);
-            AddRes(index, typeof(EcruCitrine), 1032693, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.SerratedWarCleaver);
-
-            index = AddCraft(typeof(OrcishMachete), 1011081, 1073534, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(Scourge), 1072136, 1, 1042081);
-            AddRecipe(index, (int)CraftRecipes.OrcishMachete);
-
-            index = AddCraft(typeof(MacheteOfDefense), 1011081, 1073535, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(BrilliantAmber), 1032697, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.MacheteOfDefense);
-
-            index = AddCraft(typeof(DiseasedMachete), 1011081, 1073536, 75.0, 125.0, typeof(IronIngot), 1044036, 14, 1044037);
-            AddRes(index, typeof(Blight), 1072134, 1, 1042081);
-            AddRecipe(index, (int)CraftRecipes.DiseasedMachete);
-
-            index = AddCraft(typeof(Runesabre), 1011081, 1073537, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(Turquoise), 1032691, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.Runesabre);
-
-            index = AddCraft(typeof(MagesRuneBlade), 1011081, 1073538, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(BlueDiamond), 1032696, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.MagesRuneBlade);
-
-            index = AddCraft(typeof(RuneBladeOfKnowledge), 1011081, 1073539, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(EcruCitrine), 1032693, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.RuneBladeOfKnowledge);
-
-            index = AddCraft(typeof(CorruptedRuneBlade), 1011081, 1073540, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(Corruption), 1072135, 1, 1042081);
-            AddRecipe(index, (int)CraftRecipes.CorruptedRuneBlade);
-
-            index = AddCraft(typeof(DarkglowScimitar), 1011081, 1073542, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(DarkSapphire), 1032690, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.DarkglowScimitar);
-
-            index = AddCraft(typeof(IcyScimitar), 1011081, 1073543, 75.0, 125.0, typeof(IronIngot), 1044036, 15, 1044037);
-            AddRes(index, typeof(DarkSapphire), 1032690, 1, 1044240);
-            AddRecipe(index, (int)CraftRecipes.IcyScimitar);
 
             index = AddCraft(typeof(BoneMachete), 1011081, 1020526, 45.0, 95.0, typeof(IronIngot), 1044036, 20, 1044037);
             AddRes(index, typeof(Bone), 1049064, 6, 1049063);

@@ -1180,11 +1180,6 @@ namespace Server.Items
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
             }
 
-            if ((prop = m_AosAttributes.Luck) != 0)
-            {
-                list.Add(1060436, prop.ToString()); // luck ~1_val~
-            }
-
             if ((prop = m_AosAttributes.EnhancePotions) != 0)
             {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
