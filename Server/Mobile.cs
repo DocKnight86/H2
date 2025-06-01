@@ -1,4 +1,3 @@
-#region References
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,6 @@ using Server.Mobiles;
 using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
-#endregion
 
 namespace Server
 {
@@ -5749,7 +5747,7 @@ namespace Server
 
 		public virtual void Serialize(GenericWriter writer)
 		{
-			writer.Write(38);
+			writer.Write(0);
 
 			writer.Write(m_DisplayGuildAbbr);
 			writer.Write(m_BloodHue);
