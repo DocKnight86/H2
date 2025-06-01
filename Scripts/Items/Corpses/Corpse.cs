@@ -1,4 +1,3 @@
-#region References
 using Server.ContextMenus;
 using Server.Engines.PartySystem;
 using Server.Engines.Quests;
@@ -9,7 +8,6 @@ using Server.Mobiles;
 using Server.Network;
 using System;
 using System.Collections.Generic;
-#endregion
 
 namespace Server.Items
 {
@@ -1055,11 +1053,6 @@ namespace Server.Items
                         if (item.Layer == Layer.Hair || item.Layer == Layer.FacialHair || !item.Movable)
                         {
                             continue;
-                        }
-
-                        if (from.FindItemOnLayer(Layer.OuterTorso) is DeathRobe robe)
-                        {
-                            robe.Delete();
                         }
 
                         if (m_EquipItems.Contains(item) && from.EquipItem(item))

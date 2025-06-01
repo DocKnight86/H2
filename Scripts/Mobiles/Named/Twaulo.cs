@@ -56,8 +56,7 @@ namespace Server.Mobiles
         public override ChampionSkullType SkullType => ChampionSkullType.Pain;
 
         public override Type[] UniqueList => [];
-
-        public override Type[] SharedList => [typeof(TheMostKnowledgePerson), typeof(OblivionsNeedle), typeof(BraveKnightOfTheBritannia)];
+        public override Type[] SharedList => [];
 
         public override Type[] DecorativeList => new Type[] { typeof(Pier), typeof(MonsterStatuette) };
 

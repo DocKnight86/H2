@@ -12,11 +12,7 @@ namespace Server.Mobiles
         public override bool CanGivePowerscrolls => false;
         public override bool DoesGoldShower => false;
         public override Type[] UniqueList => [];
-        public override Type[] SharedList => new Type[]
-                {
-                    typeof(TheMostKnowledgePerson),
-                    typeof(OblivionsNeedle)
-                };
+        public override Type[] SharedList => [];
         public override Type[] DecorativeList => new Type[]
                 {
                     typeof(ArtifactLargeVase),

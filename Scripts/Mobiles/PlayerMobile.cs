@@ -2638,13 +2638,6 @@ namespace Server.Mobiles
 
             if (Alive && !wasAlive)
             {
-                Item deathRobe = new DeathRobe();
-
-                if (!EquipItem(deathRobe))
-                {
-                    deathRobe.Delete();
-                }
-
                 if (NetState != null)
                 {
                     Waypoints.RemoveHealers(this, Map);

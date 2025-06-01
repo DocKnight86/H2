@@ -4,14 +4,6 @@ using System;
 
 namespace Server.Items
 {
-    public interface IArcaneEquip
-    {
-        bool IsArcane { get; }
-        int CurArcaneCharges { get; set; }
-        int MaxArcaneCharges { get; set; }
-        int TempHue { get; set; }
-    }
-
     public abstract class BaseClothing : Item, IDyable, IScissorable, ICraftable, IWearableDurability, IResource, ISetItem, IVvVItem, IOwnerRestricted, IArtifact, ICombatEquipment, IEngravable, IQuality
     {
         private string m_EngravedText;
@@ -64,8 +56,6 @@ namespace Server.Items
         private ItemQuality m_Quality;
         protected CraftResource m_Resource;
         private int m_StrReq = -1;
-
-        private bool m_Altered;
 
         private AosAttributes m_AosAttributes;
         private AosArmorAttributes m_AosClothingAttributes;
@@ -894,11 +884,6 @@ namespace Server.Items
             {
                 list.Add(1080418); // (Imbued)
             }
-
-            if (m_Altered)
-            {
-                list.Add(1111880); // Altered
-            }
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -1316,8 +1301,7 @@ namespace Server.Items
             Quality = 0x00000200,
             StrReq = 0x00000400,
             NegativeAttributes = 0x00000800,
-            Altered = 0x00001000,
-            xWeaponAttributes = 0x00002000
+            xWeaponAttributes = 0x00001000
         }
 
         #region Mondain's Legacy Sets
@@ -1353,43 +1337,18 @@ namespace Server.Items
         }
         #endregion
 
-        public void xWeaponAttributesDeserializeHelper(GenericReader reader, BaseClothing item)
-        {
-            SaveFlag flags = (SaveFlag)reader.ReadInt();
-
-            if (flags != SaveFlag.None)
-            {
-                flags = SaveFlag.xWeaponAttributes;
-            }
-
-            if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
-            {
-                m_AosWeaponAttributes = new AosWeaponAttributes(item, reader);
-            }
-            else
-            {
-                m_AosWeaponAttributes = new AosWeaponAttributes(item);
-            }
-        }
-
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(12); // version
 
-            // Embroidery Tool version 11
             writer.Write(m_EngravedText);
-
-            // Version 10 - removed VvV Item (handled in VvV System) and BlockRepair (Handled as negative attribute)
 
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
-            //Version 8
             writer.Write(m_IsImbued);
 
-            // Version 7
             m_SAAbsorptionAttributes.Serialize(writer);
 
             #region Runic Reforging
@@ -1503,10 +1462,6 @@ namespace Server.Items
             SetSaveFlag(ref flags, SaveFlag.Crafter, m_Crafter != null);
             SetSaveFlag(ref flags, SaveFlag.Quality, m_Quality != ItemQuality.Normal);
             SetSaveFlag(ref flags, SaveFlag.StrReq, m_StrReq != -1);
-            #region Imbuing
-            //SetSaveFlag(ref flags, SaveFlag.TimesImbued, m_TimesImbued != 0);
-            #endregion
-            SetSaveFlag(ref flags, SaveFlag.Altered, m_Altered);
 
             writer.WriteEncodedInt((int)flags);
 
@@ -1574,7 +1529,6 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
@@ -1588,11 +1542,6 @@ namespace Server.Items
                 case 10:
                 case 9:
                     {
-                        if (version == 9)
-                        {
-                            reader.ReadBool();
-                        }
-
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
                         goto case 8;
@@ -1625,11 +1574,6 @@ namespace Server.Items
                     }
                 case 6:
                     {
-                        if (version == 6)
-                        {
-                            m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this);
-                        }
-
                         m_TimesImbued = reader.ReadInt();
 
                         #endregion
@@ -1713,16 +1657,13 @@ namespace Server.Items
                     {
                         SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
 
-                        if (version > 11)
+                        if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
                         {
-                            if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
-                            {
-                                m_AosWeaponAttributes = new AosWeaponAttributes(this, reader);
-                            }
-                            else
-                            {
-                                m_AosWeaponAttributes = new AosWeaponAttributes(this);
-                            }
+                            m_AosWeaponAttributes = new AosWeaponAttributes(this, reader);
+                        }
+                        else
+                        {
+                            m_AosWeaponAttributes = new AosWeaponAttributes(this);
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.NegativeAttributes))
@@ -1815,11 +1756,6 @@ namespace Server.Items
                         if (GetSaveFlag(flags, SaveFlag.PlayerConstructed))
                         {
                             PlayerConstructed = true;
-                        }
-
-                        if (GetSaveFlag(flags, SaveFlag.Altered))
-                        {
-                            m_Altered = true;
                         }
 
                         break;
@@ -2273,17 +2209,6 @@ namespace Server.Items
             }
 
             return 0;
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool Altered
-        {
-            get => m_Altered;
-            set
-            {
-                m_Altered = value;
-                InvalidateProperties();
-            }
         }
     }
 }

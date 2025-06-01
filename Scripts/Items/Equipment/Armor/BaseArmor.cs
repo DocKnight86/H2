@@ -67,8 +67,6 @@ namespace Server.Items
         private int m_GorgonLenseCharges;
         private LenseType m_GorgonLenseType;
 
-        private bool m_Altered;
-
         private int m_TimesImbued;
         private bool m_IsImbued;
         private int m_PhysNonImbuing;
@@ -1020,9 +1018,8 @@ namespace Server.Items
             xAbsorptionAttributes = 0x02000000,
             xWeaponAttributes = 0x04000000,
             NegativeAttributes = 0x08000000,
-            Altered = 0x10000000,
-            TalismanProtection = 0x20000000,
-            EngravedText = 0x40000000
+            TalismanProtection = 0x10000000,
+            EngravedText = 0x20000000
         }
 
         private static void SetSaveFlag(ref SetFlag flags, SetFlag toSet, bool setIf)
@@ -1209,7 +1206,6 @@ namespace Server.Items
             SetSaveFlag(ref flags, SaveFlag.SkillBonuses, !m_AosSkillBonuses.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.PlayerConstructed, m_PlayerConstructed);
             SetSaveFlag(ref flags, SaveFlag.xAbsorptionAttributes, !m_SAAbsorptionAttributes.IsEmpty);
-            SetSaveFlag(ref flags, SaveFlag.Altered, m_Altered);
 
             writer.WriteEncodedInt((int)flags);
 
@@ -1698,11 +1694,6 @@ namespace Server.Items
                             m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this);
                         }
 
-                        if (GetSaveFlag(flags, SaveFlag.Altered))
-                        {
-                            m_Altered = true;
-                        }
-
                         break;
                     }
             }
@@ -2152,11 +2143,6 @@ namespace Server.Items
             if (IsImbued)
             {
                 list.Add(1080418); // (Imbued)
-            }
-
-            if (m_Altered)
-            {
-                list.Add(1111880); // Altered
             }
         }
 
@@ -2998,17 +2984,6 @@ namespace Server.Items
         public virtual void SetProtection(Type type, TextDefinition name, int amount)
         {
             m_TalismanProtection = new TalismanAttribute(type, name, amount);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool Altered
-        {
-            get => m_Altered;
-            set
-            {
-                m_Altered = value;
-                InvalidateProperties();
-            }
         }
     }
 }

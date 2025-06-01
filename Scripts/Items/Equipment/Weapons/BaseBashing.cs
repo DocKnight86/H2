@@ -1,6 +1,6 @@
 namespace Server.Items
 {
-    public abstract class BaseBashing : BaseMeleeWeapon
+    public abstract class BaseBashing : BaseWeapon
     {
         public BaseBashing(int itemID)
             : base(itemID)

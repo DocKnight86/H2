@@ -2,7 +2,7 @@ using Server.Targets;
 
 namespace Server.Items
 {
-    public abstract class BaseKnife : BaseMeleeWeapon
+    public abstract class BaseKnife : BaseWeapon
     {
         public BaseKnife(int itemID)
             : base(itemID)
