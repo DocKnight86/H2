@@ -103,7 +103,7 @@ namespace Server.Mobiles.MannequinProperty
         {
             if (item is BaseArmor armor)
             {
-                if (armor.ArmorAttributes.MageArmor != 0 || armor.Attributes.SpellChanneling != 0)
+                if (armor.Attributes.SpellChanneling != 0)
                 {
                     return true;
                 }

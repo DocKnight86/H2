@@ -1,6 +1,4 @@
-using Server.Mobiles;
 using Server.Network;
-using Server.Spells.SkillMasteries;
 using System;
 using System.Collections.Generic;
 
@@ -395,88 +393,6 @@ namespace Server.Items
 
             if (context != null)
                 context.OnDamage(damage, phys, fire, cold, pois, ergy, direct);
-        }
-    }
-
-    public class SplinteringWeaponContext : PropertyEffect
-    {
-        public static List<Mobile> BleedImmune { get; } = new List<Mobile>();
-
-        public SplinteringWeaponContext(Mobile from, Mobile defender, Item weapon)
-            : base(from, defender, weapon, TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(4))
-        {
-            StartForceWalk(defender);
-
-            if (!(defender is PlayerMobile) || !IsBleedImmune(defender))
-            {
-                BleedAttack.BeginBleed(defender, from, true);
-                AddBleedImmunity(defender);
-            }
-
-            defender.SendLocalizedMessage(1112486); // A shard of the brittle weapon has become lodged in you!
-            from.SendLocalizedMessage(1113077); // A shard of your blade breaks off and sticks in your opponent!
-
-            Server.Effects.PlaySound(defender.Location, defender.Map, 0x1DF);
-
-            BuffInfo.AddBuff(defender, new BuffInfo(BuffIcon.SplinteringEffect, 1154670, 1152144, TimeSpan.FromSeconds(4), defender));
-        }
-
-        public override void OnTick()
-        {
-            base.OnTick();
-
-            BuffInfo.RemoveBuff(Victim, BuffIcon.SplinteringEffect);
-        }
-
-        public static void StartForceWalk(Mobile m)
-        {
-            if (m.NetState != null && m.AccessLevel < AccessLevel.GameMaster)
-            {
-                m.SendSpeedControl(SpeedControlType.WalkSpeed);
-            }
-        }
-
-        public static void EndForceWalk(Mobile m)
-        {
-            m.SendSpeedControl(SpeedControlType.Disable);
-        }
-
-        public override void RemoveEffects()
-        {
-            EndForceWalk(Victim);
-            Victim.SendLocalizedMessage(1112487); // The shard is successfully removed.
-
-            base.RemoveEffects();
-        }
-
-        public static bool CheckHit(Mobile attacker, Mobile defender, WeaponAbility ability, Item weapon)
-        {
-            if (defender == null || ability == WeaponAbility.Disarm || ability == WeaponAbility.InfectiousStrike || SkillMasterySpell.HasSpell(attacker, typeof(SkillMasterySpell)) || VictimIsUnderEffects<SplinteringWeaponContext>(defender))
-                return false;
-
-            SplinteringWeaponContext context = GetContext<SplinteringWeaponContext>(attacker, defender);
-
-            if (context == null)
-            {
-                AddEffects(new SplinteringWeaponContext(attacker, defender, weapon));
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool IsBleedImmune(Mobile m)
-        {
-            return BleedImmune.Contains(m);
-        }
-
-        public static void AddBleedImmunity(Mobile m)
-        {
-            if (!(m is PlayerMobile) || BleedImmune.Contains(m))
-                return;
-
-            BleedImmune.Add(m);
-            Timer.DelayCall(TimeSpan.FromSeconds(16), () => BleedImmune.Remove(m));
         }
     }
 

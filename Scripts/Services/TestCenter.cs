@@ -87,14 +87,6 @@ namespace Server.Misc
                                 from.SendMessage("Artifacts have been added to your bank");
                             }
                         }
-                        else if (Insensitive.Equals(name, "air"))
-                        {
-                            if (CanGive(from, "Air"))
-                            {
-                                GiveAirFreshner(from);
-                                from.SendMessage("Air Freshner has been added to your bank.");
-                            }
-                        }
                         else if (Insensitive.Equals(name, "seeds"))
                         {
                             if (CanGive(from, "Seeds"))
@@ -459,7 +451,6 @@ namespace Server.Misc
             };
 
             bag.DropItem(new TitansHammer());
-            bag.DropItem(new InquisitorsResolution());
             bag.DropItem(new BladeOfTheRighteous());
             bag.DropItem(new ZyronicClaw());
 
@@ -476,13 +467,10 @@ namespace Server.Misc
                 Name = "Tokuno Major Artifacts"
             };
 
-            bag.DropItem(new SwordsOfProsperity());
             bag.DropItem(new SwordOfTheStampede());
             bag.DropItem(new WindsEdge());
             bag.DropItem(new DarkenedSky());
-            bag.DropItem(new RuneBeetleCarapace());
             bag.DropItem(new KasaOfTheRajin());
-            bag.DropItem(new Stormgrip());
             bag.DropItem(new TomeOfLostKnowledge());
             bag.DropItem(new PigmentsOfTokuno(PigmentType.ParagonGold));
             bag.DropItem(new PigmentsOfTokuno(PigmentType.VioletCouragePurple));
@@ -528,7 +516,6 @@ namespace Server.Misc
             bag.DropItem(new RoyalGuardInvestigatorsCloak());
             bag.DropItem(new TongueOfTheBeast());
             bag.DropItem(new TheMostKnowledgePerson());
-            bag.DropItem(new ShroudOfDeceit());
             bag.DropItem(new ANecromancerShroud());
             bag.DropItem(new LightsRampart());
             bag.DropItem(new AcidProofRobe());
@@ -536,27 +523,19 @@ namespace Server.Misc
             bag.DropItem(new TheRobeOfBritanniaAri());
             bag.DropItem(new GauntletsOfAnger());
             bag.DropItem(new JadeArmband());
-            bag.DropItem(new Subdue());
             bag.DropItem(new CrownOfTalKeesh());
             bag.DropItem(new DjinnisRing());
             bag.DropItem(new EmbroideredOakLeafCloak());
-            bag.DropItem(new GladiatorsCollar());
             bag.DropItem(new CaptainJohnsHat());
             bag.DropItem(new BraveKnightOfTheBritannia());
             bag.DropItem(new OblivionsNeedle());
-            bag.DropItem(new RoyalGuardSurvivalKnife());
             bag.DropItem(new Calm());
-            bag.DropItem(new OrcChieftainHelm());
             bag.DropItem(new FangOfRactus());
             bag.DropItem(new DetectiveBoots());
 
             PlaceItemIn(box, 90, 139, bag);
 
             PlaceItemIn(from.BankBox, 63, 106, box);
-        }
-
-        public static void GiveAirFreshner(Mobile from)
-        {
         }
 
         public static void GiveSeeds(Mobile from)

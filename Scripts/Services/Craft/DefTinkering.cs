@@ -513,14 +513,6 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(HatOfTheMagi), 1061597, 1, 1044253);
             AddRecipe(index, (int)CraftRecipes.DrSpectorLenses);
             ForceNonExceptional(index);
-
-            index = AddCraft(typeof(BraceletOfPrimalConsumption), 1073107, 1157350, 100.0, 580.0, typeof(IronIngot), 1044036, 3, 1044037);
-            SetMinSkillOffset(index, 25.0);
-            AddRes(index, typeof(RingOfTheElements), 1061104, 1, 1044253);
-            AddRes(index, typeof(BloodOfTheDarkFather), 1157343, 5, 1044253);
-            AddRes(index, typeof(WhitePearl), 1032694, 4, 1044240);
-            AddRecipe(index, (int)CraftRecipes.BraceletOfPrimalConsumption);
-            ForceNonExceptional(index);
             #endregion
 
             // Set the overridable material

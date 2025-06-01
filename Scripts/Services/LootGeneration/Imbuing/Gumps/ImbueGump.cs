@@ -39,12 +39,16 @@ namespace Server.Gumps
             double bonus = 0.0;
 
             if (!Imbuing.CheckSoulForge(User, 2, out bonus))
+            {
                 return;
+            }
 
             ImbuingContext context = Imbuing.GetContext(User);
 
             if (!ItemPropertyInfo.Table.ContainsKey(m_ID))
+            {
                 return;
+            }
 
             m_Info = ItemPropertyInfo.Table[m_ID];
 
@@ -76,7 +80,9 @@ namespace Server.Gumps
             m_TotalProps = Imbuing.GetTotalMods(m_Item, m_ID);
 
             if (maxInt <= 1)
+            {
                 currentIntensity = m_Info.Weight;
+            }
 
             int propWeight = (int)Math.Floor(weight / (double)maxInt * m_Value);
 
@@ -254,10 +260,14 @@ namespace Server.Gumps
         private int GetColor(int value, int limit)
         {
             if (value < limit)
+            {
                 return Green;
+            }
 
             if (value == limit)
+            {
                 return Yellow;
+            }
 
             return Red;
         }
@@ -378,38 +388,70 @@ namespace Server.Gumps
                 if (id >= 101 && id <= 127)
                 {
                     if (weapon.Slayer != SlayerName.None)
+                    {
                         return GetNameForAttribute(weapon.Slayer);
+                    }
 
                     if (weapon.Slayer2 != SlayerName.None)
+                    {
                         return GetNameForAttribute(weapon.Slayer2);
+                    }
                 }
                 // OnHitEffect replace OnHitEffect
                 if (id >= 35 && id <= 39)
                 {
                     if (weapon.WeaponAttributes.HitMagicArrow > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitMagicArrow);
+                    }
+
                     if (weapon.WeaponAttributes.HitHarm > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitHarm);
+                    }
+
                     if (weapon.WeaponAttributes.HitFireball > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitFireball);
+                    }
+
                     if (weapon.WeaponAttributes.HitLightning > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitLightning);
+                    }
+
                     if (weapon.WeaponAttributes.HitDispel > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitDispel);
+                    }
                 }
                 // OnHitArea replace OnHitArea
                 if (id >= 30 && id <= 34)
                 {
                     if (weapon.WeaponAttributes.HitPhysicalArea > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitPhysicalArea);
+                    }
+
                     if (weapon.WeaponAttributes.HitColdArea > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitFireArea);
+                    }
+
                     if (weapon.WeaponAttributes.HitFireArea > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitColdArea);
+                    }
+
                     if (weapon.WeaponAttributes.HitPoisonArea > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitPoisonArea);
+                    }
+
                     if (weapon.WeaponAttributes.HitEnergyArea > 0)
+                    {
                         return GetNameForAttribute(AosWeaponAttribute.HitEnergyArea);
+                    }
                 }
             }
 
@@ -445,28 +487,37 @@ namespace Server.Gumps
 
         public static TextDefinition GetNameForAttribute(object attribute)
         {
-            if (attribute is AosArmorAttribute lsq && lsq == AosArmorAttribute.LowerStatReq)
-                attribute = AosWeaponAttribute.LowerStatReq;
-
             if (attribute is AosArmorAttribute db && db == AosArmorAttribute.DurabilityBonus)
+            {
                 attribute = AosWeaponAttribute.DurabilityBonus;
+            }
 
             foreach (ItemPropertyInfo info in ItemPropertyInfo.Table.Values)
             {
                 if (attribute is SlayerName slayerName && info.Attribute is SlayerName name && slayerName == name)
+                {
                     return info.AttributeName;
+                }
 
                 if (attribute is AosAttribute aosAttribute && info.Attribute is AosAttribute infoAttribute && aosAttribute == infoAttribute)
+                {
                     return info.AttributeName;
+                }
 
                 if (attribute is AosWeaponAttribute weaponAttribute && info.Attribute is AosWeaponAttribute aosWeaponAttribute && weaponAttribute == aosWeaponAttribute)
+                {
                     return info.AttributeName;
+                }
 
                 if (attribute is SkillName attSkillName && info.Attribute is SkillName skillName && attSkillName == skillName)
+                {
                     return info.AttributeName;
+                }
 
                 if (info.Attribute == attribute)
+                {
                     return info.AttributeName;
+                }
             }
 
             return null;

@@ -73,9 +73,6 @@ namespace Server.Items
                 case CraftResource.Bloodwood:
                     Attributes.RegenHits = 2;
                     break;
-                case CraftResource.Heartwood:
-                    Attributes.Luck = 40;
-                    break;
                 case CraftResource.YewWood:
                     Attributes.RegenHits = 1;
                     break;

@@ -70,20 +70,11 @@ namespace Server.Items
             Rewards.Add(new CollectionItem(typeof(MeerEternalStatuette), 0x25F8, 1075021, 0x0, 350000.0));
             Rewards.Add(new CollectionItem(typeof(SolenQueenStatuette), 0x2602, 1075022, 0x0, 350000.0));
             Rewards.Add(new CollectionTitle(1073237, 1073639, 350000.0)); // Honored Vesper Museum Contributor
-            Rewards.Add(new CollectionItem(typeof(MinaxsArmor), 0x1C02, 1073257, 0x281, 550000.0));
-
+            
             hues = new int[] { 0x281, 0x173, 0x581, 0x300 };
             Rewards.Add(new CollectionHuedItem(typeof(GypsyHeaddress), 0x1544, 1073254, 0x453, 550000.0, hues));
             Rewards.Add(new CollectionHuedItem(typeof(NystulsWizardsHat), 0x1718, 1073255, 0x453, 550000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(JesterHatOfChuckles), 0x171C, 1073256, 0x453, 550000.0, hues));
-            Rewards.Add(new CollectionItem(typeof(KeeoneansChainMail), 0x13BF, 1073264, 0x84E, 550000.0));
             Rewards.Add(new CollectionTitle(1073238, 1073640, 550000.0)); // Prominent Vesper Museum Contributor	
-            Rewards.Add(new CollectionItem(typeof(ClaininsSpellbook), 0xEFA, 1073262, 0x84D, 800000.0));
-            Rewards.Add(new CollectionItem(typeof(VesperOrderShield), 0x1BC4, 1073258, 0x835, 800000.0));
-            Rewards.Add(new CollectionItem(typeof(VesperChaosShield), 0x1BC3, 1073259, 0xFA, 800000.0));
-            Rewards.Add(new CollectionItem(typeof(BlackthornsKryss), 0x1401, 1073260, 0x5E5, 800000.0));
-            Rewards.Add(new CollectionItem(typeof(SwordOfJustice), 0x13B9, 1073261, 0x47E, 800000.0));
-            Rewards.Add(new CollectionItem(typeof(GeoffreysAxe), 0xF45, 1073263, 0x21, 800000.0));
             Rewards.Add(new CollectionItem(typeof(VesperSpecialAchievementReplica), 0x2D4E, 1073265, 0x0, 800000.0));
             Rewards.Add(new CollectionTitle(1073239, 1073641, 800000.0)); // Eminent Vesper Museum Contributor
         }

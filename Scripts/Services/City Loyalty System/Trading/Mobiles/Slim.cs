@@ -145,7 +145,7 @@ namespace Server.Engines.CityLoyalty
 
                     TreasureMapChest.GetRandomItemStat(out var min, out var max);
 
-                    RunicReforging.GenerateRandomItem(item, 0, min, max);
+                    RunicReforging.GenerateRandomItem(item, min, max);
                     return item;
                 }
             }

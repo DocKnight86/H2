@@ -16,7 +16,7 @@ namespace Server.Items
             Charges = 50;
             MaxCharges = Charges;
             Hue = 1165;
-            Attributes.Brittle = 1;
+            NegativeAttributes.Brittle = 1;
             Attributes.LowerManaCost = 6;
 
             switch (Utility.Random(3))

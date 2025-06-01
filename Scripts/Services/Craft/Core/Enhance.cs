@@ -159,7 +159,7 @@ namespace Server.Engines.Craft
             }
 
             int phys = 0, fire = 0, cold = 0, pois = 0, nrgy = 0;
-            int dura = 0, luck = 0, lreq = 0, dinc = 0;
+            int dura = 0, dinc = 0;
             int baseChance = 0;
 
             bool physBonus = false;
@@ -168,8 +168,6 @@ namespace Server.Engines.Craft
             bool nrgyBonus = false;
             bool poisBonus = false;
             bool duraBonus = false;
-            bool luckBonus = false;
-            bool lreqBonus = false;
             bool dincBonus = false;
 
             if (item is BaseWeapon weapon)
@@ -182,8 +180,6 @@ namespace Server.Engines.Craft
                 baseChance = 20;
 
                 dura = weapon.MaxHitPoints;
-                luck = weapon.Attributes.Luck;
-                lreq = weapon.WeaponAttributes.LowerStatReq;
                 dinc = weapon.Attributes.WeaponDamage;
 
                 fireBonus = attributes.WeaponFireDamage > 0;
@@ -192,8 +188,6 @@ namespace Server.Engines.Craft
                 poisBonus = attributes.WeaponPoisonDamage > 0;
 
                 duraBonus = attributes.WeaponDurability > 0;
-                luckBonus = attributes.WeaponLuck > 0;
-                lreqBonus = attributes.WeaponLowerRequirements > 0;
                 dincBonus = dinc > 0;
             }
             else if (item is BaseArmor armor)
@@ -207,8 +201,6 @@ namespace Server.Engines.Craft
                 nrgy = armor.EnergyResistance;
 
                 dura = armor.MaxHitPoints;
-                luck = armor.Attributes.Luck;
-                lreq = armor.ArmorAttributes.LowerStatReq;
 
                 physBonus = attributes.ArmorPhysicalResist > 0;
                 fireBonus = attributes.ArmorFireResist > 0;
@@ -217,18 +209,12 @@ namespace Server.Engines.Craft
                 poisBonus = attributes.ArmorPoisonResist > 0;
 
                 duraBonus = attributes.ArmorDurability > 0;
-                luckBonus = attributes.ArmorLuck > 0;
-                lreqBonus = attributes.ArmorLowerRequirements > 0;
                 dincBonus = false;
             }
             else if (item is FishingPole pole)
             {
                 baseChance = 20;
 
-                luck = pole.Attributes.Luck;
-
-                luckBonus = attributes.ArmorLuck > 0;
-                lreqBonus = attributes.ArmorLowerRequirements > 0;
                 dincBonus = false;
             }
 
@@ -271,16 +257,6 @@ namespace Server.Engines.Craft
             if (duraBonus)
             {
                 CheckResult(ref res, baseChance + (dura / 40));
-            }
-
-            if (luckBonus)
-            {
-                CheckResult(ref res, baseChance + 10 + (luck / 2));
-            }
-
-            if (lreqBonus)
-            {
-                CheckResult(ref res, baseChance + (lreq / 4));
             }
 
             if (dincBonus)

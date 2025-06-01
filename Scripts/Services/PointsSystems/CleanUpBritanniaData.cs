@@ -356,20 +356,13 @@ namespace Server.Engines.Points
             //ArtifactRarity 10
             Entries[typeof(TitansHammer)] = 2750.0;
             Entries[typeof(ZyronicClaw)] = 2750.0;
-            Entries[typeof(InquisitorsResolution)] = 2750.0;
             Entries[typeof(BladeOfTheRighteous)] = 2750.0;
             Entries[typeof(LegacyOfTheDreadLord)] = 2750.0;
             Entries[typeof(TheTaskmaster)] = 2750.0;
 
             //Virtue Artifacts
-            Entries[typeof(TenthAnniversarySculpture)] = 1500.0;
             Entries[typeof(MapOfTheKnownWorld)] = 1500.0;
             Entries[typeof(AnkhPendant)] = 1500.0;
-            Entries[typeof(DragonsEnd)] = 1500.0;
-            Entries[typeof(JaanasStaff)] = 1500.0;
-            Entries[typeof(KatrinasCrook)] = 1500.0;
-            Entries[typeof(LordBlackthornsExemplar)] = 1500.0;
-            Entries[typeof(SentinelsGuard)] = 1500.0;
             Entries[typeof(CompassionArms)] = 1500.0;
             Entries[typeof(JusticeBreastplate)] = 1500.0;
             Entries[typeof(ValorGauntlets)] = 1500.0;
@@ -388,27 +381,18 @@ namespace Server.Engines.Points
             Entries[typeof(AdmiralsHeartyRum)] = 100.0;
             Entries[typeof(AlchemistsBauble)] = 100.0;
             Entries[typeof(BurglarsBandana)] = 100.0;
-            Entries[typeof(CaptainQuacklebushsCutlass)] = 100.0;
             Entries[typeof(DreadPirateHat)] = 100.0;
             Entries[typeof(GwennosHarp)] = 100.0;
             Entries[typeof(IolosLute)] = 100.0;
-            Entries[typeof(LunaLance)] = 100.0;
-            Entries[typeof(NightsKiss)] = 100.0;
-            Entries[typeof(NoxRangersHeavyCrossbow)] = 100.0;
             Entries[typeof(PolarBearMask)] = 100.0;
-            Entries[typeof(VioletCourage)] = 100.0;
             Entries[typeof(PixieSwatter)] = 100.0;
             Entries[typeof(WrathOfTheDryad)] = 100.0;
-            Entries[typeof(StaffOfPower)] = 100.0;
-            Entries[typeof(OrcishVisage)] = 100.0;
             Entries[typeof(BowOfTheJukaKing)] = 100.0;
             Entries[typeof(CreepingVine)] = 100.0;
             Entries[typeof(ForgedPardon)] = 100.0;
             Entries[typeof(ManaPhasingOrb)] = 500.0;
             Entries[typeof(RunedSashOfWarding)] = 100.0;
             Entries[typeof(SurgeShield)] = 100.0;
-            Entries[typeof(HeartOfTheLion)] = 100.0;
-            Entries[typeof(ShieldOfInvulnerability)] = 100.0;
             Entries[typeof(BloodwoodSpirit)] = 100.0;
             Entries[typeof(QuiverOfRage)] = 100.0;
             Entries[typeof(QuiverOfElements)] = 100.0;
@@ -418,23 +402,16 @@ namespace Server.Engines.Points
             Entries[typeof(MelisandesCorrodedHatchet)] = 100.0;
             Entries[typeof(AlbinoSquirrelImprisonedInCrystal)] = 100.0;
             Entries[typeof(GrizzledMareStatuette)] = 100.0;
-            Entries[typeof(GrizzleGauntlets)] = 100.0;
-            Entries[typeof(GrizzleGreaves)] = 100.0;
-            Entries[typeof(GrizzleHelm)] = 100.0;
-            Entries[typeof(GrizzleTunic)] = 100.0;
-            Entries[typeof(GrizzleVambraces)] = 100.0;
             Entries[typeof(ParoxysmusSwampDragonStatuette)] = 100.0;
             Entries[typeof(ScepterOfTheChief)] = 100.0;
             Entries[typeof(CrystallineRing)] = 100.0;
             Entries[typeof(MarkOfTravesty)] = 100.0;
             Entries[typeof(ImprisonedDog)] = 100.0;
             Entries[typeof(AncientFarmersKasa)] = 100.0;
-            Entries[typeof(AncientSamuraiDo)] = 100.0;
             Entries[typeof(AncientUrn)] = 100.0;
             Entries[typeof(ArmsOfTacticalExcellence)] = 100.0;
             Entries[typeof(BlackLotusHood)] = 100.0;
             Entries[typeof(ChestOfHeirlooms)] = 100.0;
-            Entries[typeof(DaimyosHelm)] = 100.0;
             Entries[typeof(DemonForks)] = 100.0;
             Entries[typeof(TheDestroyer)] = 100.0;
             Entries[typeof(DragonNunchaku)] = 100.0;
@@ -443,8 +420,6 @@ namespace Server.Engines.Points
             Entries[typeof(GlovesOfTheSun)] = 100.0;
             Entries[typeof(HanzosBow)] = 100.0;
             Entries[typeof(HonorableSwords)] = 100.0;
-            Entries[typeof(LegsOfStability)] = 100.0;
-            Entries[typeof(LeurociansMempoOfFortune)] = 100.0;
             Entries[typeof(PeasantsBokuto)] = 100.0;
             Entries[typeof(PilferedDancerFans)] = 100.0;
             Entries[typeof(TomeOfEnlightenment)] = 100.0;
@@ -452,17 +427,12 @@ namespace Server.Engines.Points
             //Tokuno Major Artifacts
             Entries[typeof(DarkenedSky)] = 2500.0;
             Entries[typeof(KasaOfTheRajin)] = 2500.0;
-            Entries[typeof(RuneBeetleCarapace)] = 2500.0;
-            Entries[typeof(Stormgrip)] = 2500.0;
             Entries[typeof(SwordOfTheStampede)] = 2500.0;
-            Entries[typeof(SwordsOfProsperity)] = 2500.0;
-            Entries[typeof(TheHorselord)] = 2500.0;
             Entries[typeof(TomeOfLostKnowledge)] = 2500.0;
             Entries[typeof(WindsEdge)] = 2500.0;
 
             //Major Artifacts
             Entries[typeof(TheDryadBow)] = 5500.0;
-            Entries[typeof(RingOfTheElements)] = 5500.0;
             Entries[typeof(ArcaneShield)] = 5500.0;
             Entries[typeof(SerpentsFang)] = 5500.0;
             Entries[typeof(OrnamentOfTheMagician)] = 5500.0;
@@ -476,7 +446,6 @@ namespace Server.Engines.Points
             Entries[typeof(HelmOfInsight)] = 5500.0;
             Entries[typeof(Frostbringer)] = 5500.0;
             Entries[typeof(StaffOfTheMagi)] = 5500.0;
-            Entries[typeof(TheDragonSlayer)] = 5500.0;
             Entries[typeof(BreathOfTheDead)] = 5500.0;
             Entries[typeof(HolyKnightsBreastplate)] = 5500.0;
             Entries[typeof(TunicOfFire)] = 5500.0;
@@ -491,9 +460,6 @@ namespace Server.Engines.Points
             Entries[typeof(TatteredAncientMummyWrapping)] = 5000.0;
             Entries[typeof(WindSpirit)] = 5000.0;
             Entries[typeof(GauntletsOfAnger)] = 5000.0;
-            Entries[typeof(GladiatorsCollar)] = 5000.0;
-            Entries[typeof(OrcChieftainHelm)] = 5000.0;
-            Entries[typeof(ShroudOfDeceit)] = 5000.0;
             Entries[typeof(AcidProofRobe)] = 5000.0;
             Entries[typeof(ANecromancerShroud)] = 5000.0;
             Entries[typeof(CaptainJohnsHat)] = 5000.0;
@@ -511,8 +477,6 @@ namespace Server.Engines.Points
             Entries[typeof(Calm)] = 5000.0;
             Entries[typeof(FangOfRactus)] = 5000.0;
             Entries[typeof(OblivionsNeedle)] = 5000.0;
-            Entries[typeof(RoyalGuardSurvivalKnife)] = 5000.0;
-            Entries[typeof(Subdue)] = 5000.0;
             Entries[typeof(Asclepius)] = 5000.0;
             Entries[typeof(BracersofAlchemicalDevastation)] = 5000.0;
             Entries[typeof(HygieiasAmulet)] = 5000.0;

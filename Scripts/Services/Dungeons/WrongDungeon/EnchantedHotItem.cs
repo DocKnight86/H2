@@ -129,7 +129,7 @@ namespace Server.Items
                     const int min = 400;
                     const int max = 1400;
 
-                    RunicReforging.GenerateRandomItem(item, 0, min, max);
+                    RunicReforging.GenerateRandomItem(item, min, max);
 
                     item.Hue = 1258;
                     item.AttachSocket(new EnchantedHotItemSocket(this));

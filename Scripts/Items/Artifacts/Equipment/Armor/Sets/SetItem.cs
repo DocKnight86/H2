@@ -6,24 +6,16 @@ namespace Server
     public enum SetItem
     {
         None,
-        Acolyte,
         Assassin,
         Darkwood,
-        Grizzle,
-        Hunter,
         Juggernaut,
-        Mage,
         Marksman,
-        Myrmidon,
         Necromancer,
         Paladin,
         Virtue,
-        Luck,
         Knights,
-        Scout,
         Sorcerer,
         Fisherman,
-        Luck2,
         Bestial,
         Virtuoso,
         Aloron,
@@ -58,17 +50,29 @@ namespace Server
             AosAttributes attrs;
 
             if (setItem is BaseWeapon weapon)
+            {
                 attrs = weapon.Attributes;
+            }
             else if (setItem is BaseArmor armor)
+            {
                 attrs = armor.Attributes;
+            }
             else if (setItem is BaseClothing clothing)
+            {
                 attrs = clothing.Attributes;
+            }
             else if (setItem is BaseQuiver quiver)
+            {
                 attrs = quiver.Attributes;
+            }
             else if (setItem is BaseJewel jewel)
+            {
                 attrs = jewel.Attributes;
+            }
             else
+            {
                 attrs = new AosAttributes(setItem as Item);
+            }
 
             bool full = setItem.SetEquipped;
             int pieces = setItem.Pieces;
@@ -80,85 +84,127 @@ namespace Server
             if (setItem is IFishingAttire attire)
             {
                 if (setItem.SetEquipped && attire.SetBonus > 0)
+                {
                     list.Add(1151573, attire.SetBonus.ToString()); //Fish Bait Strength +~1_VAL~% (total)
+                }
                 else if (attire.BaitBonus > 0)
+                {
                     list.Add(1151572, attire.BaitBonus.ToString()); //Fish Bait Strength +~1_VAL~%
+                }
             }
 
             if (beserk)
+            {
                 list.Add(1151542, "5");// Berserk ~1_VAL~ (total)
+            }
 
             if (setItem.BardMasteryBonus)
+            {
                 list.Add(1151571); //Mastery Bonus Cooldown: 15 min.
+            }
 
             if ((prop = setItem.SetAttributes.RegenHits) != 0)
+            {
                 list.Add(full ? 1080244 : 1154369, (full ? prop + (attrs.RegenHits * pieces) : prop).ToString()); // hit point regeneration ~1_val~ (total)
+            }
 
             /*if ( (prop = setItem.SetAttributes.RegenStam) != 0 )
             list.Add(full ? 1154365 : 1154370, (full ? prop + (attrs.ReganStam * pieces) : prop).ToString()); // stamina regeneration ~1_val~ (total)*/
 
             if ((prop = setItem.SetAttributes.RegenMana) != 0)
+            {
                 list.Add(full ? 1080245 : 1080250, (full ? prop + (attrs.RegenMana * pieces) : prop).ToString()); // mana regeneration ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.DefendChance) != 0)
+            {
                 list.Add(full ? 1073493 : 1060408, (full ? prop + (attrs.DefendChance * pieces) : prop).ToString()); // defense chance increase ~1_val~% (total)
+            }
 
             if ((prop = setItem.SetAttributes.AttackChance) != 0)
+            {
                 list.Add(full ? 1073490 : 1154366, (full ? prop + (attrs.AttackChance * pieces) : prop).ToString()); // hit chance increase ~1_val~% (total)
+            }
 
             if ((prop = setItem.SetAttributes.BonusStr) != 0)
+            {
                 list.Add(full ? 1072514 : 1060485, (full ? prop + (attrs.BonusStr * pieces) : prop).ToString()); // strength bonus ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.BonusDex) != 0)
+            {
                 list.Add(full ? 1072503 : 1080447, (full ? prop + (attrs.BonusDex * pieces) : prop).ToString());// dexterity bonus ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.BonusInt) != 0)
+            {
                 list.Add(full ? 1072381 : 1080439, (full ? prop + (attrs.BonusInt * pieces) : prop).ToString());// intelligence bonus ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.BonusHits) != 0)
+            {
                 list.Add(full ? 1080360 : 1080358, (full ? prop + (attrs.BonusHits * pieces) : prop).ToString());// hit point increase ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.BonusStam) != 0)
+            {
                 list.Add(full ? 1060484 : 1060484, (full ? prop + (attrs.BonusStam * pieces) : prop).ToString()); // stamina increase ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.BonusMana) != 0)
+            {
                 list.Add(full ? 1060439 : 1060439, (full ? prop + (attrs.BonusMana * pieces) : prop).ToString()); // mana increase ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.WeaponDamage) != 0)
+            {
                 list.Add(full ? 1151216 : 1154367, (full ? prop + (attrs.WeaponDamage * pieces) : prop).ToString()); // damage increase ~1_val~% (total)
+            }
 
             if ((prop = setItem.SetAttributes.WeaponSpeed) != 0)
+            {
                 list.Add(full ? 1074323 : 1154368, (full ? prop + (attrs.WeaponSpeed * pieces) : prop).ToString()); // swing speed increase ~1_val~% (total)	
+            }
 
             if ((prop = setItem.SetAttributes.SpellDamage) != 0)
+            {
                 list.Add(full ? 1072380 : 1060483, (full ? prop + (attrs.SpellDamage * pieces) : prop).ToString()); // spell damage increase ~1_val~% (total)
+            }
 
             if ((prop = setItem.SetAttributes.CastRecovery) != 0)
+            {
                 list.Add(full ? 1080242 : 1080248, (full ? prop + (attrs.CastRecovery * pieces) : prop).ToString()); // faster cast recovery ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.CastSpeed) != 0)
+            {
                 list.Add(full ? 1080243 : 1080247, (full ? prop + (attrs.CastSpeed * pieces) : prop).ToString()); // faster casting ~1_val~ (total)
+            }
 
             if ((prop = setItem.SetAttributes.LowerManaCost) != 0)
+            {
                 list.Add(full ? 1073488 : 1060433, (full ? prop + (attrs.LowerManaCost * pieces) : prop).ToString());// lower mana cost ~1_val~% (total)
+            }
 
             if ((prop = setItem.SetAttributes.LowerRegCost) != 0)
+            {
                 list.Add(full ? 1080441 : 1080440, (full ? prop + (attrs.LowerRegCost * pieces) : prop).ToString()); // lower reagent cost ~1_val~% (total)
+            }
 
             if ((prop = setItem.SetAttributes.ReflectPhysical) != 0)
+            {
                 list.Add(full ? 1072513 : 1060442, (prop + attrs.ReflectPhysical).ToString()); // reflect physical damage ~1_val~% (total)
-
-            /*if ( (prop = setItem.SetAttributes.EnhancePotions) != 0 )
-            list.Add( , (full ? prop + (attrs.EnhancePotions * pieces) : prop).ToString()); enhance potions ~1_val~% (total)*/
-
-            if ((prop = setItem.SetAttributes.Luck) != 0)
-                list.Add(full ? 1073489 : 1080246, (full ? prop + (attrs.Luck * pieces) : prop).ToString()); // luck ~1_val~% (total)
+            }
 
             if (!setItem.SetEquipped && setItem.SetAttributes.NightSight != 0)
+            {
                 list.Add(1060441); // night sight
+            }
 
             if (setItem.SetSkillBonuses.Skill_1_Value != 0)
+            {
                 list.Add(1072502, $"{"#" + (1044060 + (int)setItem.SetSkillBonuses.Skill_1_Name)}\t{setItem.SetSkillBonuses.Skill_1_Value}"); // ~1_skill~ ~2_val~ (total)
+            }
         }
 
         public static void RemoveSetBonus(Mobile from, SetItem setID, Item item)
@@ -168,13 +214,17 @@ namespace Server
             for (int i = 0; i < from.Items.Count; i++)
             {
                 if (from.Items[i] == item)
+                {
                     self = true;
+                }
 
                 Remove(from, setID, from.Items[i]);
             }
 
             if (!self)
+            {
                 Remove(from, setID, item);
+            }
 
             from.UpdateResistances();
         }
@@ -188,7 +238,9 @@ namespace Server
                     if (setItem.LastEquipped)
                     {
                         if (from != null)
+                        {
                             RemoveStatBonuses(from, item);
+                        }
 
                         setItem.SetSkillBonuses.Remove();
                     }
@@ -257,12 +309,16 @@ namespace Server
                     ISetItem setItem = (ISetItem)from.Items[i];
 
                     if (setItem.IsSetItem && setItem.SetID == setID)
+                    {
                         equipped += 1;
+                    }
                 }
             }
 
             if (equipped == pieces)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -286,13 +342,19 @@ namespace Server
                 string modName = item.Serial.ToString();
 
                 if (str != 0)
+                {
                     to.AddStatMod(new StatMod(StatType.Str, modName + "SetStr", str, TimeSpan.Zero));
+                }
 
                 if (dex != 0)
+                {
                     to.AddStatMod(new StatMod(StatType.Dex, modName + "SetDex", dex, TimeSpan.Zero));
+                }
 
                 if (intel != 0)
+                {
                     to.AddStatMod(new StatMod(StatType.Int, modName + "SetInt", intel, TimeSpan.Zero));
+                }
             }
 
             to.CheckStatTimers();
@@ -309,19 +371,25 @@ namespace Server
                     BaseArmor armor = (BaseArmor)from.Items[i];
 
                     if (armor.IsSetItem && armor.SetID == setItem.SetID && armor.Resource == resource)
+                    {
                         count += 1;
+                    }
                 }
                 else if (from.Items[i] is BaseWeapon)
                 {
                     BaseWeapon weapon = (BaseWeapon)from.Items[i];
 
                     if (weapon.IsSetItem && weapon.SetID == setItem.SetID && weapon.Resource == resource)
+                    {
                         count += 1;
+                    }
                 }
             }
 
             if (count == setItem.Pieces)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -352,7 +420,9 @@ namespace Server
         public static bool ResistsBonusPerPiece(ISetItem item)
         {
             if (item.SetPhysicalBonus == 0 && item.SetFireBonus == 0 && item.SetColdBonus == 0 && item.SetPoisonBonus == 0 && item.SetEnergyBonus == 0)
+            {
                 return true;
+            }
 
             switch (item.SetID)
             {

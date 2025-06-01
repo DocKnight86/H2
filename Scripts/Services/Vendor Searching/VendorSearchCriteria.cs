@@ -76,7 +76,6 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(AosAttribute.LowerManaCost, 1075621, 1060433),
                 new SearchCriterionEntry(AosAttribute.LowerRegCost, 1075625, 1060434),
                 new SearchCriterionEntry(AosWeaponAttribute.MageWeapon, 1079759, 1060438),
-                new SearchCriterionEntry(AosArmorAttribute.MageArmor, 1079758),
                 new SearchCriterionEntry(AosAttribute.SpellChanneling, 1079766)
             }),
             new SearchCriteriaCategory(Category.Misc, 6, 1154647, new[] // Miscellaneous
@@ -87,15 +86,11 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(AosAttribute.NightSight, 1075643),
                 new SearchCriterionEntry(Misc.Cursed, 1116639),
                 new SearchCriterionEntry(Misc.NotCursed, 1154701),
-                new SearchCriterionEntry(Misc.CannotRepair, 1151826),
-                new SearchCriterionEntry(Misc.NotCannotBeRepaired, 1154705),
                 new SearchCriterionEntry(Misc.Brittle, 1116209),
                 new SearchCriterionEntry(Misc.NotBrittle, 1154702),
                 new SearchCriterionEntry(Misc.Antique, 1152714),
                 new SearchCriterionEntry(Misc.NotAntique, 1156479),
                 new SearchCriterionEntry(AosAttribute.EnhancePotions, 1075624, 1060411),
-                new SearchCriterionEntry(AosArmorAttribute.LowerStatReq, 1079757, 1060435),
-                new SearchCriterionEntry(AosAttribute.Luck, 1061153, 1060436),
                 new SearchCriterionEntry(AosAttribute.ReflectPhysical, 1075626, 1060442),
                 new SearchCriterionEntry(AosArmorAttribute.SelfRepair, 1079709, 1060450),
                 new SearchCriterionEntry("ArtifactRarity", 1154693, 1061078)
@@ -124,7 +119,6 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(AosWeaponAttribute.HitLeechStam, 1079707, 1060430),
                 new SearchCriterionEntry(AosWeaponAttribute.HitFatigue, 1154668, 1113700),
                 new SearchCriterionEntry(AosWeaponAttribute.HitManaDrain, 1154669, 1113699),
-                new SearchCriterionEntry(AosWeaponAttribute.SplinteringWeapon, 1154670, 1112857),
                 new SearchCriterionEntry(ExtendedWeaponAttribute.Bane, 1154671)
             }),
             new SearchCriteriaCategory(Category.HitArea, 11, 1154537, new[] // Hit Area

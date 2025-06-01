@@ -40,7 +40,7 @@ namespace Server.Items
             else
                 m_Ward = WardingEffect.SpellDamage;
 
-            Attributes.Brittle = 1;
+            NegativeAttributes.Brittle = 1;
         }
 
         public override void OnDoubleClick(Mobile from)

@@ -117,7 +117,7 @@ namespace Server.Items
                 {
                     TreasureMapChest.GetRandomItemStat(out int min, out int max);
 
-                    RunicReforging.GenerateRandomItem(item, 0, min, max);
+                    RunicReforging.GenerateRandomItem(item, min, max);
 
                     DropItem(item);
                 }

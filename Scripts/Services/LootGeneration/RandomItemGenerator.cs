@@ -7,7 +7,6 @@ namespace Server.Items
 {
     public class RandomItemGenerator
     {
-        public static int FeluccaLuckBonus { get; private set; }
         public static int FeluccaBudgetBonus { get; private set; }
 
         public static int MaxBaseBudget { get; private set; }
@@ -19,7 +18,6 @@ namespace Server.Items
 
         public static void Configure()
         {
-            FeluccaLuckBonus = Config.Get("Loot.FeluccaLuckBonus", 1000);
             FeluccaBudgetBonus = Config.Get("Loot.FeluccaBudgetBonus", 100);
 
             MaxBaseBudget = Config.Get("Loot.MaxBaseBudget", 700);
@@ -50,11 +48,10 @@ namespace Server.Items
         /// This is called in BaseRunicTool to ensure all items use the new system, as long as its not palyermade.
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="luckChance">adjusted luck chance</param>
         /// <param name="attributeCount"></param>
         /// <param name="minIntensity"></param>
         /// <param name="maxIntensity"></param>
-        public static void GenerateRandomItem(Item item, int luckChance, int attributeCount, int minIntensity, int maxIntensity)
+        public static void GenerateRandomItem(Item item, int attributeCount, int minIntensity, int maxIntensity)
         {
             int min = attributeCount * 2 * minIntensity;
             min = min + (int)(min * ((double)Utility.RandomMinMax(1, 4) / 10));
@@ -62,7 +59,7 @@ namespace Server.Items
             int max = attributeCount * 2 * maxIntensity;
             max = max + (int)(max * ((double)Utility.RandomMinMax(1, 4) / 10));
 
-            RunicReforging.GenerateRandomItem(item, luckChance, min, max);
+            RunicReforging.GenerateRandomItem(item, min, max);
         }
 
         /// <summary>

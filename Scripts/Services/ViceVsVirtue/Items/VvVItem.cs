@@ -14,47 +14,9 @@ namespace Server.Items
                 talisman.Attributes.AttackChance = 10;
             }
 
-            if (item is ClaininsSpellbook spellbook && spellbook.Attributes.LowerManaCost != 10)
-            {
-                spellbook.Attributes.LowerManaCost = 10;
-            }
-
             if (item is CrystallineRing ring && ring.Attributes.CastRecovery != 3)
             {
                 ring.Attributes.CastRecovery = 3;
-            }
-
-            if (item is HumanFeyLeggings fey)
-            {
-                if (fey.PhysicalBonus != 3)
-                    fey.PhysicalBonus = 3;
-
-                if (fey.FireBonus != 3)
-                    fey.FireBonus = 3;
-
-                if (fey.ColdBonus != 3)
-                    fey.ColdBonus = 3;
-
-                if (fey.EnergyBonus != 3)
-                    fey.EnergyBonus = 3;
-            }
-
-            if (item is HeartOfTheLion lion)
-            {
-                if (lion.PhysicalBonus != 5)
-                    lion.PhysicalBonus = 5;
-
-                if (lion.FireBonus != 5)
-                    lion.FireBonus = 5;
-
-                if (lion.ColdBonus != 5)
-                    lion.ColdBonus = 5;
-
-                if (lion.PoisonBonus != 5)
-                    lion.PoisonBonus = 5;
-
-                if (lion.EnergyBonus != 5)
-                    lion.EnergyBonus = 5;
             }
 
             if (item is HuntersHeaddress hunters)
@@ -80,14 +42,6 @@ namespace Server.Items
                 kasa.Attributes.DefendChance = 10;
             }
 
-            if (item is VesperOrderShield shield && shield.Attributes.CastSpeed != 0)
-            {
-                shield.Attributes.CastSpeed = 0;
-
-                if (shield.Name != "Order Shield")
-                    shield.Name = "Order Shield";
-            }
-
             if (item is OrnamentOfTheMagician magician && magician.Attributes.RegenMana != 3)
             {
                 magician.Attributes.RegenMana = 3;
@@ -96,24 +50,6 @@ namespace Server.Items
             if (item is RingOfTheVile vile && vile.Attributes.AttackChance != 25)
             {
                 vile.Attributes.AttackChance = 25;
-            }
-
-            if (item is RuneBeetleCarapace carapace)
-            {
-                if (carapace.PhysicalBonus != 3)
-                    carapace.PhysicalBonus = 3;
-
-                if (carapace.FireBonus != 3)
-                    carapace.FireBonus = 3;
-
-                if (carapace.ColdBonus != 3)
-                    carapace.ColdBonus = 3;
-
-                if (carapace.PoisonBonus != 3)
-                    carapace.PoisonBonus = 3;
-
-                if (carapace.EnergyBonus != 3)
-                    carapace.EnergyBonus = 3;
             }
 
             if (item is SpiritOfTheTotem totem)
@@ -129,29 +65,6 @@ namespace Server.Items
 
                 if (totem.Resistances.Energy != 6)
                     totem.Resistances.Energy = 6;
-            }
-
-            if (item is Stormgrip stormgrip && stormgrip.Attributes.AttackChance != 10)
-            {
-                stormgrip.Attributes.AttackChance = 10;
-            }
-
-            if (item is InquisitorsResolution inquis)
-            {
-                if (inquis.PhysicalBonus != 5)
-                    inquis.PhysicalBonus = 5;
-
-                if (inquis.FireBonus != 7)
-                    inquis.FireBonus = 7;
-
-                if (inquis.ColdBonus != -2)
-                    inquis.ColdBonus = -2;
-
-                if (inquis.PoisonBonus != 7)
-                    inquis.PoisonBonus = 7;
-
-                if (inquis.EnergyBonus != -7)
-                    inquis.EnergyBonus = -7;
             }
 
             if (item is TomeOfLostKnowledge knowledge && knowledge.Attributes.RegenMana != 3)

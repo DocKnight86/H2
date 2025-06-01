@@ -1062,11 +1062,6 @@ namespace Server.Mobiles
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
-            if (ConvertsMageArmor && dropped is BaseArmor armor && CheckConvertArmor(from, armor))
-            {
-                return false;
-            }
-
             if (dropped is SmallBOD || dropped is LargeBOD)
             {
                 PlayerMobile pm = from as PlayerMobile;
@@ -2306,11 +2301,6 @@ namespace Server.Mobiles
 
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
         {
-            if (ConvertsMageArmor)
-            {
-                list.Add(new UpgradeMageArmor(from, this));
-            }
-
             if (from.Alive && IsActiveVendor)
             {
                 if (SupportsBulkOrders(from))
@@ -2343,171 +2333,6 @@ namespace Server.Mobiles
         {
             return (IBuyItemInfo[])m_ArmorBuyInfo.ToArray(typeof(IBuyItemInfo));
         }
-
-        #region Mage Armor Conversion
-        public virtual bool ConvertsMageArmor => false;
-
-        private readonly List<PendingConvert> _PendingConvertEntries = new List<PendingConvert>();
-
-        private bool CheckConvertArmor(Mobile from, BaseArmor armor)
-        {
-            PendingConvert convert = GetConvert(from, armor);
-
-            if (convert == null || !(from is PlayerMobile))
-                return false;
-
-            object state = convert.Armor;
-
-            RemoveConvertEntry(convert);
-            from.CloseGump(typeof(Gumps.ConfirmCallbackGump));
-
-            from.SendGump(new Gumps.ConfirmCallbackGump((PlayerMobile)from, 1049004, 1154115, state, null,
-                (m, obj) =>
-                {
-                    if (!Deleted && obj is BaseArmor ar && armor.IsChildOf(m.Backpack) && CanConvertArmor(m, ar))
-                    {
-                        if (!InRange(m.Location, 3))
-                        {
-                            m.SendLocalizedMessage(1149654); // You are too far away.
-                        }
-                        else if (!Banker.Withdraw(m, 250000, true))
-                        {
-                            m.SendLocalizedMessage(1019022); // You do not have enough gold.
-                        }
-                        else
-                        {
-                            ConvertMageArmor(m, ar);
-                        }
-                    }
-                },
-                (m, obj) =>
-                {
-                    PendingConvert con = GetConvert(m, armor);
-
-                    if (con != null)
-                    {
-                        RemoveConvertEntry(con);
-                    }
-                }));
-
-            return true;
-        }
-
-        protected virtual bool CanConvertArmor(Mobile from, BaseArmor armor)
-        {
-            if (armor == null || armor is BaseShield/*|| armor.ArtifactRarity != 0 || armor.IsArtifact*/)
-            {
-                from.SendLocalizedMessage(1113044); // You can't convert that.
-                return false;
-            }
-
-            if (armor.ArmorAttributes.MageArmor == 0 &&
-                SkillHandlers.Imbuing.GetTotalMods(armor) > 4)
-            {
-                from.SendLocalizedMessage(1154119); // This action would exceed a stat cap
-                return false;
-            }
-
-            return true;
-        }
-
-        public void TryConvertArmor(Mobile from, BaseArmor armor)
-        {
-            if (CanConvertArmor(from, armor))
-            {
-                from.SendLocalizedMessage(1154117); // Ah yes, I will convert this piece of armor but it's gonna cost you 250,000 gold coin. Payment is due immediately. Just hand me the armor.
-
-                PendingConvert convert = GetConvert(from, armor);
-
-                if (convert != null)
-                {
-                    convert.ResetTimer();
-                }
-                else
-                {
-                    _PendingConvertEntries.Add(new PendingConvert(from, armor, this));
-                }
-            }
-        }
-
-        public virtual void ConvertMageArmor(Mobile from, BaseArmor armor)
-        {
-            if (armor.ArmorAttributes.MageArmor > 0)
-                armor.ArmorAttributes.MageArmor = 0;
-            else
-                armor.ArmorAttributes.MageArmor = 1;
-
-            from.SendLocalizedMessage(1154118); // Your armor has been converted.
-        }
-
-        private void RemoveConvertEntry(PendingConvert convert)
-        {
-            _PendingConvertEntries.Remove(convert);
-
-            if (convert.Timer != null)
-            {
-                convert.Timer.Stop();
-            }
-        }
-
-        private PendingConvert GetConvert(Mobile from, BaseArmor armor)
-        {
-            for (var index = 0; index < _PendingConvertEntries.Count; index++)
-            {
-                var c = _PendingConvertEntries[index];
-
-                if (c.From == from && c.Armor == armor)
-                {
-                    return c;
-                }
-            }
-
-            return null;
-        }
-
-        protected class PendingConvert
-        {
-            public Mobile From { get; set; }
-            public BaseArmor Armor { get; set; }
-            public BaseVendor Vendor { get; set; }
-
-            public Timer Timer { get; set; }
-            public DateTime Expires { get; set; }
-
-            public bool Expired => DateTime.UtcNow > Expires;
-
-            public PendingConvert(Mobile from, BaseArmor armor, BaseVendor vendor)
-            {
-                From = from;
-                Armor = armor;
-                Vendor = vendor;
-
-                ResetTimer();
-            }
-
-            public void ResetTimer()
-            {
-                if (Timer != null)
-                {
-                    Timer.Stop();
-                    Timer = null;
-                }
-
-                Expires = DateTime.UtcNow + TimeSpan.FromSeconds(120);
-
-                Timer = Timer.DelayCall(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), OnTick);
-                Timer.Start();
-            }
-
-            public void OnTick()
-            {
-                if (Expired)
-                {
-                    Vendor.RemoveConvertEntry(this);
-                }
-            }
-        }
-        #endregion
     }
 }
 
@@ -2544,48 +2369,6 @@ namespace Server.ContextMenus
         public override void OnClick()
         {
             m_Vendor.VendorSell(Owner.From);
-        }
-    }
-
-    public class UpgradeMageArmor : ContextMenuEntry
-    {
-        public Mobile From { get; set; }
-        public BaseVendor Vendor { get; set; }
-
-        public UpgradeMageArmor(Mobile from, BaseVendor vendor)
-            : base(1154114) // Convert Mage Armor
-        {
-            Enabled = vendor.CheckVendorAccess(from);
-
-            From = from;
-            Vendor = vendor;
-        }
-
-        public override void OnClick()
-        {
-            From.Target = new InternalTarget(From, Vendor);
-            From.SendLocalizedMessage(1154116); // Target a piece of armor to show to the guild master.
-        }
-
-        private class InternalTarget : Target
-        {
-            public Mobile From { get; set; }
-            public BaseVendor Vendor { get; set; }
-
-            public InternalTarget(Mobile from, BaseVendor vendor)
-                : base(1, false, TargetFlags.None)
-            {
-                From = from;
-                Vendor = vendor;
-            }
-
-            protected override void OnTarget(Mobile from, object targeted)
-            {
-                if (targeted is BaseArmor armor)
-                {
-                    Vendor.TryConvertArmor(from, armor);
-                }
-            }
         }
     }
 }

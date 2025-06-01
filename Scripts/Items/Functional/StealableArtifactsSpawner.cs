@@ -52,7 +52,6 @@ namespace Server.Items
             new StealableEntry(Map.Malas, new Point3D(396, 8, 4), 36864, 55296, typeof(ZyronicClaw)),
             new StealableEntry(Map.Malas, new Point3D(261, 97, -1), 36864, 55296, typeof(TitansHammer)),
             new StealableEntry(Map.Malas, new Point3D(369, 389, -1), 36864, 55296, typeof(BladeOfTheRighteous)),
-            new StealableEntry(Map.Malas, new Point3D(467, 92, 4), 36864, 55296, typeof(InquisitorsResolution)),
             // Doom - Artifact rarity 12
             new StealableEntry(Map.Malas, new Point3D(487, 364, -1), 147456, 221184, typeof(RuinedPaintingArtifact)),
             #region New Doom Artifacts

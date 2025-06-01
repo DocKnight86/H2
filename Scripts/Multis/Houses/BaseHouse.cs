@@ -293,7 +293,7 @@ namespace Server.Multis
 
                     foreach (Item item in eable)
                     {
-                        if (item.RootParent == null && item.Movable && item.LootType != LootType.Blessed && !item.Insured)
+                        if (item.RootParent == null && item.Movable && item.LootType != LootType.Blessed)
                         {
                             list.Add(item);
                         }
@@ -1437,7 +1437,7 @@ namespace Server.Multis
 
         private readonly Type[] _AccessibleToAll =
         {
-            typeof(TenthAnniversarySculpture), typeof(RewardBrazier), typeof(VendorRentalContract), typeof(Dyes), typeof(DyeTub),
+            typeof(RewardBrazier), typeof(VendorRentalContract), typeof(Dyes), typeof(DyeTub),
             typeof(BaseInstrument), typeof(Clock), typeof(TreasureMap), typeof(RecallRune), typeof(Dices), typeof(BaseBoard),
             typeof(Runebook)
         };

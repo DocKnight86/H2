@@ -85,9 +85,6 @@ namespace Server.Engines.RisingTide
                 new CollectionItem(typeof(FirstMateRewardDeed), 0x14EF, 0, 0, 150000),
                 new CollectionItem(typeof(SeaWaspRewardDeed), 0x14EF, 0, 0, 50000),
                 new CollectionItem(typeof(LandlubberRewardDeed), 0x14EF, 0, 0, 30000),
-                new CollectionItem(typeof(SpikedWhipOfPlundering), 0xA28B, 0, 0, 180000),
-                new CollectionItem(typeof(BladedWhipOfPlundering), 0xA28B, 0, 0, 180000),
-                new CollectionItem(typeof(BarbedWhipOfPlundering), 0xA28B, 0, 0, 180000),
                 new CollectionItem(typeof(TritonStatue), 0xA2D8, 0, 2713, 140000),
                 new CollectionItem(typeof(PirateShieldRecipeScroll), 0x2831, 0, 0, 50000),
                 new CollectionItem(typeof(HooksShield), 0xA649, 0, 0, 200000)

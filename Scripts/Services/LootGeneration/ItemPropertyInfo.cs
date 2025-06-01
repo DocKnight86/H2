@@ -314,8 +314,8 @@ namespace Server.Items
             Register(20, new ItemPropertyInfo(AosAttribute.EnhancePotions, 1075624, 100, typeof(EnchantedEssence), typeof(Citrine), typeof(CrushedGlass), 5, 5, 25, 1111950,
                 new PropInfo(1, 0, 15), new PropInfo(2, 0, 15), new PropInfo(3, 0, 5), new PropInfo(5, 0, 5), new PropInfo(6, 25, 25, new[] { 30, 35 })));
 
-            Register(21, new ItemPropertyInfo(AosAttribute.Luck, 1061153, 100, typeof(MagicalResidue), typeof(Citrine), typeof(ChagaMushroom), 1, 1, 100, 1111999,
-                new PropInfo(1, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(2, 120, 120, new[] { 130, 140, 150, 160, 170 }), new PropInfo(3, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(4, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(5, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(6, 100, 100, new[] { 110, 120, 130, 140, 150 })));
+            /*Register(21, new ItemPropertyInfo(AosAttribute.Luck, 1061153, 100, typeof(MagicalResidue), typeof(Citrine), typeof(ChagaMushroom), 1, 1, 100, 1111999,
+                new PropInfo(1, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(2, 120, 120, new[] { 130, 140, 150, 160, 170 }), new PropInfo(3, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(4, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(5, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(6, 100, 100, new[] { 110, 120, 130, 140, 150 })));*/
 
             Register(22, new ItemPropertyInfo(AosAttribute.SpellChanneling, 1079766, 100, typeof(MagicalResidue), typeof(Diamond), typeof(SilverSnakeSkin), 0, 1, 1, 1112040,
                 new PropInfo(1, 1, 1), new PropInfo(2, 1, 1), new PropInfo(4, 1, 1)));
@@ -379,15 +379,6 @@ namespace Server.Items
 
             Register(43, new ItemPropertyInfo(AosArmorAttribute.DurabilityBonus, 1017323, 100, typeof(EnchantedEssence), typeof(Diamond), typeof(PowderedIron), 10, 10, 100, 1111949,
                new PropInfo(3, 0, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(4, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(5, 0, 100, new[] { 110, 120, 130, 140, 150 })));
-
-            Register(44, new ItemPropertyInfo(AosWeaponAttribute.LowerStatReq, 1079757, 100, typeof(EnchantedEssence), typeof(Amethyst), typeof(ElvenFletching), 10, 10, 100, 1111998,
-                new PropInfo(1, 0, 100), new PropInfo(2, 0, 100)));
-
-            Register(45, new ItemPropertyInfo(AosArmorAttribute.LowerStatReq, 1079757, 100, typeof(EnchantedEssence), typeof(Amethyst), typeof(ElvenFletching), 10, 10, 100, 1111998,
-                new PropInfo(3, 0, 100), new PropInfo(4, 0, 100), new PropInfo(5, 0, 100)));
-
-            Register(49, new ItemPropertyInfo(AosArmorAttribute.MageArmor, 1079758, 0, typeof(EnchantedEssence), typeof(Diamond), typeof(AbyssalCloth), 0, 1, 1, 1112000,
-                new PropInfo(3, 1, 1)));
 
             Register(51, new ItemPropertyInfo(AosElementAttribute.Physical, 1061158, 100, typeof(MagicalResidue), typeof(Diamond), typeof(BouraPelt), 1, 1, 15, 1112010,
                 new PropInfo(1, 10, 100, 100), new PropInfo(2, 10, 100, 100), new PropInfo(3, 15, 15, new[] { 20, 25, 30 }), new PropInfo(4, 15, 15), new PropInfo(5, 15, 15, new[] { 20, 25, 30 }), new PropInfo(6, 15, 15, new[] { 20 })));
@@ -522,9 +513,6 @@ namespace Server.Items
 
             Register(204, new ItemPropertyInfo(AosWeaponAttribute.HitManaDrain, 1154669, 140, 1, 2, 50, 1152436,
                  new PropInfo(1, 0, 70), new PropInfo(2, 0, 70)));
-
-            Register(205, new ItemPropertyInfo(AosWeaponAttribute.SplinteringWeapon, 1154670, 140, 5, 5, 30, 1152396,
-                 new PropInfo(1, 0, 20, new[] { 25, 30 })));
 
             Register(206, new ItemPropertyInfo(AosWeaponAttribute.ReactiveParalyze, 1154660, 140, 0, 1, 1, 1152400,
                  new PropInfo(1, 0, 1)));
@@ -1070,12 +1058,30 @@ namespace Server.Items
         {
             switch (type)
             {
-                case AosElementAttribute.Physical: return 51;
-                case AosElementAttribute.Fire: return 52;
-                case AosElementAttribute.Cold: return 53;
-                case AosElementAttribute.Poison: return 54;
-                case AosElementAttribute.Energy: return 55;
-                case AosElementAttribute.Chaos: return 56;
+                case AosElementAttribute.Physical:
+                {
+                    return 51;
+                }
+                case AosElementAttribute.Fire:
+                {
+                    return 52;
+                }
+                case AosElementAttribute.Cold:
+                {
+                    return 53;
+                }
+                case AosElementAttribute.Poison:
+                {
+                    return 54;
+                }
+                case AosElementAttribute.Energy:
+                {
+                    return 55;
+                }
+                case AosElementAttribute.Chaos:
+                {
+                    return 56;
+                }
             }
 
             return -1;
@@ -1165,15 +1171,19 @@ namespace Server.Items
             {
                 case ItemType.Melee:
                 case ItemType.Ranged:
+                {
                     list.Add(1000); // Placeholder for random slayers
                     break;
+                }
                 case ItemType.Jewel:
+                {
                     list.Add(1001); // Placeholders for random skills
                     list.Add(1002);
                     list.Add(1003);
                     list.Add(1004);
                     list.Add(1005);
                     break;
+                }
             }
         }
 
@@ -1213,41 +1223,62 @@ namespace Server.Items
                     switch (id)
                     {
                         case 200: // Blood Drinking
+                        {
                             return item is BaseWeapon weapon && (weapon.PrimaryAbility == WeaponAbility.BleedAttack || weapon.SecondaryAbility == WeaponAbility.BleedAttack);
+                        }
                         case 205: // Splintering
+                        {
                             return !reforged;
+                        }
                         case 206: // Reactive Paralyze Weapon
+                        {
                             return item is BaseWeapon && item.Layer == Layer.TwoHanded;
+                        }
                         case 220: // Reactive Paralyze Armor
+                        {
                             return item is BaseShield;
+                        }
                         case 63:  // Balanced
                         case 61:
+                        {
                             return item.Layer == Layer.TwoHanded;
+                        }
                         case 40:  // UBWS
+                        {
                             return GetItemType(item) == ItemType.Melee;
+                        }
                         case 30:
                         case 31:
                         case 32:
                         case 33:
                         case 34: // Hit Area Cannot be applied if it already has one present
+                        {
                             return item is BaseWeapon baseWeapon && !HasHitArea(baseWeapon);
+                        }
                         case 35:
                         case 36:
                         case 37:
                         case 38:
                         case 39: // Hit Spell Cannot be applied if it already has one present
+                        {
                             return item is BaseWeapon bw && !HasHitSpell(bw);
+                        }
                         case 49: // MageArmor cannot be applied if the armor is already meddable
+                        {
                             return item is BaseArmor armor && armor.MeditationAllowance != ArmorMeditationAllowance.All;
+                        }
                         case 208:
                         case 209:
                         case 210:
                         case 211:
                         case 212:
                         case 213: // Eaters Cannot be applied if it already has one present
+                        {
                             return (item is BaseArmor || item is BaseJewel || item is BaseWeapon) && !HasEater(item);
+                        }
                         case 500:
                         case 501: // Self Repair cannot be added to items with brittle/antique/no repair or items that have been imbued
+                        {
                             if (item is IImbuableEquipement equipement && equipement.TimesImbued > 0)
                             {
                                 return false;
@@ -1255,12 +1286,13 @@ namespace Server.Items
 
                             NegativeAttributes neg = RunicReforging.GetNegativeAttributes(item);
 
-                            if (neg != null && (neg.Brittle > 0 || neg.Antique > 0 || neg.NoRepair > 0))
+                            if (neg != null && (neg.Brittle > 0 || neg.Antique > 0))
                             {
                                 return false;
                             }
 
                             break;
+                        }
                     }
 
                     return true;

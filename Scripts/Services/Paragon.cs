@@ -15,11 +15,7 @@ namespace Server.Mobiles
             typeof(GoldBricks), typeof(PhillipsWoodenSteed),
             typeof(AlchemistsBauble), typeof(BowOfTheJukaKing),
             typeof(BurglarsBandana), typeof(GwennosHarp),
-            typeof(IolosLute), typeof(LunaLance),
-            typeof(NightsKiss), typeof(NoxRangersHeavyCrossbow),
-            typeof(OrcishVisage), typeof(PolarBearMask),
-            typeof(ShieldOfInvulnerability), typeof(StaffOfPower),
-            typeof(VioletCourage), typeof(HeartOfTheLion),
+            typeof(IolosLute), typeof(PolarBearMask),
             typeof(WrathOfTheDryad), typeof(PixieSwatter)
         };
 

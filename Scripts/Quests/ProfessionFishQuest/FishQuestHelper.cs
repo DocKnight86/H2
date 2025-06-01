@@ -237,7 +237,7 @@ namespace Server.Engines.Quests
                 else
                 {
                     if (item is FishingPole pole)
-                        BaseRunicTool.ApplyAttributesTo(pole, false, 0, Utility.RandomMinMax(1, tier + 1), 25, 100);
+                        BaseRunicTool.ApplyAttributesTo(pole, false, Utility.RandomMinMax(1, tier + 1), 25, 100);
 
                     from.SendLocalizedMessage(1149589); //You receive some rare fishing equipment.
                 }

@@ -79,7 +79,7 @@ namespace Server.Engines.Quests
         {
             if (item != null)
             {
-                RunicReforging.GenerateRandomItem(item, 0, 10, 850);
+                RunicReforging.GenerateRandomItem(item, 10, 850);
             }
         }
 

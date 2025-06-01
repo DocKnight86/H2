@@ -464,8 +464,8 @@ namespace Server
                 case 2: return from.GetMaxResistance(ResistanceType.Cold);
                 case 3: return from.GetMaxResistance(ResistanceType.Poison);
                 case 4: return from.GetMaxResistance(ResistanceType.Energy);
-                case 5: return Math.Min(45 + BaseArmor.GetRefinedDefenseChance(from), AosAttributes.GetValue(from, AosAttribute.DefendChance));
-                case 6: return 45 + BaseArmor.GetRefinedDefenseChance(from) + WhiteTigerFormSpell.GetDefenseCap(from);
+                case 5: return Math.Min(45, AosAttributes.GetValue(from, AosAttribute.DefendChance));
+                case 6: return 45 + WhiteTigerFormSpell.GetDefenseCap(from);
                 case 7: return Math.Min(45, AosAttributes.GetValue(from, AosAttribute.AttackChance));
                 case 8: return Math.Min(60, AosAttributes.GetValue(from, AosAttribute.WeaponSpeed));
                 case 9: return Math.Min(100, AosAttributes.GetValue(from, AosAttribute.WeaponDamage));
@@ -521,13 +521,11 @@ namespace Server
         LowerRegCost = 0x00020000,
         ReflectPhysical = 0x00040000,
         EnhancePotions = 0x00080000,
-        Luck = 0x00100000,
-        SpellChanneling = 0x00200000,
-        NightSight = 0x00400000,
-        IncreasedKarmaLoss = 0x00800000,
-        Brittle = 0x01000000,
-        LowerAmmoCost = 0x02000000,
-        BalancedWeapon = 0x04000000
+        SpellChanneling = 0x00100000,
+        NightSight = 0x00200000,
+        IncreasedKarmaLoss = 0x00400000,
+        LowerAmmoCost = 0x00800000,
+        BalancedWeapon = 0x01000000
     }
 
     public sealed class AosAttributes : BaseAttributes
@@ -578,7 +576,7 @@ namespace Server
 
             int value = 0;
 
-            if (attribute == AosAttribute.Luck || attribute == AosAttribute.RegenMana || attribute == AosAttribute.DefendChance || attribute == AosAttribute.EnhancePotions)
+            if (attribute == AosAttribute.RegenMana || attribute == AosAttribute.DefendChance || attribute == AosAttribute.EnhancePotions)
             {
                 value += SphynxFortune.GetAosAttributeBonus(m, attribute);
             }
@@ -594,24 +592,6 @@ namespace Server
                 if (attrs != null)
                 {
                     value += attrs[attribute];
-                }
-
-                if (attribute == AosAttribute.Luck)
-                {
-                    if (obj is BaseWeapon weapon)
-                    {
-                        value += weapon.GetLuckBonus();
-                    }
-
-                    if (obj is BaseArmor armor)
-                    {
-                        value += armor.GetLuckBonus();
-                    }
-
-                    if (obj is FishingPole pole)
-                    {
-                        value += pole.GetLuckBonus();
-                    }
                 }
 
                 if (obj is ISetItem setItem)
@@ -952,8 +932,6 @@ namespace Server
                     value = 40;
                 }
 
-                value += BaseArmor.GetInherentLowerManaCost(m);
-
                 if (CrazedMage.IsUnderDivertEffects(m))
                 {
                     value -= (int)(value*0.3);
@@ -1097,9 +1075,6 @@ namespace Server
         public int EnhancePotions { get => this[AosAttribute.EnhancePotions]; set => this[AosAttribute.EnhancePotions] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Luck { get => this[AosAttribute.Luck]; set => this[AosAttribute.Luck] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int SpellChanneling { get => this[AosAttribute.SpellChanneling]; set => this[AosAttribute.SpellChanneling] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1107,9 +1082,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int IncreasedKarmaLoss { get => this[AosAttribute.IncreasedKarmaLoss]; set => this[AosAttribute.IncreasedKarmaLoss] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int Brittle { get => this[AosAttribute.Brittle]; set => this[AosAttribute.Brittle] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int LowerAmmoCost { get => this[AosAttribute.LowerAmmoCost]; set => this[AosAttribute.LowerAmmoCost] = value; }
@@ -1121,7 +1093,7 @@ namespace Server
     [Flags]
     public enum AosWeaponAttribute : long
     {
-        LowerStatReq = 0x00000001,
+        UNUSED = 0x00000001,
         SelfRepair = 0x00000002,
         HitLeechHits = 0x00000004,
         HitLeechStam = 0x00000008,
@@ -1151,8 +1123,7 @@ namespace Server
         HitCurse = 0x08000000,
         HitFatigue = 0x10000000,
         HitManaDrain = 0x20000000,
-        SplinteringWeapon = 0x40000000,
-        ReactiveParalyze = 0x80000000
+        ReactiveParalyze = 0x40000000
     }
 
     public sealed class AosWeaponAttributes : BaseAttributes
@@ -1310,9 +1281,6 @@ namespace Server
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int LowerStatReq { get => this[AosWeaponAttribute.LowerStatReq]; set => this[AosWeaponAttribute.LowerStatReq] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int SelfRepair { get => this[AosWeaponAttribute.SelfRepair]; set => this[AosWeaponAttribute.SelfRepair] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1398,9 +1366,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int HitManaDrain { get => this[AosWeaponAttribute.HitManaDrain]; set => this[AosWeaponAttribute.HitManaDrain] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int SplinteringWeapon { get => this[AosWeaponAttribute.SplinteringWeapon]; set => this[AosWeaponAttribute.SplinteringWeapon] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int ReactiveParalyze { get => this[AosWeaponAttribute.ReactiveParalyze]; set => this[AosWeaponAttribute.ReactiveParalyze] = value; }
@@ -1495,12 +1460,10 @@ namespace Server
     [Flags]
     public enum AosArmorAttribute
     {
-        LowerStatReq = 0x00000001,
-        SelfRepair = 0x00000002,
-        MageArmor = 0x00000004,
-        DurabilityBonus = 0x00000008,
-        ReactiveParalyze = 0x00000010,
-        SoulCharge = 0x00000020
+        SelfRepair = 0x00000001,
+        DurabilityBonus = 0x00000002,
+        ReactiveParalyze = 0x00000004,
+        SoulCharge = 0x00000008
     }
 
     public sealed class AosArmorAttributes : BaseAttributes
@@ -1616,13 +1579,7 @@ namespace Server
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int LowerStatReq { get => this[AosArmorAttribute.LowerStatReq]; set => this[AosArmorAttribute.LowerStatReq] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int SelfRepair { get => this[AosArmorAttribute.SelfRepair]; set => this[AosArmorAttribute.SelfRepair] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int MageArmor { get => this[AosArmorAttribute.MageArmor]; set => this[AosArmorAttribute.MageArmor] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int DurabilityBonus { get => this[AosArmorAttribute.DurabilityBonus]; set => this[AosArmorAttribute.DurabilityBonus] = value; }
@@ -1942,16 +1899,7 @@ namespace Server
         ResonancePoison = 0x00000100,
         ResonanceEnergy = 0x00000200,
         ResonanceKinetic = 0x00000400,
-        /*Soul Charge is wrong. 
-         * Do not use these types. 
-         * Use AosArmorAttribute type only.
-         * Fill these in with any new attributes.*/
-        SoulChargeFire = 0x00000800,
-        SoulChargeCold = 0x00001000,
-        SoulChargePoison = 0x00002000,
-        SoulChargeEnergy = 0x00004000,
-        SoulChargeKinetic = 0x00008000,
-        CastingFocus = 0x00010000
+        CastingFocus = 0x00000800
     }
 
     public sealed class SAAbsorptionAttributes : BaseAttributes
@@ -2074,48 +2022,6 @@ namespace Server
         [CommandProperty(AccessLevel.GameMaster)]
         public int ResonanceKinetic { get => this[SAAbsorptionAttribute.ResonanceKinetic]; set => this[SAAbsorptionAttribute.ResonanceKinetic] = value; }
 
-        // NEED TO DELETE ALL OF THESE EVENTUALLY
-        public int SoulChargeFire
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeFire];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeFire] = value;
-            }
-        }
-        public int SoulChargeCold
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeCold];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeCold] = value;
-            }
-        }
-        public int SoulChargePoison
-        {
-            get => this[SAAbsorptionAttribute.SoulChargePoison];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargePoison] = value;
-            }
-        }
-        public int SoulChargeEnergy
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeEnergy];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeEnergy] = value;
-            }
-        }
-        public int SoulChargeKinetic
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeKinetic];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeKinetic] = value;
-            }
-        }
-
         [CommandProperty(AccessLevel.GameMaster)]
         public int CastingFocus { get => this[SAAbsorptionAttribute.CastingFocus]; set => this[SAAbsorptionAttribute.CastingFocus] = value; }
     }
@@ -2185,8 +2091,7 @@ namespace Server
         Prized = 0x00000002,
         Massive = 0x00000004,
         Unwieldly = 0x00000008,
-        Antique = 0x00000010,
-        NoRepair = 0x00000020
+        Antique = 0x00000010
     }
 
     public sealed class NegativeAttributes : BaseAttributes
@@ -2208,13 +2113,7 @@ namespace Server
 
         public void GetProperties(ObjectPropertyList list, Item item)
         {
-            if (NoRepair > 0)
-            {
-                list.Add(1151782);
-            }
-
-            if (Brittle > 0 || item is BaseWeapon weapon && weapon.Attributes.Brittle > 0 || item is BaseArmor armor && armor.Attributes.Brittle > 0 ||
-                item is BaseJewel jewel && jewel.Attributes.Brittle > 0 || item is BaseClothing clothing && clothing.Attributes.Brittle > 0)
+            if (Brittle > 0)
             {
                 list.Add(1116209);
             }
@@ -2320,9 +2219,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int Antique { get => this[NegativeAttribute.Antique]; set => this[NegativeAttribute.Antique] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int NoRepair { get => this[NegativeAttribute.NoRepair]; set => this[NegativeAttribute.NoRepair] = value; }
     }
 
     [PropertyObject]

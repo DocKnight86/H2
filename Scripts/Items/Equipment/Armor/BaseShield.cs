@@ -135,21 +135,6 @@ namespace Server.Items
             return 0;
         }
 
-        public override int GetLuckBonus()
-        {
-            if (CraftResources.GetType(Resource) != CraftResourceType.Wood)
-            {
-                return base.GetLuckBonus();
-            }
-
-            CraftAttributeInfo attrInfo = GetResourceAttrs(Resource);
-
-            if (attrInfo == null)
-                return 0;
-
-            return attrInfo.ShieldLuck;
-        }
-
         public override void DistributeExceptionalBonuses(Mobile from, bool runic)
         {
         }
@@ -165,7 +150,6 @@ namespace Server.Items
                 if (Resource != CraftResource.Heartwood)
                 {
                     Attributes.SpellChanneling += attrInfo.ShieldSpellChanneling;
-                    ArmorAttributes.LowerStatReq += attrInfo.ShieldLowerRequirements;
 
                     if (attrInfo.ShieldRegenHits > 0)
                     {

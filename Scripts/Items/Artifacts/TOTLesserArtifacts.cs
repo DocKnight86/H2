@@ -52,45 +52,6 @@ namespace Server.Items
         }
     }
 
-    public class AncientSamuraiDo : PlateDo
-    {
-        public override bool IsArtifact => true;
-
-        [Constructable]
-        public AncientSamuraiDo()
-        {
-            ArmorAttributes.LowerStatReq = 100;
-            ArmorAttributes.MageArmor = 1;
-            SkillBonuses.SetValues(0, SkillName.Parry, 10.0);
-        }
-
-        public AncientSamuraiDo(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override int LabelNumber => 1070926;// Ancient Samurai Do
-        public override int BasePhysicalResistance => 15;
-        public override int BaseFireResistance => 12;
-        public override int BaseColdResistance => 10;
-        public override int BasePoisonResistance => 11;
-        public override int BaseEnergyResistance => 8;
-        public override int InitMinHits => 255;
-        public override int InitMaxHits => 255;
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
     public class ArmsOfTacticalExcellence : LeatherHiroSode
     {
         public override bool IsArtifact => true;
@@ -157,42 +118,6 @@ namespace Server.Items
         {
             base.Serialize(writer);
             writer.Write(1);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class DaimyosHelm : PlateBattleKabuto
-    {
-        public override bool IsArtifact => true;
-
-        [Constructable]
-        public DaimyosHelm()
-        {
-            ArmorAttributes.LowerStatReq = 100;
-            ArmorAttributes.MageArmor = 1;
-            ArmorAttributes.SelfRepair = 3;
-            Attributes.WeaponSpeed = 10;
-        }
-
-        public DaimyosHelm(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override int LabelNumber => 1070920;// Daimyo's Helm
-        public override int BaseColdResistance => 10;
-        public override int InitMinHits => 255;
-        public override int InitMaxHits => 255;
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -392,44 +317,6 @@ namespace Server.Items
         }
     }
 
-    public class LegsOfStability : PlateSuneate
-    {
-        public override bool IsArtifact => true;
-
-        [Constructable]
-        public LegsOfStability()
-        {
-            Attributes.BonusStam = 5;
-
-            ArmorAttributes.SelfRepair = 3;
-            ArmorAttributes.LowerStatReq = 100;
-            ArmorAttributes.MageArmor = 1;
-        }
-
-        public LegsOfStability(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override int LabelNumber => 1070925;// Legs of Stability
-        public override int BasePhysicalResistance => 20;
-        public override int BasePoisonResistance => 18;
-        public override int InitMinHits => 255;
-        public override int InitMaxHits => 255;
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
     public class PeasantsBokuto : Bokuto
     {
         public override bool IsArtifact => true;
@@ -560,46 +447,6 @@ namespace Server.Items
         }
 
         public override int LabelNumber => 1070934;// Tome of Enlightenment
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class LeurociansMempoOfFortune : LeatherMempo
-    {
-        public override bool IsArtifact => true;
-
-        [Constructable]
-        public LeurociansMempoOfFortune()
-        {
-            Hue = 0x501;
-
-            Attributes.Luck = 300;
-            Attributes.RegenMana = 1;
-        }
-
-        public LeurociansMempoOfFortune(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override int LabelNumber => 1071460;// Leurocian's mempo of fortune
-        public override int BasePhysicalResistance => 15;
-        public override int BaseFireResistance => 10;
-        public override int BaseColdResistance => 10;
-        public override int BasePoisonResistance => 10;
-        public override int BaseEnergyResistance => 15;
-        public override int InitMinHits => 255;
-        public override int InitMaxHits => 255;
 
         public override void Serialize(GenericWriter writer)
         {

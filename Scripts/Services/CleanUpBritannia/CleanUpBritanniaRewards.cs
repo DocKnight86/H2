@@ -50,16 +50,6 @@ namespace Server.Engines.CleanUpBritannia
             Rewards.Add(new CollectionItem(typeof(KnightsPlateHelm), 0x1412, 1151246, 1150, 10000));
             Rewards.Add(new CollectionItem(typeof(KnightsPlateLegs), 0x1411, 1151251, 1150, 10000));
 
-            Rewards.Add(new CollectionItem(typeof(ScoutArms), 0x13DC, 1151257, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutBustier), 0x1C0C, 1151262, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutChest), 0x13DB, 1151258, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutCirclet), 0x2B6E, 1151254, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutFemaleChest), 0x1C02, 1151261, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutGloves), 0x13D5, 1151259, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutGorget), 0x13D6, 1151256, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutLegs), 0x13DA, 1151260, 1148, 10000));
-            Rewards.Add(new CollectionItem(typeof(ScoutSmallPlateJingasa), 0x2784, 1151255, 1148, 10000));
-
             Rewards.Add(new CollectionItem(typeof(SorcererArms), 0x13CD, 1151265, 1165, 10000));
             Rewards.Add(new CollectionItem(typeof(SorcererChest), 0x13CC, 1151266, 1165, 10000));
             Rewards.Add(new CollectionItem(typeof(SorcererFemaleChest), 0x1C06, 1151267, 1165, 10000));
@@ -113,11 +103,6 @@ namespace Server.Engines.CleanUpBritannia
             Rewards.Add(new CollectionItem(typeof(Beehive), 0x091A, 1080263, 0, 80000));
             Rewards.Add(new CollectionItem(typeof(ArcheryButteDeed), 0x100B, 1024106, 0, 80000));
 
-            Rewards.Add(new CollectionItem(typeof(NovoBleue), 0x1086, 1151242, 1165, 150000));
-            Rewards.Add(new CollectionItem(typeof(EtoileBleue), 0x108A, 1151241, 1165, 150000));
-            Rewards.Add(new CollectionItem(typeof(SoleilRouge), 0x1086, 1154382, 1166, 150000));
-            Rewards.Add(new CollectionItem(typeof(LuneRouge), 0x108A, 1154380, 1166, 150000));
-
             Rewards.Add(new CollectionItem(typeof(IntenseTealPigment), 0xEFF, 1154732, 2691, 250000));
             Rewards.Add(new CollectionItem(typeof(TyrianPurplePigment), 0xEFF, 1154735, 2716, 250000));
             Rewards.Add(new CollectionItem(typeof(MottledSunsetBluePigment), 0xEFF, 1154734, 2714, 250000));
@@ -143,7 +128,6 @@ namespace Server.Engines.CleanUpBritannia
             Rewards.Add(new CollectionItem(typeof(LiquidSunshinePigment), 0xEFF, 1154213, 1923, 250000));
             Rewards.Add(new CollectionItem(typeof(DarkVoidPigment), 0xEFF, 1154214, 2068, 250000));
 
-            Rewards.Add(new CollectionItem(typeof(LuckyCharm), 0x2F5B, 1154739, 1923, 300000));
             Rewards.Add(new CollectionItem(typeof(SoldiersMedal), 0x2F5B, 1154740, 1902, 300000));
             Rewards.Add(new CollectionItem(typeof(DuelistsEdge), 0x2F58, 1154741, 1902, 300000));
             Rewards.Add(new CollectionItem(typeof(NecromancersPhylactery), 0x2F5A, 1154742, 1912, 300000));
