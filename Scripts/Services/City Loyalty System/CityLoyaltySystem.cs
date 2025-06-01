@@ -99,7 +99,6 @@ namespace Server.Engines.CityLoyalty
         public static readonly TimeSpan LoveAtrophyDuration = TimeSpan.FromHours(40);
         public static Map SystemMap => Siege.SiegeShard ? Map.Felucca : Map.Trammel;
 
-        public bool ArtisanFestivalActive => SeasonalEventSystem.IsActive(EventType.ArtisanFestival);
         public static readonly bool AwakeingEventActive = false;
 
         public override TextDefinition Name => new TextDefinition($"{City.ToString()}");
@@ -780,32 +779,6 @@ namespace Server.Engines.CityLoyalty
             m.RemoveStatMod($"TradeDeal_{StatType.Dex}");
             m.RemoveStatMod($"TradeDeal_{StatType.Str}");
             m.RemoveStatMod($"TradeDeal_{StatType.Int}");
-        }
-
-        public static void OnBODTurnIn(Mobile from, int gold)
-        {
-            if (!Enabled)
-            {
-                return;
-            }
-
-            CityLoyaltySystem city = null;
-
-            for (var index = 0; index < Cities.Count; index++)
-            {
-                var c = Cities[index];
-
-                if (c.Definition.Region != null && c.Definition.Region.IsPartOf(from.Region))
-                {
-                    city = c;
-                    break;
-                }
-            }
-
-            if (city != null)
-            {
-                city.AwardLove(from, Math.Max(10, gold / 100));
-            }
         }
 
         public static void OnSpawnCreatureKilled(BaseCreature killed, int spawnLevel)

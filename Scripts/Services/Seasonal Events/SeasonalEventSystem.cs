@@ -24,8 +24,7 @@ namespace Server.Engines.SeasonalEvents
         TreasuresOfDoom,
         KrampusEncounter,
         RisingTide,
-        JollyRoger,
-        ArtisanFestival
+        JollyRoger
     }
 
     public enum EventStatus
@@ -69,7 +68,6 @@ namespace Server.Engines.SeasonalEvents
             Entries.Add(new KrampusEvent(EventType.KrampusEncounter, "Krampus Encounter", EventStatus.Inactive, 12, 1, 60));
             Entries.Add(new RisingTideEvent(EventType.RisingTide, "Rising Tide", EventStatus.Inactive));
             Entries.Add(new JollyRogerEvent(EventType.JollyRoger, "Jolly Roger", EventStatus.Inactive));
-            Entries.Add(new ArtisanFestivalEvent(EventType.ArtisanFestival, "Artisan Festival", EventStatus.Inactive, 12, 1, -1));
         }
 
         public static void ClearEntries()

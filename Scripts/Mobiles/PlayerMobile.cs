@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Server.Accounting;
 using Server.ContextMenus;
 using Server.Engines.ArenaSystem;
-using Server.Engines.BulkOrders;
 using Server.Engines.CannedEvil;
 using Server.Engines.Chat;
 using Server.Engines.CityLoyalty;
@@ -142,7 +141,6 @@ namespace Server.Mobiles
 
         #region Points System
         private PointsSystemProps _PointsSystemProps;
-        private BODProps _BODProps;
         private AccountGoldProps _AccountGold;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -151,26 +149,11 @@ namespace Server.Mobiles
             get
             {
                 if (_PointsSystemProps == null)
-                    _PointsSystemProps = new PointsSystemProps(this);
-
-                return _PointsSystemProps;
-            }
-            set
-            {
-            }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public BODProps BODData
-        {
-            get
-            {
-                if (_BODProps == null)
                 {
-                    _BODProps = new BODProps(this);
+                    _PointsSystemProps = new PointsSystemProps(this);
                 }
 
-                return _BODProps;
+                return _PointsSystemProps;
             }
             set
             {
@@ -286,9 +269,6 @@ namespace Server.Mobiles
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NpcGuildJoinTime { get => m_NpcGuildJoinTime; set => m_NpcGuildJoinTime = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public DateTime NextBODTurnInTime { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime LastOnline { get => m_LastOnline; set => m_LastOnline = value; }
@@ -653,7 +633,9 @@ namespace Server.Mobiles
         public static void TargetedSkillUse(Mobile from, IEntity target, int skillId)
         {
             if (from == null || target == null)
+            {
                 return;
+            }
 
             from.TargetLocked = true;
 
@@ -1496,7 +1478,9 @@ namespace Server.Mobiles
         public override void OnSubItemRemoved(Item item)
         {
             if (Engines.UOStore.UltimaStore.HasPendingItem(this))
+            {
                 Timer.DelayCall(TimeSpan.FromSeconds(1.5), Engines.UOStore.UltimaStore.CheckPendingItem, this);
+            }
         }
 
         public override void AggressiveAction(Mobile aggressor, bool criminal)
@@ -1662,7 +1646,9 @@ namespace Server.Mobiles
             if (damageable is IDamageableItem item && !item.CanDamage)
             {
                 if (message)
+                {
                     SendMessage("That cannot be harmed.");
+                }
 
                 return false;
             }
@@ -1890,7 +1876,9 @@ namespace Server.Mobiles
             base.OnHeal(ref amount, from);
 
             if (from == null)
+            {
                 return;
+            }
 
             BestialSetHelper.OnHeal(this, from, ref amount);
 
@@ -2123,7 +2111,9 @@ namespace Server.Mobiles
                 BaseGalleon galleon = BaseGalleon.FindGalleonAt(from.Location, from.Map);
 
                 if (galleon != null && galleon.IsOwner(from))
+                {
                     list.Add(new ShipAccessEntry(this, from, galleon));
+                }
 
                 if (Alive)
                 {
@@ -2340,7 +2330,9 @@ namespace Server.Mobiles
                 Type t = token.GumpType;
 
                 if (HasGump(t))
+                {
                     CloseGump(t);
+                }
             }
 
             return base.OnDragLift(item);
@@ -2589,7 +2581,9 @@ namespace Server.Mobiles
         public override bool IsBeneficialCriminal(Mobile target)
         {
             if (!target.Criminal && target is BaseCreature bc && bc.GetMaster() == this)
+            {
                 return false;
+            }
 
             return base.IsBeneficialCriminal(target);
         }
@@ -2696,9 +2690,13 @@ namespace Server.Mobiles
                 if (value != crim)
                 {
                     if (value)
+                    {
                         BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.CriminalStatus, 1153802, 1153828));
+                    }
                     else
+                    {
                         BuffInfo.RemoveBuff(this, BuffIcon.CriminalStatus);
+                    }
                 }
             }
         }
@@ -2906,62 +2904,6 @@ namespace Server.Mobiles
         private SkillName m_Learning = (SkillName)(-1);
 
         public SkillName Learning { get => m_Learning; set => m_Learning = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextSmithBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Smith, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Smith, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextTailorBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Tailor, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Tailor, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextAlchemyBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Alchemy, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Alchemy, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextInscriptionBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Inscription, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Inscription, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextTinkeringBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Tinkering, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Tinkering, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextFletchingBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Fletching, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Fletching, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextCarpentryBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Carpentry, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Carpentry, this, value);
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan NextCookingBulkOrder
-        {
-            get => BulkOrderSystem.GetNextBulkOrder(BODType.Cooking, this);
-            set => BulkOrderSystem.SetNextBulkOrder(BODType.Cooking, this, value);
-        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime LastEscortTime { get; set; }
@@ -3176,8 +3118,6 @@ namespace Server.Mobiles
 
             return base.IsHarmfulCriminal(damageable);
         }
-
-        public BOBFilter BOBFilter => BulkOrderSystem.GetBOBFilter(this);
 
         public override void Deserialize(GenericReader reader)
         {
@@ -3554,7 +3494,9 @@ namespace Server.Mobiles
         public override bool CanSee(Mobile m)
         {
             if (m is IConditionalVisibility && !((IConditionalVisibility)m).CanBeSeenBy(this))
+            {
                 return false;
+            }
 
             if (m is CharacterStatue statue)
             {
@@ -3572,7 +3514,9 @@ namespace Server.Mobiles
         public override bool CanSee(Item item)
         {
             if (item is IConditionalVisibility vis && !vis.CanBeSeenBy(this))
+            {
                 return false;
+            }
 
             if (m_DesignContext != null && m_DesignContext.Foundation.IsHiddenToCustomizer(this, item))
             {
@@ -3626,10 +3570,14 @@ namespace Server.Mobiles
             Engines.JollyRoger.JollyRogerData.DisplayTitle(this, list);
 
             if (m_SubtitleSkillTitle != null)
+            {
                 list.Add(1042971, m_SubtitleSkillTitle);
+            }
 
             if (m_CurrentVeteranTitle > 0)
+            {
                 list.Add(m_CurrentVeteranTitle);
+            }
 
             if (m_RewardTitles != null && m_SelectedTitle > -1)
             {
@@ -3779,9 +3727,13 @@ namespace Server.Mobiles
                 int i = m_RewardTitles.IndexOf(o);
 
                 if (i == m_SelectedTitle)
+                {
                     SelectRewardTitle(-1, silent);
+                }
                 else if (i > m_SelectedTitle)
+                {
                     SelectRewardTitle(m_SelectedTitle - 1, silent);
+                }
 
                 m_RewardTitles.Remove(o);
 
@@ -3828,7 +3780,9 @@ namespace Server.Mobiles
                 m_SelectedTitle = num;
 
                 if (!silent)
+                {
                     SendLocalizedMessage(1074010); // You elect to hide your Reward Title.
+                }
             }
             else if (num < m_RewardTitles.Count && num >= -1)
             {
@@ -3974,7 +3928,9 @@ namespace Server.Mobiles
                     if (loc > 0)
                     {
                         if (CityLoyaltySystem.ApplyCityTitle(this, list, prefix, loc))
+                        {
                             return;
+                        }
                     }
                     else if (suffix.Length > 0)
                     {

@@ -1,5 +1,3 @@
-using Server.Engines.BulkOrders;
-using System;
 using System.Collections.Generic;
 
 namespace Server.Mobiles
@@ -37,27 +35,6 @@ namespace Server.Mobiles
 
             AddItem(new Items.HalfApron());
         }
-
-        #region Bulk Orders
-        public override BODType BODType => BODType.Carpentry;
-
-        public override bool IsValidBulkOrder(Item item)
-        {
-            return item is SmallCarpentryBOD || item is LargeCarpentryBOD;
-        }
-
-        public override bool SupportsBulkOrders(Mobile from)
-        {
-            return from is PlayerMobile && from.Skills[SkillName.Carpentry].Base > 0;
-        }
-
-        public override void OnSuccessfulBulkOrderReceive(Mobile from)
-        {
-            if (from is PlayerMobile mobile)
-                mobile.NextCarpentryBulkOrder = TimeSpan.Zero;
-        }
-
-        #endregion
 
         public override void Serialize(GenericWriter writer)
         {
