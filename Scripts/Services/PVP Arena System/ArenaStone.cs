@@ -35,11 +35,7 @@ namespace Server.Engines.ArenaSystem
         {
             if (from is PlayerMobile pm && pm.InRange(Location, 10))
             {
-                if (pm.Young)
-                {
-                    pm.SendLocalizedMessage(1116002); // Young players and Trial Account users may not participate in duels.
-                }
-                else if (Arena != null && PVPArenaSystem.Enabled)
+                if (Arena != null && PVPArenaSystem.Enabled)
                 {
                     if (Arena.CurrentDuel != null && Arena.CurrentDuel.IsParticipant(pm))
                     {

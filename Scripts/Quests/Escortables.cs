@@ -919,7 +919,7 @@ namespace Server.Engines.Quests
 
         public override bool ClickTitle => false;
         public override bool CanTeach => true;
-        public virtual bool HealsYoungPlayers => true;
+        public virtual bool HealsPlayers => true;
         public override bool CheckTeach(SkillName skill, Mobile from)
         {
             if (!base.CheckTeach(skill, from))
@@ -968,7 +968,7 @@ namespace Server.Engines.Quests
         {
             Direction = GetDirectionTo(m);
 
-            if (m.CheckYoungHealTime())
+            if (m.CheckNPCHealTime())
             {
                 Say(501229); // You look like you need some healing my child.
 
@@ -1000,7 +1000,7 @@ namespace Server.Engines.Quests
                         OfferResurrection(m);
                     }
                 }
-                else if (HealsYoungPlayers && m.Hits < m.HitsMax && m is PlayerMobile mobile && mobile.Young)
+                else if (HealsPlayers && m.Hits < m.HitsMax && m is PlayerMobile mobile)
                 {
                     OfferHeal(mobile);
                 }

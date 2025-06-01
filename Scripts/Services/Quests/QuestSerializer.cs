@@ -188,34 +188,6 @@ namespace Server.Engines.Quests
                 "AcceptConversation", "CollectBonesObjective", "VanquishDaemonConversation", "VanquishDaemonObjective"
             },
 
-            // Deprecated
-            ["Server.Engines.Quests.Necro.DarkTidesQuest"] = new[]
-            {
-                "AcceptConversation", "AnimateMaabusCorpseObjective", "BankerConversation", "CashBankCheckObjective",
-                "FetchAbraxusScrollObjective", "FindBankObjective", "FindCallingScrollObjective", "FindCityOfLightObjective",
-                "FindCrystalCaveObjective", "FindMaabusCorpseObjective", "FindMaabusTombObjective", "FindMardothAboutKronusObjective",
-                "FindMardothAboutVaultObjective", "FindMardothEndObjective", "FindVaultOfSecretsObjective", "FindWellOfTearsObjective",
-                "HorusConversation", "LostCallingScrollConversation", "MaabasConversation", "MardothEndConversation",
-                "MardothKronusConversation", "MardothVaultConversation", "RadarConversation", "ReadAbraxusScrollConversation",
-                "ReadAbraxusScrollObjective", "ReanimateMaabusConversation", "RetrieveAbraxusScrollObjective", "ReturnToCrystalCaveObjective",
-                "SecondHorusConversation", "SpeakCavePasswordObjective", "UseCallingScrollObjective", "VaultOfSecretsConversation",
-                "FindHorusAboutRewardObjective", "HealConversation", "HorusRewardConversation"
-            },
-
-            // Deprecated
-            ["Server.Engines.Quests.Haven.UzeraanTurmoilQuest"] = new[]
-            {
-                "AcceptConversation", "UzeraanTitheConversation", "UzeraanFirstTaskConversation", "UzeraanReportConversation",
-                "SchmendrickConversation", "UzeraanScrollOfPowerConversation", "DryadConversation", "UzeraanFertileDirtConversation",
-                "UzeraanDaemonBloodConversation", "UzeraanDaemonBoneConversation", "BankerConversation", "RadarConversation",
-                "LostScrollOfPowerConversation", "LostFertileDirtConversation", "DryadAppleConversation", "LostDaemonBloodConversation",
-                "LostDaemonBoneConversation", "FindUzeraanBeginObjective", "TitheGoldObjective", "FindUzeraanFirstTaskObjective",
-                "KillHordeMinionsObjective", "FindUzeraanAboutReportObjective", "FindSchmendrickObjective", "FindApprenticeObjective",
-                "ReturnScrollOfPowerObjective", "FindDryadObjective", "ReturnFertileDirtObjective", "GetDaemonBloodObjective",
-                "ReturnDaemonBloodObjective", "GetDaemonBoneObjective", "ReturnDaemonBoneObjective", "CashBankCheckObjective",
-                "FewReagentsConversation"
-            },
-
             ["Server.Engines.Quests.Collector.CollectorQuest"] = new[]
             {
                 "DontOfferConversation", "DeclineConversation", "AcceptConversation", "ElwoodDuringFishConversation",
@@ -260,34 +232,6 @@ namespace Server.Engines.Quests
                 "DontOfferConversation", "AcceptConversation", "DuringKillQueensConversation", "GatherFungiConversation",
                 "DuringFungiGatheringConversation", "EndConversation", "FullBackpackConversation", "End2Conversation",
                 "KillQueensObjective", "ReturnAfterKillsObjective", "GatherFungiObjective", "GetRewardObjective"
-            },
-
-            // Deprecated
-            ["Server.Engines.Quests.Ninja.EminosUndertakingQuest"] = new[]
-            {
-                "AcceptConversation", "FindZoelConversation", "RadarConversation", "EnterCaveConversation",
-                "SneakPastGuardiansConversation", "NeedToHideConversation", "UseTeleporterConversation", "GiveZoelNoteConversation",
-                "LostNoteConversation", "GainInnInformationConversation", "ReturnFromInnConversation", "SearchForSwordConversation",
-                "HallwayWalkConversation", "ReturnSwordConversation", "SlayHenchmenConversation", "ContinueSlayHenchmenConversation",
-                "GiveEminoSwordConversation", "LostSwordConversation", "EarnGiftsConversation", "EarnLessGiftsConversation",
-                "FindEminoBeginObjective", "FindZoelObjective", "EnterCaveObjective", "SneakPastGuardiansObjective",
-                "UseTeleporterObjective", "GiveZoelNoteObjective", "GainInnInformationObjective", "ReturnFromInnObjective",
-                "SearchForSwordObjective", "HallwayWalkObjective", "ReturnSwordObjective", "SlayHenchmenObjective",
-                "GiveEminoSwordObjective"
-            },
-
-            // Deprecated
-            ["Server.Engines.Quests.Samurai.HaochisTrialsQuest"] = new[]
-            {
-                "AcceptConversation", "RadarConversation", "FirstTrialIntroConversation", "FirstTrialKillConversation",
-                "GainKarmaConversation", "SecondTrialIntroConversation", "SecondTrialAttackConversation", "ThirdTrialIntroConversation",
-                "ThirdTrialKillConversation", "FourthTrialIntroConversation", "FourthTrialCatsConversation", "FifthTrialIntroConversation",
-                "FifthTrialReturnConversation", "LostSwordConversation", "SixthTrialIntroConversation", "SeventhTrialIntroConversation",
-                "EndConversation", "FindHaochiObjective", "FirstTrialIntroObjective", "FirstTrialKillObjective",
-                "FirstTrialReturnObjective", "SecondTrialIntroObjective", "SecondTrialAttackObjective", "SecondTrialReturnObjective",
-                "ThirdTrialIntroObjective", "ThirdTrialKillObjective", "ThirdTrialReturnObjective", "FourthTrialIntroObjective",
-                "FourthTrialCatsObjective", "FourthTrialReturnObjective", "FifthTrialIntroObjective", "FifthTrialReturnObjective",
-                "SixthTrialIntroObjective", "SixthTrialReturnObjective", "SeventhTrialIntroObjective", "SeventhTrialReturnObjective"
             },
 
             ["Server.Engines.Quests.Zento.TerribleHatchlingsQuest"] = new[]

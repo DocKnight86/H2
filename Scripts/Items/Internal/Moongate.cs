@@ -1,4 +1,3 @@
-#region References
 using Server.Engines.CityLoyalty;
 using Server.Gumps;
 using Server.Misc;
@@ -8,7 +7,6 @@ using Server.Network;
 using Server.Regions;
 using Server.Spells;
 using System;
-#endregion
 
 namespace Server.Items
 {
@@ -109,10 +107,6 @@ namespace Server.Items
             else if (CityTradeSystem.HasTrade(m))
             {
                 m.SendLocalizedMessage(1151733); // You cannot do that while carrying a Trade Order.
-            }
-            else if (TargetMap == Map.Felucca && m is PlayerMobile mobile && mobile.Young)
-            {
-                mobile.SendLocalizedMessage(1049543); // You decide against traveling to Felucca while you are still young.
             }
             else if (SpellHelper.RestrictRedTravel && m.Murderer && TargetMap != Map.Felucca && !Siege.SiegeShard ||
                      TargetMap == Map.Tokuno && (flags & ClientFlags.Tokuno) == 0 ||

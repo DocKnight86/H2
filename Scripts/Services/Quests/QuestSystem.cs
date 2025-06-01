@@ -191,19 +191,6 @@ namespace Server.Engines.Quests
             }
         }
 
-        public virtual bool IgnoreYoungProtection(Mobile from)
-        {
-            for (int i = m_Objectives.Count - 1; i >= 0; --i)
-            {
-                QuestObjective obj = (QuestObjective)m_Objectives[i];
-
-                if (obj.IgnoreYoungProtection(from))
-                    return true;
-            }
-
-            return false;
-        }
-
         public virtual void BaseDeserialize(GenericReader reader)
         {
             int version = reader.ReadEncodedInt();

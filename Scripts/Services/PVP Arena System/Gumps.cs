@@ -849,10 +849,6 @@ namespace Server.Engines.ArenaSystem
                     {
                         PVPArenaSystem.SendMessage(from, 1116148); // You cannot invite dead players.
                     }
-                    else if (pm.Young)
-                    {
-                        PVPArenaSystem.SendMessage(from, 1116154); // You cannot invite young players.
-                    }
                     else if (entry.IgnoreInvites)
                     {
                         PVPArenaSystem.SendMessage(from, 1116157); // The player is not accepting invitations.

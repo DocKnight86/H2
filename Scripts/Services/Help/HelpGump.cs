@@ -2,7 +2,6 @@ using System;
 using Server.Gumps;
 using Server.Menus;
 using Server.Menus.Questions;
-using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 
@@ -54,8 +53,6 @@ namespace Server.Engines.Help
         {
             from.CloseGump(typeof(HelpGump));
 
-            bool isYoung = IsYoung(from);
-
             AddBackground(50, 25, 540, 430, 2600);
 
             AddPage(0);
@@ -65,37 +62,17 @@ namespace Server.Engines.Help
 
             AddPage(1);
 
-            if (isYoung)
-            {
-                AddButton(80, 75, 5540, 5541, 9, GumpButtonType.Reply, 2);
-                AddHtml(110, 75, 450, 58, @"<BODY><BASEFONT COLOR=BLACK><u>Young Player Haven Transport.</u> Select this option if you want to be transported to Haven.</BODY>", true, true);
+            AddButton(80, 90, 5540, 5541, 1, GumpButtonType.Reply, 2);
+            AddHtml(110, 90, 450, 74, @"<u>General question about Ultima Online.</u> Select this option if you have a general gameplay question, need help learning to use a skill, or if you would like to search the UO Knowledge Base.", true, true);
 
-                AddButton(80, 140, 5540, 5541, 1, GumpButtonType.Reply, 2);
-                AddHtml(110, 140, 450, 58, @"<u>General question about Ultima Online.</u> Select this option if you have a general gameplay question, need help learning to use a skill, or if you would like to search the UO Knowledge Base.", true, true);
+            AddButton(80, 170, 5540, 5541, 2, GumpButtonType.Reply, 0);
+            AddHtml(110, 170, 450, 74, @"<u>My character is physically stuck in the game.</u> This choice only covers cases where your character is physically stuck in a location they cannot move out of. This option will only work two times in 24 hours.", true, true);
 
-                AddButton(80, 205, 5540, 5541, 2, GumpButtonType.Reply, 0);
-                AddHtml(110, 205, 450, 58, @"<u>My character is physically stuck in the game.</u> This choice only covers cases where your character is physically stuck in a location they cannot move out of. This option will only work two times in 24 hours.", true, true);
+            AddButton(80, 250, 5540, 5541, 0, GumpButtonType.Page, 3);
+            AddHtml(110, 250, 450, 74, @"<u>Another player is harassing me.</u> Another player is verbally harassing your character. When you select this option you will be sending a text log to Origin Systems. To see what constitutes harassment please visit " + (SupportWebsite == null ? "http://support.uo.com/gm_9.html" : SupportWebsite) + ".", true, true);
 
-                AddButton(80, 270, 5540, 5541, 0, GumpButtonType.Page, 3);
-                AddHtml(110, 270, 450, 58, @"<u>Another player is harassing me.</u> Another player is verbally harassing your character. When you select this option you will be sending a text log to Origin Systems. To see what constitutes harassment please visit " + (SupportWebsite == null ? "http://support.uo.com/gm_9.html" : SupportWebsite) + ".", true, true);
-
-                AddButton(80, 335, 5540, 5541, 0, GumpButtonType.Page, 2);
-                AddHtml(110, 335, 450, 58, @"<u>Other.</u> If you are experiencing a problem in the game that does not fall into one of the other categories or is not addressed on the Support web page (located at  " + (SupportWebsite == null ? "http://support.uo.com" : SupportWebsite) + "), please use this option.", true, true);
-            }
-            else
-            {
-                AddButton(80, 90, 5540, 5541, 1, GumpButtonType.Reply, 2);
-                AddHtml(110, 90, 450, 74, @"<u>General question about Ultima Online.</u> Select this option if you have a general gameplay question, need help learning to use a skill, or if you would like to search the UO Knowledge Base.", true, true);
-
-                AddButton(80, 170, 5540, 5541, 2, GumpButtonType.Reply, 0);
-                AddHtml(110, 170, 450, 74, @"<u>My character is physically stuck in the game.</u> This choice only covers cases where your character is physically stuck in a location they cannot move out of. This option will only work two times in 24 hours.", true, true);
-
-                AddButton(80, 250, 5540, 5541, 0, GumpButtonType.Page, 3);
-                AddHtml(110, 250, 450, 74, @"<u>Another player is harassing me.</u> Another player is verbally harassing your character. When you select this option you will be sending a text log to Origin Systems. To see what constitutes harassment please visit " + (SupportWebsite == null ? "http://support.uo.com/gm_9.html" : SupportWebsite) + ".", true, true);
-
-                AddButton(80, 330, 5540, 5541, 0, GumpButtonType.Page, 2);
-                AddHtml(110, 330, 450, 74, @"<u>Other.</u> If you are experiencing a problem in the game that does not fall into one of the other categories or is not addressed on the Support web page (located at  " + (SupportWebsite == null ? "http://support.uo.com" : SupportWebsite) + "), please use this option.", true, true);
-            }
+            AddButton(80, 330, 5540, 5541, 0, GumpButtonType.Page, 2);
+            AddHtml(110, 330, 450, 74, @"<u>Other.</u> If you are experiencing a problem in the game that does not fall into one of the other categories or is not addressed on the Support web page (located at  " + (SupportWebsite == null ? "http://support.uo.com" : SupportWebsite) + "), please use this option.", true, true);
 
             AddPage(2);
 
@@ -168,7 +145,9 @@ namespace Server.Engines.Help
                 AggressorInfo info = m.Aggressed[i];
 
                 if (DateTime.UtcNow - info.LastCombatTime < TimeSpan.FromSeconds(30.0))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -254,34 +233,12 @@ namespace Server.Engines.Help
                         type = PageType.PhysicalHarassment;
                         break;
                     }
-                case 9: // Young player transport
-                    {
-                        if (IsYoung(from))
-                        {
-                            if (from.Region.IsPartOf<Regions.Jail>())
-                            {
-                                from.SendLocalizedMessage(1114345, "", 0x35); // You'll need a better jailbreak plan than that!
-                            }
-                            else if (CityLoyalty.CityTradeSystem.HasTrade(from))
-                            {
-                                from.SendLocalizedMessage(1151733); // You cannot do that while carrying a Trade Order.
-                            }
-                            else if (from.Region.IsPartOf("Haven Island"))
-                            {
-                                from.SendLocalizedMessage(1041529); // You're already in Haven
-                            }
-                            else
-                            {
-                                from.MoveToWorld(new Point3D(3503, 2574, 14), Map.Trammel);
-                            }
-                        }
-
-                        break;
-                    }
             }
 
             if (type != (PageType)(-1) && PageQueue.CheckAllowedToPage(from))
+            {
                 from.SendGump(new PagePromptGump(from, type));
+            }
         }
 
         public static void HelpRequest(Mobile m)
@@ -289,24 +246,24 @@ namespace Server.Engines.Help
             foreach (Gump g in m.NetState.Gumps)
             {
                 if (g is HelpGump)
+                {
                     return;
+                }
             }
 
             if (!PageQueue.CheckAllowedToPage(m))
+            {
                 return;
+            }
 
             if (PageQueue.Contains(m))
+            {
                 m.SendMenu(new ContainedMenu(m));
+            }
             else
+            {
                 m.SendGump(new HelpGump(m));
-        }
-
-        private static bool IsYoung(Mobile m)
-        {
-            if (m is PlayerMobile)
-                return ((PlayerMobile)m).Young;
-
-            return false;
+            }
         }
     }
 }

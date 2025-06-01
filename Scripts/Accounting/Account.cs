@@ -14,7 +14,6 @@ namespace Server.Accounting
     [PropertyObject]
     public class Account : IAccount, IComparable, IComparable<Account>
     {
-        private static readonly TimeSpan _YoungDuration = TimeSpan.FromHours(40.0);
         private static readonly TimeSpan _InactiveDuration = TimeSpan.FromDays(180.0);
         private static readonly TimeSpan _EmptyInactiveDuration = TimeSpan.FromDays(30.0);
 
@@ -30,7 +29,6 @@ namespace Server.Accounting
         private List<AccountComment> m_Comments;
         private List<AccountTag> m_Tags;
         private TimeSpan m_TotalGameTime;
-        private Timer m_YoungTimer;
 
         public Account(string username, string password)
         {
@@ -206,11 +204,6 @@ namespace Server.Accounting
 
             m_TotalGameTime = totalGameTime;
 
-            if (Young)
-            {
-                CheckYoung();
-            }
-
             LoadSecureAccounts(node);
 
             Accounts.Add(this);
@@ -335,27 +328,6 @@ namespace Server.Accounting
                 return false;
             }
             set => SetFlag(0, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a flag indicating if the characters created on this account will have the young status.
-        /// </summary>
-        [CommandProperty(AccessLevel.Administrator)]
-        public bool Young
-        {
-            get => !GetFlag(1);
-            set
-            {
-                SetFlag(1, !value);
-
-                if (m_YoungTimer == null)
-                {
-                    return;
-                }
-
-                m_YoungTimer.Stop();
-                m_YoungTimer = null;
-            }
         }
 
         /// <summary>
@@ -1081,42 +1053,6 @@ namespace Server.Accounting
             return banTime != DateTime.MinValue && banDuration != TimeSpan.Zero;
         }
 
-        public void RemoveYoungStatus(int message)
-        {
-            Young = false;
-
-            for (var index = 0; index < m_Mobiles.Length; index++)
-            {
-                Mobile mobile = m_Mobiles[index];
-
-                if (mobile is PlayerMobile m && m.Young)
-                {
-                    m.Young = false;
-
-                    if (m.NetState == null)
-                    {
-                        continue;
-                    }
-
-                    if (message > 0)
-                    {
-                        m.SendLocalizedMessage(message);
-                    }
-
-                    m.SendLocalizedMessage(1019039); // You are no longer considered a young player of Ultima Online, and are no longer subject to the limitations and benefits of being in that caste.
-                }
-            }
-        }
-
-        public void CheckYoung()
-        {
-            if (TotalGameTime >= _YoungDuration)
-            {
-                RemoveYoungStatus(1019038);
-                // You are old enough to be considered an adult, and have outgrown your status as a young player!
-            }
-        }
-
         /// <summary>
         ///     Checks if a specific NetState is allowed access to this account.
         /// </summary>
@@ -1427,24 +1363,6 @@ namespace Server.Accounting
             return Username;
         }
 
-        public static void OnConnected(Mobile m)
-        {
-            Account acc = m.Account as Account;
-
-            if (acc == null)
-            {
-                return;
-            }
-
-            if (!acc.Young || acc.m_YoungTimer != null)
-            {
-                return;
-            }
-
-            acc.m_YoungTimer = new YoungTimer(acc);
-            acc.m_YoungTimer.Start();
-        }
-
         public static void OnDisconnected(Mobile m)
         {
             Account acc = m.Account as Account;
@@ -1454,58 +1372,9 @@ namespace Server.Accounting
                 return;
             }
 
-            if (acc.m_YoungTimer != null)
-            {
-                acc.m_YoungTimer.Stop();
-                acc.m_YoungTimer = null;
-            }
-
             if (m is PlayerMobile pm)
             {
                 acc.m_TotalGameTime += DateTime.UtcNow - pm.SessionStart;
-            }
-        }
-
-        public static void OnLogin(Mobile m)
-        {
-            PlayerMobile pm = m as PlayerMobile;
-
-            if (pm == null)
-            {
-                return;
-            }
-
-            Account acc = pm.Account as Account;
-
-            if (acc == null)
-            {
-                return;
-            }
-
-            if (!pm.Young || !acc.Young)
-            {
-                return;
-            }
-
-            TimeSpan ts = _YoungDuration - acc.TotalGameTime;
-            int hours = Math.Max((int)ts.TotalHours, 0);
-
-            pm.SendAsciiMessage("You will enjoy the benefits and relatively safe status of a young player for {0} more hour{1}.", hours, hours != 1 ? "s" : "");
-        }
-
-        private class YoungTimer : Timer
-        {
-            private readonly Account _Account;
-
-            public YoungTimer(Account account)
-                : base(TimeSpan.FromMinutes(1.0), TimeSpan.FromMinutes(1.0))
-            {
-                _Account = account;
-            }
-
-            protected override void OnTick()
-            {
-                _Account.CheckYoung();
             }
         }
 

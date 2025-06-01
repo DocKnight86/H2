@@ -9,8 +9,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(TheZealotryOfZipactriotlQuest) };
 
-        public override bool ChangeRace => false;
-
         [Constructable]
         public Yar() : base("Yar", "the Barrab Tinker")
         {
@@ -61,8 +59,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(HiddenTreasuresQuest) };
 
-        public override bool ChangeRace => false;
-
         [Constructable]
         public Carroll() : base("Carroll", "the Gemologist")
         {
@@ -110,8 +106,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(TheSaltySeaQuest) };
 
-        public override bool ChangeRace => false;
-
         [Constructable]
         public Bront() : base("Bront", "the Captain")
         {
@@ -158,8 +152,6 @@ namespace Server.Mobiles
     public class Eriathwen : MondainQuester
     {
         public override Type[] Quests => new[] { typeof(ATinkersTaskQuest) };
-
-        public override bool ChangeRace => false;
 
         [Constructable]
         public Eriathwen() : base("Eriathwen", "the Golem Maker")
@@ -280,7 +272,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(ExterminatingTheInfestationQuest) };
 
-        public override bool ChangeRace => false;
         public override bool IsActiveVendor => true;
 
         private readonly List<SBInfo> _SBInfos = new List<SBInfo>();
@@ -370,8 +361,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(PestControlQuest) };
 
-        public override bool ChangeRace => false;
-
         [Constructable]
         public Foxx() : base("Foxx", "the Lieutenant")
         {
@@ -422,8 +411,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(GettingEvenQuest) };
 
-        public override bool ChangeRace => false;
-
         [Constructable]
         public Yero() : base("Yero", "the Gambler")
         {
@@ -465,8 +452,6 @@ namespace Server.Mobiles
     public class Alida : MondainQuester
     {
         public override Type[] Quests => new[] { typeof(OfVorpalsAndLettacesTheGardnerQuest) };
-
-        public override bool ChangeRace => false;
 
         [Constructable]
         public Alida() : base("Alida", "the Gardener")

@@ -1,4 +1,3 @@
-#region References
 using Server.Engines.ArenaSystem;
 using Server.Engines.PartySystem;
 using Server.Engines.VvV;
@@ -10,7 +9,6 @@ using Server.SkillHandlers;
 using Server.Spells.Chivalry;
 using System;
 using System.Collections.Generic;
-#endregion
 
 namespace Server.Misc
 {
@@ -82,16 +80,6 @@ namespace Server.Misc
                 return false; // Players cannot heal uncontrolled mobiles
             }
 
-            if (from is PlayerMobile mobile && mobile.Young && target is BaseCreature bc && bc.Controlled)
-            {
-                return true;
-            }
-
-            if (from is PlayerMobile pm && pm.Young && (!(target is PlayerMobile) || !((PlayerMobile)target).Young))
-            {
-                return false; // Young players cannot perform beneficial actions towards older players
-            }
-
             if (from.Guild is Guild fromGuild && target.Guild is Guild targetGuild)
             {
                 if (targetGuild == fromGuild || fromGuild.IsAlly(targetGuild))
@@ -121,12 +109,7 @@ namespace Server.Misc
 
             if (!from.Player && !(from is BaseCreature bc && bc.GetMaster() != null && bc.GetMaster().IsPlayer()))
             {
-                if (!CheckAggressor(from.Aggressors, target) && !CheckAggressed(from.Aggressed, target) && target is PlayerMobile pm && pm.CheckYoungProtection(from))
-                {
-                    return false;
-                }
-
-                return true; // Uncontrolled NPCs are only restricted by the young system
+                return true; 
             }
 
             // Summons should follow the same rules as their masters

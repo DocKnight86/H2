@@ -77,11 +77,7 @@ namespace Server.Engines.CityLoyalty
         {
             CityLoyaltyEntry pentry = City.GetPlayerEntry<CityLoyaltyEntry>(pm);
 
-            if (pm.Young)
-            {
-                pm.SendMessage("Young players cannot be nominated for the ballot!");
-            }
-            else if (!City.IsCitizen(pm) || pentry == null)
+            if (!City.IsCitizen(pm) || pentry == null)
             {
                 pm.SendLocalizedMessage(1153890); // You must be a citizen of this City to nominate yourself for the ballot! 
             }
@@ -146,11 +142,7 @@ namespace Server.Engines.CityLoyalty
 
         public bool TryEndorse(PlayerMobile pm, PlayerMobile nominee)
         {
-            if (pm.Young)
-            {
-                pm.SendMessage("Young players cannot endorse a nominee!");
-            }
-            else if (!City.IsCitizen(pm))
+            if (!City.IsCitizen(pm))
             {
                 pm.SendLocalizedMessage(1153893); // You must be a citizen of this City to endorse a nominee for the ballot! 
             }
@@ -213,10 +205,6 @@ namespace Server.Engines.CityLoyalty
             if (!CanVote())
             {
                 voter.SendLocalizedMessage(1153919); // The stone is not currently accepting votes. 
-            }
-            else if (voter.Young)
-            {
-                voter.SendMessage("Young players cannot vote in a city election!");
             }
             else if (!City.IsCitizen(voter))
             {

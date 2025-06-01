@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Server.Accounting;
 using Server.ContextMenus;
-using Server.Engines.BulkOrders;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Network.Packets;
 using Server.Regions;
-using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -179,39 +177,12 @@ namespace Server.Mobiles
 
         public virtual NpcGuild NpcGuild => NpcGuild.None;
 
-        public virtual bool ChangeRace => true;
-
         public override bool IsInvulnerable => true;
 
         public virtual DateTime NextTrickOrTreat { get; set; }
         public virtual double GetMoveDelay => Utility.RandomMinMax(30, 120);
 
         public override bool ShowFameTitle => false;
-
-        public virtual bool IsValidBulkOrder(Item item)
-        {
-            return false;
-        }
-
-        public virtual Item CreateBulkOrder(Mobile from, bool fromContextMenu)
-        {
-            return null;
-        }
-
-        public virtual bool SupportsBulkOrders(Mobile from)
-        {
-            return false;
-        }
-
-        public virtual TimeSpan GetNextBulkOrder(Mobile from)
-        {
-            return TimeSpan.Zero;
-        }
-
-        public virtual void OnSuccessfulBulkOrderReceive(Mobile from)
-        { }
-
-        public virtual BODType BODType => BODType.Smith;
 
         public virtual int GetPriceScalar()
         {
@@ -229,134 +200,6 @@ namespace Server.Mobiles
                 IBuyItemInfo info = buyinfo[index];
 
                 info.PriceScalar = priceScalar;
-            }
-        }
-
-        private class BulkOrderInfoEntry : ContextMenuEntry
-        {
-            private readonly Mobile m_From;
-            private readonly BaseVendor m_Vendor;
-
-            public BulkOrderInfoEntry(Mobile from, BaseVendor vendor)
-                : base(6152, -1)
-            {
-                Enabled = vendor.CheckVendorAccess(from);
-
-                m_From = from;
-                m_Vendor = vendor;
-            }
-
-            public override void OnClick()
-            {
-                if (!m_From.InRange(m_Vendor.Location, 20))
-                {
-                    return;
-                }
-
-                if (m_Vendor.SupportsBulkOrders(m_From) && m_From is PlayerMobile pm)
-                {
-                    if (BulkOrderSystem.CanGetBulkOrder(pm, m_Vendor.BODType) || pm.AccessLevel > AccessLevel.Player)
-                    {
-                        Item bulkOrder = BulkOrderSystem.CreateBulkOrder(pm, m_Vendor.BODType, true);
-
-                        if (bulkOrder is LargeBOD lBod)
-                        {
-                            pm.CloseGump(typeof(LargeBODAcceptGump));
-                            pm.SendGump(new LargeBODAcceptGump(pm, lBod));
-                        }
-                        else if (bulkOrder is SmallBOD sBod)
-                        {
-                            pm.CloseGump(typeof(SmallBODAcceptGump));
-                            pm.SendGump(new SmallBODAcceptGump(pm, sBod));
-                        }
-                    }
-                    else
-                    {
-                        TimeSpan ts = BulkOrderSystem.GetNextBulkOrder(m_Vendor.BODType, pm);
-
-                        int totalSeconds = (int)ts.TotalSeconds;
-                        int totalMinutes = (totalSeconds + 59) / 60;
-
-                        m_Vendor.SayTo(pm, 1072058, totalMinutes.ToString(), 0x3B2); // An offer may be available in about ~1_minutes~ minutes.
-                    }
-                }
-            }
-        }
-
-        private class BribeEntry : ContextMenuEntry
-        {
-            private readonly Mobile m_From;
-            private readonly BaseVendor m_Vendor;
-
-            public BribeEntry(Mobile from, BaseVendor vendor)
-                : base(1152294, 2)
-            {
-                Enabled = vendor.CheckVendorAccess(from);
-
-                m_From = from;
-                m_Vendor = vendor;
-            }
-
-            public override void OnClick()
-            {
-                if (!m_From.InRange(m_Vendor.Location, 2) || !(m_From is PlayerMobile))
-                    return;
-
-                if (m_Vendor.SupportsBulkOrders(m_From))
-                {
-                    if (m_From.NetState != null && m_From.NetState.IsEnhancedClient)
-                    {
-                        Timer.DelayCall(TimeSpan.FromMilliseconds(100), m_Vendor.TryBribe, m_From);
-                    }
-                    else
-                    {
-                        m_Vendor.TryBribe(m_From);
-                    }
-                }
-            }
-        }
-
-        private class ClaimRewardsEntry : ContextMenuEntry
-        {
-            private readonly Mobile m_From;
-            private readonly BaseVendor m_Vendor;
-
-            public ClaimRewardsEntry(Mobile from, BaseVendor vendor)
-                : base(1155593, 3)
-            {
-                Enabled = vendor.CheckVendorAccess(from);
-
-                m_From = from;
-                m_Vendor = vendor;
-            }
-
-            public override void OnClick()
-            {
-                if (!m_From.InRange(m_Vendor.Location, 3) || !(m_From is PlayerMobile))
-                    return;
-
-                BODContext context = BulkOrderSystem.GetContext(m_From);
-                int pending = context.GetPendingRewardFor(m_Vendor.BODType);
-
-                if (pending > 0)
-                {
-                    if (context.PointsMode == PointsMode.Enabled)
-                    {
-                        m_From.SendGump(new ConfirmBankPointsGump((PlayerMobile)m_From, m_Vendor, m_Vendor.BODType, pending, pending * 0.02));
-                    }
-                    else
-                    {
-                        m_From.SendGump(new RewardsGump(m_Vendor, (PlayerMobile)m_From, m_Vendor.BODType, pending));
-                    }
-                }
-                else if (!BulkOrderSystem.CanClaimRewards(m_From))
-                {
-                    m_Vendor.SayTo(m_From, 1157083, 0x3B2); // You must claim your last turn-in reward in order for us to continue doing business.
-                }
-                else
-                {
-                    m_From.SendGump(new RewardsGump(m_Vendor, (PlayerMobile)m_From, m_Vendor.BODType));
-                }
             }
         }
 
@@ -389,8 +232,6 @@ namespace Server.Mobiles
                 Visible = false
             };
             AddItem(pack);
-
-            BribeMultiplier = Utility.Random(10);
 
             m_LastRestock = DateTime.UtcNow;
         }
@@ -532,9 +373,6 @@ namespace Server.Mobiles
 
         public virtual void CheckMorph()
         {
-            if (!ChangeRace)
-                return;
-
             if (CheckNecromancer())
             {
                 return;
@@ -1062,108 +900,6 @@ namespace Server.Mobiles
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
-            if (dropped is SmallBOD || dropped is LargeBOD)
-            {
-                PlayerMobile pm = from as PlayerMobile;
-                IBOD bod = (IBOD) dropped;
-
-                if (Bribes != null && Bribes.TryGetValue(from, out PendingBribe value) && value.BOD == bod)
-                {
-                    if (BulkOrderSystem.CanExchangeBOD(from, this, bod, value.Amount))
-                    {
-                        DoBribe(from, bod);
-                        return false;
-                    }
-                }
-
-                if (pm != null && pm.NextBODTurnInTime > DateTime.UtcNow)
-                {
-                    SayTo(from, 1079976, 0x3B2); // You'll have to wait a few seconds while I inspect the last order.
-                    return false;
-                }
-
-                if (!IsValidBulkOrder(dropped) || !SupportsBulkOrders(from))
-                {
-                    SayTo(from, 1045130, 0x3B2); // That order is for some other shopkeeper.
-                    return false;
-                }
-
-                if (!BulkOrderSystem.CanClaimRewards(from))
-                {
-                    SayTo(from, 1157083, 0x3B2); // You must claim your last turn-in reward in order for us to continue doing business.
-                    return false;
-                }
-
-                if (!bod.Complete)
-                {
-                    SayTo(from, 1045131, 0x3B2); // You have not completed the order yet.
-                    return false;
-                }
-
-                Item reward;
-                int gold, fame;
-
-                if (dropped is SmallBOD smallBod)
-                {
-                    smallBod.GetRewards(out reward, out gold, out fame);
-                }
-                else
-                {
-                    ((LargeBOD)dropped).GetRewards(out reward, out gold, out fame);
-                }
-
-                from.SendSound(0x3D);
-
-                if (from is PlayerMobile mobile)
-                {
-                    SayTo(mobile, 1157204, mobile.Name, 0x3B2); // Ho! Ho! Thank ye ~1_PLAYER~ for giving me a Bulk Order Deed!
-
-                    BODContext context = BulkOrderSystem.GetContext(mobile);
-
-                    int points = 0;
-                    double banked = 0.0;
-
-                    if (dropped is SmallBOD sBod)
-                        BulkOrderSystem.ComputePoints(sBod, out points, out banked);
-                    else
-                        BulkOrderSystem.ComputePoints((LargeBOD)dropped, out points, out banked);
-
-                    switch (context.PointsMode)
-                    {
-                        case PointsMode.Enabled:
-                            context.AddPending(BODType, points);
-                            mobile.SendGump(new ConfirmBankPointsGump(mobile, this, BODType, points, banked));
-                            break;
-                        case PointsMode.Disabled:
-                            context.AddPending(BODType, points);
-                            mobile.SendGump(new RewardsGump(this, mobile, BODType, points));
-                            break;
-                        case PointsMode.Automatic:
-                            BulkOrderSystem.SetPoints(mobile, BODType, banked);
-                            mobile.SendGump(new RewardsGump(this, mobile, BODType));
-                            break;
-                    }
-
-                    // On EA, you have to choose the reward before you get the gold/fame reward.  IF you right click the gump, you lose 
-                    // the gold/fame for that bod.
-
-                    Banker.Deposit(mobile, gold, true);
-                }
-                
-                Titles.AwardFame(from, fame, true);
-
-                OnSuccessfulBulkOrderReceive(from);
-                Engines.CityLoyalty.CityLoyaltySystem.OnBODTurnIn(from, gold);
-
-                if (pm != null)
-                {
-                    pm.NextBODTurnInTime = DateTime.UtcNow + TimeSpan.FromSeconds(2.0);
-                }
-
-                dropped.Delete();
-                return true;
-            }
-
             if (AcceptsGift(from, dropped))
             {
                 dropped.Delete();
@@ -1228,112 +964,6 @@ namespace Server.Mobiles
 
             return false;
         }
-
-        #region BOD Bribing
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int BribeMultiplier { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public DateTime NextMultiplierDecay { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public DateTime WatchEnds { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int RecentBribes { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool UnderWatch => WatchEnds > DateTime.MinValue;
-
-        public Dictionary<Mobile, PendingBribe> Bribes { get; set; }
-
-        private void CheckNextMultiplierDecay(bool force = true)
-        {
-            int minDays = Config.Get("Vendors.BribeDecayMinTime", 25);
-            int maxDays = Config.Get("Vendors.BribeDecayMaxTime", 30);
-
-            if (force || NextMultiplierDecay > DateTime.UtcNow + TimeSpan.FromDays(maxDays))
-                NextMultiplierDecay = DateTime.UtcNow + TimeSpan.FromDays(Utility.RandomMinMax(minDays, maxDays));
-        }
-
-        public void TryBribe(Mobile m)
-        {
-            if (UnderWatch)
-            {
-                if (WatchEnds < DateTime.UtcNow)
-                {
-                    WatchEnds = DateTime.MinValue;
-                    RecentBribes = 0;
-                }
-                else
-                {
-                    SayTo(m, 1152293, 0x3B2); // My business is being watched by the Guild, so I can't be messing with bulk orders right now. Come back when there's less heat on me!
-                    return;
-                }
-            }
-
-            SayTo(m, 1152295, 0x3B2); // So you want to do a little business under the table?
-            m.SendLocalizedMessage(1152296); // Target a bulk order deed to show to the shopkeeper.
-
-            m.BeginTarget(-1, false, TargetFlags.None, (from, targeted) =>
-            {
-                IBOD bod = targeted as IBOD;
-
-                if (bod is Item bodItem && bodItem.IsChildOf(from.Backpack))
-                {
-                    if (BulkOrderSystem.CanExchangeBOD(from, this, bod, -1))
-                    {
-                        int amount = BulkOrderSystem.GetBribe(bod);
-
-                        amount *= BribeMultiplier;
-
-                        if (Bribes == null)
-                        {
-                            Bribes = new Dictionary<Mobile, PendingBribe>();
-                        }
-
-                        // Per EA, new bribe replaced old pending bribe
-                        if (!Bribes.TryGetValue(m, out PendingBribe value))
-                        {
-                            Bribes[m] = new PendingBribe(bod, amount);
-                        }
-                        else
-                        {
-                            value.BOD = bod;
-                            value.Amount = amount;
-                        }
-
-                        SayTo(from, 1152292, amount.ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("en-US")), 0x3B2);
-                        // If you help me out, I'll help you out. I can replace that bulk order with a better one, but it's gonna cost you ~1_amt~ gold coin. Payment is due immediately. Just hand me the order and I'll pull the old switcheroo.
-                    }
-                }
-                else if (bod == null)
-                {
-                    SayTo(from, 1152297, 0x3B2); // That is not a bulk order deed.
-                }
-            });
-        }
-
-        public void DoBribe(Mobile m, IBOD bod)
-        {
-            BulkOrderSystem.MutateBOD(bod);
-
-            RecentBribes++;
-
-            if (RecentBribes >= 3 && Utility.Random(6) < RecentBribes)
-            {
-                WatchEnds = DateTime.UtcNow + TimeSpan.FromMinutes(Utility.RandomMinMax(120, 180));
-            }
-
-            SayTo(m, 1152303, 0x3B2); // You'll find this one much more to your liking. It's been a pleasure, and I look forward to you greasing my palm again very soon.
-
-            Bribes.Remove(m);
-
-            BribeMultiplier++;
-            CheckNextMultiplierDecay();
-        }
-
-        #endregion
 
         private GenericBuyInfo LookupDisplayObject(object obj)
         {
@@ -2093,56 +1723,15 @@ namespace Server.Mobiles
                 seller.AddToBackpack(new Gold(GiveGold));
 
                 seller.PlaySound(0x0037); //Gold dropping sound
-
-                if (SupportsBulkOrders(seller))
-                {
-                    Item bulkOrder = CreateBulkOrder(seller, false);
-
-                    if (bulkOrder is LargeBOD lBod)
-                    {
-                        seller.SendGump(new LargeBODAcceptGump(seller, lBod));
-                    }
-                    else if (bulkOrder is SmallBOD sBod)
-                    {
-                        seller.SendGump(new SmallBODAcceptGump(seller, sBod));
-                    }
-                }
             }
 
             return true;
         }
 
-        public static void Initialize()
-        {
-            EventSink.AfterWorldSave += AfterWorldSave;
-        }
-
-        public static void AfterWorldSave(AfterWorldSaveEventArgs e)
-        {
-            foreach (BaseVendor vendor in AllVendors)
-            {
-                if (vendor.NextMultiplierDecay != DateTime.MinValue && vendor.NextMultiplierDecay < DateTime.UtcNow)
-                {
-                    Timer.DelayCall(TimeSpan.FromSeconds(10), () =>
-                    {
-                        if (vendor.BribeMultiplier > 0)
-                            vendor.BribeMultiplier /= 2;
-                        vendor.CheckNextMultiplierDecay();
-                    });
-                }
-            }
-        }
-
-
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
-            writer.Write(4); // version
-
-            writer.Write(BribeMultiplier);
-            writer.Write(NextMultiplierDecay);
-            writer.Write(RecentBribes);
+            writer.Write(0); // version
 
             List<SBInfo> sbInfos = SBInfos;
 
@@ -2194,7 +1783,6 @@ namespace Server.Mobiles
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             LoadSBInfo();
@@ -2203,27 +1791,12 @@ namespace Server.Mobiles
 
             switch (version)
             {
-                case 4:
-                case 3:
-                case 2:
-                    BribeMultiplier = reader.ReadInt();
-                    NextMultiplierDecay = reader.ReadDateTime();
-                    CheckNextMultiplierDecay(false); // Reset NextMultiplierDecay if it is out of range of the config
-                    RecentBribes = reader.ReadInt();
-                    goto case 1;
-                case 1:
+                case 0:
                     {
                         int index;
-
                         while ((index = reader.ReadEncodedInt()) > 0)
                         {
                             int doubled = reader.ReadEncodedInt();
-
-                            if (version < 4)
-                            {
-                                reader.ReadEncodedInt();
-                                reader.ReadEncodedInt();
-                            }
 
                             if (sbInfos != null)
                             {
@@ -2266,14 +1839,7 @@ namespace Server.Mobiles
                                                 break;
                                         }
 
-                                        if (version == 2 && gbi.Stackable)
-                                        {
-                                            gbi.Amount = gbi.MaxAmount = EconomyStockAmount;
-                                        }
-                                        else
-                                        {
-                                            gbi.Amount = gbi.MaxAmount = amount;
-                                        }
+                                        gbi.Amount = gbi.MaxAmount = amount;
 
                                         gbi.TotalBought = 0;
                                         gbi.TotalSold = 0;
@@ -2291,11 +1857,6 @@ namespace Server.Mobiles
                 IsParagon = false;
             }
 
-            if (version == 1)
-            {
-                BribeMultiplier = Utility.Random(10);
-            }
-
             Timer.DelayCall(TimeSpan.Zero, CheckMorph);
         }
 
@@ -2303,13 +1864,6 @@ namespace Server.Mobiles
         {
             if (from.Alive && IsActiveVendor)
             {
-                if (SupportsBulkOrders(from))
-                {
-                    list.Add(new BulkOrderInfoEntry(from, this));
-                    list.Add(new BribeEntry(from, this));
-                    list.Add(new ClaimRewardsEntry(from, this));
-                }
-
                 if (IsActiveSeller)
                 {
                     list.Add(new VendorBuyEntry(from, this));

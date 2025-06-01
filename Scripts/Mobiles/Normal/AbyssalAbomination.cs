@@ -52,7 +52,6 @@ namespace Server.Mobiles
         {
         }
 
-        public override bool IgnoreYoungProtection => true;
         public override bool Unprovokable => true;
         public override bool AreaPeaceImmune => true;
         public override Poison PoisonImmune => Poison.Lethal;

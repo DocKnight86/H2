@@ -58,8 +58,6 @@ namespace Server.Mobiles
     {
         public override Type[] Quests => new[] { typeof(UnitingTheTribesQuest) };
 
-        public override bool ChangeRace => false;
-
         [Constructable]
         public SirGeoffery()
             : base("Sir Geoffrey", "the Guardsman")

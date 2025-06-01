@@ -385,7 +385,6 @@ namespace Server.Items
             });
 
         public static readonly PMList[] Lists = { Trammel, Felucca, Ilshenar, Malas, Tokuno, TerMur };
-        public static readonly PMList[] ListsYoung = { Trammel, Ilshenar, Malas, Tokuno, TerMur };
         public static readonly PMList[] RedLists = { Felucca };
         public static readonly PMList[] SigilLists = { Felucca };
 
@@ -553,9 +552,7 @@ namespace Server.Items
                 }
                 else
                 {
-                    bool young = mobile is PlayerMobile pm && pm.Young;
-
-                    checkLists = young ? PMList.ListsYoung : PMList.Lists;
+                    checkLists = PMList.Lists;
                 }
             }
             else

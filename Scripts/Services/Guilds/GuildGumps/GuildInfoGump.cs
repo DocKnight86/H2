@@ -143,16 +143,13 @@ namespace Server.Guilds
                         break;
                     }
                 case 8:
-                    if (pm.Young)
-                    {
-                        pm.SendLocalizedMessage(1155562); // Young players may not join Vice vs Virtue. Renounce your young player status by saying, "I renounce my young player status" and try again.
-                    }
-                    else
-                    {
-                        pm.SendGump(new Engines.VvV.ConfirmSignupGump(pm));
-                    }
+                {
+                    pm.SendGump(new Engines.VvV.ConfirmSignupGump(pm));
+
                     break;
+                }
                 case 9:
+                {
                     if (Engines.Points.PointsSystem.ViceVsVirtue.IsResigning(pm, guild))
                     {
                         pm.SendLocalizedMessage(1155560); // You are currently in the process of quitting Vice vs Virtue.
@@ -168,9 +165,12 @@ namespace Server.Guilds
                         pm.SendGump(new GuildInfoGump(pm, guild, false, true));
                     }
                     break;
+                }
                 case 10:
+                {
                     pm.SendGump(new Engines.VvV.ViceVsVirtueLeaderboardGump(pm));
                     break;
+                }
             }
         }
 

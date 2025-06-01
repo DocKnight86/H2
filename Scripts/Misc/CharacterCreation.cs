@@ -228,8 +228,6 @@ namespace Server.Misc
 
             newChar.Hunger = 20;
 
-            bool young = false;
-
             if (newChar is PlayerMobile pm)
             {
                 double skillcap = Config.Get("PlayerCaps.SkillCap", 1000.0d) / 10;
@@ -243,11 +241,6 @@ namespace Server.Misc
                 }
 
                 pm.Profession = args.Profession;
-
-                if (pm.IsPlayer() && pm.Account.Young && !Siege.SiegeShard)
-                {
-                    young = pm.Young = true;
-                }
             }
 
             SetName(newChar, args.Name);

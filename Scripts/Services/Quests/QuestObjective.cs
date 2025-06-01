@@ -137,11 +137,6 @@ namespace Server.Engines.Quests
         public virtual void OnKill(BaseCreature creature, Container corpse)
         {
         }
-
-        public virtual bool IgnoreYoungProtection(Mobile from)
-        {
-            return false;
-        }
     }
 
     public class QuestLogUpdatedGump : BaseQuestGump
