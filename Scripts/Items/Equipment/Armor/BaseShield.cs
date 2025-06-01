@@ -150,7 +150,6 @@ namespace Server.Items
                 if (Resource != CraftResource.Heartwood)
                 {
                     Attributes.SpellChanneling += attrInfo.ShieldSpellChanneling;
-                    ArmorAttributes.LowerStatReq += attrInfo.ShieldLowerRequirements;
 
                     if (attrInfo.ShieldRegenHits > 0)
                     {

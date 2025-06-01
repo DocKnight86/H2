@@ -10,7 +10,7 @@ namespace Server.Items
 
             Attributes.NightSight = 1;
 
-            BaseRunicTool.ApplyAttributesTo(this, true, 0, Utility.RandomMinMax(3, 5), 0, 100);
+            BaseRunicTool.ApplyAttributesTo(this, true, Utility.RandomMinMax(3, 5), 0, 100);
 
             if (Utility.Random(100) < 50)
             {

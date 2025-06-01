@@ -8,7 +8,7 @@ namespace Server.Items
         {
             Weight = 1.0;
 
-            BaseRunicTool.ApplyAttributesTo(this, true, 0, Utility.RandomMinMax(2, 4), 0, 100);
+            BaseRunicTool.ApplyAttributesTo(this, true, Utility.RandomMinMax(2, 4), 0, 100);
 
             switch (Utility.Random(4))
             {

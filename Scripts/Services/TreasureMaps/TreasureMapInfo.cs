@@ -598,9 +598,7 @@ namespace Server.Items
         {
             typeof(BurglarsBandana), typeof(DreadPirateHat),
             typeof(GwennosHarp), typeof(IolosLute),
-            typeof(LunaLance), typeof(PolarBearMask), 
-            typeof(AlchemistsBauble), typeof(CaptainQuacklebushsCutlass),
-            typeof(ShieldOfInvulnerability)
+            typeof(PolarBearMask), typeof(AlchemistsBauble)
         };
 
         private static readonly SkillName[][] _TranscendenceTable =

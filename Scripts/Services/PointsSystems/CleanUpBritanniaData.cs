@@ -363,9 +363,6 @@ namespace Server.Engines.Points
             //Virtue Artifacts
             Entries[typeof(MapOfTheKnownWorld)] = 1500.0;
             Entries[typeof(AnkhPendant)] = 1500.0;
-            Entries[typeof(DragonsEnd)] = 1500.0;
-            Entries[typeof(KatrinasCrook)] = 1500.0;
-            Entries[typeof(SentinelsGuard)] = 1500.0;
             Entries[typeof(CompassionArms)] = 1500.0;
             Entries[typeof(JusticeBreastplate)] = 1500.0;
             Entries[typeof(ValorGauntlets)] = 1500.0;
@@ -384,23 +381,18 @@ namespace Server.Engines.Points
             Entries[typeof(AdmiralsHeartyRum)] = 100.0;
             Entries[typeof(AlchemistsBauble)] = 100.0;
             Entries[typeof(BurglarsBandana)] = 100.0;
-            Entries[typeof(CaptainQuacklebushsCutlass)] = 100.0;
             Entries[typeof(DreadPirateHat)] = 100.0;
             Entries[typeof(GwennosHarp)] = 100.0;
             Entries[typeof(IolosLute)] = 100.0;
-            Entries[typeof(LunaLance)] = 100.0;
             Entries[typeof(PolarBearMask)] = 100.0;
             Entries[typeof(PixieSwatter)] = 100.0;
             Entries[typeof(WrathOfTheDryad)] = 100.0;
-            Entries[typeof(StaffOfPower)] = 100.0;
-            Entries[typeof(OrcishVisage)] = 100.0;
             Entries[typeof(BowOfTheJukaKing)] = 100.0;
             Entries[typeof(CreepingVine)] = 100.0;
             Entries[typeof(ForgedPardon)] = 100.0;
             Entries[typeof(ManaPhasingOrb)] = 500.0;
             Entries[typeof(RunedSashOfWarding)] = 100.0;
             Entries[typeof(SurgeShield)] = 100.0;
-            Entries[typeof(ShieldOfInvulnerability)] = 100.0;
             Entries[typeof(BloodwoodSpirit)] = 100.0;
             Entries[typeof(QuiverOfRage)] = 100.0;
             Entries[typeof(QuiverOfElements)] = 100.0;

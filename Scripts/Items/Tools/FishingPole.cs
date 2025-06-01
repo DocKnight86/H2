@@ -703,15 +703,13 @@ namespace Server.Items
             {
                 Attributes.SpellChanneling = attrInfo.OtherSpellChanneling;
                 Attributes.RegenHits = attrInfo.OtherRegenHits;
-                LowerStatReq = attrInfo.OtherLowerRequirements;
             }
             else
             {
-                switch (Utility.Random(3))
+                switch (Utility.Random(2))
                 {
                     case 0: Attributes.RegenHits = attrInfo.OtherRegenHits; break;
                     case 1: Attributes.SpellChanneling = attrInfo.OtherSpellChanneling; break;
-                    case 2: LowerStatReq = attrInfo.OtherLowerRequirements; break;
                 }
             }
         }

@@ -293,7 +293,7 @@ namespace Server.Multis
 
                     foreach (Item item in eable)
                     {
-                        if (item.RootParent == null && item.Movable && item.LootType != LootType.Blessed && !item.Insured)
+                        if (item.RootParent == null && item.Movable && item.LootType != LootType.Blessed)
                         {
                             list.Add(item);
                         }

@@ -55,7 +55,6 @@ namespace Server.Items
         private int m_WeaponChaosDamage;
         private int m_WeaponDirectDamage;
         private int m_WeaponDurability;
-        private int m_WeaponLowerRequirements;
         private int m_WeaponDamage;
         private int m_WeaponHitChance;
         private int m_WeaponHitLifeLeech;
@@ -68,7 +67,6 @@ namespace Server.Items
         private int m_ArmorPoisonResist;
         private int m_ArmorEnergyResist;
         private int m_ArmorDurability;
-        private int m_ArmorLowerRequirements;
         private int m_ArmorDamage;
         private int m_ArmorHitChance;
         private int m_ArmorRegenHits;
@@ -82,7 +80,6 @@ namespace Server.Items
         private int m_ShieldPhysicalRandom;
         private int m_ShieldColdRandom;
         private int m_ShieldSpellChanneling;
-        private int m_ShieldLowerRequirements;
         private int m_ShieldRegenHits;
         private int m_ShieldBonusDex;
         private int m_ShieldBonusStr;
@@ -91,7 +88,6 @@ namespace Server.Items
 
         private int m_OtherSpellChanneling;
         private int m_OtherRegenHits;
-        private int m_OtherLowerRequirements;
 
         private int m_RunicMinAttributes;
         private int m_RunicMaxAttributes;
@@ -105,7 +101,6 @@ namespace Server.Items
         public int WeaponChaosDamage { get => m_WeaponChaosDamage; set => m_WeaponChaosDamage = value; }
         public int WeaponDirectDamage { get => m_WeaponDirectDamage; set => m_WeaponDirectDamage = value; }
         public int WeaponDurability { get => m_WeaponDurability; set => m_WeaponDurability = value; }
-        public int WeaponLowerRequirements { get => m_WeaponLowerRequirements; set => m_WeaponLowerRequirements = value; }
         public int WeaponDamage { get => m_WeaponDamage; set => m_WeaponDamage = value; }
         public int WeaponHitChance { get => m_WeaponHitChance; set => m_WeaponHitChance = value; }
         public int WeaponHitLifeLeech { get => m_WeaponHitLifeLeech; set => m_WeaponHitLifeLeech = value; }
@@ -118,7 +113,6 @@ namespace Server.Items
         public int ArmorPoisonResist { get => m_ArmorPoisonResist; set => m_ArmorPoisonResist = value; }
         public int ArmorEnergyResist { get => m_ArmorEnergyResist; set => m_ArmorEnergyResist = value; }
         public int ArmorDurability { get => m_ArmorDurability; set => m_ArmorDurability = value; }
-        public int ArmorLowerRequirements { get => m_ArmorLowerRequirements; set => m_ArmorLowerRequirements = value; }
         public int ArmorDamage { get => m_ArmorDamage; set => m_ArmorDamage = value; }
         public int ArmorHitChance { get => m_ArmorHitChance; set => m_ArmorHitChance = value; }
         public int ArmorRegenHits { get => m_ArmorRegenHits; set => m_ArmorRegenHits = value; }
@@ -132,7 +126,6 @@ namespace Server.Items
         public int ShieldPhysicalRandom { get => m_ShieldPhysicalRandom; set => m_ShieldPhysicalRandom = value; }
         public int ShieldColdRandom { get => m_ShieldColdRandom; set => m_ShieldColdRandom = value; }
         public int ShieldSpellChanneling { get => m_ShieldSpellChanneling; set => m_ShieldSpellChanneling = value; }
-        public int ShieldLowerRequirements { get => m_ShieldLowerRequirements; set => m_ShieldLowerRequirements = value; }
         public int ShieldRegenHits { get => m_ShieldRegenHits; set => m_ShieldRegenHits = value; }
         public int ShieldBonusDex { get => m_ShieldBonusDex; set => m_ShieldBonusDex = value; }
         public int ShieldBonusStr { get => m_ShieldBonusStr; set => m_ShieldBonusStr = value; }
@@ -141,8 +134,7 @@ namespace Server.Items
 
         public int OtherSpellChanneling { get => m_OtherSpellChanneling; set => m_OtherSpellChanneling = value; }
         public int OtherRegenHits { get => m_OtherRegenHits; set => m_OtherRegenHits = value; }
-        public int OtherLowerRequirements { get => m_OtherLowerRequirements; set => m_OtherLowerRequirements = value; }
-
+       
         public int RunicMinAttributes { get => m_RunicMinAttributes; set => m_RunicMinAttributes = value; }
         public int RunicMaxAttributes { get => m_RunicMaxAttributes; set => m_RunicMaxAttributes = value; }
         public int RunicMinIntensity { get => m_RunicMinIntensity; set => m_RunicMinIntensity = value; }
@@ -162,9 +154,7 @@ namespace Server.Items
 
             dullCopper.ArmorPhysicalResist = 10;
             dullCopper.ArmorDurability = 50;
-            dullCopper.ArmorLowerRequirements = 20;
             dullCopper.WeaponDurability = 100;
-            dullCopper.WeaponLowerRequirements = 50;
             dullCopper.RunicMinAttributes = 1;
             dullCopper.RunicMaxAttributes = 2;
 
@@ -220,8 +210,6 @@ namespace Server.Items
             golden.ArmorFireResist = 2;
             golden.ArmorColdResist = 2;
             golden.ArmorEnergyResist = 3;
-            golden.ArmorLowerRequirements = 30;
-            golden.WeaponLowerRequirements = 50;
             golden.RunicMinAttributes = 3;
             golden.RunicMaxAttributes = 4;
 
@@ -383,16 +371,11 @@ namespace Server.Items
             ash.ArmorColdResist = 4;
             ash.ArmorPoisonResist = 1;
             ash.ArmorEnergyResist = 6;
-            ash.ArmorLowerRequirements = 20;
 
             ash.ShieldEnergyResist = 3;
-            ash.ShieldLowerRequirements = 3;
 
             ash.WeaponSwingSpeed = 10;
-            ash.WeaponLowerRequirements = 20;
-
-            ash.OtherLowerRequirements = 20;
-
+            
             ash.RunicMinAttributes = 2;
             ash.RunicMaxAttributes = 3;
             ash.RunicMinIntensity = 35;
@@ -430,14 +413,12 @@ namespace Server.Items
             // one of below
             heartwood.ArmorDamage = 10;
             heartwood.ArmorHitChance = 5;
-            heartwood.ArmorLowerRequirements = 20;
             heartwood.ArmorMage = 1;
 
             // one of below
             heartwood.WeaponDamage = 10;
             heartwood.WeaponHitChance = 5;
             heartwood.WeaponHitLifeLeech = 13;
-            heartwood.WeaponLowerRequirements = 20;
             heartwood.WeaponSwingSpeed = 10;
 
             heartwood.ShieldBonusDex = 2;

@@ -241,7 +241,7 @@ namespace Server.Mobiles
             base.OnDeath(c);
 
             FishingPole pole = new FishingPole();
-            BaseRunicTool.ApplyAttributesTo(pole, false, 0, Utility.RandomMinMax(2, 5), 50, 100);
+            BaseRunicTool.ApplyAttributesTo(pole, false, Utility.RandomMinMax(2, 5), 50, 100);
             c.DropItem(pole);
 
             c.DropItem(new MessageInABottle(c.Map == Map.Felucca ? Map.Felucca : Map.Trammel));

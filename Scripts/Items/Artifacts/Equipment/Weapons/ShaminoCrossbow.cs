@@ -11,7 +11,6 @@ namespace Server.Items
             Attributes.AttackChance = 15;
             Attributes.WeaponDamage = 40;
             WeaponAttributes.SelfRepair = 10;
-            WeaponAttributes.LowerStatReq = 100;
         }
 
         public ShaminoCrossbow(Serial serial)
@@ -19,7 +18,7 @@ namespace Server.Items
         {
         }
 
-        public override int LabelNumber => 1062915;// Shamino’s Best Crossbow
+        public override int LabelNumber => 1062915;// Shaminoâ€™s Best Crossbow
         public override int InitMinHits => 255;
         public override int InitMaxHits => 255;
         public override void Serialize(GenericWriter writer)

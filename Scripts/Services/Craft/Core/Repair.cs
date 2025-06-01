@@ -105,10 +105,14 @@ namespace Server.Engines.Craft
                     double maxSkill = difficulty + 25;
 
                     if (value < minSkill)
+                    {
                         return false; // Too difficult
+                    }
 
                     if (value >= maxSkill)
+                    {
                         return true; // No challenge
+                    }
 
                     double chance = (value - minSkill) / (maxSkill - minSkill);
 
@@ -122,10 +126,14 @@ namespace Server.Engines.Craft
                     double maxSkill = difficulty + 25;
 
                     if (value < minSkill)
+                    {
                         return false; // Too difficult
+                    }
 
                     if (value >= maxSkill)
+                    {
                         return true; // No challenge
+                    }
 
                     double chance = (value - minSkill) / (maxSkill - minSkill);
 
@@ -205,7 +213,9 @@ namespace Server.Engines.Craft
                         if (!CheckDeed(from))
                         {
                             if (m_Addon != null)
+                            {
                                 m_Addon.User = null;
+                            }
 
                             return;
                         }
@@ -215,7 +225,9 @@ namespace Server.Engines.Craft
                             from.SendLocalizedMessage(500426); // You can't repair that.
 
                             if (m_Addon != null)
+                            {
                                 m_Addon.User = null;
+                            }
 
                             return;
                         }
@@ -227,9 +239,13 @@ namespace Server.Engines.Craft
                         else if (!usingDeed && m_CraftSystem is DefTinkering && item is BrokenAutomatonHead head)
                         {
                             if (head.TryRepair(from))
+                            {
                                 number = 1044279; // You repair the item.
+                            }
                             else
+                            {
                                 number = 1044280; // You fail to repair the item.
+                            }
                         }
                         else if (item is BaseWeapon weapon)
                         {
@@ -251,10 +267,6 @@ namespace Server.Engines.Craft
                             else if (weapon.MaxHitPoints <= toWeaken)
                             {
                                 number = 1044278; // That item has been repaired many times, and will break if repairs are attempted again.
-                            }
-                            else if (weapon.NegativeAttributes.NoRepair > 0)
-                            {
-                                number = 1044277; // That item cannot be repaired.
                             }
                             else
                             {
@@ -300,10 +312,6 @@ namespace Server.Engines.Craft
                             {
                                 number = 1044278; // That item has been repaired many times, and will break if repairs are attempted again.
                             }
-                            else if (armor.NegativeAttributes.NoRepair > 0)
-                            {
-                                number = 1044277; // That item cannot be repaired.
-                            }
                             else
                             {
                                 if (CheckWeaken(from, skill, armor.HitPoints, armor.MaxHitPoints))
@@ -347,10 +355,6 @@ namespace Server.Engines.Craft
                             else if (jewel.MaxHitPoints <= toWeaken)
                             {
                                 number = 1044278; // That item has been repaired many times, and will break if repairs are attempted again.
-                            }
-                            else if (jewel.NegativeAttributes.NoRepair > 0)
-                            {
-                                number = 1044277; // That item cannot be repaired.
                             }
                             else
                             {
@@ -396,10 +400,6 @@ namespace Server.Engines.Craft
                             {
                                 number = 1044278; // That item has been repaired many times, and will break if repairs are attempted again.
                             }
-                            else if (clothing.NegativeAttributes.NoRepair > 0)// quick fix
-                            {
-                                number = 1044277; // That item cannot be repaired.
-                            }
                             else
                             {
                                 if (CheckWeaken(from, skill, clothing.HitPoints, clothing.MaxHitPoints))
@@ -443,10 +443,6 @@ namespace Server.Engines.Craft
                             else if (talisman.MaxHitPoints <= toWeaken)
                             {
                                 number = 1044278; // That item has been repaired many times, and will break if repairs are attempted again.
-                            }
-                            else if (!talisman.CanRepair)// quick fix
-                            {
-                                number = 1044277; // That item cannot be repaired.
                             }
                             else
                             {
@@ -590,9 +586,13 @@ namespace Server.Engines.Craft
                     if (skillValue < required)
                     {
                         if (required == 80.0)
+                        {
                             from.SendLocalizedMessage(1157049, name); // You must have at least 80 tinkering skill to attempt to repair ~1_CREATURE~.
+                        }
                         else
+                        {
                             from.SendLocalizedMessage(1113614, name); // You must have some tinkering skills to attempt to repair a ~1_CREATURE~.
+                        }
                     }
                     else if (!from.CanBeginAction(typeof(IRepairableMobile)))
                     {
@@ -609,13 +609,17 @@ namespace Server.Engines.Craft
                     else
                     {
                         if (damage > (int)(skillValue * 0.6))
+                        {
                             damage = (int)(skillValue * 0.6);
+                        }
 
                         SkillLock sl = from.Skills[SkillName.Tinkering].Lock;
                         from.Skills[SkillName.Tinkering].SetLockNoRelay(SkillLock.Locked);
 
                         if (!from.CheckSkill(SkillName.Tinkering, 0.0, 100.0))
+                        {
                             damage /= 6;
+                        }
 
                         from.Skills[SkillName.Tinkering].SetLockNoRelay(sl);
 
@@ -626,16 +630,22 @@ namespace Server.Engines.Craft
                             int v = pack.ConsumeUpTo(m.RepairResource, (damage + 4) / 5);
 
                             if (v <= 0 && m is Golem)
+                            {
                                 v = pack.ConsumeUpTo(typeof(BronzeIngot), (damage + 4) / 5);
+                            }
 
                             if (v > 0)
                             {
                                 m.Hits += damage;
 
                                 if (damage > 1)
+                                {
                                     from.SendLocalizedMessage(1113616, name); // You repair ~1_CREATURE~.
+                                }
                                 else
+                                {
                                     from.SendLocalizedMessage(1157030, name); // You repair ~1_CREATURE~, but it barely helps.
+                                }
 
                                 toDelete = true;
                                 double delay = 10 - skillValue / 16.65;
@@ -669,14 +679,12 @@ namespace Server.Engines.Craft
         public static bool AllowsRepair(object targeted, CraftSystem system)
         {
             if (targeted is BrokenAutomatonHead || targeted is IRepairableMobile)
+            {
                 return true;
+            }
 
-            return targeted is BlankScroll ||
-                   targeted is BaseArmor armor && armor.CanRepair ||
-                   targeted is BaseWeapon weapon && weapon.CanRepair ||
-                   targeted is BaseClothing clothing && clothing.CanRepair ||
-                   targeted is BaseJewel jewel && jewel.CanRepair ||
-                   targeted is BaseTalisman talisman && talisman.CanRepair;
+            return targeted is BlankScroll || targeted is BaseArmor || targeted is BaseWeapon ||
+                   targeted is BaseClothing || targeted is BaseJewel || targeted is BaseTalisman;
         }
     }
 }

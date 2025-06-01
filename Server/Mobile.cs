@@ -3824,7 +3824,7 @@ namespace Server
 					continue;
 				}
 
-				if ((item.Insured || item.LootType == LootType.Blessed) && item.Parent == this && item.Layer != Layer.Mount)
+				if (item.LootType == LootType.Blessed && item.Parent == this && item.Layer != Layer.Mount)
 				{
 					equip.Add(item);
 				}
@@ -4115,8 +4115,6 @@ namespace Server
 		{
 			return true;
 		}
-
-		public static bool InsuranceEnabled { get; set; }
 
 		public virtual void Use(Item item)
 		{
@@ -7818,7 +7816,7 @@ namespace Server
 		///     </c>
 		/// </summary>
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int HitsMax => 50 + (Str / 2);
+		public virtual int HitsMax => 50 + Str / 2;
 
 		/// <summary>
 		///     Gets or sets the current stamina of the Mobile. This value ranges from 0 to <see cref="StamMax" />, inclusive.

@@ -1093,7 +1093,7 @@ namespace Server
     [Flags]
     public enum AosWeaponAttribute : long
     {
-        LowerStatReq = 0x00000001,
+        UNUSED = 0x00000001,
         SelfRepair = 0x00000002,
         HitLeechHits = 0x00000004,
         HitLeechStam = 0x00000008,
@@ -1281,9 +1281,6 @@ namespace Server
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int LowerStatReq { get => this[AosWeaponAttribute.LowerStatReq]; set => this[AosWeaponAttribute.LowerStatReq] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int SelfRepair { get => this[AosWeaponAttribute.SelfRepair]; set => this[AosWeaponAttribute.SelfRepair] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1463,11 +1460,10 @@ namespace Server
     [Flags]
     public enum AosArmorAttribute
     {
-        LowerStatReq = 0x00000001,
-        SelfRepair = 0x00000002,
-        DurabilityBonus = 0x00000004,
-        ReactiveParalyze = 0x00000008,
-        SoulCharge = 0x00000010
+        SelfRepair = 0x00000001,
+        DurabilityBonus = 0x00000002,
+        ReactiveParalyze = 0x00000004,
+        SoulCharge = 0x00000008
     }
 
     public sealed class AosArmorAttributes : BaseAttributes
@@ -1581,9 +1577,6 @@ namespace Server
         {
             return "...";
         }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int LowerStatReq { get => this[AosArmorAttribute.LowerStatReq]; set => this[AosArmorAttribute.LowerStatReq] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int SelfRepair { get => this[AosArmorAttribute.SelfRepair]; set => this[AosArmorAttribute.SelfRepair] = value; }
@@ -1906,16 +1899,7 @@ namespace Server
         ResonancePoison = 0x00000100,
         ResonanceEnergy = 0x00000200,
         ResonanceKinetic = 0x00000400,
-        /*Soul Charge is wrong. 
-         * Do not use these types. 
-         * Use AosArmorAttribute type only.
-         * Fill these in with any new attributes.*/
-        SoulChargeFire = 0x00000800,
-        SoulChargeCold = 0x00001000,
-        SoulChargePoison = 0x00002000,
-        SoulChargeEnergy = 0x00004000,
-        SoulChargeKinetic = 0x00008000,
-        CastingFocus = 0x00010000
+        CastingFocus = 0x00000800
     }
 
     public sealed class SAAbsorptionAttributes : BaseAttributes
@@ -2038,48 +2022,6 @@ namespace Server
         [CommandProperty(AccessLevel.GameMaster)]
         public int ResonanceKinetic { get => this[SAAbsorptionAttribute.ResonanceKinetic]; set => this[SAAbsorptionAttribute.ResonanceKinetic] = value; }
 
-        // NEED TO DELETE ALL OF THESE EVENTUALLY
-        public int SoulChargeFire
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeFire];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeFire] = value;
-            }
-        }
-        public int SoulChargeCold
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeCold];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeCold] = value;
-            }
-        }
-        public int SoulChargePoison
-        {
-            get => this[SAAbsorptionAttribute.SoulChargePoison];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargePoison] = value;
-            }
-        }
-        public int SoulChargeEnergy
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeEnergy];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeEnergy] = value;
-            }
-        }
-        public int SoulChargeKinetic
-        {
-            get => this[SAAbsorptionAttribute.SoulChargeKinetic];
-            set
-            {
-                //this[SAAbsorptionAttribute.SoulChargeKinetic] = value;
-            }
-        }
-
         [CommandProperty(AccessLevel.GameMaster)]
         public int CastingFocus { get => this[SAAbsorptionAttribute.CastingFocus]; set => this[SAAbsorptionAttribute.CastingFocus] = value; }
     }
@@ -2149,8 +2091,7 @@ namespace Server
         Prized = 0x00000002,
         Massive = 0x00000004,
         Unwieldly = 0x00000008,
-        Antique = 0x00000010,
-        NoRepair = 0x00000020
+        Antique = 0x00000010
     }
 
     public sealed class NegativeAttributes : BaseAttributes
@@ -2172,11 +2113,6 @@ namespace Server
 
         public void GetProperties(ObjectPropertyList list, Item item)
         {
-            if (NoRepair > 0)
-            {
-                list.Add(1151782);
-            }
-
             if (Brittle > 0)
             {
                 list.Add(1116209);
@@ -2283,9 +2219,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int Antique { get => this[NegativeAttribute.Antique]; set => this[NegativeAttribute.Antique] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int NoRepair { get => this[NegativeAttribute.NoRepair]; set => this[NegativeAttribute.NoRepair] = value; }
     }
 
     [PropertyObject]

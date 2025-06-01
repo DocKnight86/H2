@@ -36,7 +36,7 @@ namespace Server
             UNUSED2 = 0x00000040,
             FixAddonDeco = 0x00000080,
             LifeStealers = 0x00000100,
-            LootNerf2 = 0x00000200,
+            UNUSED3 = 0x00000200,
             RemoveUnused = 0x00000400,
             RemoveUnused2 = 0x00000800,
             RemoveTeleporters = 0x00001000,
@@ -195,12 +195,6 @@ namespace Server
                     {
                         RemoveUnused();
                         VersionFlag |= SpawnerVersion.RemoveUnused;
-                    }
-
-                    if ((VersionFlag & SpawnerVersion.LootNerf2) == 0)
-                    {
-                        LootNerf2();
-                        VersionFlag |= SpawnerVersion.LootNerf2;
                     }
 
                     if ((VersionFlag & SpawnerVersion.LifeStealers) == 0)
@@ -371,13 +365,6 @@ namespace Server
             Remove("Zoel");
             Remove("Horus");
             Remove("Haochi");
-        }
-        #endregion
-
-        #region Loot Nerf 2
-        public static void LootNerf2()
-        {
-            RunicReforging.LootNerf2();
         }
         #endregion
 

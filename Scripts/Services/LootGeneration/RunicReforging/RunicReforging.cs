@@ -1595,7 +1595,6 @@ namespace Server.Items
                     {
                         new NamedInfoCol(AosWeaponAttribute.SelfRepair, SelfRepairTable),
                         new NamedInfoCol(AosWeaponAttribute.DurabilityBonus, DurabilityTable),
-                        new NamedInfoCol(AosWeaponAttribute.LowerStatReq, LowerStatReqTable),
                         new NamedInfoCol("Slayer", 1),
                         new NamedInfoCol(AosWeaponAttribute.MageWeapon, MageWeaponTable),
                         new NamedInfoCol(AosAttribute.SpellChanneling, 1),
@@ -1606,14 +1605,12 @@ namespace Server.Items
                     new[] // armor
                     {
                         new NamedInfoCol(AosArmorAttribute.SelfRepair, SelfRepairTable),
-                        new NamedInfoCol(AosArmorAttribute.DurabilityBonus, DurabilityTable),
-                        new NamedInfoCol(AosArmorAttribute.LowerStatReq, LowerStatReqTable)
+                        new NamedInfoCol(AosArmorAttribute.DurabilityBonus, DurabilityTable)
                     },
                     new[] // shield
                     {
                         new NamedInfoCol(AosArmorAttribute.SelfRepair, SelfRepairTable),
-                        new NamedInfoCol(AosArmorAttribute.DurabilityBonus, DurabilityTable),
-                        new NamedInfoCol(AosArmorAttribute.LowerStatReq, LowerStatReqTable)
+                        new NamedInfoCol(AosArmorAttribute.DurabilityBonus, DurabilityTable)
                     },
 
                     Array.Empty<NamedInfoCol>()
@@ -3310,16 +3307,6 @@ namespace Server.Items
             new[] { 5, 5, 5, 5, 5, 5, 5 }
         };
 
-        public static readonly int[][] LowerStatReqTable =
-        {
-            new[] { 60, 70, 80, 100, 100, 100, 100 },
-            new[] { 80, 100, 100, 100, 100, 100, 100 },
-            new[] { 100, 100, 100, 100, 100, 100, 100 },
-            new[] { 70, 100, 100, 100, 100, 100, 100 },
-            new[] { 80, 100, 100, 100, 100, 100, 100 },
-            new[] { 100, 100, 100, 100, 100, 100, 100 }
-        };
-
         public static readonly int[][] SelfRepairTable =
         {
             new[] { 2, 4, 0, 0, 0, 0, 0 },
@@ -3651,36 +3638,6 @@ namespace Server.Items
         #endregion
 
         #region Updates
-        public static void LootNerf2()
-        {
-            int fix = 0;
-
-            foreach (Item item in World.Items.Values)
-            {
-                NegativeAttributes neg = GetNegativeAttributes(item);
-
-                if (neg != null && (neg.Brittle > 0 || neg.Antique > 0 || neg.NoRepair > 0))
-                {
-                    AosWeaponAttributes wep = GetAosWeaponAttributes(item);
-                    AosArmorAttributes armor = GetAosArmorAttributes(item);
-
-                    if (wep != null && wep.SelfRepair > 0)
-                    {
-                        wep.SelfRepair = 0;
-                        fix++;
-                    }
-
-                    if (armor != null && armor.SelfRepair > 0)
-                    {
-                        armor.SelfRepair = 0;
-                        fix++;
-                    }
-                }
-            }
-
-            SpawnerPersistence.ToConsole($"Removed Self Repair from {fix} items.");
-        }
-
         public static void ItemNerfVersion6()
         {
             int fc2 = 0;

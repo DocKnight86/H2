@@ -110,10 +110,6 @@ namespace Server.Items
 
         public virtual bool CanFortify => !IsImbued && NegativeAttributes.Antique < 4;
 
-        public virtual bool CanRepair => m_NegativeAttributes.NoRepair == 0;
-
-        public virtual bool CanAlter => true;
-
         public virtual bool UseIntOrDexProperty => false;
 
         public virtual int IntOrDexPropertyValue => 0;
@@ -671,7 +667,7 @@ namespace Server.Items
                 v = IntRequirement;
             }
 
-            return AOS.Scale(v, 100 - GetLowerStatReq());
+            return AOS.Scale(v, 100);
         }
 
         public int ComputeStatBonus(StatType type)
@@ -931,35 +927,6 @@ namespace Server.Items
                     }
                 }
             }
-        }
-
-        public int GetLowerStatReq()
-        {
-            int v = m_AosArmorAttributes.LowerStatReq;
-
-            if (m_Resource == CraftResource.Heartwood)
-            {
-                return v;
-            }
-
-            CraftResourceInfo info = CraftResources.GetInfo(m_Resource);
-
-            if (info != null)
-            {
-                CraftAttributeInfo attrInfo = info.AttributeInfo;
-
-                if (attrInfo != null)
-                {
-                    v += attrInfo.ArmorLowerRequirements;
-                }
-            }
-
-            if (v > 100)
-            {
-                v = 100;
-            }
-
-            return v;
         }
 
         public override void OnAdded(object parent)
@@ -1407,14 +1374,6 @@ namespace Server.Items
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-
-                        if (version == 13 && reader.ReadBool())
-                        {
-                            Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
-                            {
-                                m_NegativeAttributes.NoRepair = 1;
-                            });
-                        }
                         #endregion
 
                         #region Stygian Abyss
@@ -2559,11 +2518,6 @@ namespace Server.Items
 
             AddResistanceProperties(list);
 
-            if ((prop = GetLowerStatReq()) != 0)
-            {
-                list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%
-            }
-
             if ((prop = ComputeStatReq(StatType.Str)) > 0)
             {
                 list.Add(1061170, prop.ToString()); // strength requirement ~1_val~
@@ -2776,11 +2730,10 @@ namespace Server.Items
             }
             else
             {
-                switch (Utility.Random(3))
+                switch (Utility.Random(2))
                 {
                     case 0: m_AosAttributes.WeaponDamage += attrInfo.ArmorDamage; break;
                     case 1: m_AosAttributes.AttackChance += attrInfo.ArmorHitChance; break;
-                    case 2: m_AosArmorAttributes.LowerStatReq += attrInfo.ArmorLowerRequirements; break;
                 }
             }
         }

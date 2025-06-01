@@ -18,7 +18,6 @@ namespace Server.Items
             Hue = 0x2C;
             LootType = LootType.Blessed;
             ArmorAttributes.SelfRepair = 10;
-            ArmorAttributes.LowerStatReq = 100;
         }
 
         public LeggingsOfEmbers(Serial serial)

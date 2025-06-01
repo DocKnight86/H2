@@ -81,13 +81,25 @@ namespace Server.Misc
         public static bool VerifyProfession(int profession)
         {
             if (profession < 0)
+            {
                 return false;
+            }
+
             if (profession < 4)
+            {
                 return true;
+            }
+
             if (profession < 6)
+            {
                 return true;
+            }
+
             if (profession < 8)
+            {
                 return true;
+            }
+
             return false;
         }
 
@@ -164,7 +176,9 @@ namespace Server.Misc
         private static Mobile CreateMobile(Account a)
         {
             if (a.Count >= a.Limit)
+            {
                 return null;
+            }
 
             for (int i = 0; i < a.Length; ++i)
             {
@@ -180,12 +194,16 @@ namespace Server.Misc
         public static void OnCharacterCreation(CharacterCreationArguments args)
         {
             if (!VerifyProfession(args.Profession))
+            {
                 args.Profession = 0;
+            }
 
             NetState state = args.State;
 
             if (state == null)
+            {
                 return;
+            }
 
             Mobile newChar = CreateMobile(args.Account as Account);
 
@@ -214,20 +232,22 @@ namespace Server.Misc
 
             if (newChar is PlayerMobile pm)
             {
-                pm.AutoRenewInsurance = true;
-
                 double skillcap = Config.Get("PlayerCaps.SkillCap", 1000.0d) / 10;
 
                 if (skillcap != 100.0)
                 {
                     for (int i = 0; i < Enum.GetNames(typeof(SkillName)).Length; ++i)
+                    {
                         pm.Skills[i].Cap = skillcap;
+                    }
                 }
 
                 pm.Profession = args.Profession;
 
                 if (pm.IsPlayer() && pm.Account.Young && !Siege.SiegeShard)
+                {
                     young = pm.Young = true;
+                }
             }
 
             SetName(newChar, args.Name);
@@ -272,16 +292,8 @@ namespace Server.Misc
             }
 
             if (TestCenter.Enabled)
-                TestCenter.FillBankbox(newChar);
-
-            if (young)
             {
-                NewPlayerTicket ticket = new NewPlayerTicket
-                {
-                    Owner = newChar
-                };
-
-                newChar.BankBox.DropItem(ticket);
+                TestCenter.FillBankbox(newChar);
             }
 
             CityInfo city = args.City;
@@ -307,18 +319,26 @@ namespace Server.Misc
             int vInt = intel - 10;
 
             if (vStr < 0)
+            {
                 vStr = 0;
+            }
 
             if (vDex < 0)
+            {
                 vDex = 0;
+            }
 
             if (vInt < 0)
+            {
                 vInt = 0;
+            }
 
             int total = vStr + vDex + vInt;
 
             if (total == 0 || total == vMax)
+            {
                 return;
+            }
 
             double scalar = vMax / (double)total;
 
@@ -340,9 +360,13 @@ namespace Server.Misc
             stat += diff;
 
             if (stat < 0)
+            {
                 stat = 0;
+            }
             else if (stat > max)
+            {
                 stat = max;
+            }
         }
 
         private static void SetStats(Mobile m, NetState state, int str, int dex, int intel)
@@ -366,7 +390,9 @@ namespace Server.Misc
             name = name.Trim();
 
             if (!NameVerification.Validate(name, 2, 16, true, false, true, 1, NameVerification.SpaceDashPeriodQuote))
+            {
                 name = "Generic Player";
+            }
 
             m.Name = name;
         }
@@ -378,14 +404,18 @@ namespace Server.Misc
             for (int i = 0; i < skills.Length; ++i)
             {
                 if (skills[i].Value < 0 || skills[i].Value > 50)
+                {
                     return false;
+                }
 
                 total += skills[i].Value;
 
                 for (int j = i + 1; j < skills.Length; ++j)
                 {
                     if (skills[j].Value > 0 && skills[j].Name == skills[i].Name)
+                    {
                         return false;
+                    }
                 }
             }
 
@@ -532,7 +562,9 @@ namespace Server.Misc
                 default:
                     {
                         if (!ValidSkills(skills))
+                        {
                             return;
+                        }
 
                         break;
                     }
@@ -632,7 +664,9 @@ namespace Server.Misc
                         skill.BaseFixedPoint = snv.Value * 10;
 
                         if (addSkillItems)
+                        {
                             AddSkillItems(snv.Name, m);
+                        }
                     }
                 }
             }
@@ -646,14 +680,20 @@ namespace Server.Misc
         private static void EquipItem(Item item, bool mustEquip)
         {
             if (m_Mobile != null && m_Mobile.EquipItem(item))
+            {
                 return;
+            }
 
             Container pack = m_Mobile.Backpack;
 
             if (!mustEquip && pack != null)
+            {
                 pack.DropItem(item);
+            }
             else
+            {
                 item.Delete();
+            }
         }
 
         private static void PackItem(Item item)
@@ -661,9 +701,13 @@ namespace Server.Misc
             Container pack = m_Mobile.Backpack;
 
             if (pack != null)
+            {
                 pack.DropItem(item);
+            }
             else
+            {
                 item.Delete();
+            }
         }
 
         private static void PackInstrument()
@@ -1079,7 +1123,9 @@ namespace Server.Misc
                             Item shoes = m_Mobile.FindItemOnLayer(Layer.Shoes);
 
                             if (shoes != null)
+                            {
                                 shoes.Delete();
+                            }
                         }
 
                         EquipItem(new Boots(Utility.RandomYellowHue()));

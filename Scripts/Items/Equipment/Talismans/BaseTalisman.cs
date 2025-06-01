@@ -234,7 +234,6 @@ namespace Server.Items
         public virtual int InitMinHits => 0;
         public virtual int InitMaxHits => 0;
 
-        public virtual bool CanRepair => true;
         public virtual bool CanFortify => NegativeAttributes.Antique < 4;
 
         private TalismanSlayerName m_Slayer;

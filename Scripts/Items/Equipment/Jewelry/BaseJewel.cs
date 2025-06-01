@@ -503,7 +503,6 @@ namespace Server.Items
         }
 
         public virtual bool CanFortify => IsImbued == false && NegativeAttributes.Antique < 4;
-        public virtual bool CanRepair => m_NegativeAttributes.NoRepair == 0;
         #endregion
 
         public override void OnAdded(object parent)
@@ -1066,12 +1065,6 @@ namespace Server.Items
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-
-                        if (version < 12 && reader.ReadBool())
-                        {
-                            m_NegativeAttributes.NoRepair = 1;
-                        }
-
                         #endregion
 
                         #region Stygian Abyss

@@ -57,8 +57,6 @@ namespace Server.Items
         }
 
         public virtual bool CanFortify => !IsImbued && NegativeAttributes.Antique < 4;
-        public virtual bool CanRepair => m_NegativeAttributes.NoRepair == 0;
-        public virtual bool CanAlter => true;
 
         private int m_MaxHitPoints;
         private int m_HitPoints;
@@ -434,7 +432,7 @@ namespace Server.Items
 
         public int ComputeStatReq(StatType type)
         {
-            return AOS.Scale(StrRequirement, 100 - GetLowerStatReq());
+            return AOS.Scale(StrRequirement, 100);
         }
 
         public int ComputeStatBonus(StatType type)
@@ -527,11 +525,6 @@ namespace Server.Items
                     }
                 }
             }
-        }
-
-        public int GetLowerStatReq()
-        {
-            return m_AosClothingAttributes.LowerStatReq;
         }
 
         public override void OnAdded(object parent)
@@ -1247,11 +1240,6 @@ namespace Server.Items
 
             base.AddResistanceProperties(list);
 
-            if ((prop = m_AosClothingAttributes.LowerStatReq) != 0)
-            {
-                list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%
-            }
-
             if ((prop = ComputeStatReq(StatType.Str)) > 0)
             {
                 list.Add(1061170, prop.ToString()); // strength requirement ~1_val~
@@ -1622,14 +1610,6 @@ namespace Server.Items
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-
-                        if (version == 9 && reader.ReadBool())
-                        {
-                            Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
-                                {
-                                    m_NegativeAttributes.NoRepair = 1;
-                                });
-                        }
                         #endregion
 
                         #region Stygian Abyss

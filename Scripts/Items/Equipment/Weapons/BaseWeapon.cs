@@ -188,8 +188,6 @@ namespace Server.Items
         public virtual int InitMaxHits => 0;
 
         public virtual bool CanFortify => !IsImbued && NegativeAttributes.Antique < 4;
-        public virtual bool CanRepair => m_NegativeAttributes.NoRepair == 0;
-        public virtual bool CanAlter => true;
 
         public override int PhysicalResistance => m_AosWeaponAttributes.ResistPhysicalBonus;
         public override int FireResistance => m_AosWeaponAttributes.ResistFireBonus;
@@ -664,35 +662,6 @@ namespace Server.Items
             return bonus;
         }
 
-        public int GetLowerStatReq()
-        {
-            int v = m_AosWeaponAttributes.LowerStatReq;
-
-            if (m_Resource == CraftResource.Heartwood)
-            {
-                return v;
-            }
-
-            CraftResourceInfo info = CraftResources.GetInfo(m_Resource);
-
-            if (info != null)
-            {
-                CraftAttributeInfo attrInfo = info.AttributeInfo;
-
-                if (attrInfo != null)
-                {
-                    v += attrInfo.WeaponLowerRequirements;
-                }
-            }
-
-            if (v > 100)
-            {
-                v = 100;
-            }
-
-            return v;
-        }
-
         public static void BlockEquip(Mobile m, TimeSpan duration)
         {
             if (m.BeginAction(typeof(BaseWeapon)))
@@ -774,7 +743,7 @@ namespace Server.Items
                 return false;
             }
 
-            if (from.Str < AOS.Scale(StrRequirement, 100 - GetLowerStatReq()))
+            if (from.Str < AOS.Scale(StrRequirement, 100))
             {
                 from.SendLocalizedMessage(500213); // You are not strong enough to equip that.
                 return false;
@@ -3604,14 +3573,6 @@ namespace Server.Items
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-
-                        if (version < 18 && reader.ReadBool())
-                        {
-                            Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
-                            {
-                                m_NegativeAttributes.NoRepair = 1;
-                            });
-                        }
                         #endregion
 
                         #region Stygian Abyss
@@ -4920,11 +4881,6 @@ namespace Server.Items
 
             base.AddResistanceProperties(list);
 
-            if ((prop = GetLowerStatReq()) != 0)
-            {
-                list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%
-            }
-
             if ((prop = m_AosWeaponAttributes.UseBestSkill) != 0)
             {
                 list.Add(1060400); // use best weapon skill
@@ -4990,7 +4946,7 @@ namespace Server.Items
                 list.Add(1061169, MaxRange.ToString()); // range ~1_val~
             }
 
-            int strReq = AOS.Scale(StrRequirement, 100 - GetLowerStatReq());
+            int strReq = AOS.Scale(StrRequirement, 100);
 
             if (strReq > 0)
             {
@@ -5174,13 +5130,12 @@ namespace Server.Items
             }
             else
             {
-                switch (Utility.Random(5))
+                switch (Utility.Random(4))
                 {
                     case 0: m_AosAttributes.WeaponDamage += attrInfo.WeaponDamage; break;
                     case 1: m_AosAttributes.WeaponSpeed += attrInfo.WeaponSwingSpeed; break;
                     case 2: m_AosAttributes.AttackChance += attrInfo.WeaponHitChance; break;
-                    case 3: m_AosWeaponAttributes.LowerStatReq += attrInfo.WeaponLowerRequirements; break;
-                    case 4: m_AosWeaponAttributes.HitLeechHits = attrInfo.WeaponHitLifeLeech; break;
+                    case 3: m_AosWeaponAttributes.HitLeechHits = attrInfo.WeaponHitLifeLeech; break;
                 }
             }
         }
