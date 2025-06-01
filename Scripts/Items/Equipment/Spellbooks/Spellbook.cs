@@ -132,8 +132,6 @@ namespace Server.Items
             }
         }
 
-        public override bool DisplayWeight => false;
-
         [CommandProperty(AccessLevel.GameMaster)]
         public AosAttributes Attributes { get => m_AosAttributes; set { } }
 

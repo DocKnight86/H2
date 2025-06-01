@@ -2397,7 +2397,7 @@ namespace Server
 
 		public virtual void Serialize(GenericWriter writer)
 		{
-			writer.Write(15); // version
+			writer.Write(0); // version
 
 			writer.Write(Sockets != null ? Sockets.Count : 0);
 
@@ -2868,9 +2868,8 @@ namespace Server
 
 			switch (version)
 			{
-                case 15:
-				case 14:
-                {
+				case 0:
+				{
                     int socketCount = reader.ReadInt();
 
                     for (int i = 0; i < socketCount; i++)
@@ -2878,25 +2877,11 @@ namespace Server
                         ItemSocket.Load(this, reader);
                     }
 
-                    goto case 13;
-                }
-                case 13:
-				case 12:
-				case 11:
-                {
                     m_GridLocation = reader.ReadByte();
-                    goto case 10;
-                }
-                case 10:
-				case 9:
-				case 8:
-				case 7:
-				case 6:
-				{
-					SaveFlag flags = (SaveFlag)reader.ReadInt();
+
+                    SaveFlag flags = (SaveFlag)reader.ReadInt();
 
                     int minutes = reader.ReadEncodedInt();
-
                     try
                     {
                         LastMoved = DateTime.UtcNow - TimeSpan.FromMinutes(minutes);
