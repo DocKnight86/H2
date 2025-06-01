@@ -331,12 +331,6 @@ namespace Server.Mobiles
                     m_Mobile.SayTo(from, "Your pet refuses to attack this creature!");
                     return;
                 }
-
-                if (bc is IBlackSolen && SolenHelper.CheckBlackFriendship(from) || bc is IRedSolen && SolenHelper.CheckRedFriendship(from))
-                {
-                    from.SendAsciiMessage("You can not force your pet to attack a creature you are protected from.");
-                    return;
-                }
             }
 
             if (order == LastOrderType.Follow && target is Mobile && m_Mobile.CheckControlChance(from))
@@ -1550,18 +1544,7 @@ namespace Server.Mobiles
             }
             else
             {
-                bool youngFrom = from is PlayerMobile playerMobile && playerMobile.Young;
-                bool youngTo = to is PlayerMobile mobile && mobile.Young;
-
-                if (youngFrom && !youngTo)
-                {
-                    from.SendLocalizedMessage(502040); // As a young player, you may not friend pets to older players.
-                }
-                else if (!youngFrom && youngTo)
-                {
-                    from.SendLocalizedMessage(502041); // As an older player, you may not friend pets to young players.
-                }
-                else if (from.CanBeBeneficial(to, true))
+                if (from.CanBeBeneficial(to, true))
                 {
                     NetState fromState = from.NetState, toState = to.NetState;
 
@@ -2018,18 +2001,7 @@ namespace Server.Mobiles
                     return false;
                 }
 
-                bool youngFrom = from is PlayerMobile mobile && mobile.Young;
-                bool youngTo = to is PlayerMobile playerMobile && playerMobile.Young;
-
-                if (accepted && youngFrom && !youngTo)
-                {
-                    from.SendLocalizedMessage(502051); // As a young player, you may not transfer pets to older players.
-                }
-                else if (accepted && !youngFrom && youngTo)
-                {
-                    from.SendLocalizedMessage(502052); // As an older player, you may not transfer pets to young players.
-                }
-                else if (accepted && !m_Creature.CanBeControlledBy(to))
+                if (accepted && !m_Creature.CanBeControlledBy(to))
                 {
                     string args = $"{to.Name}\t{from.Name}\t ";
 
@@ -2127,18 +2099,7 @@ namespace Server.Mobiles
             {
                 m_Mobile.DebugSay("Begin transfer with {0}", to.Name);
 
-                bool youngFrom = from is PlayerMobile mobile && mobile.Young;
-                bool youngTo = to is PlayerMobile playerMobile && playerMobile.Young;
-
-                if (youngFrom && !youngTo)
-                {
-                    from.SendLocalizedMessage(502051); // As a young player, you may not transfer pets to older players.
-                }
-                else if (!youngFrom && youngTo)
-                {
-                    from.SendLocalizedMessage(502052); // As an older player, you may not transfer pets to young players.
-                }
-                else if (!m_Mobile.CanBeControlledBy(to))
+               if (!m_Mobile.CanBeControlledBy(to))
                 {
                     string args = $"{to.Name}\t{from.Name}\t ";
 

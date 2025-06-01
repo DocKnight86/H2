@@ -258,9 +258,6 @@ namespace Server.Accounting
 		[CommandProperty(AccessLevel.Administrator)]
 		bool Banned { get; set; }
 
-		[CommandProperty(AccessLevel.Administrator)]
-		bool Young { get; set; }
-
 		Mobile this[int index] { get; set; }
 
 		void Delete();

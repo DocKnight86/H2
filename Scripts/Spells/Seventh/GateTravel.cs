@@ -1,6 +1,5 @@
 using Server.Items;
 using Server.Misc;
-using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Targeting;
@@ -129,10 +128,6 @@ namespace Server.Spells.Seventh
             }
             else if (!SpellHelper.CheckTravel(Caster, map, loc, TravelCheckType.GateTo))
             {
-            }
-            else if (map == Map.Felucca && Caster is PlayerMobile pm && pm.Young)
-            {
-                Caster.SendLocalizedMessage(1049543); // You decide against traveling to Felucca while you are still young.
             }
             else if (SpellHelper.RestrictRedTravel && Caster.Murderer && map.Rules != MapRules.FeluccaRules && !Siege.SiegeShard)
             {

@@ -1439,8 +1439,6 @@ namespace Server.Engines.CannedEvil
 
     public class ChampionSpawnRegion : BaseRegion
     {
-        public override bool YoungProtected => false;
-
         private readonly ChampionSpawn m_Spawn;
 
         public ChampionSpawn ChampionSpawn => m_Spawn;

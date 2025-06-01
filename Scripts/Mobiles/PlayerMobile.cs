@@ -50,7 +50,6 @@ using RankDefinition = Server.Guilds.RankDefinition;
 
 namespace Server.Mobiles
 {
-    #region Enums
     [Flags]
     public enum PlayerFlag
     {
@@ -63,27 +62,19 @@ namespace Server.Mobiles
         KarmaLocked = 0x00000020,
         UseOwnFilter = 0x00000040,
         PagingSquelched = 0x00000080,
-        Young = 0x00000100,
-        AcceptGuildInvites = 0x00000200,
-        DisplayChampionTitle = 0x00000400,
-        HasStatReward = 0x00000800,
-        GemMining = 0x00001000,
-        ToggleMiningGem = 0x00002000,
-        AbyssEntry = 0x00010000,
-        ToggleClippings = 0x00020000,
-        ToggleCutClippings = 0x00040000,
-        ToggleCutReeds = 0x00080000,
-        ToggleCutTopiaries = 0x00100000,
-        HasValiantStatReward = 0x00200000,
-        RefuseTrades = 0x00400000
-    }
-
-    [Flags]
-    public enum ExtendedPlayerFlag
-    {
-        Unused = 0x00000001,
-        ToggleStoneOnly = 0x00000002,
-        DisabledPvpWarning = 0x00000004
+        AcceptGuildInvites = 0x00000100,
+        DisplayChampionTitle = 0x00000200,
+        HasStatReward = 0x00000400,
+        GemMining = 0x00000800,
+        ToggleMiningGem = 0x00001000,
+        AbyssEntry = 0x00002000,
+        ToggleCutClippings = 0x00004000,
+        ToggleCutReeds = 0x00008000,
+        ToggleCutTopiaries = 0x00010000,
+        HasValiantStatReward = 0x00020000,
+        RefuseTrades = 0x00040000,
+        ToggleStoneOnly = 0x00080000,
+        DisabledPvpWarning = 0x00100000
     }
 
     public enum NpcGuild
@@ -96,14 +87,6 @@ namespace Server.Mobiles
         MerchantsGuild,
         BardsGuild
     }
-
-    public enum SolenFriendship
-    {
-        None,
-        Red,
-        Black
-    }
-    #endregion
 
     public partial class PlayerMobile : Mobile
     {
@@ -134,7 +117,6 @@ namespace Server.Mobiles
         private DateTime m_NpcGuildJoinTime;
         private TimeSpan m_NpcGuildGameTime;
         private PlayerFlag m_Flags;
-        private ExtendedPlayerFlag m_ExtendedFlags;
         private int m_Profession;
 
         /*
@@ -322,7 +304,6 @@ namespace Server.Mobiles
 
         #region PlayerFlags
         public PlayerFlag Flags { get => m_Flags; set => m_Flags = value; }
-        public ExtendedPlayerFlag ExtendedFlags { get => m_ExtendedFlags; set => m_ExtendedFlags = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool PagingSquelched { get => GetFlag(PlayerFlag.PagingSquelched); set => SetFlag(PlayerFlag.PagingSquelched, value); }
@@ -367,30 +348,15 @@ namespace Server.Mobiles
         public bool HasValiantStatReward { get => GetFlag(PlayerFlag.HasValiantStatReward); set => SetFlag(PlayerFlag.HasValiantStatReward, value); }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool RefuseTrades
-        {
-            get => GetFlag(PlayerFlag.RefuseTrades);
-            set => SetFlag(PlayerFlag.RefuseTrades, value);
-        }
+        public bool RefuseTrades { get => GetFlag(PlayerFlag.RefuseTrades); set => SetFlag(PlayerFlag.RefuseTrades, value); }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool DisabledPvpWarning
-        {
-            get => GetFlag(ExtendedPlayerFlag.DisabledPvpWarning);
-            set => SetFlag(ExtendedPlayerFlag.DisabledPvpWarning, value);
-        }
+        public bool DisabledPvpWarning { get => GetFlag(PlayerFlag.DisabledPvpWarning); set => SetFlag(PlayerFlag.DisabledPvpWarning, value); }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool ToggleStoneOnly
-        {
-            get => GetFlag(ExtendedPlayerFlag.ToggleStoneOnly);
-            set => SetFlag(ExtendedPlayerFlag.ToggleStoneOnly, value);
-        }
+        public bool ToggleStoneOnly { get => GetFlag(PlayerFlag.ToggleStoneOnly); set => SetFlag(PlayerFlag.ToggleStoneOnly, value); }
 
         #region Plant system
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool ToggleClippings { get => GetFlag(PlayerFlag.ToggleClippings); set => SetFlag(PlayerFlag.ToggleClippings, value); }
-
         [CommandProperty(AccessLevel.GameMaster)]
         public bool ToggleCutReeds { get => GetFlag(PlayerFlag.ToggleCutReeds); set => SetFlag(PlayerFlag.ToggleCutReeds, value); }
 
@@ -669,23 +635,6 @@ namespace Server.Mobiles
             else
             {
                 m_Flags &= ~flag;
-            }
-        }
-
-        public bool GetFlag(ExtendedPlayerFlag flag)
-        {
-            return (m_ExtendedFlags & flag) != 0;
-        }
-
-        public void SetFlag(ExtendedPlayerFlag flag, bool value)
-        {
-            if (value)
-            {
-                m_ExtendedFlags |= flag;
-            }
-            else
-            {
-                m_ExtendedFlags &= ~flag;
             }
         }
 
@@ -1118,7 +1067,6 @@ namespace Server.Mobiles
 
             CheckStatTimers();
 
-            Accounting.Account.OnLogin(this);
             AnimalForm.OnLogin(this);
             BaseBeverage.OnLogin(this);
             ChampionSpawnRegion.OnLogin(this);
@@ -1390,9 +1338,6 @@ namespace Server.Mobiles
         {
             base.OnConnected(m);
 
-            // Checks young timer.
-            Accounting.Account.OnConnected(m);
-
             if (m is PlayerMobile pm)
             {
                 pm.m_SessionStart = DateTime.UtcNow;
@@ -1564,9 +1509,9 @@ namespace Server.Mobiles
                 // First lets find out if the creatures master is in our aggressor list
                 AggressorInfo info = null;
 
-                for (var index = 0; index < Aggressors.Count; index++)
+                for (int index = 0; index < Aggressors.Count; index++)
                 {
-                    var i = Aggressors[index];
+                    AggressorInfo i = Aggressors[index];
 
                     if (i.Attacker == aggressiveMaster)
                     {
@@ -1597,9 +1542,9 @@ namespace Server.Mobiles
                 // Now, if I am in the creatures master aggressor list, it needs to be refreshed
                 info = null;
 
-                for (var index = 0; index < aggressiveMaster.Aggressors.Count; index++)
+                for (int index = 0; index < aggressiveMaster.Aggressors.Count; index++)
                 {
-                    var i = aggressiveMaster.Aggressors[index];
+                    AggressorInfo i = aggressiveMaster.Aggressors[index];
 
                     if (i.Attacker == this)
                     {
@@ -1612,9 +1557,9 @@ namespace Server.Mobiles
 
                 info = null;
 
-                for (var index = 0; index < Aggressed.Count; index++)
+                for (int index = 0; index < Aggressed.Count; index++)
                 {
-                    var i = Aggressed[index];
+                    AggressorInfo i = Aggressed[index];
 
                     if (i.Defender == aggressiveMaster)
                     {
@@ -1628,9 +1573,9 @@ namespace Server.Mobiles
                 // next lets find out if we're on the creatures master aggressed list
                 info = null;
 
-                for (var index = 0; index < aggressiveMaster.Aggressed.Count; index++)
+                for (int index = 0; index < aggressiveMaster.Aggressed.Count; index++)
                 {
-                    var i = aggressiveMaster.Aggressed[index];
+                    AggressorInfo i = aggressiveMaster.Aggressed[index];
 
                     if (i.Defender == this)
                     {
@@ -1957,9 +1902,9 @@ namespace Server.Mobiles
 
                     bool any = false;
 
-                    for (var index = 0; index < info.Defender.DamageEntries.Count; index++)
+                    for (int index = 0; index < info.Defender.DamageEntries.Count; index++)
                     {
-                        var de = info.Defender.DamageEntries[index];
+                        DamageEntry de = info.Defender.DamageEntries[index];
 
                         if (de.Damager == this)
                         {
@@ -1985,9 +1930,9 @@ namespace Server.Mobiles
 
                     bool any = false;
 
-                    for (var index = 0; index < info.Attacker.DamageEntries.Count; index++)
+                    for (int index = 0; index < info.Attacker.DamageEntries.Count; index++)
                     {
-                        var de = info.Attacker.DamageEntries[index];
+                        DamageEntry de = info.Attacker.DamageEntries[index];
 
                         if (de.Damager == this)
                         {
@@ -2487,7 +2432,7 @@ namespace Server.Mobiles
 
             if (item is Container)
             {
-                for (var index = 0; index < item.Items.Count; index++)
+                for (int index = 0; index < item.Items.Count; index++)
                 {
                     Item subItem = item.Items[index];
 
@@ -2859,7 +2804,6 @@ namespace Server.Mobiles
 
             HueMod = -1;
             NameMod = null;
-            SavagePaintExpiration = TimeSpan.Zero;
 
             SetHairMods(-1, -1);
 
@@ -2959,27 +2903,9 @@ namespace Server.Mobiles
         private TimeSpan m_ShortTermElapse;
         private TimeSpan m_LongTermElapse;
         private DateTime m_SessionStart;
-        private DateTime m_SavagePaintExpiration;
         private SkillName m_Learning = (SkillName)(-1);
 
         public SkillName Learning { get => m_Learning; set => m_Learning = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public TimeSpan SavagePaintExpiration
-        {
-            get
-            {
-                TimeSpan ts = m_SavagePaintExpiration - DateTime.UtcNow;
-
-                if (ts < TimeSpan.Zero)
-                {
-                    ts = TimeSpan.Zero;
-                }
-
-                return ts;
-            }
-            set => m_SavagePaintExpiration = DateTime.UtcNow + value;
-        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public TimeSpan NextSmithBulkOrder
@@ -3200,29 +3126,6 @@ namespace Server.Mobiles
 
             return result;
         }
-
-        public override bool CheckPoisonImmunity(Mobile from, Poison poison)
-        {
-            if (Young)
-            {
-                return true;
-            }
-
-            return base.CheckPoisonImmunity(from, poison);
-        }
-
-        public override void OnPoisonImmunity(Mobile from, Poison poison)
-        {
-            if (Young)
-            {
-                SendLocalizedMessage(502808);
-                // You would have been poisoned, were you not new to the land of Britannia. Be careful in the future.
-            }
-            else
-            {
-                base.OnPoisonImmunity(from, poison);
-            }
-        }
         #endregion
 
         public PlayerMobile(Serial s)
@@ -3283,31 +3186,11 @@ namespace Server.Mobiles
 
             switch (version)
             {
-                case 42: 
-                case 41: 
-                case 40:
-                case 39: 
-                case 38:
-                {
-                    NextGemOfSalvationUse = reader.ReadDateTime();
-                    goto case 37;
-                }
-                case 37:
-                {
-                    m_ExtendedFlags = (ExtendedPlayerFlag)reader.ReadInt();
-                    goto case 36;
-                }
-                case 36:
-                {
-                    RewardStableSlots = reader.ReadInt();
-                    goto case 35;
-                }
-                case 35: 
-                case 34:
-                case 33:
-                case 32:
-                case 31:
+                case 1:
                     {
+                        NextGemOfSalvationUse = reader.ReadDateTime();
+                        RewardStableSlots = reader.ReadInt();
+
                         DisplayGuildTitle = reader.ReadBool();
                         m_FameKarmaTitle = reader.ReadString();
                         m_PaperdollSkillTitle = reader.ReadString();
@@ -3316,14 +3199,7 @@ namespace Server.Mobiles
 
                         m_CurrentChampTitle = reader.ReadString();
                         m_CurrentVeteranTitle = reader.ReadInt();
-                        goto case 30;
-                    }
-                case 30:
-                {
-                    goto case 29;
-                }
-                case 29:
-                    {
+
                         m_SSNextSeed = reader.ReadDateTime();
                         m_SSSeedExpire = reader.ReadDateTime();
                         m_SSSeedLocation = reader.ReadPoint3D();
@@ -3344,28 +3220,11 @@ namespace Server.Mobiles
 
                         m_SelectedTitle = reader.ReadInt();
 
-                        goto case 28;
-                    }
-                case 28:
-                    {
-                        goto case 27;
-                    }
-                case 27:
-                    {
                         m_AnkhNextUse = reader.ReadDateTime();
 
-                        goto case 26;
-                    }
-                case 26:
-                    {
                         m_AutoStabled = reader.ReadStrongMobileList();
 
-                        goto case 25;
-                    }
-                case 25:
-                    {
                         int recipeCount = reader.ReadInt();
-
                         if (recipeCount > 0)
                         {
                             m_AcquiredRecipes = new Dictionary<int, bool>();
@@ -3379,25 +3238,12 @@ namespace Server.Mobiles
                                 }
                             }
                         }
-                        goto case 24;
-                    }
-                case 24:
-                case 23:
-                    {
+
                         m_ChampionTitles = new ChampionTitleInfo(reader);
-                        goto case 22;
-                    }
-                case 22:
-                case 21:
-                case 20:
-                    {
+
                         m_AllianceMessageHue = reader.ReadEncodedInt();
                         m_GuildMessageHue = reader.ReadEncodedInt();
 
-                        goto case 19;
-                    }
-                case 19:
-                    {
                         int rank = reader.ReadEncodedInt();
                         int maxRank = RankDefinition.Ranks.Length - 1;
                         if (rank > maxRank)
@@ -3407,57 +3253,30 @@ namespace Server.Mobiles
 
                         m_GuildRank = RankDefinition.Ranks[rank];
                         m_LastOnline = reader.ReadDateTime();
-                        goto case 18;
-                    }
-                case 18:
-                    {
-                        m_SolenFriendship = (SolenFriendship)reader.ReadEncodedInt();
 
-                        goto case 17;
-                    }
-                case 17: 
-                case 16:
-                    {
                         m_Quest = QuestSerializer.DeserializeQuest(reader);
-
                         if (m_Quest != null)
                         {
                             m_Quest.From = this;
                         }
 
                         int count = reader.ReadEncodedInt();
-
                         if (count > 0)
                         {
                             m_DoneQuests = new List<QuestRestartInfo>();
 
                             for (int i = 0; i < count; ++i)
                             {
-                                Type questType;
-
-                                if (version >= 42)
-                                    questType = reader.ReadObjectType();
-                                else
-                                    questType = QuestSerializer.ReadQuestType(reader);
-
-                                DateTime restartTime;
-
-                                restartTime = reader.ReadDateTime();
+                                Type questType = reader.ReadObjectType();
+                                DateTime restartTime = reader.ReadDateTime();
 
                                 m_DoneQuests.Add(new QuestRestartInfo(questType, restartTime));
                             }
                         }
 
                         m_Profession = reader.ReadEncodedInt();
-                        goto case 15;
-                    }
-                case 15:
-                case 14:
-                case 13: 
-                case 12:
-                case 11:
-                case 10:
-                    {
+
+                        // virtualized hair and beards
                         if (reader.ReadBool())
                         {
                             m_HairModID = reader.ReadInt();
@@ -3466,43 +3285,14 @@ namespace Server.Mobiles
                             m_BeardModHue = reader.ReadInt();
                         }
 
-                        goto case 9;
-                    }
-                case 9:
-                    {
-                        SavagePaintExpiration = reader.ReadTimeSpan();
-
-                        if (SavagePaintExpiration > TimeSpan.Zero)
-                        {
-                            BodyMod = Female ? 184 : 183;
-                            HueMod = 0;
-                        }
-
-                        goto case 8;
-                    }
-                case 8:
-                    {
                         m_NpcGuild = (NpcGuild)reader.ReadInt();
                         m_NpcGuildJoinTime = reader.ReadDateTime();
                         m_NpcGuildGameTime = reader.ReadTimeSpan();
-                        goto case 7;
-                    }
-                case 7:
-                    {
+
                         m_PermaFlags = reader.ReadStrongMobileList();
-                        goto case 6;
-                    }
-                case 6:                   
-                case 5:                   
-                case 4:
-                case 3:
-                case 2:
-                    {
+
                         m_Flags = (PlayerFlag)reader.ReadInt();
-                        goto case 1;
-                    }
-                case 1:
-                    {
+
                         m_LongTermElapse = reader.ReadTimeSpan();
                         m_ShortTermElapse = reader.ReadTimeSpan();
                         m_GameTime = reader.ReadTimeSpan();
@@ -3586,10 +3376,9 @@ namespace Server.Mobiles
             CheckAtrophies(this);
 
             base.Serialize(writer);
-            writer.Write(42); // version
+            writer.Write(1); // version
 
             writer.Write(NextGemOfSalvationUse);
-            writer.Write((int)m_ExtendedFlags);
             writer.Write(RewardStableSlots);
 
             writer.Write(DisplayGuildTitle);
@@ -3608,7 +3397,6 @@ namespace Server.Mobiles
             #endregion
 
             #region Mondain's Legacy
-
             if (m_Collections == null)
             {
                 writer.Write(0);
@@ -3641,7 +3429,6 @@ namespace Server.Mobiles
             writer.Write(m_SelectedTitle);
             #endregion
 
-            // Version 28
             writer.Write(m_AnkhNextUse);
             writer.Write(m_AutoStabled, true);
 
@@ -3667,8 +3454,6 @@ namespace Server.Mobiles
 
             writer.WriteEncodedInt(m_GuildRank.Rank);
             writer.Write(m_LastOnline);
-
-            writer.WriteEncodedInt((int)m_SolenFriendship);
 
             QuestSerializer.Serialize(m_Quest, writer);
 
@@ -3700,8 +3485,6 @@ namespace Server.Mobiles
                 writer.Write(m_BeardModID);
                 writer.Write(m_BeardModHue);
             }
-
-            writer.Write(SavagePaintExpiration);
 
             writer.Write((int)m_NpcGuild);
             writer.Write(m_NpcGuildJoinTime);
@@ -3966,14 +3749,10 @@ namespace Server.Mobiles
         #region Quests
         private QuestSystem m_Quest;
         private List<QuestRestartInfo> m_DoneQuests;
-        private SolenFriendship m_SolenFriendship;
 
         public QuestSystem Quest { get => m_Quest; set => m_Quest = value; }
 
         public List<QuestRestartInfo> DoneQuests { get => m_DoneQuests; set => m_DoneQuests = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public SolenFriendship SolenFriendship { get => m_SolenFriendship; set => m_SolenFriendship = value; }
         #endregion
 
         #region Mondain's Legacy
@@ -4256,11 +4035,9 @@ namespace Server.Mobiles
 
         public override void OnKillsChange(int oldValue)
         {
-            if (Young && Kills > oldValue)
+            if (Kills > oldValue)
             {
-                Account acc = Account as Account;
-
-                acc?.RemoveYoungStatus(0);
+                SendMessage("If you become a murderer you lose equipment protection when you die.");
             }
         }
 
@@ -4436,30 +4213,10 @@ namespace Server.Mobiles
         #endregion
 
         #region Young system
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool Young
-        {
-            get => GetFlag(PlayerFlag.Young);
-            set
-            {
-                SetFlag(PlayerFlag.Young, value);
-                InvalidateProperties();
-            }
-        }
-
-        public override string ApplyNameSuffix(string suffix)
-        {
-            if (Young)
-            {
-                suffix = suffix.Length == 0 ? "(Young)" : string.Concat(suffix, " (Young)");
-            }
-
-            return base.ApplyNameSuffix(suffix);
-        }
-
+        
         public override TimeSpan GetLogoutDelay()
         {
-            if (Young || BedrollLogout || TestCenter.Enabled)
+            if (BedrollLogout || TestCenter.Enabled)
             {
                 return TimeSpan.Zero;
             }
@@ -4467,47 +4224,13 @@ namespace Server.Mobiles
             return base.GetLogoutDelay();
         }
 
-        private DateTime m_LastYoungMessage = DateTime.MinValue;
+        private DateTime m_LastNPCHeal = DateTime.MinValue;
 
-        public bool CheckYoungProtection(Mobile from)
+        public bool CheckNPCHealTime()
         {
-            if (!Young)
+            if (DateTime.UtcNow - m_LastNPCHeal > TimeSpan.FromMinutes(5.0))
             {
-                return false;
-            }
-
-            if (Region is BaseRegion region && !region.YoungProtected)
-            {
-                return false;
-            }
-
-            if (from is BaseCreature creature && creature.IgnoreYoungProtection)
-            {
-                return false;
-            }
-
-            if (Quest != null && Quest.IgnoreYoungProtection(from))
-            {
-                return false;
-            }
-
-            if (DateTime.UtcNow - m_LastYoungMessage > TimeSpan.FromMinutes(1.0))
-            {
-                m_LastYoungMessage = DateTime.UtcNow;
-                SendLocalizedMessage(1019067);
-                // A monster looks at you menacingly but does not attack.  You would be under attack now if not for your status as a new citizen of Britannia.
-            }
-
-            return true;
-        }
-
-        private DateTime m_LastYoungHeal = DateTime.MinValue;
-
-        public bool CheckYoungHealTime()
-        {
-            if (DateTime.UtcNow - m_LastYoungHeal > TimeSpan.FromMinutes(5.0))
-            {
-                m_LastYoungHeal = DateTime.UtcNow;
+                m_LastNPCHeal = DateTime.UtcNow;
                 return true;
             }
 
@@ -4883,7 +4606,7 @@ namespace Server.Mobiles
                     return false;
                 }
 
-                for (var index = 0; index < m_Values.Length; index++)
+                for (int index = 0; index < m_Values.Length; index++)
                 {
                     TitleInfo info = m_Values[index];
 

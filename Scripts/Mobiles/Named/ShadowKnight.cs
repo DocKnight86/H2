@@ -72,8 +72,6 @@ namespace Server.Mobiles
             base.OnDamagedBySpell(from);
         }
 
-        public override bool IgnoreYoungProtection => true;
-
         public override TribeType Tribe => TribeType.Undead;
 
         public override bool Unprovokable => true;

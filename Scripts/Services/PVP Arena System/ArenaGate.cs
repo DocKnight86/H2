@@ -25,7 +25,9 @@ namespace Server.Engines.ArenaSystem
         public override void OnDoubleClick(Mobile from)
         {
             if (from.InRange(Location, 1))
+            {
                 TryUse(from);
+            }
         }
 
         public override bool OnMoveOver(Mobile m)
@@ -54,11 +56,7 @@ namespace Server.Engines.ArenaSystem
         private bool CheckValidation(PlayerMobile pm)
         {
             if (!Duel.IsParticipant(pm))
-                return false;
-
-            if (pm.Young)
             {
-                PVPArenaSystem.SendMessage(pm, 1149696); // As a young player, you may not enter this area.
                 return false;
             }
 

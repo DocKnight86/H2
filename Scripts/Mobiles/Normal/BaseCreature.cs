@@ -5356,11 +5356,10 @@ namespace Server.Mobiles
         public virtual double TreasureMapChance => TreasureMap.LootChance;
         public virtual int TreasureMapLevel => -1;
 
-        public virtual bool IgnoreYoungProtection => false;
-
         public override bool OnBeforeDeath()
         {
             int treasureLevel = TreasureMapInfo.ConvertLevel(TreasureMapLevel);
+
             GetLootingRights();
 
             if (!Summoned && !NoKillAwards && !IsBonded && !NoLootOnDeath)

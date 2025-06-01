@@ -57,7 +57,7 @@ namespace Server.Mobiles
         public override bool IsActiveVendor => false;
         public override bool IsInvulnerable => false;
         public override VendorShoeType ShoeType => VendorShoeType.Sandals;
-        public virtual bool HealsYoungPlayers => true;
+        public virtual bool HealsPlayers => true;
         protected override List<SBInfo> SBInfos => m_SBInfos;
         public override void InitSBInfo()
         {
@@ -95,7 +95,7 @@ namespace Server.Mobiles
         {
             Direction = GetDirectionTo(m);
 
-            if (m.CheckYoungHealTime())
+            if (m.CheckNPCHealTime())
             {
                 Say(501229); // You look like you need some healing my child.
 
@@ -127,7 +127,7 @@ namespace Server.Mobiles
                         OfferResurrection(m);
                     }
                 }
-                else if (HealsYoungPlayers && m.Hits < m.HitsMax && m is PlayerMobile mobile && mobile.Young)
+                else if (HealsPlayers && m.Hits < m.HitsMax && m is PlayerMobile mobile)
                 {
                     OfferHeal(mobile);
                 }
