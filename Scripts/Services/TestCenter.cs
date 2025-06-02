@@ -507,26 +507,6 @@ namespace Server.Misc
 
             PlaceItemIn(box, 90, 57, bag);
 
-            bag = new Bag
-            {
-                Hue = 55,
-                Name = "Replicas"
-            };
-
-            bag.DropItem(new RoyalGuardInvestigatorsCloak());
-            bag.DropItem(new TongueOfTheBeast());
-            bag.DropItem(new LightsRampart());
-            bag.DropItem(new AcidProofRobe());
-            bag.DropItem(new ObiDiEnse());
-            bag.DropItem(new TheRobeOfBritanniaAri());
-            bag.DropItem(new GauntletsOfAnger());
-            bag.DropItem(new JadeArmband());
-            bag.DropItem(new CrownOfTalKeesh());
-            bag.DropItem(new DjinnisRing());
-            bag.DropItem(new EmbroideredOakLeafCloak());
-
-            PlaceItemIn(box, 90, 139, bag);
-
             PlaceItemIn(from.BankBox, 63, 106, box);
         }
 

@@ -5055,7 +5055,6 @@ namespace Server.Mobiles
         }
 
         public LootStage LootStage { get; protected set; }
-        public int KillersLuck { get; protected set; }
         public bool StealPackGenerated { get; protected set; }
         public bool HasBeenStolen { get; set; }
 
@@ -5079,7 +5078,6 @@ namespace Server.Mobiles
                     StealPackGenerated = true;
                     break;
                 case LootStage.Death:
-                    KillersLuck = LootPack.GetLuckChanceForKiller(this);
                     break;
             }
 
@@ -5108,8 +5106,6 @@ namespace Server.Mobiles
                     AddLoot(LootPack.UltraRich);
                 }
             }
-
-            KillersLuck = 0;
         }
 
         public virtual void GenerateLoot()

@@ -116,7 +116,6 @@ namespace Server.Mobiles
         private DateTime m_NpcGuildJoinTime;
         private TimeSpan m_NpcGuildGameTime;
         private PlayerFlag m_Flags;
-        private int m_Profession;
 
         /*
 		* a value of zero means, that the mobile is not executing the spell. Otherwise,
@@ -258,9 +257,6 @@ namespace Server.Mobiles
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int AllianceMessageHue { get => m_AllianceMessageHue; set => m_AllianceMessageHue = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int Profession { get => m_Profession; set => m_Profession = value; }
 
         public int StepsTaken { get; set; }
 
@@ -3207,8 +3203,6 @@ namespace Server.Mobiles
                             }
                         }
 
-                        m_Profession = reader.ReadEncodedInt();
-
                         // virtualized hair and beards
                         if (reader.ReadBool())
                         {
@@ -3255,12 +3249,6 @@ namespace Server.Mobiles
             if (m_RewardTitles == null)
             {
                 m_RewardTitles = new List<object>();
-            }
-
-            // Professions weren't verified on 1.0 RC0
-            if (!CharacterCreation.VerifyProfession(m_Profession))
-            {
-                m_Profession = 0;
             }
 
             if (m_PermaFlags == null)
@@ -3406,8 +3394,6 @@ namespace Server.Mobiles
                     writer.Write(restartInfo.RestartTime);
                 }
             }
-
-            writer.WriteEncodedInt(m_Profession);
 
             bool useMods = m_HairModID != -1 || m_BeardModID != -1;
             writer.Write(useMods);

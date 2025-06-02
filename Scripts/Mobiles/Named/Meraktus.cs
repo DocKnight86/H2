@@ -72,7 +72,6 @@ namespace Server.Mobiles
             AddLoot(LootPack.LootItem<MalletAndChisel>());
             AddLoot(LootPack.RandomLootItem(new Type[] { typeof(MinotaurHedge), typeof(BonePile), typeof(LightYarn) }, 100.0, 1, false, true));
             AddLoot(LootPack.LootItem<TormentedChains>(50.0, 1));
-            AddLoot(LootPack.ArcanistScrolls, 1);
         }
 
         public override int GetAngerSound()

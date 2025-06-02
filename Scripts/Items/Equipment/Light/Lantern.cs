@@ -9,9 +9,13 @@ namespace Server.Items
             : base(0xA25)
         {
             if (Burnout)
+            {
                 Duration = TimeSpan.FromMinutes(20);
+            }
             else
+            {
                 Duration = TimeSpan.Zero;
+            }
 
             Burning = false;
             Light = LightType.Circle300;
@@ -28,7 +32,9 @@ namespace Server.Items
             get
             {
                 if (ItemID == 0xA15 || ItemID == 0xA17)
+                {
                     return ItemID;
+                }
 
                 return 0xA22;
             }
@@ -38,7 +44,9 @@ namespace Server.Items
             get
             {
                 if (ItemID == 0xA18)
+                {
                     return ItemID;
+                }
 
                 return 0xA25;
             }
@@ -52,7 +60,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -80,7 +88,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

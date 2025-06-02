@@ -15,22 +15,22 @@ namespace Server.Items
 
         public static readonly TimeSpan UseDelay = TimeSpan.FromSeconds(7.0);
 
-        private BookQuality m_Quality;
+        private BookQuality _Quality;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public BookQuality Quality
         {
-            get => m_Quality;
+            get => _Quality;
             set
             {
-                m_Quality = value;
+                _Quality = value;
                 InvalidateProperties();
             }
         }
 
-        private List<RunebookEntry> m_Entries;
-        private string m_Description;
-        private Mobile m_Crafter;
+        private List<RunebookEntry> _Entries;
+        private string _Description;
+        private Mobile _Crafter;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NextUse { get; set; }
@@ -38,10 +38,10 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile Crafter
         {
-            get => m_Crafter;
+            get => _Crafter;
             set
             {
-                m_Crafter = value;
+                _Crafter = value;
                 InvalidateProperties();
             }
         }
@@ -52,10 +52,10 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public string Description
         {
-            get => m_Description;
+            get => _Description;
             set
             {
-                m_Description = value;
+                _Description = value;
                 InvalidateProperties();
             }
         }
@@ -80,7 +80,7 @@ namespace Server.Items
 
             Layer = Layer.Invalid;
 
-            m_Entries = new List<RunebookEntry>();
+            _Entries = new List<RunebookEntry>();
 
             MaxCharges = maxCharges;
 
@@ -95,7 +95,7 @@ namespace Server.Items
         {
         }
 
-        public List<RunebookEntry> Entries => m_Entries;
+        public List<RunebookEntry> Entries => _Entries;
 
         public int DefaultIndex { get; set; }
 
@@ -103,17 +103,23 @@ namespace Server.Items
         {
             get
             {
-                if (DefaultIndex >= 0 && DefaultIndex < m_Entries.Count)
-                    return m_Entries[DefaultIndex];
+                if (DefaultIndex >= 0 && DefaultIndex < _Entries.Count)
+                {
+                    return _Entries[DefaultIndex];
+                }
 
                 return null;
             }
             set
             {
                 if (value == null)
+                {
                     DefaultIndex = -1;
+                }
                 else
-                    DefaultIndex = m_Entries.IndexOf(value);
+                {
+                    DefaultIndex = _Entries.IndexOf(value);
+                }
             }
         }
 
@@ -136,17 +142,19 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(3);
+            writer.Write(0);
 
-            writer.Write((byte)m_Quality);
-            writer.Write(m_Crafter);
+            writer.Write((byte)_Quality);
+            writer.Write(_Crafter);
             writer.Write((int)Level);
 
-            writer.Write(m_Entries.Count);
-            for (int i = 0; i < m_Entries.Count; ++i)
-                m_Entries[i].Serialize(writer);
+            writer.Write(_Entries.Count);
+            for (int i = 0; i < _Entries.Count; ++i)
+            {
+                _Entries[i].Serialize(writer);
+            }
 
-            writer.Write(m_Description);
+            writer.Write(_Description);
             writer.Write(CurCharges);
             writer.Write(MaxCharges);
             writer.Write(DefaultIndex);
@@ -157,16 +165,18 @@ namespace Server.Items
             base.Deserialize(reader);
             reader.ReadInt();
 
-            m_Quality = (BookQuality)reader.ReadByte();
-            m_Crafter = reader.ReadMobile();
+            _Quality = (BookQuality)reader.ReadByte();
+            _Crafter = reader.ReadMobile();
             Level = (SecureLevel)reader.ReadInt();
 
             int count = reader.ReadInt();
-            m_Entries = new List<RunebookEntry>(count);
+            _Entries = new List<RunebookEntry>(count);
             for (int i = 0; i < count; ++i)
-                m_Entries.Add(new RunebookEntry(reader));
+            {
+                _Entries.Add(new RunebookEntry(reader));
+            }
 
-            m_Description = reader.ReadString();
+            _Description = reader.ReadString();
             CurCharges = reader.ReadInt();
             MaxCharges = reader.ReadInt();
             DefaultIndex = reader.ReadInt();
@@ -175,11 +185,15 @@ namespace Server.Items
         public void DropRune(Mobile from, RunebookEntry e, int index)
         {
             if (DefaultIndex > index)
+            {
                 DefaultIndex -= 1;
+            }
             else if (DefaultIndex == index)
+            {
                 DefaultIndex = -1;
+            }
 
-            m_Entries.RemoveAt(index);
+            _Entries.RemoveAt(index);
 
 
             RecallRune rune = new RecallRune();
@@ -236,14 +250,20 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            if (m_Quality == BookQuality.Exceptional)
+            if (_Quality == BookQuality.Exceptional)
+            {
                 list.Add(1063341); // exceptional
+            }
 
-            if (m_Crafter != null)
-                list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
+            if (_Crafter != null)
+            {
+                list.Add(1050043, _Crafter.TitleName); // crafted by ~1_NAME~
+            }
 
-            if (!string.IsNullOrEmpty(m_Description))
-                list.Add(m_Description);
+            if (!string.IsNullOrEmpty(_Description))
+            {
+                list.Add(_Description);
+            }
         }
 
         public override bool OnDragLift(Mobile from)
@@ -301,15 +321,17 @@ namespace Server.Items
             Runebook book = newItem as Runebook;
 
             if (book == null)
-                return;
-
-            book.m_Entries = new List<RunebookEntry>();
-
-            for (int i = 0; i < m_Entries.Count; i++)
             {
-                RunebookEntry entry = m_Entries[i];
+                return;
+            }
 
-                book.m_Entries.Add(new RunebookEntry(entry.Location, entry.Map, entry.Description, entry.House, entry.Type));
+            book._Entries = new List<RunebookEntry>();
+
+            for (int i = 0; i < _Entries.Count; i++)
+            {
+                RunebookEntry entry = _Entries[i];
+
+                book._Entries.Add(new RunebookEntry(entry.Location, entry.Map, entry.Description, entry.House, entry.Type));
             }
 
             base.OnAfterDuped(newItem);
@@ -318,12 +340,16 @@ namespace Server.Items
         public bool CheckAccess(Mobile m)
         {
             if (!IsLockedDown || m.AccessLevel >= AccessLevel.GameMaster)
+            {
                 return true;
+            }
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
             if (house != null && (house.Public ? house.IsBanned(m) : !house.HasAccess(m)))
+            {
                 return false;
+            }
 
             return house != null && house.HasSecureAccess(m, Level);
         }
@@ -340,14 +366,14 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(1005571); // You cannot place objects in the book while viewing the contents.
                 }
-                else if (m_Entries.Count < MaxEntries)
+                else if (_Entries.Count < MaxEntries)
                 {
                     if (rune.Marked)
                     {
                         if (rune.Type == RecallRuneType.Ship)
                         {
                             RunebookEntry entry = new RunebookEntry(Point3D.Zero, null, null, null, rune.Type, rune.Galleon);
-                            m_Entries.Add(entry);
+                            _Entries.Add(entry);
 
                             rune.Delete();
 
@@ -360,7 +386,7 @@ namespace Server.Items
 
                         if (rune.TargetMap != null)
                         {
-                            m_Entries.Add(new RunebookEntry(rune.Target, rune.TargetMap, rune.Description, rune.House, rune.Type));
+                            _Entries.Add(new RunebookEntry(rune.Target, rune.TargetMap, rune.Description, rune.House, rune.Type));
 
                             rune.Delete();
 
@@ -369,7 +395,9 @@ namespace Server.Items
                             string desc = rune.Description;
 
                             if (desc == null || (desc = desc.Trim()).Length == 0)
+                            {
                                 desc = "(indescript)";
+                            }
 
                             from.SendAsciiMessage(desc);
 
@@ -423,14 +451,18 @@ namespace Server.Items
             int charges = 5 + quality + (int)(from.Skills[SkillName.Inscribe].Value / 30);
 
             if (charges > 10)
+            {
                 charges = 10;
+            }
 
             MaxCharges = charges * 2;
 
             if (makersMark)
+            {
                 Crafter = from;
+            }
 
-            m_Quality = (BookQuality)(quality - 1);
+            _Quality = (BookQuality)(quality - 1);
 
             return quality;
         }
@@ -439,9 +471,9 @@ namespace Server.Items
 
     public class RunebookEntry
     {
-        private readonly Point3D m_Location;
-        private readonly Map m_Map;
-        private readonly string m_Description;
+        private readonly Point3D _Location;
+        private readonly Map _Map;
+        private readonly string _Description;
 
         public Point3D Location
         {
@@ -452,7 +484,7 @@ namespace Server.Items
                     return Galleon.GetMarkedLocation();
                 }
 
-                return m_Location;
+                return _Location;
             }
         }
 
@@ -465,7 +497,7 @@ namespace Server.Items
                     return Galleon.Map;
                 }
 
-                return m_Map;
+                return _Map;
             }
         }
 
@@ -507,7 +539,7 @@ namespace Server.Items
                     return $"{ownername}'s ship, the {shipname}";
                 }
 
-                return m_Description;
+                return _Description;
             }
         }
 
@@ -519,9 +551,9 @@ namespace Server.Items
 
         public RunebookEntry(Point3D loc, Map map, string desc, BaseHouse house, RecallRuneType type = 0, BaseGalleon g = null)
         {
-            m_Location = loc;
-            m_Map = map;
-            m_Description = desc;
+            _Location = loc;
+            _Map = map;
+            _Description = desc;
             House = house;
             Galleon = g;
             Type = type;
@@ -533,32 +565,14 @@ namespace Server.Items
 
             switch (version)
             {
-                case 3:
+                case 0:
                     {
                         Type = (RecallRuneType)reader.ReadInt();
                         Galleon = reader.ReadItem() as BaseGalleon;
                         House = reader.ReadItem() as BaseHouse;
-                        m_Location = reader.ReadPoint3D();
-                        m_Map = reader.ReadMap();
-                        m_Description = reader.ReadString();
-
-                        break;
-                    }
-                case 2:
-                    {
-                        Galleon = reader.ReadItem() as BaseGalleon;
-                        goto case 0;
-                    }
-                case 1:
-                    {
-                        House = reader.ReadItem() as BaseHouse;
-                        goto case 0;
-                    }
-                case 0:
-                    {
-                        m_Location = reader.ReadPoint3D();
-                        m_Map = reader.ReadMap();
-                        m_Description = reader.ReadString();
+                        _Location = reader.ReadPoint3D();
+                        _Map = reader.ReadMap();
+                        _Description = reader.ReadString();
 
                         break;
                     }
@@ -567,14 +581,14 @@ namespace Server.Items
 
         public void Serialize(GenericWriter writer)
         {
-            writer.Write((byte)3);
+            writer.Write((byte)0);
 
             writer.Write((int)Type);
             writer.Write(Galleon);
             writer.Write(House);
-            writer.Write(m_Location);
-            writer.Write(m_Map);
-            writer.Write(m_Description);
+            writer.Write(_Location);
+            writer.Write(_Map);
+            writer.Write(_Description);
         }
     }
 }

@@ -1249,7 +1249,12 @@ namespace Server
 		{
 			AddNameProperty(list);
 
-			if (IsSecure)
+            if (Stackable)
+            {
+                list.Add("[stackable]");
+            }
+
+            if (IsSecure)
 			{
 				AddSecureProperty(list);
 			}

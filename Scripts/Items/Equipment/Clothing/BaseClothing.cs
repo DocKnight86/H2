@@ -1340,7 +1340,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(12); // version
+            writer.Write(0); // version
 
             writer.Write(m_EngravedText);
 
@@ -1351,13 +1351,10 @@ namespace Server.Items
 
             m_SAAbsorptionAttributes.Serialize(writer);
 
-            #region Runic Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
             writer.Write((int)m_ItemPower);
-            #endregion
 
-            #region Stygian Abyss
             writer.Write(m_GorgonLenseCharges);
             writer.Write((int)m_GorgonLenseType);
 
@@ -1367,14 +1364,10 @@ namespace Server.Items
             writer.Write(PoisonNonImbuing);
             writer.Write(EnergyNonImbuing);
 
-            // Version 6
             writer.Write(m_TimesImbued);
-
-            #endregion
 
             #region Mondain's Legacy Sets
             SetFlag sflags = SetFlag.None;
-
             SetSaveFlag(ref sflags, SetFlag.Attributes, !m_SetAttributes.IsEmpty);
             SetSaveFlag(ref sflags, SetFlag.SkillBonuses, !m_SetSkillBonuses.IsEmpty);
             SetSaveFlag(ref sflags, SetFlag.PhysicalBonus, m_SetPhysicalBonus != 0);
@@ -1446,9 +1439,7 @@ namespace Server.Items
 
             #endregion
 
-            // Version 5
             SaveFlag flags = SaveFlag.None;
-
             SetSaveFlag(ref flags, SaveFlag.xWeaponAttributes, !m_AosWeaponAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.NegativeAttributes, !m_NegativeAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.Resource, m_Resource != DefaultResource);
@@ -1533,35 +1524,21 @@ namespace Server.Items
 
             switch (version)
             {
-                case 12:
-                case 11:
+                case 0:
                     {
                         m_EngravedText = reader.ReadString();
-                        goto case 9;
-                    }
-                case 10:
-                case 9:
-                    {
+
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
-                        goto case 8;
-                    }
-                case 8:
-                    {
+
                         m_IsImbued = reader.ReadBool();
-                        goto case 7;
-                    }
-                case 7:
-                    {
+
                         m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this, reader);
 
-                        #region Runic Reforging
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-                        #endregion
 
-                        #region Stygian Abyss
                         m_GorgonLenseCharges = reader.ReadInt();
                         m_GorgonLenseType = (LenseType)reader.ReadInt();
 
@@ -1570,17 +1547,10 @@ namespace Server.Items
                         ColdNonImbuing = reader.ReadInt();
                         PoisonNonImbuing = reader.ReadInt();
                         EnergyNonImbuing = reader.ReadInt();
-                        goto case 6;
-                    }
-                case 6:
-                    {
+
                         m_TimesImbued = reader.ReadInt();
 
-                        #endregion
-
-                        #region Mondain's Legacy Sets
                         SetFlag sflags = (SetFlag)reader.ReadEncodedInt();
-
                         if (GetSaveFlag(sflags, SetFlag.Attributes))
                         {
                             m_SetAttributes = new AosAttributes(this, reader);
@@ -1649,14 +1619,7 @@ namespace Server.Items
                             m_SetSelfRepair = reader.ReadEncodedInt();
                         }
 
-                        #endregion
-
-                        goto case 5;
-                    }
-                case 5:
-                    {
                         SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
-
                         if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
                         {
                             m_AosWeaponAttributes = new AosWeaponAttributes(this, reader);
@@ -1760,38 +1723,6 @@ namespace Server.Items
 
                         break;
                     }
-                case 4:
-                    {
-                        m_Resource = (CraftResource)reader.ReadInt();
-
-                        goto case 3;
-                    }
-                case 3:
-                    {
-                        m_AosAttributes = new AosAttributes(this, reader);
-                        m_AosClothingAttributes = new AosArmorAttributes(this, reader);
-                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
-                        m_AosResistances = new AosElementAttributes(this, reader);
-
-                        goto case 2;
-                    }
-                case 2:
-                    {
-                        PlayerConstructed = reader.ReadBool();
-                        goto case 1;
-                    }
-                case 1:
-                    {
-                        m_Crafter = reader.ReadMobile();
-                        m_Quality = (ItemQuality)reader.ReadInt();
-                        break;
-                    }
-                case 0:
-                    {
-                        m_Crafter = null;
-                        m_Quality = ItemQuality.Normal;
-                        break;
-                    }
             }
 
             if (m_SetAttributes == null)
@@ -1822,7 +1753,6 @@ namespace Server.Items
                 parent.CheckStatTimers();
             }
         }
-
         #endregion
 
         public virtual bool Dye(Mobile from, DyeTub sender)
