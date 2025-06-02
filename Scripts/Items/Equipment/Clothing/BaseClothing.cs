@@ -4,14 +4,6 @@ using System;
 
 namespace Server.Items
 {
-    public interface IArcaneEquip
-    {
-        bool IsArcane { get; }
-        int CurArcaneCharges { get; set; }
-        int MaxArcaneCharges { get; set; }
-        int TempHue { get; set; }
-    }
-
     public abstract class BaseClothing : Item, IDyable, IScissorable, ICraftable, IWearableDurability, IResource, ISetItem, IVvVItem, IOwnerRestricted, IArtifact, ICombatEquipment, IEngravable, IQuality
     {
         private string m_EngravedText;
@@ -64,8 +56,6 @@ namespace Server.Items
         private ItemQuality m_Quality;
         protected CraftResource m_Resource;
         private int m_StrReq = -1;
-
-        private bool m_Altered;
 
         private AosAttributes m_AosAttributes;
         private AosArmorAttributes m_AosClothingAttributes;
@@ -894,11 +884,6 @@ namespace Server.Items
             {
                 list.Add(1080418); // (Imbued)
             }
-
-            if (m_Altered)
-            {
-                list.Add(1111880); // Altered
-            }
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)
@@ -1316,8 +1301,7 @@ namespace Server.Items
             Quality = 0x00000200,
             StrReq = 0x00000400,
             NegativeAttributes = 0x00000800,
-            Altered = 0x00001000,
-            xWeaponAttributes = 0x00002000
+            xWeaponAttributes = 0x00001000
         }
 
         #region Mondain's Legacy Sets
@@ -1353,52 +1337,24 @@ namespace Server.Items
         }
         #endregion
 
-        public void xWeaponAttributesDeserializeHelper(GenericReader reader, BaseClothing item)
-        {
-            SaveFlag flags = (SaveFlag)reader.ReadInt();
-
-            if (flags != SaveFlag.None)
-            {
-                flags = SaveFlag.xWeaponAttributes;
-            }
-
-            if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
-            {
-                m_AosWeaponAttributes = new AosWeaponAttributes(item, reader);
-            }
-            else
-            {
-                m_AosWeaponAttributes = new AosWeaponAttributes(item);
-            }
-        }
-
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
+            writer.Write(0); // version
 
-            writer.Write(12); // version
-
-            // Embroidery Tool version 11
             writer.Write(m_EngravedText);
-
-            // Version 10 - removed VvV Item (handled in VvV System) and BlockRepair (Handled as negative attribute)
 
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
-            //Version 8
             writer.Write(m_IsImbued);
 
-            // Version 7
             m_SAAbsorptionAttributes.Serialize(writer);
 
-            #region Runic Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
             writer.Write((int)m_ItemPower);
-            #endregion
 
-            #region Stygian Abyss
             writer.Write(m_GorgonLenseCharges);
             writer.Write((int)m_GorgonLenseType);
 
@@ -1408,14 +1364,10 @@ namespace Server.Items
             writer.Write(PoisonNonImbuing);
             writer.Write(EnergyNonImbuing);
 
-            // Version 6
             writer.Write(m_TimesImbued);
-
-            #endregion
 
             #region Mondain's Legacy Sets
             SetFlag sflags = SetFlag.None;
-
             SetSaveFlag(ref sflags, SetFlag.Attributes, !m_SetAttributes.IsEmpty);
             SetSaveFlag(ref sflags, SetFlag.SkillBonuses, !m_SetSkillBonuses.IsEmpty);
             SetSaveFlag(ref sflags, SetFlag.PhysicalBonus, m_SetPhysicalBonus != 0);
@@ -1487,9 +1439,7 @@ namespace Server.Items
 
             #endregion
 
-            // Version 5
             SaveFlag flags = SaveFlag.None;
-
             SetSaveFlag(ref flags, SaveFlag.xWeaponAttributes, !m_AosWeaponAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.NegativeAttributes, !m_NegativeAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.Resource, m_Resource != DefaultResource);
@@ -1503,10 +1453,6 @@ namespace Server.Items
             SetSaveFlag(ref flags, SaveFlag.Crafter, m_Crafter != null);
             SetSaveFlag(ref flags, SaveFlag.Quality, m_Quality != ItemQuality.Normal);
             SetSaveFlag(ref flags, SaveFlag.StrReq, m_StrReq != -1);
-            #region Imbuing
-            //SetSaveFlag(ref flags, SaveFlag.TimesImbued, m_TimesImbued != 0);
-            #endregion
-            SetSaveFlag(ref flags, SaveFlag.Altered, m_Altered);
 
             writer.WriteEncodedInt((int)flags);
 
@@ -1574,45 +1520,25 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
             {
-                case 12:
-                case 11:
+                case 0:
                     {
                         m_EngravedText = reader.ReadString();
-                        goto case 9;
-                    }
-                case 10:
-                case 9:
-                    {
-                        if (version == 9)
-                        {
-                            reader.ReadBool();
-                        }
 
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
-                        goto case 8;
-                    }
-                case 8:
-                    {
+
                         m_IsImbued = reader.ReadBool();
-                        goto case 7;
-                    }
-                case 7:
-                    {
+
                         m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this, reader);
 
-                        #region Runic Reforging
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-                        #endregion
 
-                        #region Stygian Abyss
                         m_GorgonLenseCharges = reader.ReadInt();
                         m_GorgonLenseType = (LenseType)reader.ReadInt();
 
@@ -1621,22 +1547,10 @@ namespace Server.Items
                         ColdNonImbuing = reader.ReadInt();
                         PoisonNonImbuing = reader.ReadInt();
                         EnergyNonImbuing = reader.ReadInt();
-                        goto case 6;
-                    }
-                case 6:
-                    {
-                        if (version == 6)
-                        {
-                            m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this);
-                        }
 
                         m_TimesImbued = reader.ReadInt();
 
-                        #endregion
-
-                        #region Mondain's Legacy Sets
                         SetFlag sflags = (SetFlag)reader.ReadEncodedInt();
-
                         if (GetSaveFlag(sflags, SetFlag.Attributes))
                         {
                             m_SetAttributes = new AosAttributes(this, reader);
@@ -1705,24 +1619,14 @@ namespace Server.Items
                             m_SetSelfRepair = reader.ReadEncodedInt();
                         }
 
-                        #endregion
-
-                        goto case 5;
-                    }
-                case 5:
-                    {
                         SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
-
-                        if (version > 11)
+                        if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
                         {
-                            if (GetSaveFlag(flags, SaveFlag.xWeaponAttributes))
-                            {
-                                m_AosWeaponAttributes = new AosWeaponAttributes(this, reader);
-                            }
-                            else
-                            {
-                                m_AosWeaponAttributes = new AosWeaponAttributes(this);
-                            }
+                            m_AosWeaponAttributes = new AosWeaponAttributes(this, reader);
+                        }
+                        else
+                        {
+                            m_AosWeaponAttributes = new AosWeaponAttributes(this);
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.NegativeAttributes))
@@ -1817,43 +1721,6 @@ namespace Server.Items
                             PlayerConstructed = true;
                         }
 
-                        if (GetSaveFlag(flags, SaveFlag.Altered))
-                        {
-                            m_Altered = true;
-                        }
-
-                        break;
-                    }
-                case 4:
-                    {
-                        m_Resource = (CraftResource)reader.ReadInt();
-
-                        goto case 3;
-                    }
-                case 3:
-                    {
-                        m_AosAttributes = new AosAttributes(this, reader);
-                        m_AosClothingAttributes = new AosArmorAttributes(this, reader);
-                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
-                        m_AosResistances = new AosElementAttributes(this, reader);
-
-                        goto case 2;
-                    }
-                case 2:
-                    {
-                        PlayerConstructed = reader.ReadBool();
-                        goto case 1;
-                    }
-                case 1:
-                    {
-                        m_Crafter = reader.ReadMobile();
-                        m_Quality = (ItemQuality)reader.ReadInt();
-                        break;
-                    }
-                case 0:
-                    {
-                        m_Crafter = null;
-                        m_Quality = ItemQuality.Normal;
                         break;
                     }
             }
@@ -1886,7 +1753,6 @@ namespace Server.Items
                 parent.CheckStatTimers();
             }
         }
-
         #endregion
 
         public virtual bool Dye(Mobile from, DyeTub sender)
@@ -2273,17 +2139,6 @@ namespace Server.Items
             }
 
             return 0;
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool Altered
-        {
-            get => m_Altered;
-            set
-            {
-                m_Altered = value;
-                InvalidateProperties();
-            }
         }
     }
 }

@@ -215,9 +215,7 @@ namespace Server.Engines.Points
             Entries[typeof(BarbedLeather)] = 2.0;
             Entries[typeof(Fur)] = 0.10;
 
-
             //BOD Rewards
-            Entries[typeof(Sandals)] = 2.0;
             Entries[typeof(LeatherGlovesOfMining)] = 50.0;
             Entries[typeof(StuddedGlovesOfMining)] = 100.0;
             Entries[typeof(RingmailGlovesOfMining)] = 500.0;
@@ -457,26 +455,7 @@ namespace Server.Engines.Points
             Entries[typeof(JackalsCollar)] = 5500.0;
 			Entries[typeof(SpiritOfTheTotem)] = 5500.0;
             Entries[typeof(PendantOfTheMagi)] = 35;
-            Entries[typeof(TatteredAncientMummyWrapping)] = 5000.0;
             Entries[typeof(WindSpirit)] = 5000.0;
-            Entries[typeof(GauntletsOfAnger)] = 5000.0;
-            Entries[typeof(AcidProofRobe)] = 5000.0;
-            Entries[typeof(ANecromancerShroud)] = 5000.0;
-            Entries[typeof(CaptainJohnsHat)] = 5000.0;
-            Entries[typeof(CrownOfTalKeesh)] = 5000.0;
-            Entries[typeof(DetectiveBoots)] = 5000.0;
-            Entries[typeof(EmbroideredOakLeafCloak)] = 5000.0;
-            Entries[typeof(JadeArmband)] = 5000.0;
-            Entries[typeof(MagicalDoor)] = 5000.0;
-            Entries[typeof(RoyalGuardInvestigatorsCloak)] = 5000.0;
-            Entries[typeof(SamaritanRobe)] = 5000.0;
-            Entries[typeof(TheMostKnowledgePerson)] = 5000.0;
-            Entries[typeof(TheRobeOfBritanniaAri)] = 5000.0;
-            Entries[typeof(DjinnisRing)] = 5000.0;
-            Entries[typeof(BraveKnightOfTheBritannia)] = 5000.0;
-            Entries[typeof(Calm)] = 5000.0;
-            Entries[typeof(FangOfRactus)] = 5000.0;
-            Entries[typeof(OblivionsNeedle)] = 5000.0;
             Entries[typeof(Asclepius)] = 5000.0;
             Entries[typeof(BracersofAlchemicalDevastation)] = 5000.0;
             Entries[typeof(HygieiasAmulet)] = 5000.0;

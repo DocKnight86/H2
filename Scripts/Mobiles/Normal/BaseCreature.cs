@@ -1988,21 +1988,6 @@ namespace Server.Mobiles
             }
             else
             {
-                if (from.Race == Race.Human)
-                {
-                    hides = (int)Math.Ceiling(hides * 1.1); // 10% bonus only applies to hides, ore & logs
-                }
-
-                if (corpse.Map == Map.Felucca && !Siege.SiegeShard)
-                {
-                    feathers *= 2;
-                    wool *= 2;
-                    hides *= 2;
-                    fur *= 2;
-                    meat *= 2;
-                    scales *= 2;
-                }
-
                 if (special)
                 {
                     feathers = (int)Math.Ceiling(feathers * 1.1);
@@ -5070,7 +5055,6 @@ namespace Server.Mobiles
         }
 
         public LootStage LootStage { get; protected set; }
-        public int KillersLuck { get; protected set; }
         public bool StealPackGenerated { get; protected set; }
         public bool HasBeenStolen { get; set; }
 
@@ -5094,7 +5078,6 @@ namespace Server.Mobiles
                     StealPackGenerated = true;
                     break;
                 case LootStage.Death:
-                    KillersLuck = LootPack.GetLuckChanceForKiller(this);
                     break;
             }
 
@@ -5123,8 +5106,6 @@ namespace Server.Mobiles
                     AddLoot(LootPack.UltraRich);
                 }
             }
-
-            KillersLuck = 0;
         }
 
         public virtual void GenerateLoot()

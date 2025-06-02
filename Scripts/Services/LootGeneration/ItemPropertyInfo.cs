@@ -1199,12 +1199,12 @@ namespace Server.Items
         /// <param name="item"></param>
         /// <param name="attribute"></param>
         /// <returns></returns>
-        public static bool ValidateProperty(Item item, object attribute, bool reforged)
+        public static bool ValidateProperty(Item item, object attribute)
         {
-            return ValidateProperty(item, GetID(attribute), reforged);
+            return ValidateProperty(item, GetID(attribute));
         }
 
-        public static bool ValidateProperty(Item item, int id, bool reforged)
+        public static bool ValidateProperty(Item item, int id)
         {
             ItemPropertyInfo info = GetInfo(id);
 
@@ -1215,7 +1215,7 @@ namespace Server.Items
                 if (typeInfo != null)
                 {
                     // reforged follows its own set of guidelines
-                    if (!reforged && typeInfo.LootMax <= 0)
+                    if (typeInfo.LootMax <= 0)
                     {
                         return false;
                     }
@@ -1225,10 +1225,6 @@ namespace Server.Items
                         case 200: // Blood Drinking
                         {
                             return item is BaseWeapon weapon && (weapon.PrimaryAbility == WeaponAbility.BleedAttack || weapon.SecondaryAbility == WeaponAbility.BleedAttack);
-                        }
-                        case 205: // Splintering
-                        {
-                            return !reforged;
                         }
                         case 206: // Reactive Paralyze Weapon
                         {

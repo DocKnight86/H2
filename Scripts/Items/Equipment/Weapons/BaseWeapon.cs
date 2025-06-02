@@ -131,8 +131,6 @@ namespace Server.Items
         private CraftResource m_Resource;
         private bool m_PlayerConstructed;
 
-        private bool m_Altered;
-
         private AosAttributes m_AosAttributes;
         private AosWeaponAttributes m_AosWeaponAttributes;
         private AosSkillBonuses m_AosSkillBonuses;
@@ -3305,7 +3303,6 @@ namespace Server.Items
             SetSaveFlag(ref flags, SaveFlag.EngravedText, !string.IsNullOrEmpty(m_EngravedText));
             SetSaveFlag(ref flags, SaveFlag.xAbsorptionAttributes, !m_SAAbsorptionAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.xNegativeAttributes, !m_NegativeAttributes.IsEmpty);
-            SetSaveFlag(ref flags, SaveFlag.Altered, m_Altered);
             SetSaveFlag(ref flags, SaveFlag.xExtendedWeaponAttributes, !m_ExtendedWeaponAttributes.IsEmpty);
 
             writer.Write((long)flags);
@@ -3462,9 +3459,9 @@ namespace Server.Items
         private enum SaveFlag : long
         {
             None = 0x00000000,
-            Empty1 = 0x00000001,
-            Empty2 = 0x00000002,
-            Empty3 = 0x00000004,
+            UNUSED1 = 0x00000001,
+            UNUSED2 = 0x00000002,
+            UNUSED3 = 0x00000004,
             Quality = 0x00000008,
             Hits = 0x00000010,
             MaxHits = 0x00000020,
@@ -3495,8 +3492,7 @@ namespace Server.Items
             EngravedText = 0x40000000,
             xAbsorptionAttributes = 0x80000000,
             xNegativeAttributes = 0x100000000,
-            Altered = 0x200000000,
-            xExtendedWeaponAttributes = 0x400000000
+            xExtendedWeaponAttributes = 0x200000000
         }
 
         #region Mondain's Legacy Sets
@@ -3689,21 +3685,6 @@ namespace Server.Items
                         else
                         {
                             flags = (SaveFlag)reader.ReadLong();
-                        }
-
-                        if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty1))
-                        {
-                            reader.ReadInt();
-                        }
-
-                        if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty2))
-                        {
-                            reader.ReadInt();
-                        }
-
-                        if (version < 20 && GetSaveFlag(flags, SaveFlag.Empty3))
-                        {
-                            reader.ReadInt();
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.Quality))
@@ -3955,11 +3936,6 @@ namespace Server.Items
                             m_NegativeAttributes = new NegativeAttributes(this);
                         }
                         #endregion
-
-                        if (GetSaveFlag(flags, SaveFlag.Altered))
-                        {
-                            m_Altered = true;
-                        }
 
                         if (GetSaveFlag(flags, SaveFlag.xExtendedWeaponAttributes))
                         {
@@ -4345,11 +4321,6 @@ namespace Server.Items
             if (IsImbued)
             {
                 list.Add(1080418); // (Imbued)
-            }
-
-            if (m_Altered)
-            {
-                list.Add(1111880); // Altered
             }
         }
 
@@ -5283,17 +5254,6 @@ namespace Server.Items
             return 0;
         }
         #endregion
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool Altered
-        {
-            get => m_Altered;
-            set
-            {
-                m_Altered = value;
-                InvalidateProperties();
-            }
-        }
     }
 
     public enum CheckSlayerResult

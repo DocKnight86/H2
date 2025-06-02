@@ -44,18 +44,7 @@ namespace Server.Items
             Donations.Add(new CollectionItem(typeof(Drake), 0x20D6, 1073119, 0x0, 400.0));
             Donations.Add(new CollectionItem(typeof(Reptalon), 0x2D95, 1073121, 0x0, 550.0));
 
-            int[] hues = new int[]
-            {
-                0x555, 0xAE, 0x94, 0x278, 0x32, 0x28, 0x327, 0x41A
-            };
-
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberCloak), 0x1515, 1073221, 0x555, 100000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberRobe), 0x1F03, 1073221, 0x555, 100000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberSkirt), 0x1F01, 1073221, 0x555, 100000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberBodySash), 0x1541, 1073221, 0x555, 100000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberThighBoots), 0x1711, 1073221, 0x555, 100000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberFloppyHat), 0x1713, 1073221, 0x555, 100000.0, hues));
-            Rewards.Add(new CollectionHuedItem(typeof(ZooMemberBonnet), 0x1719, 1073221, 0x555, 100000.0, hues));
+            // REWARDS
             Rewards.Add(new CollectionTitle(1073201, 1073624, 100000.0)); // Britannia Zoo Contributor
             Rewards.Add(new CollectionItem(typeof(QuagmireStatue), 0x2614, 1073195, 0x0, 200000.0));
             Rewards.Add(new CollectionItem(typeof(BakeKitsuneStatue), 0x2763, 1073189, 0x0, 200000.0));
@@ -66,11 +55,7 @@ namespace Server.Items
             Rewards.Add(new CollectionItem(typeof(SnakeStatue), 0x25C2, 1073194, 0x0, 200000.0));
             Rewards.Add(new CollectionTitle(1073202, 1073627, 200000.0)); // Distinguished Britannia Zoo Contributor
 
-            hues = new int[]
-            {
-                0x34, 0x1C2, 0x2A3
-            };
-
+            int[] hues = [0x34, 0x1C2, 0x2A3];
             Rewards.Add(new CollectionItem(typeof(SilverSteedZooStatuette), 0x259D, 1073219, 0x0, 350000.0));
             Rewards.Add(new CollectionHuedItem(typeof(QuagmireZooStatuette), 0x2614, 1074848, 0x34, 350000.0, hues));
             Rewards.Add(new CollectionHuedItem(typeof(BakeKitsuneZooStatuette), 0x2763, 1074849, 0x34, 350000.0, hues));

@@ -50,10 +50,9 @@ namespace Server.Mobiles
 
         public override int TreasureMapLevel => 4;
 
-        public override void GenerateLoot() // -- Need to verify
+        public override void GenerateLoot() 
         {
             AddLoot(LootPack.FilthyRich);
-            AddLoot(LootPack.ArcanistScrolls, 0, 1);
         }
 
         public override void OnDamage(int amount, Mobile from, bool willKill)

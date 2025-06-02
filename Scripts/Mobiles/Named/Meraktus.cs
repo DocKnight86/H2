@@ -12,11 +12,7 @@ namespace Server.Mobiles
         public override bool CanGivePowerscrolls => false;
         public override bool DoesGoldShower => false;
         public override Type[] UniqueList => [];
-        public override Type[] SharedList => new Type[]
-                {
-                    typeof(TheMostKnowledgePerson),
-                    typeof(OblivionsNeedle)
-                };
+        public override Type[] SharedList => [];
         public override Type[] DecorativeList => new Type[]
                 {
                     typeof(ArtifactLargeVase),
@@ -76,7 +72,6 @@ namespace Server.Mobiles
             AddLoot(LootPack.LootItem<MalletAndChisel>());
             AddLoot(LootPack.RandomLootItem(new Type[] { typeof(MinotaurHedge), typeof(BonePile), typeof(LightYarn) }, 100.0, 1, false, true));
             AddLoot(LootPack.LootItem<TormentedChains>(50.0, 1));
-            AddLoot(LootPack.ArcanistScrolls, 1);
         }
 
         public override int GetAngerSound()

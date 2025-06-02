@@ -2,7 +2,7 @@ using System;
 
 namespace Server.Items
 {
-    public class Fists : BaseMeleeWeapon
+    public class Fists : BaseWeapon
     {
         public static void Initialize()
         {

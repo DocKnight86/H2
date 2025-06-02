@@ -61,7 +61,7 @@ namespace Server.Mobiles
         public override ChampionSkullType SkullType => ChampionSkullType.None;
         public override Type[] UniqueList => [];
         public override Type[] SharedList => [];
-        public override Type[] DecorativeList => new[] { typeof(MagicalDoor) };
+        public override Type[] DecorativeList => [];
         public override MonsterStatuetteType[] StatueTypes => new[] { MonsterStatuetteType.AbyssalInfernal, MonsterStatuetteType.ArchDemon };
 
         public override Poison PoisonImmune => Poison.Lethal;

@@ -71,16 +71,16 @@ namespace Server.Items
 			1 // 1 property   : 1/4 : 25%
 		};
 
-        private string m_EngravedText;
-        private BookQuality m_Quality;
-        private AosAttributes m_AosAttributes;
-        private AosSkillBonuses m_AosSkillBonuses;
-        private NegativeAttributes m_NegativeAttributes;
-        private ulong m_Content;
-        private int m_Count;
-        private Mobile m_Crafter;
-        private SlayerName m_Slayer;
-        private SlayerName m_Slayer2;
+        private string _EngravedText;
+        private BookQuality _Quality;
+        private AosAttributes _AosAttributes;
+        private AosSkillBonuses _AosSkillBonuses;
+        private NegativeAttributes _NegativeAttributes;
+        private ulong _Content;
+        private int _Count;
+        private Mobile _Crafter;
+        private SlayerName _Slayer;
+        private SlayerName _Slayer2;
 
         [Constructable]
         public Spellbook()
@@ -95,9 +95,9 @@ namespace Server.Items
         public Spellbook(ulong content, int itemID)
             : base(itemID)
         {
-            m_AosAttributes = new AosAttributes(this);
-            m_AosSkillBonuses = new AosSkillBonuses(this);
-            m_NegativeAttributes = new NegativeAttributes(this);
+            _AosAttributes = new AosAttributes(this);
+            _AosSkillBonuses = new AosSkillBonuses(this);
+            _NegativeAttributes = new NegativeAttributes(this);
 
             Weight = 3.0;
             Layer = Layer.OneHanded;
@@ -113,10 +113,10 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public string EngravedText
         {
-            get => m_EngravedText;
+            get => _EngravedText;
             set
             {
-                m_EngravedText = value;
+                _EngravedText = value;
                 InvalidateProperties();
             }
         }
@@ -124,22 +124,22 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public BookQuality Quality
         {
-            get => m_Quality;
+            get => _Quality;
             set
             {
-                m_Quality = value;
+                _Quality = value;
                 InvalidateProperties();
             }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public AosAttributes Attributes { get => m_AosAttributes; set { } }
+        public AosAttributes Attributes { get => _AosAttributes; set { } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public AosSkillBonuses SkillBonuses { get => m_AosSkillBonuses; set { } }
+        public AosSkillBonuses SkillBonuses { get => _AosSkillBonuses; set { } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public NegativeAttributes NegativeAttributes { get => m_NegativeAttributes; set { } }
+        public NegativeAttributes NegativeAttributes { get => _NegativeAttributes; set { } }
 
         public virtual SpellbookType SpellbookType => SpellbookType.Regular;
         public virtual int BookOffset => 0;
@@ -148,18 +148,18 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public ulong Content
         {
-            get => m_Content;
+            get => _Content;
             set
             {
-                if (m_Content != value)
+                if (_Content != value)
                 {
-                    m_Content = value;
+                    _Content = value;
 
-                    m_Count = 0;
+                    _Count = 0;
 
                     while (value > 0)
                     {
-                        m_Count += (int)(value & 0x1);
+                        _Count += (int)(value & 0x1);
                         value >>= 1;
                     }
 
@@ -169,15 +169,15 @@ namespace Server.Items
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int SpellCount => m_Count;
+        public int SpellCount => _Count;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile Crafter
         {
-            get => m_Crafter;
+            get => _Crafter;
             set
             {
-                m_Crafter = value;
+                _Crafter = value;
                 InvalidateProperties();
             }
         }
@@ -185,10 +185,10 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public SlayerName Slayer
         {
-            get => m_Slayer;
+            get => _Slayer;
             set
             {
-                m_Slayer = value;
+                _Slayer = value;
                 InvalidateProperties();
             }
         }
@@ -196,10 +196,10 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public SlayerName Slayer2
         {
-            get => m_Slayer2;
+            get => _Slayer2;
             set
             {
-                m_Slayer2 = value;
+                _Slayer2 = value;
                 InvalidateProperties();
             }
         }
@@ -212,30 +212,35 @@ namespace Server.Items
         public bool IsVvVItem { get => _VvVItem; set { _VvVItem = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile Owner { get => _Owner; set { _Owner = value; if (_Owner != null) _OwnerName = _Owner.Name; InvalidateProperties(); } }
+        public Mobile Owner { get => _Owner; set { _Owner = value; if (_Owner != null)
+            {
+                _OwnerName = _Owner.Name;
+            }
+
+            InvalidateProperties(); } }
 
         public virtual string OwnerName { get => _OwnerName; set { _OwnerName = value; InvalidateProperties(); } }
 
-        private int m_MaxHitPoints;
-        private int m_HitPoints;
+        private int _MaxHitPoints;
+        private int _HitPoints;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int HitPoints
         {
-            get => m_HitPoints;
+            get => _HitPoints;
             set
             {
-                if (m_HitPoints == value)
+                if (_HitPoints == value)
                 {
                     return;
                 }
 
-                if (value > m_MaxHitPoints)
+                if (value > _MaxHitPoints)
                 {
-                    value = m_MaxHitPoints;
+                    value = _MaxHitPoints;
                 }
 
-                m_HitPoints = value;
+                _HitPoints = value;
 
                 InvalidateProperties();
             }
@@ -244,10 +249,10 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public int MaxHitPoints
         {
-            get => m_MaxHitPoints;
+            get => _MaxHitPoints;
             set
             {
-                m_MaxHitPoints = value;
+                _MaxHitPoints = value;
                 InvalidateProperties();
             }
         }
@@ -267,25 +272,29 @@ namespace Server.Items
 
         public virtual int OnHit(BaseWeapon weap, int damage)
         {
-            if (m_MaxHitPoints == 0)
+            if (_MaxHitPoints == 0)
+            {
                 return damage;
+            }
 
-            int chance = m_NegativeAttributes.Antique > 0 ? 50 : 25;
+            int chance = _NegativeAttributes.Antique > 0 ? 50 : 25;
 
             if (chance > Utility.Random(100)) // 25% chance to lower durability
             {
-                if (m_HitPoints >= 1)
+                if (_HitPoints >= 1)
                 {
                     HitPoints--;
                 }
-                else if (m_MaxHitPoints > 0)
+                else if (_MaxHitPoints > 0)
                 {
                     MaxHitPoints--;
 
                     if (Parent is Mobile mobile)
+                    {
                         mobile.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1061121); // Your equipment is severely damaged.
+                    }
 
-                    if (m_MaxHitPoints == 0)
+                    if (_MaxHitPoints == 0)
                     {
                         Delete();
                     }
@@ -604,8 +613,8 @@ namespace Server.Items
                 {
                     from.Send(new PlaySound(0x249, GetWorldLocation()));
 
-                    m_Content |= (ulong)1 << val;
-                    ++m_Count;
+                    _Content |= (ulong)1 << val;
+                    ++_Count;
 
                     if (scroll.Amount > 1)
                     {
@@ -631,9 +640,9 @@ namespace Server.Items
                 return;
             }
 
-            book.m_AosAttributes = new AosAttributes(newItem, m_AosAttributes);
-            book.m_AosSkillBonuses = new AosSkillBonuses(newItem, m_AosSkillBonuses);
-            book.m_NegativeAttributes = new NegativeAttributes(newItem, m_NegativeAttributes);
+            book._AosAttributes = new AosAttributes(newItem, _AosAttributes);
+            book._AosSkillBonuses = new AosSkillBonuses(newItem, _AosSkillBonuses);
+            book._NegativeAttributes = new NegativeAttributes(newItem, _NegativeAttributes);
 
             base.OnAfterDuped(newItem);
         }
@@ -642,11 +651,11 @@ namespace Server.Items
         {
             if (parent is Mobile from)
             {
-                m_AosSkillBonuses.AddTo(from);
+                _AosSkillBonuses.AddTo(from);
 
-                int strBonus = m_AosAttributes.BonusStr;
-                int dexBonus = m_AosAttributes.BonusDex;
-                int intBonus = m_AosAttributes.BonusInt;
+                int strBonus = _AosAttributes.BonusStr;
+                int dexBonus = _AosAttributes.BonusDex;
+                int intBonus = _AosAttributes.BonusInt;
 
                 if (strBonus != 0 || dexBonus != 0 || intBonus != 0)
                 {
@@ -676,7 +685,7 @@ namespace Server.Items
         {
             if (parent is Mobile from)
             {
-                m_AosSkillBonuses.Remove();
+                _AosSkillBonuses.Remove();
 
                 string modName = Serial.ToString();
 
@@ -692,7 +701,7 @@ namespace Server.Items
         {
             spellID -= BookOffset;
 
-            return spellID >= 0 && spellID < BookCount && (m_Content & ((ulong)1 << spellID)) != 0;
+            return spellID >= 0 && spellID < BookCount && (_Content & ((ulong)1 << spellID)) != 0;
         }
 
         public void DisplayTo(Mobile to)
@@ -721,26 +730,26 @@ namespace Server.Items
 
             to.Send(new DisplaySpellbookPacket(this));
 
-            to.Send(new SpellbookContentPacket(this, ItemID, BookOffset + 1, m_Content));
+            to.Send(new SpellbookContentPacket(this, ItemID, BookOffset + 1, _Content));
         }
 
         public override void AddNameProperties(ObjectPropertyList list)
         {
             base.AddNameProperties(list);
 
-            if (m_Quality == BookQuality.Exceptional)
+            if (_Quality == BookQuality.Exceptional)
             {
                 list.Add(1063341); // exceptional
             }
 
-            if (m_EngravedText != null)
+            if (_EngravedText != null)
             {
-                list.Add(1072305, Utility.FixHtml(m_EngravedText)); // Engraved: ~1_INSCRIPTION~
+                list.Add(1072305, Utility.FixHtml(_EngravedText)); // Engraved: ~1_INSCRIPTION~
             }
 
-            if (m_Crafter != null)
+            if (_Crafter != null)
             {
-                list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
+                list.Add(1050043, _Crafter.TitleName); // crafted by ~1_NAME~
             }
 
             if (IsVvVItem)
@@ -753,25 +762,25 @@ namespace Server.Items
                 list.Add(1153213, OwnerName);
             }
 
-            if (m_NegativeAttributes != null)
+            if (_NegativeAttributes != null)
             {
-                m_NegativeAttributes.GetProperties(list, this);
+                _NegativeAttributes.GetProperties(list, this);
             }
 
-            m_AosSkillBonuses.GetProperties(list);
+            _AosSkillBonuses.GetProperties(list);
 
-            if (m_Slayer != SlayerName.None)
+            if (_Slayer != SlayerName.None)
             {
-                SlayerEntry entry = SlayerGroup.GetEntryByName(m_Slayer);
+                SlayerEntry entry = SlayerGroup.GetEntryByName(_Slayer);
                 if (entry != null)
                 {
                     list.Add(entry.Title);
                 }
             }
 
-            if (m_Slayer2 != SlayerName.None)
+            if (_Slayer2 != SlayerName.None)
             {
-                SlayerEntry entry = SlayerGroup.GetEntryByName(m_Slayer2);
+                SlayerEntry entry = SlayerGroup.GetEntryByName(_Slayer2);
                 if (entry != null)
                 {
                     list.Add(entry.Title);
@@ -780,127 +789,129 @@ namespace Server.Items
 
             int prop;
 
-            if ((prop = m_AosAttributes.SpellChanneling) != 0)
+            if ((prop = _AosAttributes.SpellChanneling) != 0)
             {
                 list.Add(1060482); // spell channeling
             }
 
-            if ((prop = m_AosAttributes.NightSight) != 0)
+            if ((prop = _AosAttributes.NightSight) != 0)
             {
                 list.Add(1060441); // night sight
             }
 
-            if ((prop = m_AosAttributes.BonusStr) != 0)
+            if ((prop = _AosAttributes.BonusStr) != 0)
             {
                 list.Add(1060485, prop.ToString()); // strength bonus ~1_val~
             }
 
-            if ((prop = m_AosAttributes.BonusDex) != 0)
+            if ((prop = _AosAttributes.BonusDex) != 0)
             {
                 list.Add(1060409, prop.ToString()); // dexterity bonus ~1_val~
             }
 
-            if ((prop = m_AosAttributes.BonusInt) != 0)
+            if ((prop = _AosAttributes.BonusInt) != 0)
             {
                 list.Add(1060432, prop.ToString()); // intelligence bonus ~1_val~
             }
 
-            if ((prop = m_AosAttributes.BonusHits) != 0)
+            if ((prop = _AosAttributes.BonusHits) != 0)
             {
                 list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
             }
 
-            if ((prop = m_AosAttributes.BonusStam) != 0)
+            if ((prop = _AosAttributes.BonusStam) != 0)
             {
                 list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
             }
 
-            if ((prop = m_AosAttributes.BonusMana) != 0)
+            if ((prop = _AosAttributes.BonusMana) != 0)
             {
                 list.Add(1060439, prop.ToString()); // mana increase ~1_val~
             }
 
-            if ((prop = m_AosAttributes.RegenHits) != 0)
+            if ((prop = _AosAttributes.RegenHits) != 0)
             {
                 list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
             }
 
-            if ((prop = m_AosAttributes.RegenStam) != 0)
+            if ((prop = _AosAttributes.RegenStam) != 0)
             {
                 list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
             }
 
-            if ((prop = m_AosAttributes.RegenMana) != 0)
+            if ((prop = _AosAttributes.RegenMana) != 0)
             {
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
             }
 
-            if ((prop = m_AosAttributes.EnhancePotions) != 0)
+            if ((prop = _AosAttributes.EnhancePotions) != 0)
             {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.ReflectPhysical) != 0)
+            if ((prop = _AosAttributes.ReflectPhysical) != 0)
             {
                 list.Add(1060442, prop.ToString()); // reflect physical damage ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.AttackChance) != 0)
+            if ((prop = _AosAttributes.AttackChance) != 0)
             {
                 list.Add(1060415, prop.ToString()); // hit chance increase ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.WeaponSpeed) != 0)
+            if ((prop = _AosAttributes.WeaponSpeed) != 0)
             {
                 list.Add(1060486, prop.ToString()); // swing speed increase ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.WeaponDamage) != 0)
+            if ((prop = _AosAttributes.WeaponDamage) != 0)
             {
                 list.Add(1060401, prop.ToString()); // damage increase ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.DefendChance) != 0)
+            if ((prop = _AosAttributes.DefendChance) != 0)
             {
                 list.Add(1060408, prop.ToString()); // defense chance increase ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.CastRecovery) != 0)
+            if ((prop = _AosAttributes.CastRecovery) != 0)
             {
                 list.Add(1060412, prop.ToString()); // faster cast recovery ~1_val~
             }
 
-            if ((prop = m_AosAttributes.CastSpeed) != 0)
+            if ((prop = _AosAttributes.CastSpeed) != 0)
             {
                 list.Add(1060413, prop.ToString()); // faster casting ~1_val~
             }
 
-            if ((prop = m_AosAttributes.SpellDamage) != 0)
+            if ((prop = _AosAttributes.SpellDamage) != 0)
             {
                 list.Add(1060483, prop.ToString()); // spell damage increase ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.LowerManaCost) != 0)
+            if ((prop = _AosAttributes.LowerManaCost) != 0)
             {
                 list.Add(1060433, prop.ToString()); // lower mana cost ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.LowerRegCost) != 0)
+            if ((prop = _AosAttributes.LowerRegCost) != 0)
             {
                 list.Add(1060434, prop.ToString()); // lower reagent cost ~1_val~%
             }
 
-            if ((prop = m_AosAttributes.IncreasedKarmaLoss) != 0)
+            if ((prop = _AosAttributes.IncreasedKarmaLoss) != 0)
             {
                 list.Add(1075210, prop.ToString()); // Increased Karma Loss ~1val~%
             }
 
             AddProperty(list);
 
-            list.Add(1042886, m_Count.ToString()); // ~1_NUMBERS_OF_SPELLS~ Spells
+            list.Add(1042886, _Count.ToString()); // ~1_NUMBERS_OF_SPELLS~ Spells
 
-            if (m_MaxHitPoints > 0)
-                list.Add(1060639, "{0}\t{1}", m_HitPoints, m_MaxHitPoints); // durability ~1_val~ / ~2_val~
+            if (_MaxHitPoints > 0)
+            {
+                list.Add(1060639, "{0}\t{1}", _HitPoints, _MaxHitPoints); // durability ~1_val~ / ~2_val~
+            }
         }
 
         public virtual void AddProperty(ObjectPropertyList list)
@@ -924,31 +935,23 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(6); // version
+            writer.Write(0); // version
 
-            m_NegativeAttributes.Serialize(writer);
-
-            writer.Write(m_HitPoints);
-            writer.Write(m_MaxHitPoints);
-
+            _NegativeAttributes.Serialize(writer);
+            writer.Write(_HitPoints);
+            writer.Write(_MaxHitPoints);
             writer.Write(_VvVItem);
             writer.Write(_Owner);
             writer.Write(_OwnerName);
-
-            writer.Write((byte)m_Quality);
-
-            writer.Write(m_EngravedText);
-
-            writer.Write(m_Crafter);
-
-            writer.Write((int)m_Slayer);
-            writer.Write((int)m_Slayer2);
-
-            m_AosAttributes.Serialize(writer);
-            m_AosSkillBonuses.Serialize(writer);
-
-            writer.Write(m_Content);
-            writer.Write(m_Count);
+            writer.Write((byte)_Quality);
+            writer.Write(_EngravedText);
+            writer.Write(_Crafter);
+            writer.Write((int)_Slayer);
+            writer.Write((int)_Slayer2);
+            _AosAttributes.Serialize(writer);
+            _AosSkillBonuses.Serialize(writer);
+            writer.Write(_Content);
+            writer.Write(_Count);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -958,82 +961,51 @@ namespace Server.Items
 
             switch (version)
             {
-                case 6:
+                case 0:
                     {
-                        m_NegativeAttributes = new NegativeAttributes(this, reader);
-
-
-                        m_MaxHitPoints = reader.ReadInt();
-                        m_HitPoints = reader.ReadInt();
-
+                        _NegativeAttributes = new NegativeAttributes(this, reader);
+                        _MaxHitPoints = reader.ReadInt();
+                        _HitPoints = reader.ReadInt();
                         _VvVItem = reader.ReadBool();
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
-
-                        goto case 5;
-                    }
-                case 5:
-                    {
-                        m_Quality = (BookQuality)reader.ReadByte();
-
-                        goto case 4;
-                    }
-                case 4:
-                    {
-                        m_EngravedText = reader.ReadString();
-
-                        goto case 3;
-                    }
-                case 3:
-                    {
-                        m_Crafter = reader.ReadMobile();
-                        goto case 2;
-                    }
-                case 2:
-                    {
-                        m_Slayer = (SlayerName)reader.ReadInt();
-                        m_Slayer2 = (SlayerName)reader.ReadInt();
-                        goto case 1;
-                    }
-                case 1:
-                    {
-                        m_AosAttributes = new AosAttributes(this, reader);
-                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
-
-                        goto case 0;
-                    }
-                case 0:
-                    {
-                        m_Content = reader.ReadULong();
-                        m_Count = reader.ReadInt();
+                        _Quality = (BookQuality)reader.ReadByte();
+                        _EngravedText = reader.ReadString();
+                        _Crafter = reader.ReadMobile();
+                        _Slayer = (SlayerName)reader.ReadInt();
+                        _Slayer2 = (SlayerName)reader.ReadInt();
+                        _AosAttributes = new AosAttributes(this, reader);
+                        _AosSkillBonuses = new AosSkillBonuses(this, reader);
+                        _Content = reader.ReadULong();
+                        _Count = reader.ReadInt();
 
                         break;
                     }
             }
 
-            if (m_AosAttributes == null)
+            if (_AosAttributes == null)
             {
-                m_AosAttributes = new AosAttributes(this);
+                _AosAttributes = new AosAttributes(this);
             }
 
-            if (m_AosSkillBonuses == null)
+            if (_AosSkillBonuses == null)
             {
-                m_AosSkillBonuses = new AosSkillBonuses(this);
+                _AosSkillBonuses = new AosSkillBonuses(this);
             }
 
-            if (m_NegativeAttributes == null)
+            if (_NegativeAttributes == null)
             {
-                m_NegativeAttributes = new NegativeAttributes(this);
+                _NegativeAttributes = new NegativeAttributes(this);
             }
 
             if (Parent is Mobile)
             {
-                m_AosSkillBonuses.AddTo((Mobile)Parent);
+                _AosSkillBonuses.AddTo((Mobile)Parent);
             }
 
-            int strBonus = m_AosAttributes.BonusStr;
-            int dexBonus = m_AosAttributes.BonusDex;
-            int intBonus = m_AosAttributes.BonusInt;
+            int strBonus = _AosAttributes.BonusStr;
+            int dexBonus = _AosAttributes.BonusDex;
+            int intBonus = _AosAttributes.BonusInt;
 
             if (Parent is Mobile mobile && (strBonus != 0 || dexBonus != 0 || intBonus != 0))
             {
@@ -1151,7 +1123,7 @@ namespace Server.Items
                 Crafter = from;
             }
 
-            m_Quality = (BookQuality)(quality - 1);
+            _Quality = (BookQuality)(quality - 1);
 
             return quality;
         }

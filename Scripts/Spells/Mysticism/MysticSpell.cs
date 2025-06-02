@@ -1,4 +1,3 @@
-using Server.Items;
 using System;
 
 namespace Server.Spells.Mysticism
@@ -23,10 +22,9 @@ namespace Server.Spells.Mysticism
         public override bool ConsumeReagents()
         {
             if (base.ConsumeReagents())
+            {
                 return true;
-
-            if (ArcaneGem.ConsumeCharges(Caster, 1))
-                return true;
+            }
 
             return false;
         }
@@ -36,7 +34,9 @@ namespace Server.Spells.Mysticism
             int circle = (int)Circle;
 
             if (Scroll != null)
+            {
                 circle -= 2;
+            }
 
             double avg = ChanceLength * circle;
 
@@ -51,7 +51,10 @@ namespace Server.Spells.Mysticism
             get
             {
                 if (Caster.Skills[SkillName.Imbuing].Value >= Caster.Skills[SkillName.Focus].Value)
+                {
                     return SkillName.Imbuing;
+                }
+
                 return SkillName.Focus;
             }
         }
@@ -59,13 +62,17 @@ namespace Server.Spells.Mysticism
         public override void SendCastEffect()
         {
             if (Caster.Player)
+            {
                 Caster.FixedEffect(0x37C4, 87, (int)(GetCastDelay().TotalSeconds * 28), 0x66C, 3);
+            }
         }
 
         public override int GetMana()
         {
             if (this is HailStormSpell)
+            {
                 return 50;
+            }
 
             return m_ManaTable[(int)Circle];
         }
@@ -73,7 +80,9 @@ namespace Server.Spells.Mysticism
         public override TimeSpan GetCastRecovery()
         {
             if (Scroll is SpellStone)
+            {
                 return TimeSpan.Zero;
+            }
 
             return base.GetCastRecovery();
         }
@@ -81,7 +90,9 @@ namespace Server.Spells.Mysticism
         public override TimeSpan GetCastDelay()
         {
             if (Scroll is SpellStone)
+            {
                 return TimeSpan.Zero;
+            }
 
             return base.GetCastDelay();
         }
@@ -89,7 +100,9 @@ namespace Server.Spells.Mysticism
         public override bool CheckCast()
         {
             if (!base.CheckCast())
+            {
                 return false;
+            }
 
             return true;
         }
@@ -101,10 +114,14 @@ namespace Server.Spells.Mysticism
             n /= 100.0;
 
             if (n <= 0.0)
+            {
                 return false;
+            }
 
             if (n >= 1.0)
+            {
                 return true;
+            }
 
             int circle = Math.Max(5, 1 + (int)Circle);
 
@@ -112,7 +129,9 @@ namespace Server.Spells.Mysticism
             maxSkill += (circle / 6) * 25;
 
             if (target.Skills[SkillName.MagicResist].Value < maxSkill)
+            {
                 target.CheckSkill(SkillName.MagicResist, 0.0, target.Skills[SkillName.MagicResist].Cap);
+            }
 
             return (n >= Utility.RandomDouble());
         }

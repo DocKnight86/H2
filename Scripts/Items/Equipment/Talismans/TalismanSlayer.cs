@@ -65,8 +65,7 @@ namespace Server.Items
                 typeof(AncientLich), typeof(Lich),
                 typeof(LichLord), typeof(SkeletalMage),
                 typeof(BoneMagi), typeof(OrcishMage),
-                typeof(KhaldunZealot), typeof(JukaMage),
-                typeof(KhaldunSummoner), typeof(MasterTheophilus),
+                typeof(JukaMage), 
                 typeof(GrayGoblinMage), typeof(MeerMage)
             };
 

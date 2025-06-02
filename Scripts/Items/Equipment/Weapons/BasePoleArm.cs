@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Server.Items
 {
-    public abstract class BasePoleArm : BaseMeleeWeapon, IHarvestTool
+    public abstract class BasePoleArm : BaseWeapon, IHarvestTool
     {
         public BasePoleArm(int itemID)
             : base(itemID)

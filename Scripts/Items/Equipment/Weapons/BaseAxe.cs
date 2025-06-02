@@ -9,7 +9,7 @@ namespace Server.Items
         bool Axe(Mobile from, BaseAxe axe);
     }
 
-    public abstract class BaseAxe : BaseMeleeWeapon, IHarvestTool
+    public abstract class BaseAxe : BaseWeapon, IHarvestTool
     {
         public BaseAxe(int itemID)
             : base(itemID)

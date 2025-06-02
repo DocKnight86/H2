@@ -97,7 +97,7 @@ namespace Server.Items
             }
         }
 
-        public static readonly ChangeHairstyleEntry[] HumanMaleEntries = new[]
+        public static readonly ChangeHairstyleEntry[] MaleEntries = new[]
             {
                 /* Hair */
                 new ChangeHairstyleEntry(0xC8F7, 1125404, StyleType.Hair, 0xA1A4),
@@ -111,7 +111,7 @@ namespace Server.Items
                 new ChangeHairstyleEntry(0xC8FE, 1125411, StyleType.Beard, 0xA1AB)
             };
 
-        public static readonly ChangeHairstyleEntry[] HumanFemaleEntries = new[]
+        public static readonly ChangeHairstyleEntry[] FemaleEntries = new[]
         {
                 /* Hair */
                 new ChangeHairstyleEntry(0xF00F, 1125412, StyleType.Hair, 0xA1AC),
@@ -157,20 +157,8 @@ namespace Server.Items
                 {
                     from.CloseGump(typeof(InternalGump));
 
-                    ChangeHairstyleEntry[] entry = HumanMaleEntries;
+                    ChangeHairstyleEntry[] entry = from.Female ? FemaleEntries : MaleEntries;
 
-                    if (from.Race == Race.Human)
-                    {
-                        if (from.Female)
-                        {
-                            entry = HumanFemaleEntries;
-                        }
-                        else
-                        {
-                            entry = HumanMaleEntries;
-                        }
-                    }
-                    
                     from.SendGump(new InternalGump(from, Token, entry));
                 }
             }

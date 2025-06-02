@@ -166,11 +166,6 @@ namespace Server.Misc
                 points += creature.DefaultHitsRegen;
             }
 
-            if (from is PlayerMobile && from.Race == Race.Human)	//Is this affected by the cap?
-            {
-                points += 2;
-            }
-
             if (points < 0)
             {
                 points = 0;

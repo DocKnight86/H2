@@ -1,4 +1,4 @@
-﻿namespace Server.Items
+namespace Server.Items
 {
     public class QuiverOfInfinity : BaseQuiver
     {
@@ -19,27 +19,18 @@
         {
         }
 
-        public override bool CanAlter => false;
-
         public override int LabelNumber => 1075201;// Quiver of Infinity
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
-            writer.WriteEncodedInt(2); // version
+            writer.WriteEncodedInt(0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
-            int version = reader.ReadEncodedInt();
-
-            if (version < 1 && DamageIncrease == 0)
-                DamageIncrease = 10;
-
-            if (version < 2 && Attributes.WeaponDamage == 10)
-                Attributes.WeaponDamage = 0;
+            reader.ReadEncodedInt();
         }
     }
 }

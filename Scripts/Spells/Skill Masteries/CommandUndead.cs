@@ -137,11 +137,7 @@ namespace Server.Spells.SkillMasteries
         {
             typeof(UnfrozenMummy),
             typeof(RedDeath),
-            typeof(SirPatrick),
             typeof(LadyJennifyr),
-            typeof(MasterMikael),
-            typeof(MasterJonath),
-            typeof(LadyMarai),
             typeof(Niporailem),
             typeof(PestilentBandage)
         };

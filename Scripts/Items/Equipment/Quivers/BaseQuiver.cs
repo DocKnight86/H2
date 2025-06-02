@@ -53,51 +53,49 @@ namespace Server.Items
 
         public virtual int ArtifactRarity => 0;
 
-        private AosAttributes m_Attributes;
-        private AosSkillBonuses m_AosSkillBonuses;
-        private AosElementAttributes m_Resistances;
-        private int m_Capacity;
-        private int m_WeightReduction;
-        private int m_DamageIncrease;
-
-        public virtual bool CanAlter => true;
+        private AosAttributes _Attributes;
+        private AosSkillBonuses _AosSkillBonuses;
+        private AosElementAttributes _Resistances;
+        private int _Capacity;
+        private int _WeightReduction;
+        private int _DamageIncrease;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool IsArrowAmmo { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public AosAttributes Attributes { get => m_Attributes; set { } }
+        public AosAttributes Attributes { get => _Attributes; set { } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public AosSkillBonuses SkillBonuses { get => m_AosSkillBonuses; set { } }
+        public AosSkillBonuses SkillBonuses { get => _AosSkillBonuses; set { } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public AosElementAttributes Resistances { get => m_Resistances; set { } }
+        public AosElementAttributes Resistances { get => _Resistances; set { } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Capacity { get => m_Capacity; set { m_Capacity = value; InvalidateProperties(); } }
+        public int Capacity { get => _Capacity; set { _Capacity = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int LowerAmmoCost { get => m_Attributes.LowerAmmoCost; set { m_Attributes.LowerAmmoCost = value; InvalidateProperties(); } }
+        public int LowerAmmoCost { get => _Attributes.LowerAmmoCost; set { _Attributes.LowerAmmoCost = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int WeightReduction { get => m_WeightReduction; set { m_WeightReduction = value; InvalidateProperties(); } }
+        public int WeightReduction { get => _WeightReduction; set { _WeightReduction = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int DamageIncrease { get => m_DamageIncrease; set { m_DamageIncrease = value; InvalidateProperties(); } }
+        public int DamageIncrease { get => _DamageIncrease; set { _DamageIncrease = value; InvalidateProperties(); } }
 
-        private Mobile m_Crafter;
-        private ItemQuality m_Quality;
-        private bool m_PlayerConstructed;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile Crafter { get => m_Crafter; set { m_Crafter = value; InvalidateProperties(); } }
+        private Mobile _Crafter;
+        private ItemQuality _Quality;
+        private bool _PlayerConstructed;
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public ItemQuality Quality { get => m_Quality; set { m_Quality = value; InvalidateProperties(); } }
+        public Mobile Crafter { get => _Crafter; set { _Crafter = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool PlayerConstructed { get => m_PlayerConstructed; set => m_PlayerConstructed = value; }
+        public ItemQuality Quality { get => _Quality; set { _Quality = value; InvalidateProperties(); } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool PlayerConstructed { get => _PlayerConstructed; set => _PlayerConstructed = value; }
 
         public Item Ammo => Items.Count > 0 ? Items[0] : null;
 
@@ -113,9 +111,9 @@ namespace Server.Items
             Capacity = 500;
             Layer = Layer.Cloak;
 
-            m_Attributes = new AosAttributes(this);
-            m_AosSkillBonuses = new AosSkillBonuses(this);
-            m_Resistances = new AosElementAttributes(this);
+            _Attributes = new AosAttributes(this);
+            _AosSkillBonuses = new AosSkillBonuses(this);
+            _Resistances = new AosElementAttributes(this);
             m_SetAttributes = new AosAttributes(this);
             m_SetSkillBonuses = new AosSkillBonuses(this);
             DamageIncrease = 10;
@@ -133,9 +131,9 @@ namespace Server.Items
         {
             if (newItem is BaseQuiver quiver)
             {
-                quiver.m_Attributes = new AosAttributes(newItem, m_Attributes);
-                quiver.m_AosSkillBonuses = new AosSkillBonuses(newItem, m_AosSkillBonuses);
-                quiver.m_Resistances = new AosElementAttributes(newItem, m_Resistances);
+                quiver._Attributes = new AosAttributes(newItem, _Attributes);
+                quiver._AosSkillBonuses = new AosSkillBonuses(newItem, _AosSkillBonuses);
+                quiver._Resistances = new AosElementAttributes(newItem, _Resistances);
                 quiver.m_SetAttributes = new AosAttributes(newItem, m_SetAttributes);
                 quiver.m_SetSkillBonuses = new AosSkillBonuses(newItem, m_SetSkillBonuses);
             }
@@ -156,7 +154,7 @@ namespace Server.Items
 
             if (type == TotalType.Weight)
             {
-                total -= total * m_WeightReduction / 100;
+                total -= total * _WeightReduction / 100;
             }
 
             return total;
@@ -236,7 +234,7 @@ namespace Server.Items
                     currentAmount += i.Amount;
                 }
 
-                if (item.Amount + currentAmount <= m_Capacity)
+                if (item.Amount + currentAmount <= _Capacity)
                 {
                     return base.CheckHold(m, item, message, checkItems, plusItems, plusWeight);
                 }
@@ -265,7 +263,7 @@ namespace Server.Items
                     currentAmount += i.Amount;
                 }
 
-                if (item.Amount + currentAmount <= m_Capacity)
+                if (item.Amount + currentAmount <= _Capacity)
                 {
                     return base.CheckStack(from, item);
                 }
@@ -293,8 +291,8 @@ namespace Server.Items
         {
             if (parent is Mobile mob)
             {
-                m_Attributes.AddStatBonuses(mob);
-                m_AosSkillBonuses.AddTo(mob);
+                _Attributes.AddStatBonuses(mob);
+                _AosSkillBonuses.AddTo(mob);
 
                 if (mob.Weapon is BaseRanged ranged)
                 {
@@ -318,8 +316,8 @@ namespace Server.Items
         {
             if (parent is Mobile mob)
             {
-                m_Attributes.RemoveStatBonuses(mob);
-                m_AosSkillBonuses.Remove();
+                _Attributes.RemoveStatBonuses(mob);
+                _AosSkillBonuses.Remove();
 
                 if (IsSetItem && m_SetEquipped)
                 {
@@ -378,11 +376,11 @@ namespace Server.Items
         public virtual int BasePoisonResistance => 0;
         public virtual int BaseEnergyResistance => 0;
 
-        public override int PhysicalResistance => BasePhysicalResistance + m_Resistances.Physical;
-        public override int FireResistance => BaseFireResistance + m_Resistances.Fire;
-        public override int ColdResistance => BaseColdResistance + m_Resistances.Cold;
-        public override int PoisonResistance => BasePoisonResistance + m_Resistances.Poison;
-        public override int EnergyResistance => BaseEnergyResistance + m_Resistances.Energy;
+        public override int PhysicalResistance => BasePhysicalResistance + _Resistances.Physical;
+        public override int FireResistance => BaseFireResistance + _Resistances.Fire;
+        public override int ColdResistance => BaseColdResistance + _Resistances.Cold;
+        public override int PoisonResistance => BasePoisonResistance + _Resistances.Poison;
+        public override int EnergyResistance => BaseEnergyResistance + _Resistances.Energy;
 
         public override void AddWeightProperty(ObjectPropertyList list)
         {
@@ -401,12 +399,12 @@ namespace Server.Items
                 list.Add(1153213, OwnerName);
             }
 
-            if (m_Crafter != null)
+            if (_Crafter != null)
             {
-                list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
+                list.Add(1050043, _Crafter.TitleName); // crafted by ~1_NAME~
             }
 
-            if (m_Quality == ItemQuality.Exceptional)
+            if (_Quality == ItemQuality.Exceptional)
             {
                 list.Add(1063341); // exceptional
             }
@@ -416,7 +414,7 @@ namespace Server.Items
         {
             base.AddNameProperties(list);
 
-            m_AosSkillBonuses.GetProperties(list);
+            _AosSkillBonuses.GetProperties(list);
 
             Item ammo = Ammo;
 
@@ -444,7 +442,7 @@ namespace Server.Items
 
             int prop;
 
-            if ((prop = m_DamageIncrease) != 0)
+            if ((prop = _DamageIncrease) != 0)
             {
                 list.Add(1074762, prop.ToString()); // Damage modifier: ~1_PERCENT~%
             }
@@ -489,112 +487,112 @@ namespace Server.Items
                 list.Add(1079978, direct.ToString()); // Direct Damage: ~1_PERCENT~%
             }
 
-            if ((prop = m_Attributes.DefendChance) != 0)
+            if ((prop = _Attributes.DefendChance) != 0)
             {
                 list.Add(1060408, prop.ToString()); // defense chance increase ~1_val~%
             }
 
-            if ((prop = m_Attributes.BonusDex) != 0)
+            if ((prop = _Attributes.BonusDex) != 0)
             {
                 list.Add(1060409, prop.ToString()); // dexterity bonus ~1_val~
             }
 
-            if ((prop = m_Attributes.EnhancePotions) != 0)
+            if ((prop = _Attributes.EnhancePotions) != 0)
             {
                 list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
             }
 
-            if ((prop = m_Attributes.CastRecovery) != 0)
+            if ((prop = _Attributes.CastRecovery) != 0)
             {
                 list.Add(1060412, prop.ToString()); // faster cast recovery ~1_val~
             }
 
-            if ((prop = m_Attributes.CastSpeed) != 0)
+            if ((prop = _Attributes.CastSpeed) != 0)
             {
                 list.Add(1060413, prop.ToString()); // faster casting ~1_val~
             }
 
-            if ((prop = m_Attributes.AttackChance) != 0)
+            if ((prop = _Attributes.AttackChance) != 0)
             {
                 list.Add(1060415, prop.ToString()); // hit chance increase ~1_val~%
             }
 
-            if ((prop = m_Attributes.BonusHits) != 0)
+            if ((prop = _Attributes.BonusHits) != 0)
             {
                 list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
             }
 
-            if ((prop = m_Attributes.BonusInt) != 0)
+            if ((prop = _Attributes.BonusInt) != 0)
             {
                 list.Add(1060432, prop.ToString()); // intelligence bonus ~1_val~
             }
 
-            if ((prop = m_Attributes.LowerManaCost) != 0)
+            if ((prop = _Attributes.LowerManaCost) != 0)
             {
                 list.Add(1060433, prop.ToString()); // lower mana cost ~1_val~%
             }
 
-            if ((prop = m_Attributes.LowerRegCost) != 0)
+            if ((prop = _Attributes.LowerRegCost) != 0)
             {
                 list.Add(1060434, prop.ToString()); // lower reagent cost ~1_val~%	
             }
 
-            if ((prop = m_Attributes.BonusMana) != 0)
+            if ((prop = _Attributes.BonusMana) != 0)
             {
                 list.Add(1060439, prop.ToString()); // mana increase ~1_val~
             }
 
-            if ((prop = m_Attributes.RegenMana) != 0)
+            if ((prop = _Attributes.RegenMana) != 0)
             {
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
             }
 
-            if ((prop = m_Attributes.NightSight) != 0)
+            if ((prop = _Attributes.NightSight) != 0)
             {
                 list.Add(1060441); // night sight
             }
 
-            if ((prop = m_Attributes.ReflectPhysical) != 0)
+            if ((prop = _Attributes.ReflectPhysical) != 0)
             {
                 list.Add(1060442, prop.ToString()); // reflect physical damage ~1_val~%
             }
 
-            if ((prop = m_Attributes.RegenStam) != 0)
+            if ((prop = _Attributes.RegenStam) != 0)
             {
                 list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
             }
 
-            if ((prop = m_Attributes.RegenHits) != 0)
+            if ((prop = _Attributes.RegenHits) != 0)
             {
                 list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
             }
 
-            if ((prop = m_Attributes.SpellDamage) != 0)
+            if ((prop = _Attributes.SpellDamage) != 0)
             {
                 list.Add(1060483, prop.ToString()); // spell damage increase ~1_val~%
             }
 
-            if ((prop = m_Attributes.BonusStam) != 0)
+            if ((prop = _Attributes.BonusStam) != 0)
             {
                 list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
             }
 
-            if ((prop = m_Attributes.BonusStr) != 0)
+            if ((prop = _Attributes.BonusStr) != 0)
             {
                 list.Add(1060485, prop.ToString()); // strength bonus ~1_val~
             }
 
-            if ((prop = m_Attributes.WeaponSpeed) != 0)
+            if ((prop = _Attributes.WeaponSpeed) != 0)
             {
                 list.Add(1060486, prop.ToString()); // swing speed increase ~1_val~%
             }
 
-            if ((prop = m_Attributes.WeaponDamage) != 0)
+            if ((prop = _Attributes.WeaponDamage) != 0)
             {
                 list.Add(1060401, prop.ToString()); // damage increase ~1_val~%
             }
 
-            if ((prop = m_Attributes.LowerAmmoCost) > 0)
+            if ((prop = _Attributes.LowerAmmoCost) > 0)
             {
                 list.Add(1075208, prop.ToString()); // Lower Ammo Cost ~1_Percentage~%
             }
@@ -631,7 +629,7 @@ namespace Server.Items
 
             list.Add(1072241, "{0}\t{1}\t{2}\t{3}", Items.Count, DefaultMaxItems, (int)weight, DefaultMaxWeight); // Contents: ~1_COUNT~/~2_MAXCOUNT items, ~3_WEIGHT~/~4_MAXWEIGHT~ stones
 
-            if ((prop = m_WeightReduction) != 0)
+            if ((prop = _WeightReduction) != 0)
             {
                 list.Add(1072210, prop.ToString()); // Weight reduction: ~1_PERCENTAGE~%	
             }
@@ -647,11 +645,26 @@ namespace Server.Items
         {
             switch (resist)
             {
-                case ResistanceType.Physical: return PhysicalResistance;
-                case ResistanceType.Fire: return FireResistance;
-                case ResistanceType.Cold: return ColdResistance;
-                case ResistanceType.Poison: return PoisonResistance;
-                case ResistanceType.Energy: return EnergyResistance;
+                case ResistanceType.Physical:
+                {
+                    return PhysicalResistance;
+                }
+                case ResistanceType.Fire:
+                {
+                    return FireResistance;
+                }
+                case ResistanceType.Cold:
+                {
+                    return ColdResistance;
+                }
+                case ResistanceType.Poison:
+                {
+                    return PoisonResistance;
+                }
+                case ResistanceType.Energy:
+                {
+                    return EnergyResistance;
+                }
             }
 
             return 0;
@@ -707,7 +720,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(4); // version
+            writer.Write(1); // version
 
             writer.Write(_VvVItem);
             writer.Write(_Owner);
@@ -717,15 +730,15 @@ namespace Server.Items
 
             writer.Write(IsArrowAmmo);
 
-            m_AosSkillBonuses.Serialize(writer);
-            m_Resistances.Serialize(writer);
+            _AosSkillBonuses.Serialize(writer);
+            _Resistances.Serialize(writer);
 
-            SetSaveFlag(ref flags, SaveFlag.Attributes, !m_Attributes.IsEmpty);
-            SetSaveFlag(ref flags, SaveFlag.WeightReduction, m_WeightReduction != 0);
-            SetSaveFlag(ref flags, SaveFlag.DamageIncrease, m_DamageIncrease != 0);
-            SetSaveFlag(ref flags, SaveFlag.Crafter, m_Crafter != null);
+            SetSaveFlag(ref flags, SaveFlag.Attributes, !_Attributes.IsEmpty);
+            SetSaveFlag(ref flags, SaveFlag.WeightReduction, _WeightReduction != 0);
+            SetSaveFlag(ref flags, SaveFlag.DamageIncrease, _DamageIncrease != 0);
+            SetSaveFlag(ref flags, SaveFlag.Crafter, _Crafter != null);
             SetSaveFlag(ref flags, SaveFlag.Quality, true);
-            SetSaveFlag(ref flags, SaveFlag.Capacity, m_Capacity > 0);
+            SetSaveFlag(ref flags, SaveFlag.Capacity, _Capacity > 0);
 
             #region Mondain's Legacy Sets
             SetSaveFlag(ref flags, SaveFlag.SetAttributes, !m_SetAttributes.IsEmpty);
@@ -744,32 +757,32 @@ namespace Server.Items
 
             if (GetSaveFlag(flags, SaveFlag.Attributes))
             {
-                m_Attributes.Serialize(writer);
+                _Attributes.Serialize(writer);
             }
 
             if (GetSaveFlag(flags, SaveFlag.WeightReduction))
             {
-                writer.Write(m_WeightReduction);
+                writer.Write(_WeightReduction);
             }
 
             if (GetSaveFlag(flags, SaveFlag.DamageIncrease))
             {
-                writer.Write(m_DamageIncrease);
+                writer.Write(_DamageIncrease);
             }
 
             if (GetSaveFlag(flags, SaveFlag.Crafter))
             {
-                writer.Write(m_Crafter);
+                writer.Write(_Crafter);
             }
 
             if (GetSaveFlag(flags, SaveFlag.Quality))
             {
-                writer.Write((int)m_Quality);
+                writer.Write((int)_Quality);
             }
 
             if (GetSaveFlag(flags, SaveFlag.Capacity))
             {
-                writer.Write(m_Capacity);
+                writer.Write(_Capacity);
             }
 
             if (GetSaveFlag(flags, SaveFlag.SetPhysical))
@@ -830,21 +843,15 @@ namespace Server.Items
 
             switch (version)
             {
-                case 4:
+                case 1:
                     {
                         _VvVItem = reader.ReadBool();
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
-                        goto case 3;
-                    }
-                case 3:
-                case 2:
-                    IsArrowAmmo = reader.ReadBool();
-                    goto case 1;
-                case 1:
-                    {
-                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
-                        m_Resistances = new AosElementAttributes(this, reader);
+                        IsArrowAmmo = reader.ReadBool();
+                        _AosSkillBonuses = new AosSkillBonuses(this, reader);
+                        _Resistances = new AosElementAttributes(this, reader);
+
                         goto case 0;
                     }
                 case 0:
@@ -853,36 +860,36 @@ namespace Server.Items
 
                         if (GetSaveFlag(flags, SaveFlag.Attributes))
                         {
-                            m_Attributes = new AosAttributes(this, reader);
+                            _Attributes = new AosAttributes(this, reader);
                         }
                         else
                         {
-                            m_Attributes = new AosAttributes(this);
+                            _Attributes = new AosAttributes(this);
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.WeightReduction))
                         {
-                            m_WeightReduction = reader.ReadInt();
+                            _WeightReduction = reader.ReadInt();
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.DamageIncrease))
                         {
-                            m_DamageIncrease = reader.ReadInt();
+                            _DamageIncrease = reader.ReadInt();
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.Crafter))
                         {
-                            m_Crafter = reader.ReadMobile();
+                            _Crafter = reader.ReadMobile();
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.Quality))
                         {
-                            m_Quality = (ItemQuality)reader.ReadInt();
+                            _Quality = (ItemQuality)reader.ReadInt();
                         }
 
                         if (GetSaveFlag(flags, SaveFlag.Capacity))
                         {
-                            m_Capacity = reader.ReadInt();
+                            _Capacity = reader.ReadInt();
                         }
 
                         #region Mondain's Legacy Sets
@@ -977,7 +984,7 @@ namespace Server.Items
 
             if (Parent is Mobile)
             {
-                m_AosSkillBonuses.AddTo((Mobile)Parent);
+                _AosSkillBonuses.AddTo((Mobile)Parent);
                 ((Mobile)Parent).CheckStatTimers();
             }
         }
@@ -986,9 +993,18 @@ namespace Server.Items
         {
             switch (type)
             {
-                case StatType.Str: return Attributes.BonusStr;
-                case StatType.Dex: return Attributes.BonusDex;
-                case StatType.Int: return Attributes.BonusInt;
+                case StatType.Str:
+                {
+                    return Attributes.BonusStr;
+                }
+                case StatType.Dex:
+                {
+                    return Attributes.BonusDex;
+                }
+                case StatType.Int:
+                {
+                    return Attributes.BonusInt;
+                }
             }
 
             return 0;

@@ -250,7 +250,6 @@ namespace Server
                 case 7:
                 case 6:
                     ReplaceTwistedWealdVersion7();
-                    RunicReforging.ItemNerfVersion6();
                     break;
                 case 5:
                     break;
