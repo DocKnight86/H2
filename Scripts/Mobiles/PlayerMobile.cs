@@ -1061,7 +1061,6 @@ namespace Server.Mobiles
             MaginciaLottoSystem.OnLogin(this);
             MasteryInfo.OnLogin(this);
             PlantSystem.OnLogin(this);
-            PotionOfGloriousFortune.OnLogin(this);
             QuestSystem.OnLogin(this);
             ResponseEntry.OnLogin(this);
             ShadowguardController.OnLogin(this);

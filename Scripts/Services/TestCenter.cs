@@ -7,7 +7,6 @@ using System;
 using System.Text;
 using Server.Engines.Points;
 using Server.SkillHandlers;
-using Server.Spells.SkillMasteries;
 using Server.Engines.Craft;
 using Server.Engines.Plants;
 using Server.Accounting;
@@ -93,21 +92,6 @@ namespace Server.Misc
                             {
                                 GiveSeeds(from);
                                 from.SendMessage("Seeds have been added to your bank.");
-                            }
-                        }
-                        else if (Insensitive.Equals(name, "tokens"))
-                        {
-                            if (CanGive(from, "Tokens"))
-                            {
-                                GiveTokens(from);
-                            }
-                        }
-                        else if (Insensitive.Equals(name, "masteries"))
-                        {
-                            if (CanGive(from, "Masteries"))
-                            {
-                                GiveMasteries(from);
-                                from.SendMessage("Masteries have been added to your bank.");
                             }
                         }
                     }
@@ -561,51 +545,6 @@ namespace Server.Misc
             PlaceItemIn(box, 109, 83, bag);
 
             PlaceItemIn(from.BankBox, 83, 106, box);
-        }
-
-        public static void GiveTokens(Mobile from)
-        {
-            from.SendLocalizedMessage(1075549); // A token has been placed in your backpack. Double-click it to redeem your promotion.
-
-            for (int i = 0; i < 10; i++)
-            {
-                from.AddToBackpack(new HeritageToken());
-            }
-
-            from.AddToBackpack(new AnniversaryPromotionalToken(AnniversaryType.ShadowItems));
-            from.AddToBackpack(new AnniversaryPromotionalToken(AnniversaryType.CrystalItems));
-            from.AddToBackpack(new PersonalAttendantToken());
-        }
-
-        public static void GiveMasteries(Mobile from)
-        {
-            var backpack = new Backpack
-            {
-                Hue = 1154,
-                Name = "Skill Masteries"
-            };
-
-            Bag bag = null;
-
-            for (int i = 0; i < MasteryInfo.Skills.Length; i++)
-            {
-                var skill = MasteryInfo.Skills[i];
-
-                bag = new Bag
-                {
-                    Name = $"{SkillInfo.Table[(int)skill].Name} Mastery"
-                };
-
-                for (int j = 1; j <= 3; j++)
-                {
-                    bag.DropItem(new SkillMasteryPrimer(skill, j));
-                }
-
-                backpack.DropItem(bag);
-            }
-
-            PlaceItemIn(backpack, 83, 106, new BookOfMasteries());
-            PlaceItemIn(from.BankBox, 103, 106, backpack);
         }
 
         private static void PlaceItemIn(Container parent, int x, int y, Item item)

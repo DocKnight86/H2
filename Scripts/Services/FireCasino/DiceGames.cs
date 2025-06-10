@@ -1,5 +1,4 @@
 using Server.Engines.Points;
-using Server.Engines.Quests;
 using Server.Mobiles;
 using Server.Network;
 using System;
@@ -58,7 +57,9 @@ namespace Server.Engines.ResortAndCasino
         public virtual int GetRoll(int index)
         {
             if (Roll == null || index > Roll.Count)
+            {
                 return 0;
+            }
 
             return Roll[index];
         }
@@ -66,7 +67,9 @@ namespace Server.Engines.ResortAndCasino
         public virtual int GetMatches()
         {
             if (Roll == null)
+            {
                 return 0;
+            }
 
             int count = 0;
 
@@ -120,14 +123,8 @@ namespace Server.Engines.ResortAndCasino
         public virtual void Remove()
         {
             if (Dealer != null)
-                Dealer.RemoveGame(Player, this);
-        }
-
-        public virtual void OnWin()
-        {
-            if (Player != null && QuestHelper.GetQuest(Player, typeof(GettingEvenQuest)) is GettingEvenQuest q)
             {
-                q.Update(GetType());
+                Dealer.RemoveGame(Player, this);
             }
         }
 
@@ -177,7 +174,6 @@ namespace Server.Engines.ResortAndCasino
                 PointsSystem.CasinoData.AwardPoints(Player, winnings);
 
                 Winner = true;
-                OnWin();
                 Dealer.PrivateOverheadMessage(MessageType.Regular, 0x35, 1153377, $"{Player.Name}\t{winnings.ToString(CultureInfo.GetCultureInfo("en-US"))}", Player.NetState); // *pays out ~2_VAL~ chips to ~1_NAME~*
             }
         }
@@ -242,20 +238,39 @@ namespace Server.Engines.ResortAndCasino
                 {
                     default:
                     case HighMiddleLowType.High:
-                        if (WinsHi(total)) winnings = CurrentBet * 2; break;
+                        if (WinsHi(total))
+                        {
+                            winnings = CurrentBet * 2;
+                        }
+
+                        break;
                     case HighMiddleLowType.Middle:
-                        if (WinsMiddle(total)) winnings = CurrentBet * 2; break;
+                        if (WinsMiddle(total))
+                        {
+                            winnings = CurrentBet * 2;
+                        }
+
+                        break;
                     case HighMiddleLowType.Low:
-                        if (WinsLow(total)) winnings = CurrentBet * 2; break;
+                        if (WinsLow(total))
+                        {
+                            winnings = CurrentBet * 2;
+                        }
+
+                        break;
                     case HighMiddleLowType.Outside:
-                        if (WinsOutside(total)) winnings = CurrentBet * 5; break;
+                        if (WinsOutside(total))
+                        {
+                            winnings = CurrentBet * 5;
+                        }
+
+                        break;
                 }
 
                 if (winnings > 0)
                 {
                     PointsSystem.CasinoData.AwardPoints(Player, winnings);
                     Winner = true;
-                    OnWin();
 
                     Dealer.PrivateOverheadMessage(MessageType.Regular, 0x35, 1153377, $"{Player.Name}\t{winnings.ToString(CultureInfo.GetCultureInfo("en-US"))}", Player.NetState); // *pays out ~2_VAL~ chips to ~1_NAME~*
                 }
@@ -336,7 +351,9 @@ namespace Server.Engines.ResortAndCasino
             }
 
             if (RollNumber == 1)
+            {
                 Player.PrivateOverheadMessage(MessageType.Regular, 0x35, 1153631, (CurrentBet / 3).ToString(CultureInfo.GetCultureInfo("en-US")), Player.NetState); // *bets ~1_AMT~ chips on ~2_PROP~*
+            }
         }
 
         public override void OnDiceRolled()
@@ -358,20 +375,29 @@ namespace Server.Engines.ResortAndCasino
                 int winnings = 0;
 
                 if (IsFiveOfAKind())
+                {
                     winnings = TotalBet * 80;
+                }
                 else if (IsFourOfAKind())
+                {
                     winnings = TotalBet * 3;
+                }
                 else if (IsStraight())
+                {
                     winnings = TotalBet * 2;
+                }
                 else if (IsFullHouse())
+                {
                     winnings = (int)(TotalBet * 1.5);
+                }
                 else if (IsThreeOfAKind())
+                {
                     winnings = TotalBet;
+                }
 
                 if (winnings > 0)
                 {
                     Winner = true;
-                    OnWin();
 
                     WinningTotal = winnings;
                     PointsSystem.CasinoData.AwardPoints(Player, winnings);

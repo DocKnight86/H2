@@ -39,7 +39,7 @@ namespace Server
             typeof(Kryss), typeof(Longsword), typeof(Scimitar), typeof(VikingSword), typeof(Pickaxe), typeof(HammerPick),
             typeof(ButcherKnife), typeof(Cleaver), typeof(Dagger), typeof(SkinningKnife), typeof(ShepherdsCrook),
 			typeof(Scythe), typeof(BoneHarvester), typeof(Scepter), typeof(BladedStaff), typeof(Pike), typeof(DoubleBladedStaff),
-            typeof(Lance), typeof(CrescentBlade), typeof(SmithyHammer), typeof(SledgeHammerWeapon)
+            typeof(Lance), typeof(CrescentBlade), typeof(SmithyHammer), typeof(SledgeHammer)
         };	
         public static Type[] WeaponTypes => m_WeaponTypes;
 

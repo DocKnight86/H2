@@ -908,7 +908,6 @@ namespace Server.Items
             new[]
             {
                 new FillableEntry(1, typeof(PaintsAndBrush)),
-                new FillableEntry(1, typeof(SledgeHammer)),
                 new FillableEntry(2, typeof(SmithHammer)),
                 new FillableEntry(2, typeof(Tongs)),
                 new FillableEntry(4, typeof(Lockpick)),
@@ -966,7 +965,6 @@ namespace Server.Items
             {
                 new FillableEntry(8, typeof(SmithHammer)),
                 new FillableEntry(8, typeof(Tongs)),
-                new FillableEntry(8, typeof(SledgeHammer)),
                 new FillableEntry(8, typeof(IronIngot)),
                 new FillableEntry(1, typeof(IronWire)),
                 new FillableEntry(1, typeof(SilverWire)),

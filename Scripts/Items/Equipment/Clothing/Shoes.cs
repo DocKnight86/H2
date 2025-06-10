@@ -29,37 +29,23 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
-            writer.Write(2); // version
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
-            int version = reader.ReadInt();
-
-            switch (version)
-            {
-                case 2:
-                    break; // empty, resource removed
-                case 1:
-                    {
-                        m_Resource = (CraftResource)reader.ReadInt();
-                        break;
-                    }
-                case 0:
-                    {
-                        m_Resource = DefaultResource;
-                        break;
-                    }
-            }
+            reader.ReadInt();
         }
     }
 
     [Flipable(0x2307, 0x2308)]
     public class FurBoots : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public FurBoots()
             : this(0)
@@ -94,6 +80,10 @@ namespace Server.Items
     [Flipable(0x170b, 0x170c)]
     public class Boots : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override CraftResource DefaultResource => CraftResource.RegularLeather;
 
         [Constructable]
@@ -130,6 +120,10 @@ namespace Server.Items
     [Flipable]
     public class ThighBoots : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override CraftResource DefaultResource => CraftResource.RegularLeather;
 
         [Constructable]
@@ -166,7 +160,9 @@ namespace Server.Items
     [Flipable(0x170f, 0x1710)]
     public class Shoes : BaseShoes
     {
-        public override CraftResource DefaultResource => CraftResource.RegularLeather;
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
 
         [Constructable]
         public Shoes()
@@ -202,6 +198,10 @@ namespace Server.Items
     [Flipable(0x170d, 0x170e)]
     public class Sandals : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override CraftResource DefaultResource => CraftResource.RegularLeather;
 
         [Constructable]
@@ -238,6 +238,10 @@ namespace Server.Items
     [Flipable(0x2797, 0x27E2)]
     public class NinjaTabi : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public NinjaTabi()
             : this(0)
@@ -272,6 +276,10 @@ namespace Server.Items
     [Flipable(0x2796, 0x27E1)]
     public class SamuraiTabi : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public SamuraiTabi()
             : this(0)
@@ -306,6 +314,10 @@ namespace Server.Items
     [Flipable(0x2796, 0x27E1)]
     public class Waraji : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Waraji()
             : this(0)
@@ -340,6 +352,10 @@ namespace Server.Items
     [Flipable(0x2FC4, 0x317A)]
     public class ElvenBoots : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override CraftResource DefaultResource => CraftResource.RegularLeather;
 
         [Constructable]
@@ -380,6 +396,10 @@ namespace Server.Items
 
     public class JesterShoes : BaseShoes
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1109617;  // Jester Shoes
 
         [Constructable]

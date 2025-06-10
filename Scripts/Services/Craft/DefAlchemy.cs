@@ -16,7 +16,9 @@ namespace Server.Engines.Craft
             get
             {
                 if (m_CraftSystem == null)
+                {
                     m_CraftSystem = new DefAlchemy();
+                }
 
                 return m_CraftSystem;
             }
@@ -28,7 +30,7 @@ namespace Server.Engines.Craft
         }
 
         private DefAlchemy()
-            : base(1, 1, 1.25)// base( 1, 1, 3.1 )
+            : base(1, 1, 1.25)
         {
         }
 
@@ -37,10 +39,14 @@ namespace Server.Engines.Craft
             int num = 0;
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
+            {
                 return 1044038; // You have worn out your tool!
+            }
 
             if (!tool.CheckAccessible(from, ref num))
+            {
                 return num; // The tool must be on your person to use.
+            }
 
             return 0;
         }
@@ -60,7 +66,9 @@ namespace Server.Engines.Craft
         public override int PlayEndingEffect(Mobile from, bool failed, bool lostMaterial, bool toolBroken, int quality, bool makersMark, CraftItem item)
         {
             if (toolBroken)
+            {
                 from.SendLocalizedMessage(1044038); // You have worn out your tool
+            }
 
             if (failed)
             {
@@ -239,8 +247,6 @@ namespace Server.Engines.Craft
             // Strange Brew         
             index = AddCraft(typeof(SmokeBomb), 1116353, 1030248, 90.0, 120.0, typeof(Eggs), 1044477, 1, 1044253);
             AddRes(index, typeof(Ginseng), 1044356, 3, 1044364);
-
-            AddCraft(typeof(HoveringWisp), 1116353, 1072881, 75.0, 125.0, typeof(CapturedEssence), 1032686, 4, 1044253);
 
             index = AddCraft(typeof(NaturalDye), 1116353, 1112136, 75.0, 100.0, typeof(PlantPigment), 1112132, 1, 1044253);
             AddRes(index, typeof(ColorFixative), 1112135, 1, 1044253);

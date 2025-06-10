@@ -1,5 +1,4 @@
 using Server.Engines.Craft;
-using Server.Network;
 using System;
 
 namespace Server.Items
@@ -15,10 +14,10 @@ namespace Server.Items
 
     public abstract class BaseTool : Item, ITool, IResource, IQuality
     {
-        private Mobile m_Crafter;
-        private ItemQuality m_Quality;
-        private int m_UsesRemaining;
-        private bool m_RepairMode;
+        private Mobile _Crafter;
+        private ItemQuality _Quality;
+        private int _UsesRemaining;
+        private bool _RepairMode;
         private CraftResource _Resource;
         private bool _PlayerConstructed;
 
@@ -35,16 +34,16 @@ namespace Server.Items
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile Crafter { get => m_Crafter; set { m_Crafter = value; InvalidateProperties(); } }
+        public Mobile Crafter { get => _Crafter; set { _Crafter = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public ItemQuality Quality
         {
-            get => m_Quality;
+            get => _Quality;
             set
             {
                 UnscaleUses();
-                m_Quality = value;
+                _Quality = value;
                 InvalidateProperties();
                 ScaleUses();
             }
@@ -61,26 +60,28 @@ namespace Server.Items
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public virtual int UsesRemaining { get => m_UsesRemaining; set { m_UsesRemaining = value; InvalidateProperties(); } }
+        public virtual int UsesRemaining { get => _UsesRemaining; set { _UsesRemaining = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool RepairMode { get => m_RepairMode; set => m_RepairMode = value; }
+        public bool RepairMode { get => _RepairMode; set => _RepairMode = value; }
 
         public void ScaleUses()
         {
-            m_UsesRemaining = m_UsesRemaining * GetUsesScalar() / 100;
+            _UsesRemaining = _UsesRemaining * GetUsesScalar() / 100;
             InvalidateProperties();
         }
 
         public void UnscaleUses()
         {
-            m_UsesRemaining = m_UsesRemaining * 100 / GetUsesScalar();
+            _UsesRemaining = _UsesRemaining * 100 / GetUsesScalar();
         }
 
         public int GetUsesScalar()
         {
-            if (m_Quality == ItemQuality.Exceptional)
+            if (_Quality == ItemQuality.Exceptional)
+            {
                 return 200;
+            }
 
             return 100;
         }
@@ -99,8 +100,8 @@ namespace Server.Items
         public BaseTool(int uses, int itemID)
             : base(itemID)
         {
-            m_UsesRemaining = uses;
-            m_Quality = ItemQuality.Normal;
+            _UsesRemaining = uses;
+            _Quality = ItemQuality.Normal;
         }
 
         public BaseTool(Serial serial)
@@ -110,21 +111,20 @@ namespace Server.Items
 
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
-            if (m_Crafter != null)
-                list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
+            if (_Crafter != null)
+            {
+                list.Add(1050043, _Crafter.TitleName); // crafted by ~1_NAME~
+            }
 
-            if (m_Quality == ItemQuality.Exceptional)
+            if (_Quality == ItemQuality.Exceptional)
+            {
                 list.Add(1060636); // exceptional
+            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
         {
             list.Add(1060584, UsesRemaining.ToString()); // uses remaining: ~1_val~
-        }
-
-        public virtual void DisplayDurabilityTo(Mobile m)
-        {
-            LabelToAffix(m, 1017323, AffixType.Append, ": " + m_UsesRemaining); // Durability
         }
 
         public virtual bool CheckAccessible(Mobile m, ref int num)
@@ -138,39 +138,6 @@ namespace Server.Items
             return true;
         }
 
-        public static bool CheckAccessible(Item tool, Mobile m)
-        {
-            return CheckAccessible(tool, m, false);
-        }
-
-        public static bool CheckAccessible(Item tool, Mobile m, bool message)
-        {
-            if (tool == null || tool.Deleted)
-            {
-                return false;
-            }
-
-            int num = 0;
-
-            bool res;
-
-            if (tool is ITool iTool)
-            {
-                res = iTool.CheckAccessible(m, ref num);
-            }
-            else
-            {
-                res = tool.IsChildOf(m) || tool.Parent == m;
-            }
-
-            if (num > 0 && message)
-            {
-                m.SendLocalizedMessage(num);
-            }
-
-            return res;
-        }
-
         public static bool CheckTool(Item tool, Mobile m)
         {
             if (tool == null || tool.Deleted)
@@ -181,12 +148,16 @@ namespace Server.Items
             Item check = m.FindItemOnLayer(Layer.OneHanded);
 
             if (check is ITool && check != tool && !(check is AncientSmithyHammer))
+            {
                 return false;
+            }
 
             check = m.FindItemOnLayer(Layer.TwoHanded);
 
             if (check is ITool && check != tool && !(check is AncientSmithyHammer))
+            {
                 return false;
+            }
 
             return true;
         }
@@ -197,7 +168,7 @@ namespace Server.Items
             {
                 CraftSystem system = CraftSystem;
 
-                if (m_RepairMode)
+                if (_RepairMode)
                 {
                     Repair.Do(from, system, this);
                 }
@@ -224,56 +195,29 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
-            writer.Write(4); // version
+            writer.Write(0); // version
 
             writer.Write(_PlayerConstructed);
-
             writer.Write((int)_Resource);
-            writer.Write(m_RepairMode);
-            writer.Write(m_Crafter);
-            writer.Write((int)m_Quality);
-            writer.Write(m_UsesRemaining);
+            writer.Write(_RepairMode);
+            writer.Write(_Crafter);
+            writer.Write((int)_Quality);
+            writer.Write(_UsesRemaining);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            reader.ReadInt();
 
-            int version = reader.ReadInt();
-
-            switch (version)
-            {
-                case 4:
-                    {
-                        _PlayerConstructed = reader.ReadBool();
-                        goto case 3;
-                    }
-                case 3:
-                    {
-                        _Resource = (CraftResource)reader.ReadInt();
-                        goto case 2;
-                    }
-                case 2:
-                    {
-                        m_RepairMode = reader.ReadBool();
-                        goto case 1;
-                    }
-                case 1:
-                    {
-                        m_Crafter = reader.ReadMobile();
-                        m_Quality = (ItemQuality)reader.ReadInt();
-                        goto case 0;
-                    }
-                case 0:
-                    {
-                        m_UsesRemaining = reader.ReadInt();
-                        break;
-                    }
-            }
+            _PlayerConstructed = reader.ReadBool();
+            _Resource = (CraftResource)reader.ReadInt();
+            _RepairMode = reader.ReadBool();
+            _Crafter = reader.ReadMobile();
+            _Quality = (ItemQuality)reader.ReadInt();
+            _UsesRemaining = reader.ReadInt();
         }
 
-        #region ICraftable Members
         public int OnCraft(int quality, bool makersMark, Mobile from, CraftSystem craftSystem, Type typeRes, ITool tool, CraftItem craftItem, int resHue)
         {
             PlayerConstructed = true;
@@ -281,10 +225,11 @@ namespace Server.Items
             Quality = (ItemQuality)quality;
 
             if (makersMark)
+            {
                 Crafter = from;
+            }
 
             return quality;
         }
-        #endregion
     }
 }

@@ -2088,10 +2088,9 @@ namespace Server
     public enum NegativeAttribute
     {
         Brittle = 0x00000001,
-        Prized = 0x00000002,
-        Massive = 0x00000004,
-        Unwieldly = 0x00000008,
-        Antique = 0x00000010
+        Massive = 0x00000002,
+        Unwieldly = 0x00000004,
+        Antique = 0x00000008
     }
 
     public sealed class NegativeAttributes : BaseAttributes
@@ -2116,11 +2115,6 @@ namespace Server
             if (Brittle > 0)
             {
                 list.Add(1116209);
-            }
-
-            if (Prized > 0)
-            {
-                list.Add(1154910);
             }
 
             if (Antique > 0)
@@ -2207,9 +2201,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int Brittle { get => this[NegativeAttribute.Brittle]; set => this[NegativeAttribute.Brittle] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int Prized { get => this[NegativeAttribute.Prized]; set => this[NegativeAttribute.Prized] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int Massive { get => this[NegativeAttribute.Massive]; set => this[NegativeAttribute.Massive] = value; }

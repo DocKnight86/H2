@@ -336,29 +336,6 @@ namespace Server.Engines.Craft
 
             AddCraft(typeof(WildStaff), 1044566, 1031557, 63.8, 113.8, typeof(Board), 1044041, 16, 1044351);
 
-            index = AddCraft(typeof(PhantomStaff), 1044566, 1072919, 90.0, 130.0, typeof(Board), 1044041, 16, 1044351);
-            AddRes(index, typeof(DiseasedBark), 1032683, 1, 1053098);
-            AddRes(index, typeof(Putrefaction), 1032678, 10, 1053098);
-            AddRes(index, typeof(Taint), 1032679, 10, 1053098);
-            AddRecipe(index, (int)CraftRecipes.PhantomStaff);
-            ForceNonExceptional(index);
-
-            index = AddCraft(typeof(ArcanistsWildStaff), 1044566, 1073549, 63.8, 113.8, typeof(Board), 1044041, 16, 1044351);
-            AddRes(index, typeof(WhitePearl), 1026253, 1, 1053098);
-            AddRecipe(index, (int)CraftRecipes.ArcanistsWildStaff);
-
-            index = AddCraft(typeof(AncientWildStaff), 1044566, 1073550, 63.8, 113.8, typeof(Board), 1044041, 16, 1044351);
-            AddRes(index, typeof(PerfectEmerald), 1026251, 1, 1053098);
-            AddRecipe(index, (int)CraftRecipes.AncientWildStaff);
-
-            index = AddCraft(typeof(ThornedWildStaff), 1044566, 1073551, 63.8, 113.8, typeof(Board), 1044041, 16, 1044351);
-            AddRes(index, typeof(FireRuby), 1026254, 1, 1053098);
-            AddRecipe(index, (int)CraftRecipes.ThornedWildStaff);
-
-            index = AddCraft(typeof(HardenedWildStaff), 1044566, 1073552, 63.8, 113.8, typeof(Board), 1044041, 16, 1044351);
-            AddRes(index, typeof(Turquoise), 1026250, 1, 1053098);
-            AddRecipe(index, (int)CraftRecipes.HardenedWildStaff);
-
             AddCraft(typeof(Club), 1044566, 1025043, 65.0, 90.0, typeof(Board), 1044041, 9, 1044351);
             AddCraft(typeof(BlackStaff), 1044566, 1023568, 81.5, 106.5, typeof(Board), 1044041, 9, 1044351);
 

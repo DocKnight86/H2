@@ -33,6 +33,10 @@ namespace Server.Items
     [Flipable(0x230C, 0x230B)]
     public class FurSarong : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public FurSarong()
             : this(0)
@@ -67,6 +71,10 @@ namespace Server.Items
     [Flipable(0x1516, 0x1531)]
     public class Skirt : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Skirt()
             : this(0)
@@ -101,6 +109,10 @@ namespace Server.Items
     [Flipable(0x1537, 0x1538)]
     public class Kilt : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Kilt()
             : this(0)
@@ -135,6 +147,11 @@ namespace Server.Items
     [Flipable(0x279A, 0x27E5)]
     public class Hakama : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Hakama()
             : this(0)
@@ -168,6 +185,10 @@ namespace Server.Items
 
     public class GuildedKilt : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1109619;  // Guilded Kilt
 
         [Constructable]
@@ -202,6 +223,10 @@ namespace Server.Items
 
     public class CheckeredKilt : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1109620;  // Checkered Kilt
 
         [Constructable]
@@ -236,6 +261,10 @@ namespace Server.Items
 
     public class FancyKilt : BaseOuterLegs
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1109621;  // Fancy Kilt
 
         [Constructable]

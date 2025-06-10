@@ -76,7 +76,7 @@ namespace Server.Items
                     typeof(OrcFootSoldier), typeof(RatmanAssassin),
                     typeof(OgreBoneCrusher), typeof(TitanRockHunter),
                     typeof(CaveTrollWrong), typeof(HungryOgre),
-                    typeof(Archmage), typeof(Fezzik)
+                    typeof(Archmage)
                 );
 
             humanoid.Entries = new[]
@@ -87,7 +87,7 @@ namespace Server.Items
 
                         typeof(Ogre), typeof(OgreLord),
                         typeof(ArcticOgreLord), typeof(OgreBoneCrusher),
-                        typeof(HungryOgre), typeof(Fezzik)
+                        typeof(HungryOgre)
                     ),
 
                 new SlayerEntry
