@@ -1,6 +1,4 @@
-using Server.Engines.Quests;
 using Server.Gumps;
-using Server.Mobiles;
 
 namespace Server.Items
 {
@@ -168,55 +166,6 @@ namespace Server.Items
         }
     }
 
-    public class MyrmidexIdol : Item
-    {
-        public override int LabelNumber => 1156823;  // Idol of Zipactriotl
-
-        private static Point3D _Destination = new Point3D(899, 2307, 40);
-
-        public MyrmidexIdol() : base(39453)
-        {
-            Movable = false;
-        }
-
-        public override void OnDoubleClick(Mobile from)
-        {
-            if (!(from is PlayerMobile))
-            {
-                return;
-            }
-
-            if (QuestHelper.GetQuest((PlayerMobile)from, typeof(DestructionOfZipactriotlQuest)) is DestructionOfZipactriotlQuest q || from.AccessLevel > AccessLevel.Player)
-            {
-                BaseCreature.TeleportPets(from, _Destination, Map.TerMur);
-                from.MoveToWorld(_Destination, Map.TerMur);
-
-                Effects.SendLocationParticles(EffectItem.Create(from.Location, Map.TerMur, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
-                Effects.SendLocationParticles(EffectItem.Create(_Destination, Map.TerMur, EffectItem.DefaultDuration), 0x3728, 10, 10, 5023);
-
-                from.PlaySound(0x1FE);
-            }
-            else
-                from.SendLocalizedMessage(1156841); // You must be on the "Destruction of Zipactriotl" quest to enter. Visit the Barrabian Tinker in the Barrab village to the Southwest.
-        }
-
-        public MyrmidexIdol(Serial serial) : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
     public class StasisChamberPowerCore : Item
     {
         public override int LabelNumber => 1156623;
@@ -283,119 +232,6 @@ namespace Server.Items
         }
 
         public StasisChamberRegulator(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class StasisChamberStator : Item
-    {
-        public override int LabelNumber => 1156628;
-
-        [Constructable]
-        public StasisChamberStator()
-            : base(40156)
-        {
-        }
-
-        public StasisChamberStator(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class BottledMyrmidexPheromone : Item
-    {
-        public override int LabelNumber => 1156620;
-
-        [Constructable]
-        public BottledMyrmidexPheromone()
-            : base(3836)
-        {
-        }
-
-        public BottledMyrmidexPheromone(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class BottleOfConcentratedInsecticide : Item
-    {
-        public override int LabelNumber => 1156617;
-
-        [Constructable]
-        public BottleOfConcentratedInsecticide()
-            : base(22344)
-        {
-        }
-
-        public BottleOfConcentratedInsecticide(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class MyrmidexPopulationReport : Item
-    {
-        public override int LabelNumber => 1156775;
-
-        [Constructable]
-        public MyrmidexPopulationReport()
-            : base(18098)
-        {
-            Hue = 467;
-        }
-
-        public MyrmidexPopulationReport(Serial serial)
             : base(serial)
         {
         }

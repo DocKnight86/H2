@@ -1,4 +1,3 @@
-using Server.Engines.MyrmidexInvasion;
 using Server.Items;
 using Server.Spells.SkillMasteries;
 using System;
@@ -18,7 +17,6 @@ namespace Server.Mobiles
 
     public abstract class BaseEodonTribesman : BaseCreature
     {
-        protected long _NextMastery;
         private bool _HasYelled;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -83,12 +81,6 @@ namespace Server.Mobiles
                 return null;
             }
             set { }
-        }
-
-        private void AddImmovableItem(Item item)
-        {
-            item.LootType = LootType.Blessed;
-            SetWearable(item);
         }
 
         public BaseEodonTribesman(AIType ai, EodonTribe type) : base(ai, FightMode.Closest, 10, 1, .2, .4)
@@ -191,32 +183,6 @@ namespace Server.Mobiles
                     }
                 }
             }
-        }
-
-        public override bool IsEnemy(Mobile m)
-        {
-            // Basically, this makes them FightMode.Aggressor. More can can be added in to make them attack others, such as other tribes, etc.
-            AggressorInfo first = null;
-
-            for (var index = 0; index < Aggressors.Count; index++)
-            {
-                var a = Aggressors[index];
-
-                if (a.Attacker == m)
-                {
-                    first = a;
-                    break;
-                }
-            }
-
-            bool valid = first != null;
-
-            if (!valid && MyrmidexInvasionSystem.Active)
-            {
-                valid = MyrmidexInvasionSystem.AreEnemies(this, m);
-            }
-
-            return valid;
         }
 
         public override WeaponAbility GetWeaponAbility()
@@ -423,7 +389,6 @@ namespace Server.Mobiles
             }
         }
 
-        public override bool AlwaysAttackable => Region.IsPartOf<BattleRegion>();
         public override bool ShowFameTitle => false;
 
         public override void GenerateLoot()
@@ -593,7 +558,6 @@ namespace Server.Mobiles
             SetWearable(weapon);
         }
 
-        public override bool AlwaysAttackable => Region.IsPartOf<BattleRegion>();
         public override bool ShowFameTitle => false;
 
         public TribeShaman(Serial serial) : base(serial)

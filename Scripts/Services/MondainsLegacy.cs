@@ -19,8 +19,6 @@ namespace Server
         {
             CommandSystem.Register("DecorateML", AccessLevel.Administrator, DecorateML_OnCommand);
             CommandSystem.Register("DecorateMLDelete", AccessLevel.Administrator, DecorateMLDelete_OnCommand);
-
-            LoadSettings();
         }
 
         public static bool FindItem(int x, int y, int z, Map map, int itemID)
@@ -48,21 +46,6 @@ namespace Server
 
             eable.Free();
             return false;
-        }
-
-        public static void LoadSettings()
-        {
-            if (!FindItem(new Point3D(1431, 1696, 0), Map.Trammel, 0x307F))
-            {
-                ArcaneCircleAddon addon = new ArcaneCircleAddon();
-                addon.MoveToWorld(new Point3D(1431, 1696, 0), Map.Trammel);
-            }
-
-            if (!FindItem(new Point3D(1431, 1696, 0), Map.Felucca, 0x307F))
-            {
-                ArcaneCircleAddon addon = new ArcaneCircleAddon();
-                addon.MoveToWorld(new Point3D(1431, 1696, 0), Map.Felucca);
-            }
         }
 
         public static void OnKilledBy(BaseCreature killed, Mobile killer)

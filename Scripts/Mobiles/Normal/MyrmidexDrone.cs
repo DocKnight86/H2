@@ -1,4 +1,3 @@
-using Server.Engines.MyrmidexInvasion;
 using Server.Items;
 
 namespace Server.Mobiles
@@ -62,17 +61,6 @@ namespace Server.Mobiles
         public override Poison HitPoison => Poison.Regular;
         public override Poison PoisonImmune => Poison.Regular;
         public override int TreasureMapLevel => 1;
-
-        public override bool IsEnemy(Mobile m)
-        {
-            if (MyrmidexInvasionSystem.Active && MyrmidexInvasionSystem.IsAlliedWithEodonTribes(m))
-                return true;
-
-            if (MyrmidexInvasionSystem.Active && MyrmidexInvasionSystem.IsAlliedWithMyrmidex(m))
-                return false;
-
-            return base.IsEnemy(m);
-        }
 
         public MyrmidexDrone(Serial serial)
             : base(serial)

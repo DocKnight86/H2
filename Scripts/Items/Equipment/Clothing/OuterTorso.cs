@@ -30,77 +30,13 @@ namespace Server.Items
         }
     }
 
-    public class LibraryFriendBodySash : BodySash
-    {
-        public override int LabelNumber => 1073346; // Friends of the Library Sash
-
-        [Constructable]
-        public LibraryFriendBodySash()
-            : this(0)
-        {
-        }
-
-        [Constructable]
-        public LibraryFriendBodySash(int hue)
-            : base(hue)
-        {
-        }
-
-        public LibraryFriendBodySash(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
-    public class LibraryFriendSurcoat : Surcoat
-    {
-        public override int LabelNumber => 1073348; // Friends of the Library Surcoat
-
-        [Constructable]
-        public LibraryFriendSurcoat()
-            : this(0)
-        {
-        }
-
-        [Constructable]
-        public LibraryFriendSurcoat(int hue)
-            : base(hue)
-        {
-        }
-
-        public LibraryFriendSurcoat(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
-        }
-    }
-
     [Flipable(0x230E, 0x230D)]
     public class GildedDress : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public GildedDress()
             : this(0)
@@ -135,6 +71,10 @@ namespace Server.Items
     [Flipable(0x1F00, 0x1EFF)]
     public class FancyDress : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public FancyDress()
             : this(0)
@@ -169,6 +109,10 @@ namespace Server.Items
     [Flipable]
     public class Robe : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Robe()
             : this(0)
@@ -203,6 +147,10 @@ namespace Server.Items
     [Flipable(0x1f01, 0x1f02)]
     public class PlainDress : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public PlainDress()
             : this(0)
@@ -237,6 +185,10 @@ namespace Server.Items
     [Flipable(0x2799, 0x27E4)]
     public class Kamishimo : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Kamishimo()
             : this(0)
@@ -271,6 +223,10 @@ namespace Server.Items
     [Flipable(0x279C, 0x27E7)]
     public class HakamaShita : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public HakamaShita()
             : this(0)
@@ -305,6 +261,10 @@ namespace Server.Items
     [Flipable(0x2782, 0x27CD)]
     public class MaleKimono : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public MaleKimono()
             : this(0)
@@ -341,6 +301,10 @@ namespace Server.Items
     [Flipable(0x2783, 0x27CE)]
     public class FemaleKimono : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public FemaleKimono()
             : this(0)
@@ -377,6 +341,10 @@ namespace Server.Items
     [Flipable(0x2FB9, 0x3173)]
     public class MaleElvenRobe : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public MaleElvenRobe()
             : this(0)
@@ -411,6 +379,10 @@ namespace Server.Items
     [Flipable(0x2FBA, 0x3174)]
     public class FemaleElvenRobe : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public FemaleElvenRobe()
             : this(0)
@@ -446,6 +418,10 @@ namespace Server.Items
 
     public class FloweredDress : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1109622;  // Flowered Dress
 
         [Constructable]
@@ -480,6 +456,10 @@ namespace Server.Items
 
     public class EveningGown : BaseOuterTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1109625;  // Evening Gown
 
         [Constructable]
@@ -514,6 +494,10 @@ namespace Server.Items
 
     public class Epaulette : BaseClothing
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         public override int LabelNumber => 1123325;  // Epaulette
 
         [Constructable]

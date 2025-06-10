@@ -15,8 +15,7 @@ namespace Server.Mobiles
             typeof(GoldBricks), typeof(PhillipsWoodenSteed),
             typeof(AlchemistsBauble), typeof(BowOfTheJukaKing),
             typeof(BurglarsBandana), typeof(GwennosHarp),
-            typeof(IolosLute), typeof(PolarBearMask),
-            typeof(WrathOfTheDryad), typeof(PixieSwatter)
+            typeof(IolosLute), typeof(PolarBearMask)
         };
 
         public static int Hue = 0x501;// Paragon hue

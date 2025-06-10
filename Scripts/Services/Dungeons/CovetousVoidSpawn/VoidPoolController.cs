@@ -1,5 +1,4 @@
 using Server.Engines.Points;
-using Server.Engines.Quests;
 using Server.Items;
 using Server.Mobiles;
 using System;
@@ -75,7 +74,9 @@ namespace Server.Engines.VoidPool
                         NextStart = DateTime.UtcNow + TimeSpan.FromMinutes(RestartSpan);
 
                         if (Region != null)
+                        {
                             Region.SendRegionMessage(1152526, RestartSpan.ToString()); // The battle for the Void Pool will begin in ~1_VALUE~ minutes.
+                        }
                     }
 
                     if (Level3Spawner == null)
@@ -97,7 +98,9 @@ namespace Server.Engines.VoidPool
             get
             {
                 if (Wave < 2)
+                {
                     return 0;
+                }
 
                 return Math.Max(1, Wave / 5);
             }
@@ -149,19 +152,29 @@ namespace Server.Engines.VoidPool
             if (map == Map.Trammel)
             {
                 if (InstanceTram != null)
+                {
                     Delete();
+                }
                 else
+                {
                     InstanceTram = this;
+                }
             }
             else if (map == Map.Felucca)
             {
                 if (InstanceFel != null)
+                {
                     Delete();
+                }
                 else
+                {
                     InstanceFel = this;
+                }
             }
             else
+            {
                 Delete();
+            }
 
             WaypointsA = new List<WayPoint>();
             WaypointsB = new List<WayPoint>();
@@ -181,7 +194,9 @@ namespace Server.Engines.VoidPool
         public override void OnDoubleClick(Mobile from)
         {
             if (from.AccessLevel >= AccessLevel.GameMaster)
+            {
                 from.SendGump(new Gumps.PropertiesGump(from, this));
+            }
         }
 
         private void OnTick()
@@ -195,7 +210,9 @@ namespace Server.Engines.VoidPool
                 Wave = 0;
 
                 if (CurrentScore != null)
+                {
                     CurrentScore.Clear();
+                }
 
                 if (Waves != null)
                 {
@@ -209,7 +226,9 @@ namespace Server.Engines.VoidPool
                 Region.SendRegionMessage(1152527, 0x2B); // The battle for the Void Pool is beginning now!
 
                 if (WaypointACount != WaypointsA.Count || WaypointBCount != WaypointsB.Count)
+                {
                     Generate.AddWaypoints();
+                }
 
                 SpawnWave();
             }
@@ -296,7 +315,9 @@ namespace Server.Engines.VoidPool
                             bc.CurrentWayPoint = GetNearestWaypoint(bc);
                         }
                         else
+                        {
                             bc.Delete();
+                        }
                     });
                 }
             }
@@ -378,7 +399,9 @@ namespace Server.Engines.VoidPool
         public DateTime GetNextWaveTime()
         {
             if (Wave == 1)
+            {
                 return DateTime.UtcNow + TimeSpan.FromSeconds(10);
+            }
 
             int min = Math.Max(30, RespawnMin - Wave) + Utility.RandomMinMax(0, 10);
             int max = Math.Max(45, RespawnMax - Wave) - Utility.RandomMinMax(0, 5);
@@ -389,7 +412,9 @@ namespace Server.Engines.VoidPool
         public void OnVoidWallDamaged(Mobile damager)
         {
             if (0.5 > Utility.RandomDouble())
+            {
                 PoolHits--;
+            }
 
             Region.SendRegionMessage(1152529); // The Void Pool walls have been damaged! Defend the Void Pool!
 
@@ -421,7 +446,7 @@ namespace Server.Engines.VoidPool
 
             List<Mobile> list = Region.GetPlayers();
 
-            for (var index = 0; index < list.Count; index++)
+            for (int index = 0; index < list.Count; index++)
             {
                 Mobile m = list[index];
 
@@ -431,23 +456,13 @@ namespace Server.Engines.VoidPool
                 }
             }
 
-            for (var index = 0; index < list.Count; index++)
+            for (int index = 0; index < list.Count; index++)
             {
                 Mobile m = list[index];
 
                 if (CurrentScore.TryGetValue(m, out long value))
                 {
                     m.SendLocalizedMessage(1152650, $"{GetTotalWaves(m)}\t{Wave.ToString()}\t{Wave.ToString()}\t{value}"); // During the battle, you helped fight back ~1_COUNT~ out of ~2_TOTAL~ waves of enemy forces. Your final wave was ~3_MAX~. Your total score for the battle was ~4_SCORE~ points.
-
-                    if (m is PlayerMobile mobile)
-                    {
-                        AForcedSacraficeQuest quest = QuestHelper.GetQuest<AForcedSacraficeQuest>(mobile);
-
-                        if (quest != null)
-                        {
-                            quest.CompleteQuest();
-                        }
-                    }
                 }
             }
 
@@ -458,11 +473,13 @@ namespace Server.Engines.VoidPool
         public void OnCreatureKilled(BaseCreature killed)
         {
             if (Waves == null)
-                return;
-
-            for (var index = 0; index < Waves.Count; index++)
             {
-                var info = Waves[index];
+                return;
+            }
+
+            for (int index = 0; index < Waves.Count; index++)
+            {
+                WaveInfo info = Waves[index];
 
                 if (info.Creatures.Contains(killed))
                 {
@@ -502,7 +519,7 @@ namespace Server.Engines.VoidPool
 
                     if (info.Creatures.Count == 0)
                     {
-                        for (var i = 0; i < info.Credit.Count; i++)
+                        for (int i = 0; i < info.Credit.Count; i++)
                         {
                             Mobile m = info.Credit[i];
 
@@ -514,16 +531,22 @@ namespace Server.Engines.VoidPool
                                 {
                                     //Score Bonus
                                     if (!CurrentScore.ContainsKey(m))
+                                    {
                                         CurrentScore[m] = Stage * 125;
+                                    }
                                     else
+                                    {
                                         CurrentScore[m] += Stage * 125;
+                                    }
                                 }
                             }
                         }
                     }
 
                     if (killed.Corpse != null && !killed.Corpse.Deleted)
+                    {
                         ((Corpse) killed.Corpse).BeginDecay(TimeSpan.FromMinutes(1));
+                    }
                 }
             }
         }
@@ -531,7 +554,9 @@ namespace Server.Engines.VoidPool
         public void ClearSpawners()
         {
             if (Region == null)
+            {
                 return;
+            }
 
             foreach (Item item in Region.GetEnumeratedItems())
             {
@@ -585,7 +610,9 @@ namespace Server.Engines.VoidPool
         public void ClearSpawn(bool effects)
         {
             if (Region == null)
+            {
                 return;
+            }
 
             foreach (Mobile m in Region.GetEnumeratedMobiles())
             {
@@ -610,7 +637,7 @@ namespace Server.Engines.VoidPool
 
             int points = 0;
 
-            for (var index = 0; index < Waves.Count; index++)
+            for (int index = 0; index < Waves.Count; index++)
             {
                 WaveInfo info = Waves[index];
 
@@ -627,9 +654,9 @@ namespace Server.Engines.VoidPool
         {
             int count = 0;
 
-            for (var index = 0; index < Waves.Count; index++)
+            for (int index = 0; index < Waves.Count; index++)
             {
-                var i = Waves[index];
+                WaveInfo i = Waves[index];
 
                 if (i.Wave > 2 && i.Credit.Contains(from))
                 {
@@ -643,7 +670,9 @@ namespace Server.Engines.VoidPool
         public static int GetPlayerScore(Dictionary<Mobile, long> score, Mobile m)
         {
             if (score == null || m == null || !score.TryGetValue(m, out long value))
+            {
                 return 0;
+            }
 
             return (int)value;
         }
@@ -660,7 +689,9 @@ namespace Server.Engines.VoidPool
         public override void Delete()
         {
             if (OnGoing)
+            {
                 EndInvasion();
+            }
 
             if (Region != null)
             {
@@ -674,7 +705,7 @@ namespace Server.Engines.VoidPool
                 Timer = null;
             }
 
-            for (var index = 0; index < WaypointsA.Count; index++)
+            for (int index = 0; index < WaypointsA.Count; index++)
             {
                 WayPoint wp = WaypointsA[index];
 
@@ -684,7 +715,7 @@ namespace Server.Engines.VoidPool
                 }
             }
 
-            for (var index = 0; index < WaypointsB.Count; index++)
+            for (int index = 0; index < WaypointsB.Count; index++)
             {
                 WayPoint wp = WaypointsB[index];
 
@@ -729,15 +760,15 @@ namespace Server.Engines.VoidPool
             writer.Write(WaypointsA.Count);
             writer.Write(WaypointsB.Count);
 
-            for (var index = 0; index < WaypointsA.Count; index++)
+            for (int index = 0; index < WaypointsA.Count; index++)
             {
-                var w = WaypointsA[index];
+                WayPoint w = WaypointsA[index];
                 writer.Write(w);
             }
 
-            for (var index = 0; index < WaypointsB.Count; index++)
+            for (int index = 0; index < WaypointsB.Count; index++)
             {
-                var w = WaypointsB[index];
+                WayPoint w = WaypointsB[index];
                 writer.Write(w);
             }
         }
@@ -789,9 +820,13 @@ namespace Server.Engines.VoidPool
             }
 
             if (Map == Map.Felucca)
+            {
                 InstanceFel = this;
+            }
             else
+            {
                 InstanceTram = this;
+            }
 
             Timer.DelayCall(TimeSpan.FromSeconds(10), () => { ClearSpawn(); ClearSpawners(); });
         }

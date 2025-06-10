@@ -4,17 +4,17 @@ using System;
 
 namespace Server.Items
 {
-    public abstract class BaseClothing : Item, IDyable, IScissorable, ICraftable, IWearableDurability, IResource, ISetItem, IVvVItem, IOwnerRestricted, IArtifact, ICombatEquipment, IEngravable, IQuality
+    public abstract class BaseClothing : Item, IDyable, IScissorable, IWearableDurability, IResource, ISetItem, IVvVItem, IOwnerRestricted, IArtifact, ICombatEquipment, IEngravable, IQuality
     {
-        private string m_EngravedText;
+        private string _EngravedText;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public string EngravedText
         {
-            get => m_EngravedText;
+            get => _EngravedText;
             set
             {
-                m_EngravedText = value;
+                _EngravedText = value;
                 InvalidateProperties();
             }
         }
@@ -417,8 +417,6 @@ namespace Server.Items
 
         public virtual bool AllowMaleWearer => true;
         public virtual bool AllowFemaleWearer => true;
-
-        public virtual bool CanBeBlessed => true;
 
         public int ComputeStatReq(StatType type)
         {
@@ -895,9 +893,9 @@ namespace Server.Items
                 list.Add(1154937); // VvV Item
             }
 
-            if (!string.IsNullOrEmpty(m_EngravedText))
+            if (!string.IsNullOrEmpty(_EngravedText))
             {
-                list.Add(1158847, Utility.FixHtml(m_EngravedText)); // Embroidered: ~1_MESSAGE~	
+                list.Add(1158847, Utility.FixHtml(_EngravedText)); // Embroidered: ~1_MESSAGE~	
             }
         }
 
@@ -1342,7 +1340,7 @@ namespace Server.Items
             base.Serialize(writer);
             writer.Write(0); // version
 
-            writer.Write(m_EngravedText);
+            writer.Write(_EngravedText);
 
             writer.Write(_Owner);
             writer.Write(_OwnerName);
@@ -1526,7 +1524,7 @@ namespace Server.Items
             {
                 case 0:
                     {
-                        m_EngravedText = reader.ReadString();
+                        _EngravedText = reader.ReadString();
 
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();

@@ -24,11 +24,11 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(1045113); // That item is already blessed
                 }
-                else if (item.LootType != LootType.Regular || Siege.SiegeShard && SkillHandlers.Imbuing.GetTotalMods(item) > 0 || item.NegativeAttributes.Prized > 0)
+                else if (item.LootType != LootType.Regular || Siege.SiegeShard && SkillHandlers.Imbuing.GetTotalMods(item) > 0)
                 {
                     from.SendLocalizedMessage(1045114); // You can not bless that item
                 }
-                else if (!item.CanBeBlessed || item.RootParent != from)
+                else if (item.RootParent != from)
                 {
                     from.SendLocalizedMessage(500509); // You cannot bless that object
                 }

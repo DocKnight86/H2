@@ -33,6 +33,10 @@ namespace Server.Items
     [Flipable(0x1541, 0x1542)]
     public class BodySash : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public BodySash()
             : this(0)
@@ -67,6 +71,10 @@ namespace Server.Items
     [Flipable(0x153d, 0x153e)]
     public class FullApron : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public FullApron()
             : this(0)
@@ -101,6 +109,10 @@ namespace Server.Items
     [Flipable(0x1f7b, 0x1f7c)]
     public class Doublet : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Doublet()
             : this(0)
@@ -135,6 +147,10 @@ namespace Server.Items
     [Flipable(0x1ffd, 0x1ffe)]
     public class Surcoat : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Surcoat()
             : this(0)
@@ -169,6 +185,10 @@ namespace Server.Items
     [Flipable(0x1fa1, 0x1fa2)]
     public class Tunic : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Tunic()
             : this(0)
@@ -203,6 +223,10 @@ namespace Server.Items
     [Flipable(0x2310, 0x230F)]
     public class FormalShirt : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
         [Constructable]
         public FormalShirt()
             : this(0)
@@ -237,6 +261,10 @@ namespace Server.Items
     [Flipable(0x1f9f, 0x1fa0)]
     public class JesterSuit : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public JesterSuit()
             : this(0)
@@ -271,6 +299,10 @@ namespace Server.Items
     [Flipable(0x27A1, 0x27EC)]
     public class JinBaori : BaseMiddleTorso
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public JinBaori()
             : this(0)

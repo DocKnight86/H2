@@ -37,8 +37,6 @@ namespace Server.Services.TownCryer
         public static List<TownCryerGuildEntry> GuildEntries { get; private set; }
         public static List<PlayerMobile> TownCryerExempt { get; private set; }
 
-        public static Dictionary<Mobile, DateTime> MysteriousPotionEffects { get; private set; }
-
         public static Timer Timer { get; private set; }
         public static bool NewGreeting { get; private set; }
 
@@ -89,10 +87,7 @@ namespace Server.Services.TownCryer
             if (Enabled)
             {
                 NewsEntries.Add(new TownCryerNewsEntry(1158092, 1158094, 0x651, typeof(HuntmastersChallengeQuest), "https://uo.com/wiki/ultima-online-wiki/gameplay/huntmasters-challenge/")); // Huntsmaster Challenge 
-                NewsEntries.Add(new TownCryerNewsEntry(1158104, 1158106, 0x61C, typeof(PaladinsOfTrinsic), "https://uo.com/wiki/ultima-online-wiki/world/dungeons/dungeon-shame/")); //  New Shame 
-                NewsEntries.Add(new TownCryerNewsEntry(1158107, 1158109, 0x61A, typeof(RightingWrongQuest), "https://uo.com/wiki/ultima-online-wiki/world/dungeons/dungeon-wrong/")); // New Wrong
                 NewsEntries.Add(new TownCryerNewsEntry(1158113, 1158115, 0x64C, typeof(BuriedRichesQuest), "https://uo.com/wiki/ultima-online-wiki/gameplay/treasure-maps/")); // New TMaps
-                NewsEntries.Add(new TownCryerNewsEntry(1158119, 1158121, 0x64D, typeof(APleaFromMinocQuest), "https://uo.com/wiki/ultima-online-wiki/world/dungeons/dungeon-covetous/")); // New Covetous
                 
                 // New greeting, resets all TC hiding
                 if (NewGreeting)
@@ -190,9 +185,9 @@ namespace Server.Services.TownCryer
         {
             int count = 0;
 
-            for (var index = 0; index < CityEntries.Count; index++)
+            for (int index = 0; index < CityEntries.Count; index++)
             {
-                var x = CityEntries[index];
+                TownCryerCityEntry x = CityEntries[index];
 
                 if (x.City == city)
                 {
@@ -210,9 +205,9 @@ namespace Server.Services.TownCryer
                 return false;
             }
 
-            for (var index = 0; index < GuildEntries.Count; index++)
+            for (int index = 0; index < GuildEntries.Count; index++)
             {
-                var x = GuildEntries[index];
+                TownCryerGuildEntry x = GuildEntries[index];
 
                 if (x.Guild == g)
                 {
@@ -225,9 +220,9 @@ namespace Server.Services.TownCryer
 
         public static bool HasCustomEntries()
         {
-            for (var index = 0; index < GreetingsEntries.Count; index++)
+            for (int index = 0; index < GreetingsEntries.Count; index++)
             {
-                var x = GreetingsEntries[index];
+                TownCryerGreetingEntry x = GreetingsEntries[index];
 
                 if (x.Saves || x.Expires != DateTime.MinValue)
                 {
@@ -242,9 +237,9 @@ namespace Server.Services.TownCryer
         {
             bool any = false;
 
-            for (var index = 0; index < GreetingsEntries.Count; index++)
+            for (int index = 0; index < GreetingsEntries.Count; index++)
             {
-                var e = GreetingsEntries[index];
+                TownCryerGreetingEntry e = GreetingsEntries[index];
 
                 if (e.Expires != DateTime.MinValue)
                 {
@@ -253,7 +248,7 @@ namespace Server.Services.TownCryer
                 }
             }
 
-            if (any || ModeratorEntries.Count > 0 || CityEntries.Count > 0 || GuildEntries.Count > 0 || MysteriousPotionEffects != null)
+            if (any || ModeratorEntries.Count > 0 || CityEntries.Count > 0 || GuildEntries.Count > 0)
             {
                 if (Timer == null || !Timer.Running)
                 {
@@ -291,28 +286,6 @@ namespace Server.Services.TownCryer
             {
                 if (GuildEntries[i].Expired)
                     GuildEntries.RemoveAt(i);
-            }
-
-            if (MysteriousPotionEffects != null)
-            {
-                List<Mobile> list = new List<Mobile>(MysteriousPotionEffects.Keys);
-
-                for (var index = 0; index < list.Count; index++)
-                {
-                    Mobile m = list[index];
-
-                    if (MysteriousPotionEffects != null && MysteriousPotionEffects.ContainsKey(m) && MysteriousPotionEffects[m] < DateTime.UtcNow)
-                    {
-                        MysteriousPotionEffects.Remove(m);
-
-                        if (MysteriousPotionEffects.Count == 0)
-                        {
-                            MysteriousPotionEffects = null;
-                        }
-                    }
-                }
-
-                ColUtility.Free(list);
             }
 
             CheckTimer();
@@ -364,24 +337,6 @@ namespace Server.Services.TownCryer
             }
         }
 
-        public static bool UnderMysteriousPotionEffects(Mobile m, bool checkQuest = false)
-        {
-            return MysteriousPotionEffects != null && MysteriousPotionEffects.ContainsKey(m) && MysteriousPotionEffects[m] > DateTime.UtcNow &&
-                   (!checkQuest || m is PlayerMobile mobile && QuestHelper.HasQuest<AForcedSacraficeQuest2>(mobile));
-        }
-
-        public static void AddMysteriousPotionEffects(Mobile m)
-        {
-            if (MysteriousPotionEffects == null)
-            {
-                MysteriousPotionEffects = new Dictionary<Mobile, DateTime>();
-            }
-
-            MysteriousPotionEffects[m] = DateTime.UtcNow + TimeSpan.FromDays(3);
-
-            CheckTimer();
-        }
-
         #region Pre-Loaded 
         private static void LoadPreloadedMessages()
         {
@@ -413,11 +368,11 @@ namespace Server.Services.TownCryer
                 {
                     int index = 0;
 
-                    var name = root.GetElementsByTagName("message");
+                    XmlNodeList name = root.GetElementsByTagName("message");
 
-                    for (var i = 0; i < name.Count; i++)
+                    for (int i = 0; i < name.Count; i++)
                     {
-                        var reg = (XmlElement) name[i];
+                        XmlElement reg = (XmlElement) name[i];
                         string title = Utility.GetText(reg["title"], null);
                         string body = Utility.GetText(reg["body"], null);
                         DateTime created = GetDateTime(Utility.GetText(reg["created"], null));
@@ -534,7 +489,7 @@ namespace Server.Services.TownCryer
 
             writer.Write(TownCryerExempt.Count);
 
-            for (var index = 0; index < TownCryerExempt.Count; index++)
+            for (int index = 0; index < TownCryerExempt.Count; index++)
             {
                 PlayerMobile pm = TownCryerExempt[index];
 
@@ -543,9 +498,9 @@ namespace Server.Services.TownCryer
 
             int count = 0;
 
-            for (var index = 0; index < GreetingsEntries.Count; index++)
+            for (int index = 0; index < GreetingsEntries.Count; index++)
             {
-                var x = GreetingsEntries[index];
+                TownCryerGreetingEntry x = GreetingsEntries[index];
 
                 if (x.Saves)
                 {
@@ -555,7 +510,7 @@ namespace Server.Services.TownCryer
 
             writer.Write(count);
 
-            for (var index = 0; index < GreetingsEntries.Count; index++)
+            for (int index = 0; index < GreetingsEntries.Count; index++)
             {
                 TownCryerGreetingEntry e = GreetingsEntries[index];
 
@@ -567,7 +522,7 @@ namespace Server.Services.TownCryer
 
             writer.Write(ModeratorEntries.Count);
 
-            for (var index = 0; index < ModeratorEntries.Count; index++)
+            for (int index = 0; index < ModeratorEntries.Count; index++)
             {
                 TownCryerModeratorEntry e = ModeratorEntries[index];
 
@@ -576,7 +531,7 @@ namespace Server.Services.TownCryer
 
             writer.Write(CityEntries.Count);
 
-            for (var index = 0; index < CityEntries.Count; index++)
+            for (int index = 0; index < CityEntries.Count; index++)
             {
                 TownCryerCityEntry e = CityEntries[index];
 
@@ -585,22 +540,11 @@ namespace Server.Services.TownCryer
 
             writer.Write(GuildEntries.Count);
 
-            for (var index = 0; index < GuildEntries.Count; index++)
+            for (int index = 0; index < GuildEntries.Count; index++)
             {
                 TownCryerGuildEntry e = GuildEntries[index];
 
                 e.Serialize(writer);
-            }
-
-            writer.Write(MysteriousPotionEffects != null ? MysteriousPotionEffects.Count : 0);
-
-            if (MysteriousPotionEffects != null)
-            {
-                foreach (KeyValuePair<Mobile, DateTime> kvp in MysteriousPotionEffects)
-                {
-                    writer.Write(kvp.Key);
-                    writer.Write(kvp.Value);
-                }
             }
         }
 
@@ -670,20 +614,6 @@ namespace Server.Services.TownCryer
                         }
                     }
 
-                    count = reader.ReadInt();
-                    for (int i = 0; i < count; i++)
-                    {
-                        Mobile m = reader.ReadMobile();
-                        DateTime dt = reader.ReadDateTime();
-
-                        if (m != null)
-                        {
-                            if (MysteriousPotionEffects == null)
-                                MysteriousPotionEffects = new Dictionary<Mobile, DateTime>();
-
-                            MysteriousPotionEffects[m] = dt;
-                        }
-                    }
                     break;
             }
 

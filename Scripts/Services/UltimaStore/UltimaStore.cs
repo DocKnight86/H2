@@ -76,12 +76,10 @@ namespace Server.Engines.UOStore
         {
             // Featured
             StoreCategory cat = StoreCategory.Featured;
-            Register<PotionOfGloriousFortune>(1158688, 1158739, 0xA1E6, 0, 1195, 200, cat);
             Register<KnightChessPieceGuildstone>(1159490, 1159491, 0xA581, 0, 0, 500, cat);
             Register<AnvilofArtifactsDeed>(1159437, 1159466, 0xA108, 0, 0, 1000, cat);
             Register<VirtueShield>(1109616, 1158384, 0x7818, 0, 0, 1500, cat);
             Register<PetBondingPotion>(1156613, 1156678, 0, 0x9CBC, 0, 500, cat);
-            //Register<DeluxeStarterPackToken>(1158368, 1158369, 0, 0x9CCB, 0, 2000, cat);
 
             // Character
             cat = StoreCategory.Character;
@@ -232,32 +230,10 @@ namespace Server.Engines.UOStore
             Register<StoreSingingBall>(1041245, 1156907, 0, 0x9CB8, 0, 200, cat);
             Register<SecretChest>(1151583, 1156909, 0x9706, 0, 0, 500, cat);
 
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1157015 }, 1156916, 0, 0x9CB5, 0, 200, cat, ConstructMiniHouseDeed); // two story wood & plaster
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011317 }, 1156916, 0x22F5, 0, 0, 200, cat, ConstructMiniHouseDeed); // small stone tower
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011307 }, 1156916, 0x22E0, 0, 0, 200, cat, ConstructMiniHouseDeed); // wood and plaster house
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011308 }, 1156916, 0x22E1, 0, 0, 200, cat, ConstructMiniHouseDeed); // thathed-roof cottage
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011312 }, 1156916, 0, 0x9CB2, 0, 200, cat, ConstructMiniHouseDeed); // Tower
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011313 }, 1156916, 0, 0x9CB1, 0, 200, cat, ConstructMiniHouseDeed); // Small stone keep
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011314 }, 1156916, 0, 0x9CB0, 0, 200, cat, ConstructMiniHouseDeed); // Castle
-
             Register<HangingSwordsDeed>(1076272, 1156936, 0, 0x9C96, 0, 100, cat);
             Register<UnmadeBedDeed>(1076279, 1156935, 0, 0x9C9B, 0, 100, cat);
             Register<CurtainsDeed>(1076280, 1156934, 0, 0x9C93, 0, 100, cat);
             Register<TableWithOrangeClothDeed>(new TextDefinition[] { 1157012, 1157013 }, 1156933, 0x118E, 0, 0, 100, cat);
-
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011320 }, 1156916, 0x22F3, 0, 0, 200, cat, ConstructMiniHouseDeed); // sanstone house with patio
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011316 }, 1156916, 0, 0x9CB3, 0, 200, cat, ConstructMiniHouseDeed); // marble house with patio
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011319 }, 1156916, 0x2300, 0, 0, 200, cat, ConstructMiniHouseDeed); // two story villa
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1157014 }, 1156916, 0, 0x9CB6, 0, 200, cat, ConstructMiniHouseDeed); // two story stone & plaster
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011315 }, 1156916, 0, 0x9CB4, 0, 200, cat, ConstructMiniHouseDeed); // Large house with patio
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011309 }, 1156916, 0, 0x9CB7, 0, 200, cat, ConstructMiniHouseDeed); // brick house
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011304 }, 1156916, 0x22C9, 0, 0, 200, cat, ConstructMiniHouseDeed); // field stone house
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011306 }, 1156916, 0x22DF, 0, 0, 200, cat, ConstructMiniHouseDeed); // wooden house
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011305 }, 1156916, 0x22DE, 0, 0, 200, cat, ConstructMiniHouseDeed); // small brick house
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011303 }, 1156916, 0x22E1, 0, 0, 200, cat, ConstructMiniHouseDeed); // stone and plaster house
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011318 }, 1156916, 0x22FB, 0, 0, 200, cat, ConstructMiniHouseDeed); // two-story log cabin
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011321 }, 1156916, 0x22F6, 0, 0, 200, cat, ConstructMiniHouseDeed); // small stone workshop
-            Register<MiniHouseDeed>(new TextDefinition[] { 1062096, 1011322 }, 1156916, 0x22F4, 0, 0, 200, cat, ConstructMiniHouseDeed); // small marble workshop
 
             Register<TableWithBlueClothDeed>(1076276, 1156932, 0x118C, 0, 0, 100, cat);
             Register<CherryBlossomTreeDeed>(1076268, 1156940, 0, 0x9C91, 0, 100, cat);
@@ -311,7 +287,6 @@ namespace Server.Engines.UOStore
             cat = StoreCategory.Misc;
             Register<SoulstoneToken>(1159573, 1158405, 0x32F4, 0, 2721, 1000, cat, ConstructSoulstone);
             Register<EnchantedSoulstoneVessel>(1126839, 1159627, 0xA73F, 0, 0, 1000, cat);
-            Register<PotionOfGloriousFortune>(1158688, 1158739, 0xA1E6, 0, 1195, 200, cat);
             Register<RookChessPieceGuildstone>(1159490, 1159491, 0xA583, 0, 0, 500, cat);
             Register<LegacyGuildstone>(1159490, 1159491, 0xED4, 0, 0, 500, cat);
             Register<KnightChessPieceGuildstone>(1159490, 1159491, 0xA581, 0, 0, 500, cat);

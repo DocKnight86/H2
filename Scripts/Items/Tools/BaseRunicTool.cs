@@ -94,34 +94,6 @@ namespace Server.Items
             return v;
         }
 
-        public static void ApplyAttributesTo(Item item, int attributeCount, int min, int max)
-        {
-            if (item is FishingPole pole)
-            {
-                ApplyAttributesTo(pole, attributeCount, min, max);
-            }
-            else if (item is BaseWeapon weapon)
-            {
-                ApplyAttributesTo(weapon, attributeCount, min, max);
-            }
-            else if (item is BaseArmor armor)
-            {
-                ApplyAttributesTo(armor, attributeCount, min, max);
-            }
-            else if (item is BaseHat hat)
-            {
-                ApplyAttributesTo(hat, attributeCount, min, max);
-            }
-            else if (item is BaseJewel jewel)
-            {
-                ApplyAttributesTo(jewel, attributeCount, min, max);
-            }
-            else if (item is Spellbook spellbook)
-            {
-                ApplyAttributesTo(spellbook, attributeCount, min, max);
-            }
-        }
-
         #region High Seas
         public static void ApplyAttributesTo(FishingPole pole, bool playerMade, int attributeCount, int min, int max)
         {
@@ -710,11 +682,6 @@ namespace Server.Items
             }
         }
 
-        public static void ApplyAttributesTo(Spellbook spellbook, int attributeCount, int min, int max)
-        {
-            ApplyAttributesTo(spellbook, false, attributeCount, min, max);
-        }
-
         public static void ApplyAttributesTo(Spellbook spellbook, bool playerMade, int attributeCount, int min, int max)
         {
             int delta;
@@ -799,25 +766,17 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(0); // version
+
             writer.Write((int)Resource);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            reader.ReadInt();
 
-            int version = reader.ReadInt();
-
-            switch (version)
-            {
-                case 0:
-                    {
-                        Resource = (CraftResource)reader.ReadInt();
-                        break;
-                    }
-            }
+            Resource = (CraftResource)reader.ReadInt();
         }
 
         public void ApplyAttributesTo(BaseWeapon weapon)

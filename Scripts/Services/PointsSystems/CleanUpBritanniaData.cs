@@ -383,8 +383,6 @@ namespace Server.Engines.Points
             Entries[typeof(GwennosHarp)] = 100.0;
             Entries[typeof(IolosLute)] = 100.0;
             Entries[typeof(PolarBearMask)] = 100.0;
-            Entries[typeof(PixieSwatter)] = 100.0;
-            Entries[typeof(WrathOfTheDryad)] = 100.0;
             Entries[typeof(BowOfTheJukaKing)] = 100.0;
             Entries[typeof(CreepingVine)] = 100.0;
             Entries[typeof(ForgedPardon)] = 100.0;
@@ -477,7 +475,6 @@ namespace Server.Engines.Points
             Entries[typeof(Bottle)] = 0.25;
             Entries[typeof(OrcishKinMask)] = 100.0;
             Entries[typeof(PottedPlantDeed)] = 15000.0;
-            Entries[typeof(BagOfSending)] = 250.0;
             Entries[typeof(Cauldron)] = 200.0;
             Entries[typeof(ChampionSkull)] = 1000.0;
             Entries[typeof(ClockworkAssembly)] = 50.0;
@@ -490,7 +487,6 @@ namespace Server.Engines.Points
             Entries[typeof(ExcellentIronMaiden)] = 50.0;
             Entries[typeof(ExecutionersCap)] = 1.0;
             Entries[typeof(Flowstone)] = 250.0;
-            Entries[typeof(GlacialStaff)] = 500.0;
             Entries[typeof(GrapeVine)] = 500.0;
             Entries[typeof(HorseShoes)] = 200.0;
             Entries[typeof(MangledHeadOfDreadhorn)] = 1000.0;

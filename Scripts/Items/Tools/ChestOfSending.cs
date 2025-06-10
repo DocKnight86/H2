@@ -121,7 +121,7 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(1054107); // This item must be in your backpack.
                 }
-                else if (item is Container || item is BagOfSending || item is ChestOfSending)
+                else if (item is Container || item is ChestOfSending)
                 {
                     from.SendLocalizedMessage(1150420, "#1150424"); // You cannot send a container through the ~1_NAME~.
                 }
