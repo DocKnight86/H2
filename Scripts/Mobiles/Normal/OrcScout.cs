@@ -1,8 +1,6 @@
-#region References
 using Server.Items;
 using Server.Misc;
 using Server.Targeting;
-#endregion
 
 namespace Server.Mobiles
 {
@@ -51,14 +49,7 @@ namespace Server.Mobiles
             Fame = 1500;
             Karma = -1500;
 
-            if (0.1 > Utility.RandomDouble())
-            {
-                AddItem(new OrcishBow());
-            }
-            else
-            {
-                AddItem(new Bow());
-            }
+            AddItem(new Bow());
         }
 
         public OrcScout(Serial serial)

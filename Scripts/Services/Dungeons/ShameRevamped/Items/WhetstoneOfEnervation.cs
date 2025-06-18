@@ -30,13 +30,19 @@ namespace Server.Items
                 from.BeginTarget(-1, false, TargetFlags.None, (m, targeted) =>
                     {
                         if (!IsChildOf(m.Backpack))
+                        {
                             m.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+                        }
                         else if (targeted is BaseWeapon wep)
                         {
                             if (!wep.IsChildOf(m.Backpack))
+                            {
                                 m.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-                            else if (wep.TimesImbued > 0 || wep.Quality != ItemQuality.Exceptional)
+                            }
+                            else if (wep.Quality != ItemQuality.Exceptional)
+                            {
                                 m.SendLocalizedMessage(1046439); // Invalid target.
+                            }
                             else if (wep.Attributes.WeaponDamage > 0)
                             {
                                 wep.Attributes.WeaponDamage = 0;
@@ -45,14 +51,20 @@ namespace Server.Items
                                 Consume();
                             }
                             else
+                            {
                                 m.SendLocalizedMessage(1046439); // Invalid target.
+                            }
                         }
                         else
+                        {
                             m.SendLocalizedMessage(1046439); // Invalid target.
+                        }
                     });
             }
             else
+            {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
         }
 
         public WhetstoneOfEnervation(Serial serial)
