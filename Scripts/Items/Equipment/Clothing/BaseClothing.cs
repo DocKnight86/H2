@@ -65,8 +65,7 @@ namespace Server.Items
         private NegativeAttributes m_NegativeAttributes;
         private AosWeaponAttributes m_AosWeaponAttributes;
 
-        private int m_TimesImbued;
-        private bool m_IsImbued;
+        private bool _IsImbued;
         private int m_GorgonLenseCharges;
         private LenseType m_GorgonLenseType;
 
@@ -155,34 +154,12 @@ namespace Server.Items
         public bool PlayerConstructed { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int TimesImbued
-        {
-            get => m_TimesImbued;
-            set { m_TimesImbued = value; InvalidateProperties(); }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public bool IsImbued
         {
-            get
-            {
-                if (TimesImbued >= 1 && !m_IsImbued)
-                {
-                    m_IsImbued = true;
-                }
-
-                return m_IsImbued;
-            }
+            get => _IsImbued;
             set
             {
-                if (TimesImbued >= 1)
-                {
-                    m_IsImbued = true;
-                }
-                else
-                {
-                    m_IsImbued = value;
-                }
+                _IsImbued = value;
 
                 InvalidateProperties();
             }
@@ -205,41 +182,6 @@ namespace Server.Items
         {
             get => m_GorgonLenseType;
             set { m_GorgonLenseType = value; InvalidateProperties(); }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int PhysNonImbuing { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int FireNonImbuing { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ColdNonImbuing { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int PoisonNonImbuing { get; set; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int EnergyNonImbuing { get; set; }
-
-        public virtual int[] BaseResists
-        {
-            get
-            {
-                int[] list = new int[5];
-
-                list[0] = BasePhysicalResistance;
-                list[1] = BaseFireResistance;
-                list[2] = BaseColdResistance;
-                list[3] = BasePoisonResistance;
-                list[4] = BaseEnergyResistance;
-
-                return list;
-            }
-        }
-
-        public virtual void OnAfterImbued(Mobile m, int mod, int value)
-        {
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1345,7 +1287,7 @@ namespace Server.Items
             writer.Write(_Owner);
             writer.Write(_OwnerName);
 
-            writer.Write(m_IsImbued);
+            writer.Write(_IsImbued);
 
             m_SAAbsorptionAttributes.Serialize(writer);
 
@@ -1355,14 +1297,6 @@ namespace Server.Items
 
             writer.Write(m_GorgonLenseCharges);
             writer.Write((int)m_GorgonLenseType);
-
-            writer.Write(PhysNonImbuing);
-            writer.Write(FireNonImbuing);
-            writer.Write(ColdNonImbuing);
-            writer.Write(PoisonNonImbuing);
-            writer.Write(EnergyNonImbuing);
-
-            writer.Write(m_TimesImbued);
 
             #region Mondain's Legacy Sets
             SetFlag sflags = SetFlag.None;
@@ -1529,7 +1463,7 @@ namespace Server.Items
                         _Owner = reader.ReadMobile();
                         _OwnerName = reader.ReadString();
 
-                        m_IsImbued = reader.ReadBool();
+                        _IsImbued = reader.ReadBool();
 
                         m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this, reader);
 
@@ -1539,14 +1473,6 @@ namespace Server.Items
 
                         m_GorgonLenseCharges = reader.ReadInt();
                         m_GorgonLenseType = (LenseType)reader.ReadInt();
-
-                        PhysNonImbuing = reader.ReadInt();
-                        FireNonImbuing = reader.ReadInt();
-                        ColdNonImbuing = reader.ReadInt();
-                        PoisonNonImbuing = reader.ReadInt();
-                        EnergyNonImbuing = reader.ReadInt();
-
-                        m_TimesImbued = reader.ReadInt();
 
                         SetFlag sflags = (SetFlag)reader.ReadEncodedInt();
                         if (GetSaveFlag(sflags, SetFlag.Attributes))
@@ -1852,12 +1778,6 @@ namespace Server.Items
 
                 from.CheckSkill(SkillName.ArmsLore, 0, 100);
             }
-
-            PhysNonImbuing = PhysicalResistance;
-            FireNonImbuing = FireResistance;
-            ColdNonImbuing = ColdResistance;
-            PoisonNonImbuing = PoisonResistance;
-            EnergyNonImbuing = EnergyResistance;
 
             InvalidateProperties();
         }

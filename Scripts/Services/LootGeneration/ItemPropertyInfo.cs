@@ -1275,11 +1275,6 @@ namespace Server.Items
                         case 500:
                         case 501: // Self Repair cannot be added to items with brittle/antique/no repair or items that have been imbued
                         {
-                            if (item is IImbuableEquipement equipement && equipement.TimesImbued > 0)
-                            {
-                                return false;
-                            }
-
                             NegativeAttributes neg = RunicReforging.GetNegativeAttributes(item);
 
                             if (neg != null && (neg.Brittle > 0 || neg.Antique > 0))

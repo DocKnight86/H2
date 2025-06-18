@@ -97,22 +97,6 @@ namespace Server.Items
             set { _OwnerName = value; InvalidateProperties(); }
         }
 
-        /* Weapon internals work differently now (Mar 13 2003)
-        *
-        * The attributes defined below default to -1.
-        * If the value is -1, the corresponding virtual 'Aos/Old' property is used.
-        * If not, the attribute value itself is used. Here's the list:
-        *  - MinDamage
-        *  - MaxDamage
-        *  - Speed
-        *  - HitSound
-        *  - MissSound
-        *  - StrRequirement, DexRequirement, IntRequirement
-        *  - WeaponType
-        *  - WeaponAnimation
-        *  - MaxRange
-        */
-
         #region Var declarations
         // Instance values. These values are unique to each weapon.
         private ItemQuality m_Quality;
@@ -149,7 +133,6 @@ namespace Server.Items
         private WeaponType m_Type;
         private WeaponAnimation m_Animation;
 
-        private int m_TimesImbued;
         private bool m_IsImbued;
         private bool m_DImodded;
 
@@ -481,34 +464,12 @@ namespace Server.Items
         public int LastParryChance { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int TimesImbued
-        {
-            get => m_TimesImbued;
-            set => m_TimesImbued = value;
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public bool IsImbued
         {
-            get
-            {
-                if (TimesImbued >= 1 && !m_IsImbued)
-                {
-                    m_IsImbued = true;
-                }
-
-                return m_IsImbued;
-            }
+            get => m_IsImbued;
             set
             {
-                if (TimesImbued >= 1)
-                {
-                    m_IsImbued = true;
-                }
-                else
-                {
-                    m_IsImbued = value;
-                }
+                m_IsImbued = value;
 
                 InvalidateProperties();
             }
@@ -3176,19 +3137,13 @@ namespace Server.Items
 
             writer.Write(m_IsImbued);
 
-            #region Runic Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
             writer.Write((int)m_ItemPower);
-            #endregion
 
             writer.Write(m_DImodded);
 
-            writer.Write(m_TimesImbued);
-
-            #region Veteran Rewards
             writer.Write(m_EngravedText);
-            #endregion
 
             #region Mondain's Legacy
             writer.Write((int)m_Slayer3);
@@ -3531,69 +3486,37 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
             {
-                case 20: // Removed Eras
-                case 19: // Removed SearingWeapon
+                case 20: 
+                case 19: 
                 case 18:
                 case 17:
-                    {
-                        m_UsesRemaining = reader.ReadInt();
-                        m_ShowUsesRemaining = reader.ReadBool();
-                        goto case 16;
-                    }
                 case 16:
-                    {
-                        if (version == 17)
-                        {
-                            reader.ReadBool();
-                        }
-
-                        _Owner = reader.ReadMobile();
-                        _OwnerName = reader.ReadString();
-                        goto case 15;
-                    }
                 case 15:
                 case 14:
-                    {
-                        m_IsImbued = reader.ReadBool();
-                        goto case 13;
-                    }
                 case 13:
                 case 12:
                     {
-                        #region Runic Reforging
+                        m_UsesRemaining = reader.ReadInt();
+                        m_ShowUsesRemaining = reader.ReadBool();
+
+                        _Owner = reader.ReadMobile();
+                        _OwnerName = reader.ReadString();
+
+                        m_IsImbued = reader.ReadBool();
+
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-                        #endregion
 
-                        #region Stygian Abyss
                         m_DImodded = reader.ReadBool();
 
-                        if (version == 18)
-                        {
-                            if (reader.ReadBool())
-                            {
-                                Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
-                                {
-                                    AttachSocket(new SearingWeapon(this));
-                                });
-                            }
-                        }
                         goto case 11;
                     }
                 case 11:
-                    {
-                        m_TimesImbued = reader.ReadInt();
-
-                        #endregion
-
-                        goto case 10;
-                    }
                 case 10:
                     {
                         m_EngravedText = reader.ReadString();

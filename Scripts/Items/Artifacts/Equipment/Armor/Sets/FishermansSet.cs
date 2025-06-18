@@ -6,7 +6,7 @@ namespace Server.Items
         int SetBonus { get; set; }
     }
 
-    public class FishermansHat : TallStrawHat, ISetItem, IFishingAttire
+    public class FishermansHat : TallStrawHat, IFishingAttire
     {
         public override int LabelNumber => 1151190;  //Fisherman's Tall Straw Hat
 
@@ -29,22 +29,6 @@ namespace Server.Items
         public override int BasePoisonResistance => Resistances.Poison == 0 ? 8 : base.BasePoisonResistance;
         public override int BaseEnergyResistance => Resistances.Energy == 0 ? 8 : base.BaseEnergyResistance;
 
-        public override int[] BaseResists
-        {
-            get
-            {
-                int[] list = new int[5];
-
-                list[0] = base.BasePhysicalResistance;
-                list[1] = base.BaseFireResistance;
-                list[2] = base.BaseColdResistance;
-                list[3] = base.BasePoisonResistance;
-                list[4] = base.BaseEnergyResistance;
-
-                return list;
-            }
-        }
-
         [Constructable]
         public FishermansHat()
         {
@@ -65,11 +49,11 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
-    public class FishermansTrousers : StuddedLegs, ISetItem, IFishingAttire
+    public class FishermansTrousers : StuddedLegs, IFishingAttire
     {
         public override int LabelNumber => 1151191;  //Fisherman's Trousers
 
@@ -92,22 +76,6 @@ namespace Server.Items
         public override int BasePoisonResistance => PoisonBonus == 0 ? 7 : base.BasePoisonResistance;
         public override int BaseEnergyResistance => EnergyBonus == 0 ? 8 : base.BaseEnergyResistance;
 
-        public override int[] BaseResists
-        {
-            get
-            {
-                int[] list = new int[5];
-
-                list[0] = base.BasePhysicalResistance;
-                list[1] = base.BaseFireResistance;
-                list[2] = base.BaseColdResistance;
-                list[3] = base.BasePoisonResistance;
-                list[4] = base.BaseEnergyResistance;
-
-                return list;
-            }
-        }
-
         [Constructable]
         public FishermansTrousers()
         {
@@ -129,11 +97,11 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
-    public class FishermansVest : LeatherChest, ISetItem, IFishingAttire
+    public class FishermansVest : LeatherChest, IFishingAttire
     {
         public override int LabelNumber => 1151192;  //Fisherman's Vest
 
@@ -156,22 +124,6 @@ namespace Server.Items
         public override int BasePoisonResistance => PoisonBonus == 0 ? 5 : base.BasePoisonResistance;
         public override int BaseEnergyResistance => EnergyBonus == 0 ? 5 : base.BaseEnergyResistance;
 
-        public override int[] BaseResists
-        {
-            get
-            {
-                int[] list = new int[5];
-
-                list[0] = base.BasePhysicalResistance;
-                list[1] = base.BaseFireResistance;
-                list[2] = base.BaseColdResistance;
-                list[3] = base.BasePoisonResistance;
-                list[4] = base.BaseEnergyResistance;
-
-                return list;
-            }
-        }
-
         [Constructable]
         public FishermansVest()
         {
@@ -193,11 +145,11 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
-    public class FishermansEelskinGloves : LeatherGloves, ISetItem, IFishingAttire
+    public class FishermansEelskinGloves : LeatherGloves, IFishingAttire
     {
         public override int LabelNumber => 1151189;  //Fisherman's Eelskin Gloves
 
@@ -220,22 +172,6 @@ namespace Server.Items
         public override int BasePoisonResistance => PoisonBonus == 0 ? 5 : base.BasePoisonResistance;
         public override int BaseEnergyResistance => EnergyBonus == 0 ? 5 : base.BaseEnergyResistance;
 
-        public override int[] BaseResists
-        {
-            get
-            {
-                int[] list = new int[5];
-
-                list[0] = base.BasePhysicalResistance;
-                list[1] = base.BaseFireResistance;
-                list[2] = base.BaseColdResistance;
-                list[3] = base.BasePoisonResistance;
-                list[4] = base.BaseEnergyResistance;
-
-                return list;
-            }
-        }
-
         [Constructable]
         public FishermansEelskinGloves()
         {
@@ -257,7 +193,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Server.Items
         {
             if (m_IngredientTable != null)
             {
-                for (var index = 0; index < m_IngredientTable.Count; index++)
+                for (int index = 0; index < m_IngredientTable.Count; index++)
                 {
                     IngredientDropEntry entry = m_IngredientTable[index];
 
@@ -217,7 +217,7 @@ namespace Server.Items
 
                     if (entry.DropMultiples)
                     {
-                        for (var i = 0; i < entry.Ingredients.Length; i++)
+                        for (int i = 0; i < entry.Ingredients.Length; i++)
                         {
                             Type type = entry.Ingredients[i];
 
@@ -237,10 +237,12 @@ namespace Server.Items
                         Item drop = Loot.Construct(entry.Ingredients);
 
                         if (drop != null)
+                        {
                             drops.Add(drop);
+                        }
                     }
 
-                    for (var i = 0; i < drops.Count; i++)
+                    for (int i = 0; i < drops.Count; i++)
                     {
                         Item item = drops[i];
 

@@ -36,21 +36,6 @@ namespace Server.Items
 
         public virtual string OwnerName { get => _OwnerName; set { _OwnerName = value; InvalidateProperties(); } }
 
-        /* Armor internals work differently now (Jun 19 2003)
-        * 
-        * The attributes defined below default to -1.
-        * If the value is -1, the corresponding virtual 'Aos/Old' property is used.
-        * If not, the attribute value itself is used. Here's the list:
-        *  - ArmorBase
-        *  - StrBonus
-        *  - DexBonus
-        *  - IntBonus
-        *  - StrReq
-        *  - DexReq
-        *  - IntReq
-        *  - MeditationAllowance
-        */
-
         // Instance values. These values must are unique to each armor piece.
         private int m_MaxHitPoints;
         private int m_HitPoints;
@@ -67,13 +52,7 @@ namespace Server.Items
         private int m_GorgonLenseCharges;
         private LenseType m_GorgonLenseType;
 
-        private int m_TimesImbued;
         private bool m_IsImbued;
-        private int m_PhysNonImbuing;
-        private int m_FireNonImbuing;
-        private int m_ColdNonImbuing;
-        private int m_PoisonNonImbuing;
-        private int m_EnergyNonImbuing;
 
         private AosAttributes m_AosAttributes;
         private AosArmorAttributes m_AosArmorAttributes;
@@ -333,68 +312,15 @@ namespace Server.Items
         public LenseType GorgonLenseType { get => m_GorgonLenseType; set { m_GorgonLenseType = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int TimesImbued { get => m_TimesImbued; set { m_TimesImbued = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public bool IsImbued
         {
-            get
-            {
-                if (TimesImbued >= 1 && !m_IsImbued)
-                {
-                    m_IsImbued = true;
-                }
-
-                return m_IsImbued;
-            }
+            get => m_IsImbued;
             set
             {
-                if (TimesImbued >= 1)
-                {
-                    m_IsImbued = true;
-                }
-                else
-                {
-                    m_IsImbued = value;
-                }
+                m_IsImbued = value;
 
                 InvalidateProperties();
             }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int PhysNonImbuing { get => m_PhysNonImbuing; set => m_PhysNonImbuing = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int FireNonImbuing { get => m_FireNonImbuing; set => m_FireNonImbuing = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ColdNonImbuing { get => m_ColdNonImbuing; set => m_ColdNonImbuing = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int PoisonNonImbuing { get => m_PoisonNonImbuing; set => m_PoisonNonImbuing = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int EnergyNonImbuing { get => m_EnergyNonImbuing; set => m_EnergyNonImbuing = value; }
-
-        public virtual int[] BaseResists
-        {
-            get
-            {
-                int[] list = new int[5];
-
-                list[0] = BasePhysicalResistance;
-                list[1] = BaseFireResistance;
-                list[2] = BaseColdResistance;
-                list[3] = BasePoisonResistance;
-                list[4] = BaseEnergyResistance;
-
-                return list;
-            }
-        }
-
-        public virtual void OnAfterImbued(Mobile m, int mod, int value)
-        {
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1082,27 +1008,12 @@ namespace Server.Items
 
             writer.Write(m_IsImbued);
 
-            // Version 9
-            #region Runic Reforging
             writer.Write((int)m_ReforgedPrefix);
             writer.Write((int)m_ReforgedSuffix);
             writer.Write((int)m_ItemPower);
-            #endregion
-
-            #region Stygian Abyss
+            
             writer.Write(m_GorgonLenseCharges);
             writer.Write((int)m_GorgonLenseType);
-
-            writer.Write(m_PhysNonImbuing);
-            writer.Write(m_FireNonImbuing);
-            writer.Write(m_ColdNonImbuing);
-            writer.Write(m_PoisonNonImbuing);
-            writer.Write(m_EnergyNonImbuing);
-
-            // Version 8
-            writer.Write(m_TimesImbued);
-
-            #endregion
 
             SetFlag sflags = SetFlag.None;
 
@@ -1343,7 +1254,6 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
 
             switch (version)
@@ -1353,42 +1263,27 @@ namespace Server.Items
                 case 14:
                 case 13:
                 case 12:
-                    {
-                        _Owner = reader.ReadMobile();
-                        _OwnerName = reader.ReadString();
-                        goto case 11;
-                    }
                 case 11:
                 case 10:
                     {
+                        _Owner = reader.ReadMobile();
+                        _OwnerName = reader.ReadString();
+
                         m_IsImbued = reader.ReadBool();
                         goto case 9;
                     }
                 case 9:
                     {
-                        #region Runic Reforging
                         m_ReforgedPrefix = (ReforgedPrefix)reader.ReadInt();
                         m_ReforgedSuffix = (ReforgedSuffix)reader.ReadInt();
                         m_ItemPower = (ItemPower)reader.ReadInt();
-                        #endregion
 
-                        #region Stygian Abyss
                         m_GorgonLenseCharges = reader.ReadInt();
                         m_GorgonLenseType = (LenseType)reader.ReadInt();
-
-                        m_PhysNonImbuing = reader.ReadInt();
-                        m_FireNonImbuing = reader.ReadInt();
-                        m_ColdNonImbuing = reader.ReadInt();
-                        m_PoisonNonImbuing = reader.ReadInt();
-                        m_EnergyNonImbuing = reader.ReadInt();
                         goto case 8;
                     }
                 case 8:
                     {
-                        m_TimesImbued = reader.ReadInt();
-
-                        #endregion
-
                         SetFlag sflags = (SetFlag)reader.ReadEncodedInt();
 
                         if (GetSaveFlag(sflags, SetFlag.Attributes))
@@ -2647,13 +2542,6 @@ namespace Server.Items
                 from.CheckSkill(SkillName.ArmsLore, 0, 100);
             }
 
-            // Imbuing needs to keep track of what is natrual, what is imbued bonuses
-            m_PhysNonImbuing = m_PhysicalBonus;
-            m_FireNonImbuing = m_FireBonus;
-            m_ColdNonImbuing = m_ColdBonus;
-            m_PoisonNonImbuing = m_PoisonBonus;
-            m_EnergyNonImbuing = m_EnergyBonus;
-
             InvalidateProperties();
         }
 
@@ -2678,12 +2566,6 @@ namespace Server.Items
                 m_ColdBonus = Math.Max(0, m_ColdBonus - info.ArmorColdResist);
                 m_PoisonBonus = Math.Max(0, m_PoisonBonus - info.ArmorPoisonResist);
                 m_EnergyBonus = Math.Max(0, m_EnergyBonus - info.ArmorEnergyResist);
-
-                m_PhysNonImbuing = Math.Max(0, PhysNonImbuing - info.ArmorPhysicalResist);
-                m_FireNonImbuing = Math.Max(0, m_FireNonImbuing - info.ArmorFireResist);
-                m_ColdNonImbuing = Math.Max(0, m_ColdNonImbuing - info.ArmorColdResist);
-                m_PoisonNonImbuing = Math.Max(0, m_PoisonNonImbuing - info.ArmorPoisonResist);
-                m_EnergyNonImbuing = Math.Max(0, m_EnergyNonImbuing - info.ArmorEnergyResist);
             }
 
             info = GetResourceAttrs(m_Resource);
@@ -2694,12 +2576,6 @@ namespace Server.Items
             m_ColdBonus += info.ArmorColdResist;
             m_PoisonBonus += info.ArmorPoisonResist;
             m_EnergyBonus += info.ArmorEnergyResist;
-
-            m_PhysNonImbuing += info.ArmorPhysicalResist;
-            m_FireNonImbuing += info.ArmorFireResist;
-            m_ColdNonImbuing += info.ArmorColdResist;
-            m_PoisonNonImbuing += info.ArmorPoisonResist;
-            m_EnergyNonImbuing += info.ArmorEnergyResist;
         }
 
         public virtual void DistributeMaterialBonus(CraftAttributeInfo attrInfo)
