@@ -140,10 +140,6 @@ namespace Server.Engines.Craft
 
             AddCraft(typeof(GargoyleWallMirror), 1044050, 1095324, 70.0, 120.0, typeof(Sand), 1044625, 10, 1044627);
 
-            index = AddCraft(typeof(SoulstoneFragment), 1044050, 1071000, 70.0, 120.0, typeof(CrystalGranules), 1112329, 2, 1044253);
-            AddRes(index, typeof(VoidEssence), 1112327, 2, 1044253);
-            SetItemHue(index, 1150);
-
             AddCraft(typeof(EmptyVenomVial), 1044050, 1112215, 52.5, 102.5, typeof(Sand), 1044625, 1, 1044627);
 
             AddCraft(typeof(EmptyOilFlask), 1044050, 1150866, 60.0, 110.0, typeof(Sand), 1044625, 5, 1044627);

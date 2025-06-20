@@ -4,7 +4,8 @@ namespace Server.Multis
 {
     public class SmallOldHouse : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-3, -3, 7, 7), new Rectangle2D(-1, 4, 3, 1) };
+        public static Rectangle2D[] AreaArray = [new(-3, -3, 7, 7), new(-1, 4, 3, 1)];
+
         public SmallOldHouse(Mobile owner, int id)
             : base(id, owner, 425, 3)
         {
@@ -20,7 +21,6 @@ namespace Server.Multis
 
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(2, 4, 0);
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.TwoStoryFoundations[0];
 
         public override void Serialize(GenericWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -54,7 +54,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.ThreeStoryFoundations[20];
         public override int ConvertOffsetX => -1;
         public override int ConvertOffsetY => -1;
         public override Rectangle2D[] Area => AreaArray;
@@ -69,13 +68,14 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
     public class TwoStoryHouse : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-7, 0, 14, 7), new Rectangle2D(-7, -7, 9, 7), new Rectangle2D(-4, 7, 4, 1) };
+        public static Rectangle2D[] AreaArray = [new(-7, 0, 14, 7), new(-7, -7, 9, 7), new(-4, 7, 4, 1)];
+
         public TwoStoryHouse(Mobile owner, int id)
             : base(id, owner, 1370, 10)
         {
@@ -104,7 +104,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -128,7 +128,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.ThreeStoryFoundations[37];
         public override int ConvertOffsetY => -1;
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(5, 8, 0);
@@ -142,7 +141,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -215,7 +214,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -239,7 +238,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.ThreeStoryFoundations[29];
         public override int ConvertOffsetY => -1;
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(1, 8, 0);
@@ -253,7 +251,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -273,7 +271,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.ThreeStoryFoundations[29];
         public override int ConvertOffsetY => -1;
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(1, 8, 0);
@@ -287,7 +284,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -307,7 +304,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.TwoStoryFoundations[6];
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(1, 4, 0);
 
@@ -320,7 +316,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -342,7 +338,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.TwoStoryFoundations[12];
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(5, 8, 0);
 
@@ -355,7 +350,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -375,7 +370,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.TwoStoryFoundations[35];
         public override int ConvertOffsetY => -1;
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(4, 6, 0);
@@ -389,7 +383,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -412,7 +406,6 @@ namespace Server.Multis
         {
         }
 
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.TwoStoryFoundations[31];
         public override Rectangle2D[] Area => AreaArray;
         public override Point3D BaseBanLocation => new Point3D(3, 8, 0);
 
@@ -425,7 +418,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -453,7 +446,6 @@ namespace Server.Multis
 
         public override Rectangle2D[] Area => ItemID == 0x40A2 ? AreaArray1 : AreaArray2;
         public override Point3D BaseBanLocation => new Point3D(3, 4, 0);
-        public override HousePlacementEntry ConvertEntry => HousePlacementEntry.TwoStoryFoundations[0];
 
         public override void Serialize(GenericWriter writer)
         {
@@ -464,7 +456,7 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

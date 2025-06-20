@@ -5370,25 +5370,6 @@ namespace Server.Mobiles
                         PackItem(new TreasureMap(treasureLevel, map, SpellHelper.IsEodon(map, Location)));
                     }
                 }
-
-                if (m_Paragon && Paragon.ChocolateIngredientChance > Utility.RandomDouble())
-                {
-                    switch (Utility.Random(4))
-                    {
-                        case 0:
-                            PackItem(new CocoaButter());
-                            break;
-                        case 1:
-                            PackItem(new CocoaLiquor());
-                            break;
-                        case 2:
-                            PackItem(new SackOfSugar());
-                            break;
-                        case 3:
-                            PackItem(new Vanilla());
-                            break;
-                    }
-                }
             }
 
             if (!Summoned && !NoKillAwards && !m_HasGeneratedLoot && !m_NoLootOnDeath)
