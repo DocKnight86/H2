@@ -229,7 +229,6 @@ namespace Server.Engines.VeteranRewards
                     new RewardEntry(houseAddOns,    1062692, typeof(ContestMiniHouseDeed), MiniHouseType.MalasMountainPass),
                     new RewardEntry(houseAddOns,    1072216, typeof(ContestMiniHouseDeed), MiniHouseType.ChurchAtNight),
 
-                    new RewardEntry(miscellaneous,  1076155, typeof(RedSoulstone)),
                     new RewardEntry(miscellaneous,  1080523, typeof(CommodityDeedBox)),
                     new RewardEntry(miscellaneous,  1113945,  typeof(CrystalPortal)),
                     new RewardEntry(miscellaneous,  1150074,  typeof(CorruptedCrystalPortal)),

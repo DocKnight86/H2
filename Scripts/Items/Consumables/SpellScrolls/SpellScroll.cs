@@ -1,7 +1,5 @@
-using Server.ContextMenus;
 using Server.Mobiles;
 using Server.Spells;
-using System.Collections.Generic;
 
 namespace Server.Items
 {
@@ -36,7 +34,6 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(0); // version
 
             writer.Write(m_SpellID);
@@ -45,26 +42,9 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            reader.ReadInt();
 
-            int version = reader.ReadInt();
-
-            switch (version)
-            {
-                case 0:
-                    {
-                        m_SpellID = reader.ReadInt();
-
-                        break;
-                    }
-            }
-        }
-
-        public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
-        {
-            base.GetContextMenuEntries(from, list);
-
-            if (from.Alive && Movable)
-                list.Add(new AddToSpellbookEntry());
+            m_SpellID = reader.ReadInt();
         }
 
         public override void OnDoubleClick(Mobile from)

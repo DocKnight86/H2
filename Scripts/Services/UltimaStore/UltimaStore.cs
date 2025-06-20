@@ -284,25 +284,18 @@ namespace Server.Engines.UOStore
             Register<ChargerOfTheFallen>(1075187, 1156646, 0x2D9C, 0, 0, 1000, cat);
 
             // misc
-            cat = StoreCategory.Misc;
-            Register<SoulstoneToken>(1159573, 1158405, 0x32F4, 0, 2721, 1000, cat, ConstructSoulstone);
-            Register<EnchantedSoulstoneVessel>(1126839, 1159627, 0xA73F, 0, 0, 1000, cat);
+            cat = StoreCategory.Misc; ;
             Register<RookChessPieceGuildstone>(1159490, 1159491, 0xA583, 0, 0, 500, cat);
             Register<LegacyGuildstone>(1159490, 1159491, 0xED4, 0, 0, 500, cat);
             Register<KnightChessPieceGuildstone>(1159490, 1159491, 0xA581, 0, 0, 500, cat);
             Register<AnvilofArtifactsDeed>(1159437, 1159466, 0xA108, 0, 0, 1000, cat);
             Register<PetWhistle>(1159374, 1159394, 0xA4E7, 0, 0, 200, cat);
-            Register<SoulstoneToken>(1158869, 1158405, 0x32F4, 0, 43, 1000, cat, ConstructSoulstone);
-            Register<SoulstoneToken>(1158870, 1158405, 0x32F4, 0, 53, 1000, cat, ConstructSoulstone);
-            Register<SoulstoneToken>(1158868, 1158405, 0x32F4, 0, 1150, 1000, cat, ConstructSoulstone);
-            Register<SoulstoneToken>(1158867, 1158405, 0x32F4, 0, 1106, 1000, cat, ConstructSoulstone);
-
+           
             if (AccountVault.SystemSettings.UseTokens)
             {
                 Register<VaultToken>(1158315, 1158316, 0x9FE8, 0, 0, 300, cat);
             }
 
-            Register<SoulstoneToken>(1158404, 1158405, 0x32F4, 0, 2598, 1000, cat, ConstructSoulstone);
             Register<WeddingChest>(1157895, 1157896, 0, 0x9CCC, 0, 500, cat);
             
             Register<TotemOfChromaticFortune>(1157606, 1157604, 0, 0x9CC9, 0, 300, cat);
@@ -317,9 +310,6 @@ namespace Server.Engines.UOStore
             Register<PenOfWisdom>(1115358, 1156669, 0, 0x9C62, 0, 600, cat);
 
             Register<BritannianShipDeed>(1150100, 1156673, 0, 0x9C6A, 0, 1200, cat);
-
-            Register<SoulstoneToken>(1078835, 1158405, 0x2ADC, 0, 0, 1000, cat, ConstructSoulstone);
-            Register<SoulstoneToken>(1078834, 1158405, 0x2A93, 0, 0, 1000, cat, ConstructSoulstone);
 
             Register<MerchantsTrinket>(new TextDefinition[] { 1156827, 1156681 }, 1156666, 0, 0x9C67, 0, 300, cat, ConstructMerchantsTrinket);
             Register<MerchantsTrinket>(new TextDefinition[] { 1156828, 1156682 }, 1156667, 0, 0x9C67, 0, 500, cat, ConstructMerchantsTrinket);
@@ -545,23 +535,6 @@ namespace Server.Engines.UOStore
             {
                 case 1156686: return new ForgedMetalOfArtifacts(10);
                 case 1156687: return new ForgedMetalOfArtifacts(5);
-            }
-
-            return null;
-        }
-
-        public static Item ConstructSoulstone(Mobile m, StoreEntry entry)
-        {
-            switch (entry.Name[0].Number)
-            {
-                case 1078835: return new SoulstoneToken(SoulstoneType.Blue);
-                case 1078834: return new SoulstoneToken(SoulstoneType.Green);
-                case 1158404: return new SoulstoneToken(SoulstoneType.Violet);
-                case 1158869: return new SoulstoneToken(SoulstoneType.Orange);
-                case 1158870: return new SoulstoneToken(SoulstoneType.Yellow);
-                case 1158868: return new SoulstoneToken(SoulstoneType.White);
-                case 1158867: return new SoulstoneToken(SoulstoneType.Black);
-                case 1159573: return new SoulstoneToken(SoulstoneType.Gold);
             }
 
             return null;

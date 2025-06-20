@@ -367,7 +367,7 @@ namespace Server.Multis
         {
             typeof(Engines.Plants.SeedBox), typeof(GardenShedAddon),
             typeof(GardenShedBarrel),       typeof(BaseSpecialScrollBook),
-            typeof(JewelryBox), typeof(EnchantedSoulstoneVessel)
+            typeof(JewelryBox)
         };
 
         private readonly Type[] _NoDecayItems =
@@ -375,7 +375,7 @@ namespace Server.Multis
             typeof(BaseBoard),              typeof(Aquarium),
             typeof(FishBowl),               typeof(BaseSpecialScrollBook),
             typeof(Engines.Plants.SeedBox), typeof(JewelryBox),
-            typeof(FermentationBarrel), typeof(EnchantedSoulstoneVessel)
+            typeof(FermentationBarrel)
         };
 
         // Not Included Storage
@@ -2773,11 +2773,6 @@ namespace Server.Multis
                         LockDowns.Remove(ad);
 
                         ad.Movable = false;
-                    }
-
-                    if (item is EnchantedSoulstoneVessel esv && esv.Owned == null)
-                    {
-                        esv.Owned = m;
                     }
 
                     m.CloseGump(typeof(SetSecureLevelGump));

@@ -508,13 +508,9 @@ namespace Server.Engines.Points
             Entries[typeof(BalmOfSwiftness)] = 100.0;
             Entries[typeof(TaintedMushroom)] = 1000.0;
             Entries[typeof(GoldenSkull)] = 1000.0;
-            Entries[typeof(RedSoulstone)] = 15000.0;
-            Entries[typeof(BlueSoulstone)] = 15000.0;
-            Entries[typeof(SoulStone)] = 15000.0;
             Entries[typeof(HornOfPlenty)] = 2500.0;
             Entries[typeof(KepetchWax)] = 500.0;
             Entries[typeof(SlithEye)] = 500.0;
-            Entries[typeof(SoulstoneFragment)] = 500.0;
             Entries[typeof(WhiteClothDyeTub)] = 300.0;
             Entries[typeof(Lodestone)] = 75.0;
             Entries[typeof(FeyWings)] = 75.0;
