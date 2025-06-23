@@ -1,5 +1,3 @@
-#region References
-
 using Server.Commands;
 using Server.Gumps;
 using Server.Mobiles;
@@ -9,27 +7,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-#endregion
-
 namespace Server.Engines.Help
 {
     public enum PageType
     {
-        Bug,
-        Stuck,
-        Account,
-        Question,
-        Suggestion,
-        Other,
-        VerbalHarassment,
-        PhysicalHarassment
+        Account
     }
 
     public class PageEntry
     {
-        // What page types should have a speech log as attachment?
-        public static readonly PageType[] SpeechLogAttachment = new[] { PageType.VerbalHarassment };
-
         private readonly Mobile m_Sender;
         private Mobile m_Handler;
         private DateTime m_Sent;
@@ -37,7 +23,6 @@ namespace Server.Engines.Help
         private PageType m_Type;
         private Point3D m_PageLocation;
         private Map m_PageMap;
-        private readonly List<SpeechLogEntry> m_SpeechLog;
 
         public static readonly string SupportEmail = Config.Get("General.SupportEmail", default(string));
         public static readonly string SupportWebsite = Config.Get("General.SupportWebsite", default(string));
@@ -84,8 +69,6 @@ namespace Server.Engines.Help
             set { m_PageMap = value; }
         }
 
-        public List<SpeechLogEntry> SpeechLog => m_SpeechLog;
-
         private Timer m_Timer;
 
         public void Stop()
@@ -106,12 +89,6 @@ namespace Server.Engines.Help
             m_Type = type;
             m_PageLocation = sender.Location;
             m_PageMap = sender.Map;
-
-            if (sender is PlayerMobile pm && pm.SpeechLog != null && Array.IndexOf(SpeechLogAttachment, type) >= 0)
-            {
-                m_SpeechLog = new List<SpeechLogEntry>(pm.SpeechLog);
-            }
-
             m_Timer = new InternalTimer(this);
             m_Timer.Start();
         }
@@ -286,29 +263,13 @@ namespace Server.Engines.Help
                 from.SendLocalizedMessage(500182); // You cannot request help while customizing a house or transferring a character.
                 return false;
             }
-            else if (pm.PagingSquelched)
-            {
-                from.SendMessage("You cannot request help, sorry.");
-                return false;
-            }
 
             return true;
         }
 
         public static string GetPageTypeName(PageType type)
         {
-            if (type == PageType.VerbalHarassment)
-            {
-                return "Verbal Harassment";
-            }
-            else if (type == PageType.PhysicalHarassment)
-            {
-                return "Physical Harassment";
-            }
-            else
-            {
-                return type.ToString();
-            }
+            return type.ToString();
         }
 
         public static void OnHandlerChanged(Mobile old, Mobile value, PageEntry entry)
@@ -379,11 +340,6 @@ namespace Server.Engines.Help
             return m_List.IndexOf(e);
         }
 
-        public static void Cancel(Mobile sender)
-        {
-            Remove((PageEntry)m_KeyedBySender[sender]);
-        }
-
         public static void Remove(PageEntry e)
         {
             if (e == null)
@@ -405,11 +361,6 @@ namespace Server.Engines.Help
         public static PageEntry GetEntry(Mobile sender)
         {
             return (PageEntry)m_KeyedBySender[sender];
-        }
-
-        public static void Remove(Mobile sender)
-        {
-            Remove(GetEntry(sender));
         }
 
         public static ArrayList List => m_List;

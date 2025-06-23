@@ -35,7 +35,9 @@ namespace Server.Gumps
                 AddHtml(35, 15, 120, 20, Color("House Type", White), false, false);
 
                 if (list.Count == 0)
+                {
                     AddHtml(35, 40, 160, 40, Color("There were no houses found for that player.", White), false, false);
+                }
 
                 AddImage(190, 17, 0x25EA);
                 AddImage(207, 17, 0x25E6);
@@ -47,12 +49,16 @@ namespace Server.Gumps
                     if (i % 15 == 0)
                     {
                         if (page > 0)
+                        {
                             AddButton(207, 17, 0x15E1, 0x15E5, 0, GumpButtonType.Page, page + 1);
+                        }
 
                         AddPage(++page);
 
                         if (page > 1)
+                        {
                             AddButton(190, 17, 0x15E3, 0x15E7, 0, GumpButtonType.Page, page - 1);
+                        }
                     }
 
                     object name = FindHouseName(list[i]);
@@ -60,9 +66,13 @@ namespace Server.Gumps
                     AddHtml(15, 40 + ((i % 15) * 20), 20, 20, Color($"{i + 1}.", White), false, false);
 
                     if (name is int iName)
+                    {
                         AddHtmlLocalized(35, 40 + ((i % 15) * 20), 160, 20, iName, White16, false, false);
+                    }
                     else if (name is string sName)
+                    {
                         AddHtml(35, 40 + ((i % 15) * 20), 160, 20, Color(sName, White), false, false);
+                    }
 
                     AddButton(198, 39 + ((i % 15) * 20), 4005, 4007, i + 1, GumpButtonType.Reply, 0);
                 }
@@ -81,9 +91,13 @@ namespace Server.Gumps
                 bool valid = Sextant.Format(sel.Location, map, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth);
 
                 if (valid)
+                {
                     location = $"{yLat}° {yMins}'{(ySouth ? "S" : "N")}, {xLong}° {xMins}'{(xEast ? "E" : "W")}";
+                }
                 else
+                {
                     location = "unknown";
+                }
 
                 AddHtml(10, 15, 220, 20, Color(Center("House Properties"), White), false, false);
 
@@ -146,7 +160,9 @@ namespace Server.Gumps
         public static void ViewHouses_OnTarget(Mobile from, object targeted)
         {
             if (targeted is Mobile mobile)
+            {
                 from.SendGump(new ViewHousesGump(from, GetHouses(mobile), null));
+            }
         }
 
         public static List<BaseHouse> GetHouses(Mobile owner)
@@ -166,7 +182,9 @@ namespace Server.Gumps
                     Mobile mob = acct[i];
 
                     if (mob != null)
+                    {
                         list.AddRange(BaseHouse.GetHouses(mob));
+                    }
                 }
             }
 
@@ -182,7 +200,9 @@ namespace Server.Gumps
                 int v = info.ButtonID - 1;
 
                 if (v >= 0 && v < m_List.Count)
+                {
                     m_From.SendGump(new ViewHousesGump(m_From, m_List, m_List[v]));
+                }
             }
             else if (!m_Selection.Deleted)
             {
@@ -198,7 +218,9 @@ namespace Server.Gumps
                             Map map = m_Selection.Map;
 
                             if (map != null && map != Map.Internal)
+                            {
                                 m_From.MoveToWorld(m_Selection.BanLocation, map);
+                            }
 
                             m_From.SendGump(new ViewHousesGump(m_From, m_List, m_Selection));
 
@@ -211,7 +233,9 @@ namespace Server.Gumps
                             HouseSign sign = m_Selection.Sign;
 
                             if (sign != null && !sign.Deleted)
+                            {
                                 sign.OnDoubleClick(m_From);
+                            }
 
                             break;
                         }
@@ -243,23 +267,9 @@ namespace Server.Gumps
             for (int i = 0; i < entries.Length; ++i)
             {
                 if (entries[i].MultiID == multiID)
+                {
                     return entries[i].Description;
-            }
-
-            entries = HousePlacementEntry.TwoStoryFoundations;
-
-            for (int i = 0; i < entries.Length; ++i)
-            {
-                if (entries[i].MultiID == multiID)
-                    return entries[i].Description;
-            }
-
-            entries = HousePlacementEntry.ThreeStoryFoundations;
-
-            for (int i = 0; i < entries.Length; ++i)
-            {
-                if (entries[i].MultiID == multiID)
-                    return entries[i].Description;
+                }
             }
 
             return house.GetType().Name;
