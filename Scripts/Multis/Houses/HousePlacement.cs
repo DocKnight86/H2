@@ -71,9 +71,6 @@ namespace Server.Multis
             // This holds data describing the internal structure of the house
             MultiComponentList mcl = MultiData.GetComponents(multiID);
 
-            if (multiID >= 0x13EC && multiID < 0x1D00)
-                HouseFoundation.AddStairsTo(ref mcl); // this is a AOS house, add the stairs
-
             // Location of the nortwest-most corner of the house
             Point3D start = new Point3D(center.X + mcl.Min.X, center.Y + mcl.Min.Y, center.Z);
 

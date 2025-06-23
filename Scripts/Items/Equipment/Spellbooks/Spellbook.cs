@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Server.Commands;
 using Server.Engines.Craft;
-using Server.Multis;
 using Server.Network;
 using Server.Network.Packets;
 using Server.Spells;
@@ -313,11 +312,6 @@ namespace Server.Items
         {
             try
             {
-                if (!DesignContext.Check(from))
-                {
-                    return; // They are customizing
-                }
-
                 Spellbook book = Find(from, spellId);
 
                 if (book != null && book.HasSpell(spellId))
@@ -1163,11 +1157,6 @@ namespace Server.Items
 
         public static void OpenSpellbookRequest(Mobile from, int bookType)
         {
-            if (!DesignContext.Check(from))
-            {
-                return; // They are customizing
-            }
-
             SpellbookType type;
 
             switch (bookType)
@@ -1206,11 +1195,6 @@ namespace Server.Items
 
         public static void CastSpellRequest(Mobile from, int spellID, Item item)
         {
-            if (!DesignContext.Check(from))
-            {
-                return; // They are customizing
-            }
-
             Spellbook book = item as Spellbook;
 
             if (book == null || !book.HasSpell(spellID))

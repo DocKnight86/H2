@@ -51,7 +51,6 @@ namespace Server.Items
             : base(itemid)
         {
             Weight = 3.0;
-            LootType = LootType.Blessed;
         }
 
         public HousePlacementTool(Serial serial)
@@ -423,11 +422,7 @@ namespace Server.Items
             {
                 object[] args;
 
-                if (m_Type == typeof(HouseFoundation))
-                {
-                    args = [from, m_MultiID, m_Storage, m_Lockdowns];
-                }
-                else if (m_Type == typeof(SmallOldHouse) || m_Type == typeof(SmallShop) || m_Type == typeof(TwoStoryHouse))
+                if (m_Type == typeof(SmallOldHouse) || m_Type == typeof(SmallShop) || m_Type == typeof(TwoStoryHouse))
                 {
                     args = [from, m_MultiID];
                 }
@@ -513,11 +508,6 @@ namespace Server.Items
                             }
 
                             house.MoveToWorld(center, from.Map);
-
-                            if (house is HouseFoundation foundation)
-                            {
-                                foundation.OnPlacement();
-                            }
 
                             for (int i = 0; i < toMove.Count; ++i)
                             {

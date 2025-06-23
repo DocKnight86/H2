@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using Server.Accounting;
 using Server.Commands;
 using Server.Guilds;
-using Server.Items;
 using Server.Network;
 
 namespace Server
@@ -41,8 +40,6 @@ namespace Server
 	public delegate void CreateGuildHandler(CreateGuildEventArgs e);
 
 	public delegate void OnEnterRegionEventHandler(OnEnterRegionEventArgs e);
-
-	public delegate void MultiDesignQueryHandler(MultiDesignQueryEventArgs e);
 
 	public class CreateGuildEventArgs : EventArgs
 	{
@@ -346,18 +343,6 @@ namespace Server
 		public Region NewRegion => m_NewRegion;
 	}
 
-	public class MultiDesignQueryEventArgs : EventArgs
-	{
-		public NetState State { get; set; }
-		public BaseMulti Multi { get; set; }
-
-		public MultiDesignQueryEventArgs(NetState state, BaseMulti multi)
-		{
-			State = state;
-			Multi = multi;
-		}
-	}
-
 	public static class EventSink
 	{
 		public static event SpeechEventHandler Speech;
@@ -377,7 +362,6 @@ namespace Server
 		public static event FastWalkEventHandler FastWalk;
 		public static event CreateGuildHandler CreateGuild;
 		public static event OnEnterRegionEventHandler OnEnterRegion;
-		public static event MultiDesignQueryHandler MultiDesign;
 
 		public static void InvokeCreateGuild(CreateGuildEventArgs e)
         {
@@ -462,11 +446,6 @@ namespace Server
 		public static void InvokeOnEnterRegion(OnEnterRegionEventArgs e)
         {
             OnEnterRegion?.Invoke(e);
-        }
-
-		public static void InvokeMultiDesignQuery(MultiDesignQueryEventArgs e)
-        {
-            MultiDesign?.Invoke(e);
         }
     }
 }

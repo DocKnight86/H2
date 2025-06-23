@@ -53,7 +53,9 @@ namespace Server.Multis
                         Item subItem = subItems[i];
 
                         if (!(subItem is Container) && subItem.StackWith(null, dropped, false))
+                        {
                             return;
+                        }
                     }
                 }
             }
@@ -118,7 +120,9 @@ namespace Server.Multis
             base.OnItemRemoved(item);
 
             if (TotalItems == 0)
+            {
                 Delete();
+            }
         }
 
         public void RestartTimer()
@@ -177,10 +181,14 @@ namespace Server.Multis
             base.OnAfterDelete();
 
             if (House != null && House.MovingCrate == this)
+            {
                 House.MovingCrate = null;
+            }
 
             if (m_InternalizeTimer != null)
+            {
                 m_InternalizeTimer.Stop();
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -307,7 +315,9 @@ namespace Server.Multis
             base.OnItemRemoved(item);
 
             if (item.GetBounce() == null && TotalItems == 0)
+            {
                 Delete();
+            }
         }
 
         public override void OnItemBounceCleared(Item item)
@@ -315,7 +325,9 @@ namespace Server.Multis
             base.OnItemBounceCleared(item);
 
             if (TotalItems == 0)
+            {
                 Delete();
+            }
         }
 
         public override void Serialize(GenericWriter writer)

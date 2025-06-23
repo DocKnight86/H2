@@ -69,11 +69,6 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
-            if (m is PlayerMobile mobile && mobile.DesignContext != null)
-            {
-                return true;
-            }
-
             if (m_Target != null && !m_Target.Deleted)
             {
                 if (CheckAccess(m))
@@ -97,7 +92,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1); // version
+            writer.Write(0); // version
 
             writer.Write((int)m_Level);
             writer.Write(m_Target);

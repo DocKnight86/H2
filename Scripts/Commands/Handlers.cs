@@ -130,18 +130,26 @@ namespace Server.Commands
                         if (pe == null || pe.Handler != from)
                         {
                             if (pe == null)
+                            {
                                 from.SendMessage("You may only use this command on someone who has paged you.");
+                            }
                             else
+                            {
                                 from.SendMessage("You may only use this command if you are handling their help page.");
+                            }
 
                             return;
                         }
                     }
 
                     if (targ.AddToBackpack(held))
+                    {
                         from.SendMessage("The item they were holding has been placed into their backpack.");
+                    }
                     else
+                    {
                         from.SendMessage("The item they were holding has been placed at their feet.");
+                    }
 
                     held.ClearBounce();
 
@@ -194,11 +202,15 @@ namespace Server.Commands
 
             foreach (Item item in World.Items.Values)
                 if (item.Map == map && item.Parent == null)
+                {
                     list.Add(item);
+                }
 
             foreach (Mobile m in World.Mobiles.Values)
                 if (m.Map == map && !m.Player)
+                {
                     list.Add(m);
+                }
 
             if (list.Count > 0)
             {
@@ -240,7 +252,9 @@ namespace Server.Commands
                         Mobile pet = pets[i];
 
                         if (pet is IMount mount)
+                        {
                             mount.Rider = null; // make sure it's dismounted
+                        }
 
                         pet.MoveToWorld(from.Location, from.Map);
                     }
@@ -273,7 +287,9 @@ namespace Server.Commands
                         Mobile pet = (Mobile)pets[i];
 
                         if (pet is IMount mount)
+                        {
                             mount.Rider = null; // make sure it's dismounted
+                        }
 
                         pet.MoveToWorld(from.Location, from.Map);
                     }
@@ -296,7 +312,9 @@ namespace Server.Commands
 
             foreach (Mobile m in World.Mobiles.Values)
                 if (m is Banker && !(m is BaseCreature))
+                {
                     list.Add(m);
+                }
 
             foreach (Mobile m in list)
             {
@@ -314,7 +332,9 @@ namespace Server.Commands
                                 hasBankerSpawner = Insensitive.Equals(spawner.SpawnObjects[i].SpawnName, "banker");
 
                             if (hasBankerSpawner)
+                            {
                                 break;
+                            }
                         }
                     }
 
@@ -340,11 +360,17 @@ namespace Server.Commands
         public static void Sound_OnCommand(CommandEventArgs e)
         {
             if (e.Length == 1)
+            {
                 PlaySound(e.Mobile, e.GetInt32(0), true);
+            }
             else if (e.Length == 2)
+            {
                 PlaySound(e.Mobile, e.GetInt32(0), e.GetBoolean(1));
+            }
             else
+            {
                 e.Mobile.SendMessage("Format: Sound <index> [toAll]");
+            }
         }
 
         [Usage("Echo <text>")]
@@ -354,9 +380,13 @@ namespace Server.Commands
             string toEcho = e.ArgString.Trim();
 
             if (toEcho.Length > 0)
+            {
                 e.Mobile.SendMessage(toEcho);
+            }
             else
+            {
                 e.Mobile.SendMessage("Format: Echo \"<text>\"");
+            }
         }
 
         [Usage("Bank")]
@@ -376,14 +406,18 @@ namespace Server.Commands
 
             foreach (CommandEntry entry in CommandSystem.Entries.Values)
                 if (m.AccessLevel >= entry.AccessLevel)
+                {
                     list.Add(entry);
+                }
 
             list.Sort();
 
             StringBuilder sb = new StringBuilder();
 
             if (list.Count > 0)
+            {
                 sb.Append(list[0].Command);
+            }
 
             for (int i = 1; i < list.Count; ++i)
             {
@@ -403,7 +437,9 @@ namespace Server.Commands
             }
 
             if (sb.Length > 0)
+            {
                 m.SendAsciiMessage(0x482, sb.ToString());
+            }
         }
 
         [Usage("SM <text>")]
@@ -458,15 +494,16 @@ namespace Server.Commands
         {
             if (e.Length == 1)
             {
-                if (!Multis.DesignContext.Check(e.Mobile))
-                    return; // They are customizing
-
                 Spell spell = SpellRegistry.NewSpell(e.GetString(0), e.Mobile, null);
 
                 if (spell != null)
+                {
                     spell.Cast();
+                }
                 else
+                {
                     e.Mobile.SendMessage("That spell was not found.");
+                }
             }
             else
             {
@@ -527,7 +564,9 @@ namespace Server.Commands
             Map map = m.Map;
 
             if (map == null)
+            {
                 return;
+            }
 
             CommandLogging.WriteLine(m, "{0} {1} playing sound {2} (toAll={3})", m.AccessLevel, CommandLogging.Format(m), index, toAll);
 
@@ -538,7 +577,9 @@ namespace Server.Commands
             foreach (NetState state in m.GetClientsInRange(12))
             {
                 if (toAll || state.Mobile.CanSee(m))
+                {
                     state.Send(p);
+                }
             }
 
             p.Release();
@@ -675,7 +716,9 @@ namespace Server.Commands
                             map = Map.AllMaps[i];
 
                             if (map.MapIndex == 0x7F || map.MapIndex == 0xFF)
+                            {
                                 continue;
+                            }
 
                             if (Insensitive.Equals(name, map.Name))
                             {
@@ -702,7 +745,9 @@ namespace Server.Commands
                             Map m = Map.AllMaps[i];
 
                             if (m.MapIndex == 0x7F || m.MapIndex == 0xFF || from.Map == m)
+                            {
                                 continue;
+                            }
 
                             foreach (Region r in m.Regions.Values)
                             {
@@ -715,9 +760,13 @@ namespace Server.Commands
                         }
 
                         if (ser != 0)
+                        {
                             from.SendMessage("No object with that serial was found.");
+                        }
                         else
+                        {
                             from.SendMessage("No region with that name was found.");
+                        }
 
                         return;
                     }
@@ -762,9 +811,13 @@ namespace Server.Commands
                     Point3D p = Sextant.ReverseLookup(map, e.GetInt32(3), e.GetInt32(0), e.GetInt32(4), e.GetInt32(1), Insensitive.Equals(e.GetString(5), "E"), Insensitive.Equals(e.GetString(2), "S"));
 
                     if (p != Point3D.Zero)
+                    {
                         from.Location = p;
+                    }
                     else
+                    {
                         from.SendMessage("Sextant reverse lookup failed.");
+                    }
                 }
             }
             else
@@ -789,7 +842,9 @@ namespace Server.Commands
                 }
 
                 if (targeted is Mobile mobile)
+                {
                     from.SendMenu(new EquipMenu(from, mobile, GetEquip(mobile)));
+                }
             }
 
             private static ItemListEntry[] GetEquip(Mobile m)
@@ -883,9 +938,13 @@ namespace Server.Commands
                         CommandLogging.WriteLine(from, "{0} {1} opening bank box of {2}", from.AccessLevel, CommandLogging.Format(from), CommandLogging.Format(m));
 
                         if (from == m)
+                        {
                             box.Open();
+                        }
                         else
+                        {
                             box.DisplayTo(from);
+                        }
                     }
                     else
                     {
@@ -917,10 +976,14 @@ namespace Server.Commands
                             IMount mount = mountItem.Mount;
 
                             if (mount != null)
+                            {
                                 mount.Rider = null;
+                            }
 
                             if (targ.Items.IndexOf(item) == -1)
+                            {
                                 --i;
+                            }
                         }
                     }
 
@@ -967,9 +1030,13 @@ namespace Server.Commands
                 if (targeted is Mobile mobile)
                 {
                     if (mobile.AccessLevel >= from.AccessLevel && mobile != from)
+                    {
                         from.SendMessage("You can't do that to someone with higher Accesslevel than you!");
+                    }
                     else
+                    {
                         from.SendGump(new StuckMenu(from, mobile, false));
+                    }
                 }
             }
         }

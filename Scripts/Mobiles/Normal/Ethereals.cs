@@ -324,12 +324,6 @@ namespace Server.Mobiles
                 return false;
             }
 
-            if (!DesignContext.Check(from))
-            {
-                // Check sends the message
-                return false;
-            }
-
             return true;
         }
 

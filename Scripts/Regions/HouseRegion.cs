@@ -52,10 +52,7 @@ namespace Server.Regions
         {
             if (m.AccessLevel == AccessLevel.Player && House != null && House.IsFriend(m))
             {
-                if (House is HouseFoundation)
-                {
-                    House.RefreshDecay();
-                }
+                House.RefreshDecay();
             }
 
             Timer.DelayCall(TimeSpan.FromMilliseconds(500), m.SendEverything);
@@ -146,10 +143,6 @@ namespace Server.Regions
                 m.Location = House.BanLocation;
                 m.SendLocalizedMessage(1061637); // You are not allowed to access 
             }
-            else if (House is HouseFoundation foundation && foundation.Customizer != null && foundation.Customizer != m && foundation.IsInside(m))
-            {
-                m.Location = foundation.BanLocation;
-            }
 
             if (House.InternalizedVendors.Count > 0 && House.IsInside(m) && !House.IsInside(oldLocation, 16) && House.IsOwner(m) && m.Alive && !m.HasGump(typeof(NoticeGump)))
             {
@@ -197,10 +190,6 @@ namespace Server.Regions
             else if (House.IsCombatRestricted(from) && !House.IsInside(oldLocation, 16) && House.IsInside(newLocation, 16))
             {
                 from.SendLocalizedMessage(1061637); // You are not allowed to access 
-                return false;
-            }
-            else if (House is HouseFoundation foundation && foundation.Customizer != null && foundation.Customizer != from && foundation.IsInside(newLocation, 16))
-            {
                 return false;
             }
 
