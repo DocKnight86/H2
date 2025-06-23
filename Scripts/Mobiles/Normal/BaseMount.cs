@@ -446,9 +446,6 @@ namespace Server.Mobiles
                 return;
             }
 
-            if (!DesignContext.Check(from))
-                return;
-
             if (from.HasTrade)
             {
                 from.SendLocalizedMessage(1042317); // You may not ride at this time

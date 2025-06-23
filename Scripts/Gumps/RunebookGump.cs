@@ -328,7 +328,7 @@ namespace Server.Gumps
         {
             Mobile from = state.Mobile;
 
-            if (Book.Deleted || !from.InRange(Book.GetWorldLocation(), 3) || !Multis.DesignContext.Check(from))
+            if (Book.Deleted || !from.InRange(Book.GetWorldLocation(), 3))
             {
                 Book.Openers.Remove(from);
                 return;

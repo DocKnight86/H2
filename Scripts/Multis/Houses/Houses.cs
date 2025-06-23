@@ -37,7 +37,8 @@ namespace Server.Multis
 
     public class GuildHouse : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-7, -7, 14, 14), new Rectangle2D(-2, 7, 4, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-7, -7, 14, 14), new Rectangle2D(-2, 7, 4, 1)];
+
         public GuildHouse(Mobile owner)
             : base(0x74, owner, 1100, 8)
         {
@@ -110,7 +111,8 @@ namespace Server.Multis
 
     public class Tower : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-7, -7, 16, 14), new Rectangle2D(-1, 7, 4, 2), new Rectangle2D(-11, 0, 4, 7), new Rectangle2D(9, 0, 4, 7) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-7, -7, 16, 14), new Rectangle2D(-1, 7, 4, 2), new Rectangle2D(-11, 0, 4, 7), new Rectangle2D(9, 0, 4, 7)];
+
         public Tower(Mobile owner)
             : base(0x7A, owner, 2119, 15)
         {
@@ -147,7 +149,8 @@ namespace Server.Multis
 
     public class Keep : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-11, -11, 7, 8), new Rectangle2D(-11, 5, 7, 8), new Rectangle2D(6, -11, 7, 8), new Rectangle2D(6, 5, 7, 8), new Rectangle2D(-9, -3, 5, 8), new Rectangle2D(6, -3, 5, 8), new Rectangle2D(-4, -9, 10, 20), new Rectangle2D(-1, 11, 4, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-11, -11, 7, 8), new Rectangle2D(-11, 5, 7, 8), new Rectangle2D(6, -11, 7, 8), new Rectangle2D(6, 5, 7, 8), new Rectangle2D(-9, -3, 5, 8), new Rectangle2D(6, -3, 5, 8), new Rectangle2D(-4, -9, 10, 20), new Rectangle2D(-1, 11, 4, 1)];
+
         public Keep(Mobile owner)
             : base(0x7C, owner, 2625, 18)
         {
@@ -173,13 +176,14 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
     public class Castle : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-15, -15, 31, 31), new Rectangle2D(-1, 16, 4, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-15, -15, 31, 31), new Rectangle2D(-1, 16, 4, 1)];
+
         public Castle(Mobile owner)
             : base(0x7E, owner, 4076, 28)
         {
@@ -220,7 +224,8 @@ namespace Server.Multis
 
     public class LargePatioHouse : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-7, -7, 15, 14), new Rectangle2D(-5, 7, 4, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-7, -7, 15, 14), new Rectangle2D(-5, 7, 4, 1)];
+
         public LargePatioHouse(Mobile owner)
             : base(0x8C, owner, 1100, 8)
         {
@@ -257,7 +262,8 @@ namespace Server.Multis
 
     public class LargeMarbleHouse : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-7, -7, 15, 14), new Rectangle2D(-6, 7, 6, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-7, -7, 15, 14), new Rectangle2D(-6, 7, 6, 1)];
+
         public LargeMarbleHouse(Mobile owner)
             : base(0x96, owner, 1370, 10)
         {
@@ -290,7 +296,8 @@ namespace Server.Multis
 
     public class SmallTower : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-3, -3, 8, 7), new Rectangle2D(2, 4, 3, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-3, -3, 8, 7), new Rectangle2D(2, 4, 3, 1)];
+
         public SmallTower(Mobile owner)
             : base(0x98, owner, 580, 4)
         {
@@ -322,7 +329,8 @@ namespace Server.Multis
 
     public class LogCabin : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-3, -6, 8, 13) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-3, -6, 8, 13)];
+
         public LogCabin(Mobile owner)
             : base(0x9A, owner, 1100, 8)
         {
@@ -356,7 +364,8 @@ namespace Server.Multis
 
     public class SandStonePatio : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-5, -4, 12, 8), new Rectangle2D(-2, 4, 3, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-5, -4, 12, 8), new Rectangle2D(-2, 4, 3, 1)];
+
         public SandStonePatio(Mobile owner)
             : base(0x9C, owner, 850, 6)
         {
@@ -389,7 +398,8 @@ namespace Server.Multis
 
     public class TwoStoryVilla : BaseHouse
     {
-        public static Rectangle2D[] AreaArray = { new Rectangle2D(-5, -5, 11, 11), new Rectangle2D(2, 6, 4, 1) };
+        public static Rectangle2D[] AreaArray = [new Rectangle2D(-5, -5, 11, 11), new Rectangle2D(2, 6, 4, 1)];
+
         public TwoStoryVilla(Mobile owner)
             : base(0x9E, owner, 1100, 8)
         {
@@ -424,8 +434,9 @@ namespace Server.Multis
 
     public class SmallShop : BaseHouse
     {
-        public static Rectangle2D[] AreaArray1 = { new Rectangle2D(-3, -3, 7, 7), new Rectangle2D(-1, 4, 4, 1) };
-        public static Rectangle2D[] AreaArray2 = { new Rectangle2D(-3, -3, 7, 7), new Rectangle2D(-2, 4, 3, 1) };
+        public static Rectangle2D[] AreaArray1 = [new Rectangle2D(-3, -3, 7, 7), new Rectangle2D(-1, 4, 4, 1)];
+        public static Rectangle2D[] AreaArray2 = [new Rectangle2D(-3, -3, 7, 7), new Rectangle2D(-2, 4, 3, 1)];
+
         public SmallShop(Mobile owner, int id)
             : base(id, owner, 425, 3)
         {

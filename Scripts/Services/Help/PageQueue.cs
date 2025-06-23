@@ -1,6 +1,5 @@
 using Server.Commands;
 using Server.Gumps;
-using Server.Mobiles;
 using Server.Network;
 using System;
 using System.Collections;
@@ -247,24 +246,6 @@ namespace Server.Engines.Help
         public static void Initialize()
         {
             CommandSystem.Register("Pages", AccessLevel.Counselor, Pages_OnCommand);
-        }
-
-        public static bool CheckAllowedToPage(Mobile from)
-        {
-            PlayerMobile pm = from as PlayerMobile;
-
-            if (pm == null)
-            {
-                return true;
-            }
-
-            if (pm.DesignContext != null)
-            {
-                from.SendLocalizedMessage(500182); // You cannot request help while customizing a house or transferring a character.
-                return false;
-            }
-
-            return true;
         }
 
         public static string GetPageTypeName(PageType type)

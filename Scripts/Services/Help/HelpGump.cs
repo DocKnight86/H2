@@ -135,11 +135,6 @@ namespace Server.Engines.Help
                 }
             }
 
-            if (!PageQueue.CheckAllowedToPage(m))
-            {
-                return;
-            }
-
             if (PageQueue.Contains(m))
             {
                 m.SendMenu(new ContainedMenu(m));

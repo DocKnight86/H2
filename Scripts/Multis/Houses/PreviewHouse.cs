@@ -81,7 +81,6 @@ namespace Server.Multis
             }
         }
 
-
         public PreviewHouse(Serial serial)
             : base(serial)
         {
@@ -92,7 +91,9 @@ namespace Server.Multis
             base.OnLocationChange(oldLocation);
 
             if (m_Components == null)
+            {
                 return;
+            }
 
             int xOffset = X - oldLocation.X;
             int yOffset = Y - oldLocation.Y;
@@ -111,7 +112,9 @@ namespace Server.Multis
             base.OnMapChange();
 
             if (m_Components == null)
+            {
                 return;
+            }
 
             for (int i = 0; i < m_Components.Count; ++i)
             {
@@ -126,7 +129,9 @@ namespace Server.Multis
             base.OnDelete();
 
             if (m_Components == null)
+            {
                 return;
+            }
 
             for (int i = 0; i < m_Components.Count; ++i)
             {
@@ -139,7 +144,9 @@ namespace Server.Multis
         public override void OnAfterDelete()
         {
             if (m_Timer != null)
+            {
                 m_Timer.Stop();
+            }
 
             m_Timer = null;
 
@@ -149,7 +156,6 @@ namespace Server.Multis
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(0); // version
 
             writer.Write(m_Components);
@@ -158,34 +164,26 @@ namespace Server.Multis
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            reader.ReadInt();
 
-            int version = reader.ReadInt();
-
-            switch (version)
-            {
-                case 0:
-                    {
-                        m_Components = reader.ReadStrongItemList();
-
-                        break;
-                    }
-            }
+            m_Components = reader.ReadStrongItemList();
 
             Timer.DelayCall(TimeSpan.Zero, Delete);
         }
 
         private class DecayTimer : Timer
         {
-            private readonly Item m_Item;
+            private readonly Item _Item;
+
             public DecayTimer(Item item)
                 : base(TimeSpan.FromSeconds(20.0))
             {
-                m_Item = item;
+                _Item = item;
             }
 
             protected override void OnTick()
             {
-                m_Item.Delete();
+                _Item.Delete();
             }
         }
     }

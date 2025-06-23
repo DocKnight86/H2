@@ -381,9 +381,9 @@ namespace Server.Multis
         // Not Included Storage
         public virtual bool CheckCounts(Item item)
         {
-            for (var index = 0; index < _NoItemCountTable.Length; index++)
+            for (int index = 0; index < _NoItemCountTable.Length; index++)
             {
-                var x = _NoItemCountTable[index];
+                Type x = _NoItemCountTable[index];
 
                 if (item.GetType() == x || item.GetType().IsSubclassOf(x))
                 {
@@ -397,9 +397,9 @@ namespace Server.Multis
         // Contents will not decay
         public virtual bool CheckContentsDecay(Item item)
         {
-            for (var index = 0; index < _NoDecayItems.Length; index++)
+            for (int index = 0; index < _NoDecayItems.Length; index++)
             {
-                var x = _NoDecayItems[index];
+                Type x = _NoDecayItems[index];
 
                 if (item.GetType() == x || item.GetType().IsSubclassOf(x))
                 {
@@ -436,9 +436,9 @@ namespace Server.Multis
 
                 int count = 0;
 
-                for (var index = 0; index < list.Count; index++)
+                for (int index = 0; index < list.Count; index++)
                 {
-                    var x = list[index];
+                    SecureInfo x = list[index];
 
                     if (!LockDowns.ContainsKey(x.Item))
                     {
@@ -457,7 +457,7 @@ namespace Server.Multis
             {
                 fromMovingCrate += MovingCrate.TotalItems;
 
-                for (var index = 0; index < MovingCrate.Items.Count; index++)
+                for (int index = 0; index < MovingCrate.Items.Count; index++)
                 {
                     Item item = MovingCrate.Items[index];
 
@@ -478,7 +478,7 @@ namespace Server.Multis
                 return false;
             }
 
-            for (var index = 0; index < Region.Area.Length; index++)
+            for (int index = 0; index < Region.Area.Length; index++)
             {
                 Rectangle3D rect = Region.Area[index];
 
@@ -547,7 +547,7 @@ namespace Server.Multis
         {
             get
             {
-                for (var index = 0; index < PlayerVendors.Count; index++)
+                for (int index = 0; index < PlayerVendors.Count; index++)
                 {
                     Mobile vendor = PlayerVendors[index];
 
@@ -565,7 +565,7 @@ namespace Server.Multis
         {
             get
             {
-                for (var index = 0; index < PlayerVendors.Count; index++)
+                for (int index = 0; index < PlayerVendors.Count; index++)
                 {
                     Mobile vendor = PlayerVendors[index];
 
@@ -615,7 +615,7 @@ namespace Server.Multis
         {
             List<Mobile> list = new List<Mobile>();
 
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile playerVendor = PlayerVendors[index];
 
@@ -630,7 +630,7 @@ namespace Server.Multis
 
         public bool AreThereAvailableVendorsFor(Mobile m)
         {
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile playerVendor = PlayerVendors[index];
 
@@ -675,7 +675,7 @@ namespace Server.Multis
 
             LockDowns.Clear();
 
-            for (var index = 0; index < VendorRentalContracts.Count; index++)
+            for (int index = 0; index < VendorRentalContracts.Count; index++)
             {
                 Item item = VendorRentalContracts[index];
 
@@ -694,7 +694,7 @@ namespace Server.Multis
 
             VendorRentalContracts.Clear();
 
-            for (var index = 0; index < Secures.Count; index++)
+            for (int index = 0; index < Secures.Count; index++)
             {
                 SecureInfo info = Secures[index];
 
@@ -779,7 +779,7 @@ namespace Server.Multis
 
             Addons.Clear();
 
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile vendor = PlayerVendors[index];
 
@@ -791,7 +791,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < PlayerBarkeepers.Count; index++)
+            for (int index = 0; index < PlayerBarkeepers.Count; index++)
             {
                 Mobile mobile = PlayerBarkeepers[index];
 
@@ -830,7 +830,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < VendorRentalContracts.Count; index++)
+            for (int index = 0; index < VendorRentalContracts.Count; index++)
             {
                 Item item = VendorRentalContracts[index];
 
@@ -840,7 +840,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < Secures.Count; index++)
+            for (int index = 0; index < Secures.Count; index++)
             {
                 SecureInfo info = Secures[index];
 
@@ -855,7 +855,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile vendor = PlayerVendors[index];
 
@@ -870,7 +870,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < PlayerBarkeepers.Count; index++)
+            for (int index = 0; index < PlayerBarkeepers.Count; index++)
             {
                 Mobile mobile = PlayerBarkeepers[index];
 
@@ -907,7 +907,7 @@ namespace Server.Multis
 
         public void RestoreRelocatedEntities()
         {
-            for (var index = 0; index < RelocatedEntities.Count; index++)
+            for (int index = 0; index < RelocatedEntities.Count; index++)
             {
                 RelocatedEntity relocEntity = RelocatedEntities[index];
 
@@ -1115,9 +1115,9 @@ namespace Server.Multis
 
             List<Mobile> list = new List<Mobile>();
 
-            var mobiles = Region.GetMobiles();
+            List<Mobile> mobiles = Region.GetMobiles();
 
-            for (var index = 0; index < mobiles.Count; index++)
+            for (int index = 0; index < mobiles.Count; index++)
             {
                 Mobile mobile = mobiles[index];
 
@@ -1162,9 +1162,9 @@ namespace Server.Multis
             {
                 int count = 0;
 
-                for (var index = 0; index < Secures.Count; index++)
+                for (int index = 0; index < Secures.Count; index++)
                 {
-                    var x = Secures[index];
+                    SecureInfo x = Secures[index];
 
                     if (!LockDowns.ContainsKey(x.Item))
                     {
@@ -1422,7 +1422,7 @@ namespace Server.Multis
 
         private bool IsInList(Item item, Type[] list)
         {
-            for (var index = 0; index < list.Length; index++)
+            for (int index = 0; index < list.Length; index++)
             {
                 Type t = list[index];
 
@@ -1464,9 +1464,9 @@ namespace Server.Multis
 
             MultiTileEntry first = new MultiTileEntry();
 
-            for (var index = 0; index < mcl.List.Length; index++)
+            for (int index = 0; index < mcl.List.Length; index++)
             {
-                var entry = mcl.List[index];
+                MultiTileEntry entry = mcl.List[index];
 
                 if (p.X - X == entry.m_OffsetX && p.Y - Y == entry.m_OffsetY && p.Z - TileData.ItemTable[entry.m_ItemID].CalcHeight - Z == entry.m_OffsetZ)
                 {
@@ -1475,7 +1475,7 @@ namespace Server.Multis
                 }
             }
 
-            var id = first.m_ItemID;
+            ushort id = first.m_ItemID;
 
             if (id <= 0 || !HouseFoundation.IsStair(id) && !HouseFoundation.IsStairBlock(id))
             {
@@ -1639,7 +1639,7 @@ namespace Server.Multis
 
             if (Doors != null)
             {
-                for (var index = 0; index < Doors.Count; index++)
+                for (int index = 0; index < Doors.Count; index++)
                 {
                     Item item = Doors[index];
 
@@ -1709,7 +1709,7 @@ namespace Server.Multis
 
             if (Doors != null)
             {
-                for (var index = 0; index < Doors.Count; index++)
+                for (int index = 0; index < Doors.Count; index++)
                 {
                     Item item = Doors[index];
 
@@ -2166,7 +2166,7 @@ namespace Server.Multis
 
             if (i is Container && CheckContentsDecay(i))
             {
-                for (var index = 0; index < i.Items.Count; index++)
+                for (int index = 0; index < i.Items.Count; index++)
                 {
                     Item c = i.Items[index];
 
@@ -2365,9 +2365,9 @@ namespace Server.Multis
                 m_House.Friends.Clear();
                 m_House.CoOwners.Clear();
 
-                for (var index = 0; index < m_House.Secures.Count; index++)
+                for (int index = 0; index < m_House.Secures.Count; index++)
                 {
-                    var x = m_House.Secures[index];
+                    SecureInfo x = m_House.Secures[index];
 
                     x.Owner = to;
                 }
@@ -2549,7 +2549,7 @@ namespace Server.Multis
 
         public virtual void OnTransfer()
         {
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile playerVendor = PlayerVendors[index];
 
@@ -2560,7 +2560,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < PlayerBarkeepers.Count; index++)
+            for (int index = 0; index < PlayerBarkeepers.Count; index++)
             {
                 Mobile barkeeper = PlayerBarkeepers[index];
 
@@ -2573,7 +2573,7 @@ namespace Server.Multis
 
         public void OnCondemned()
         {
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile playerVendor = PlayerVendors[index];
 
@@ -2609,9 +2609,9 @@ namespace Server.Multis
 
                 SecureInfo first = null;
 
-                for (var index = 0; index < Secures.Count; index++)
+                for (int index = 0; index < Secures.Count; index++)
                 {
-                    var i = Secures[index];
+                    SecureInfo i = Secures[index];
 
                     if (i.Item == check && HasSecureAccess(m, i))
                     {
@@ -2845,9 +2845,9 @@ namespace Server.Multis
 
         public SecureInfo GetSecureInfoFor(Item item)
         {
-            for (var index = 0; index < Secures.Count; index++)
+            for (int index = 0; index < Secures.Count; index++)
             {
-                var info = Secures[index];
+                SecureInfo info = Secures[index];
 
                 if (info.Item == item)
                 {
@@ -2860,9 +2860,9 @@ namespace Server.Multis
 
         public SecureInfo GetSecureInfoFor(Mobile from, Item item)
         {
-            for (var index = 0; index < Secures.Count; index++)
+            for (int index = 0; index < Secures.Count; index++)
             {
-                var info = Secures[index];
+                SecureInfo info = Secures[index];
 
                 if (info.Item == item && (info.Owner == from || IsOwner(from)))
                 {
@@ -2877,9 +2877,9 @@ namespace Server.Multis
         {
             List<SecureInfo> list = new List<SecureInfo>();
 
-            for (var index = 0; index < Secures.Count; index++)
+            for (int index = 0; index < Secures.Count; index++)
             {
-                var s = Secures[index];
+                SecureInfo s = Secures[index];
 
                 if (s.Owner == from)
                 {
@@ -2954,7 +2954,7 @@ namespace Server.Multis
                 return;
             }
 
-            for (var index = 0; index < Secures.Count; index++)
+            for (int index = 0; index < Secures.Count; index++)
             {
                 SecureInfo info = Secures[index];
 
@@ -3189,7 +3189,7 @@ namespace Server.Multis
 
             List<Mobile> remove = new List<Mobile>();
 
-            for (var index = 0; index < CoOwners.Count; index++)
+            for (int index = 0; index < CoOwners.Count; index++)
             {
                 Mobile m = CoOwners[index];
 
@@ -3199,7 +3199,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < remove.Count; index++)
+            for (int index = 0; index < remove.Count; index++)
             {
                 Mobile m = remove[index];
 
@@ -3208,7 +3208,7 @@ namespace Server.Multis
 
             remove.Clear();
 
-            for (var index = 0; index < Friends.Count; index++)
+            for (int index = 0; index < Friends.Count; index++)
             {
                 Mobile m = Friends[index];
 
@@ -3218,7 +3218,7 @@ namespace Server.Multis
                 }
             }
 
-            for (var index = 0; index < remove.Count; index++)
+            for (int index = 0; index < remove.Count; index++)
             {
                 Mobile m = remove[index];
 
@@ -3256,7 +3256,7 @@ namespace Server.Multis
 
                 List<SecureInfo> infos = GetSecureInfosFor(targ);
 
-                for (var index = 0; index < infos.Count; index++)
+                for (int index = 0; index < infos.Count; index++)
                 {
                     SecureInfo info = infos[index];
 
@@ -3343,7 +3343,7 @@ namespace Server.Multis
 
                 List<SecureInfo> infos = GetSecureInfosFor(targ);
 
-                for (var index = 0; index < infos.Count; index++)
+                for (int index = 0; index < infos.Count; index++)
                 {
                     SecureInfo info = infos[index];
 
@@ -3370,7 +3370,7 @@ namespace Server.Multis
 
             writer.WriteEncodedInt(RelocatedEntities.Count);
 
-            for (var index = 0; index < RelocatedEntities.Count; index++)
+            for (int index = 0; index < RelocatedEntities.Count; index++)
             {
                 RelocatedEntity relEntity = RelocatedEntities[index];
 
@@ -3860,7 +3860,7 @@ namespace Server.Multis
         {
             int count = 0;
 
-            for (var index = 0; index < PlayerVendors.Count; index++)
+            for (int index = 0; index < PlayerVendors.Count; index++)
             {
                 Mobile playerVendor = PlayerVendors[index];
 
@@ -3970,9 +3970,9 @@ namespace Server.Multis
 
             CheckUnregisteredAddons();
 
-            var ms = GetMobiles();
+            List<Mobile> ms = GetMobiles();
 
-            for (var index = 0; index < ms.Count; index++)
+            for (int index = 0; index < ms.Count; index++)
             {
                 Mobile m = ms[index];
 
@@ -4270,7 +4270,7 @@ namespace Server.Multis
                 return true;
             }
 
-            for (var index = 0; index < CoOwners.Count; index++)
+            for (int index = 0; index < CoOwners.Count; index++)
             {
                 Mobile mob = CoOwners[index];
 
@@ -4913,11 +4913,6 @@ namespace Server.Multis
                 }
 
                 bool isOwned = house.Doors.Contains(item);
-
-                if (!isOwned)
-                {
-                    isOwned = house is HouseFoundation foundation && foundation.IsFixture(item);
-                }
 
                 if (!isOwned)
                 {

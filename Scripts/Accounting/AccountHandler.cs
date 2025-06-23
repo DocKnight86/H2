@@ -160,7 +160,7 @@ namespace Server.Misc
                         else
                             from.SendMessage("Your IP address does not match that which created this account.");
                     }
-                    else if (PageQueue.CheckAllowedToPage(from))
+                    else 
                     {
                         from.SendMessage("Your IP address does not match that which created this account.  A page has been entered into the help system on your behalf.");
 
