@@ -2,8 +2,6 @@ using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Spells;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -611,58 +609,6 @@ namespace Server.Multis
 
             frontStairs = false;
             return false;
-        }
-
-        public void BeginCustomize(Mobile m)
-        {
-            if (!m.CheckAlive())
-            {
-                return;
-            }
-
-            if (SpellHelper.CheckCombat(m))
-            {
-                m.SendLocalizedMessage(1005564, "", 0x22); // Wouldst thou flee during the heat of battle??
-                return;
-            }
-
-            RelocateEntities();
-
-            var list = GetItems();
-
-            for (var index = 0; index < list.Count; index++)
-            {
-                Item item = list[index];
-
-                item.Location = BanLocation;
-            }
-
-            var mobiles = GetMobiles();
-
-            for (var index = 0; index < mobiles.Count; index++)
-            {
-                Mobile mobile = mobiles[index];
-
-                if (mobile is Mannequin || mobile is Steward)
-                {
-                    Mannequin.ForceRedeed(mobile, this);
-                }
-                else if (mobile != m)
-                {
-                    mobile.Location = BanLocation;
-                }
-            }
-
-            DesignContext.Add(m, this);
-
-            m.Send(new BeginHouseCustomization(this));
-
-            NetState ns = m.NetState;
-
-            if (ns != null)
-                SendInfoTo(ns);
-
-            DesignState.SendDetailedInfoTo(ns);
         }
 
         public override void SendInfoTo(NetState state, bool sendOplPacket)
