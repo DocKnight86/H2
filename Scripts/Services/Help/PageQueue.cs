@@ -1,16 +1,14 @@
 #region References
-using Server.Accounting;
+
 using Server.Commands;
 using Server.Gumps;
-using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
+
 #endregion
 
 namespace Server.Engines.Help
@@ -448,70 +446,6 @@ namespace Server.Engines.Help
                 entry.Sender.SendMessage(
                     "We are sorry, but no staff members are currently available to assist you.  Your page will remain in the queue until one becomes available, or until you cancel it manually.");
             }
-
-            if (Email.FromAddress != null && Email.SpeechLogPageAddresses != null && entry.SpeechLog != null)
-            {
-                SendEmail(entry);
-            }
-        }
-
-        private static void SendEmail(PageEntry entry)
-        {
-            Mobile sender = entry.Sender;
-            DateTime time = DateTime.UtcNow;
-
-            MailMessage mail = new MailMessage(Email.FromAddress, Email.SpeechLogPageAddresses)
-            {
-                Subject = "ServUO Speech Log Page Forwarding"
-            };
-
-            using (StringWriter writer = new StringWriter())
-            {
-                writer.WriteLine("ServUO Speech Log Page - {0}", GetPageTypeName(entry.Type));
-                writer.WriteLine();
-
-                writer.WriteLine(
-                    "From: '{0}', Account: '{1}'", sender.RawName, sender.Account is Account ? sender.Account.Username : "???");
-                writer.WriteLine("Location: {0} [{1}]", sender.Location, sender.Map);
-                writer.WriteLine(
-                    "Sent on: {0}/{1:00}/{2:00} {3}:{4:00}:{5:00}",
-                    time.Year,
-                    time.Month,
-                    time.Day,
-                    time.Hour,
-                    time.Minute,
-                    time.Second);
-                writer.WriteLine();
-
-                writer.WriteLine("Message:");
-                writer.WriteLine("'{0}'", entry.Message);
-                writer.WriteLine();
-
-                writer.WriteLine("Speech Log");
-                writer.WriteLine("==========");
-
-                foreach (SpeechLogEntry logEntry in entry.SpeechLog)
-                {
-                    Mobile from = logEntry.From;
-                    string fromName = from.RawName;
-                    string fromAccount = from.Account is Account ? from.Account.Username : "???";
-                    DateTime created = logEntry.Created;
-                    string speech = logEntry.Speech;
-
-                    writer.WriteLine(
-                        "{0}:{1:00}:{2:00} - {3} ({4}): '{5}'",
-                        created.Hour,
-                        created.Minute,
-                        created.Second,
-                        fromName,
-                        fromAccount,
-                        speech);
-                }
-
-                mail.Body = writer.ToString();
-            }
-
-            Email.AsyncSend(mail);
         }
     }
 

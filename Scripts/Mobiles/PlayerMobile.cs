@@ -1057,14 +1057,12 @@ namespace Server.Mobiles
             HouseRegion.OnLogin(this);
             LampRoomRegion.OnLogin(this);
             LightCycle.OnLogin(this);
-            LoginStats.OnLogin(this);
             MaginciaLottoSystem.OnLogin(this);
             MasteryInfo.OnLogin(this);
             PlantSystem.OnLogin(this);
             QuestSystem.OnLogin(this);
             ResponseEntry.OnLogin(this);
             ShadowguardController.OnLogin(this);
-            ShardPoller.OnLogin(this);
             StormLevelGump.OnLogin(this);
             Strandedness.OnLogin(this);
             TwistedWealdDesert.OnLogin(this);
@@ -1091,9 +1089,9 @@ namespace Server.Mobiles
                 ViceVsVirtueSystem.OnLogin(this);
             }
 
-            if (Siege.SiegeShard)
+            if (IsStaff())
             {
-                Siege.OnLogin(this);
+                PageQueue.Pages_OnCalled(this);
             }
 
             ResendBuffs();

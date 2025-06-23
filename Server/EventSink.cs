@@ -42,10 +42,6 @@ namespace Server
 
 	public delegate void OnEnterRegionEventHandler(OnEnterRegionEventArgs e);
 
-	public delegate void ItemDeletedEventHandler(ItemDeletedEventArgs e);
-
-	public delegate void ContainerDroppedToEventHandler(ContainerDroppedToEventArgs e);
-
 	public delegate void MultiDesignQueryHandler(MultiDesignQueryEventArgs e);
 
 	public class CreateGuildEventArgs : EventArgs
@@ -350,30 +346,6 @@ namespace Server
 		public Region NewRegion => m_NewRegion;
 	}
 
-	public class ItemDeletedEventArgs : EventArgs
-	{
-		public Item Item { get; set; }
-
-		public ItemDeletedEventArgs(Item item)
-		{
-			Item = item;
-		}
-	}
-
-	public class ContainerDroppedToEventArgs : EventArgs
-	{
-		public Mobile Mobile { get; set; }
-		public Container Container { get; set; }
-		public Item Dropped { get; set; }
-
-		public ContainerDroppedToEventArgs(Mobile m, Container container, Item dropped)
-		{
-			Mobile = m;
-			Container = container;
-			Dropped = dropped;
-		}
-	}
-
 	public class MultiDesignQueryEventArgs : EventArgs
 	{
 		public NetState State { get; set; }
@@ -405,8 +377,6 @@ namespace Server
 		public static event FastWalkEventHandler FastWalk;
 		public static event CreateGuildHandler CreateGuild;
 		public static event OnEnterRegionEventHandler OnEnterRegion;
-		public static event ItemDeletedEventHandler ItemDeleted;
-		public static event ContainerDroppedToEventHandler ContainerDroppedTo;
 		public static event MultiDesignQueryHandler MultiDesign;
 
 		public static void InvokeCreateGuild(CreateGuildEventArgs e)
@@ -492,16 +462,6 @@ namespace Server
 		public static void InvokeOnEnterRegion(OnEnterRegionEventArgs e)
         {
             OnEnterRegion?.Invoke(e);
-        }
-
-		public static void InvokeItemDeleted(ItemDeletedEventArgs e)
-        {
-            ItemDeleted?.Invoke(e);
-        }
-
-		public static void InvokeContainerDroppedTo(ContainerDroppedToEventArgs e)
-        {
-            ContainerDroppedTo?.Invoke(e);
         }
 
 		public static void InvokeMultiDesignQuery(MultiDesignQueryEventArgs e)

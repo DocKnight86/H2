@@ -232,7 +232,7 @@ namespace Server.Misc
         private static void SetStats(Mobile m)
         {
             // str, dex, int
-            m.InitStats(35, 10, 10);
+            m.InitStats(30, 10, 10);
         }
 
         private static void SetSkills(Mobile m)
