@@ -1,8 +1,6 @@
-#region References
 using Server.Engines.Craft;
 using Server.Targeting;
 using System;
-#endregion
 
 namespace Server.Items
 {
@@ -12,7 +10,7 @@ namespace Server.Items
     }
 
     [Flipable(0xf9f, 0xf9e)]
-    public class Scissors : Item, ICraftable, IQuality, IUsesRemaining
+    public class Scissors : Item, IQuality, IUsesRemaining
     {
         private int m_UsesRemaining;
         private Mobile m_Crafter;
@@ -51,16 +49,22 @@ namespace Server.Items
             m_UsesRemaining = 50;
 
             if (Siege.SiegeShard)
+            {
                 m_ShowUsesRemaining = true;
+            }
         }
 
         public override void AddCraftedProperties(ObjectPropertyList list)
         {
             if (m_Crafter != null)
+            {
                 list.Add(1050043, m_Crafter.TitleName); // crafted by ~1_NAME~
+            }
 
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 list.Add(1060636); // exceptional
+            }
         }
 
         public override void AddUsesRemainingProperties(ObjectPropertyList list)
@@ -78,7 +82,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(2); // version
+            writer.Write(0); // version
 
             writer.Write(m_ShowUsesRemaining);
             writer.Write(m_UsesRemaining);
@@ -111,7 +115,9 @@ namespace Server.Items
         public int GetUsesScalar()
         {
             if (m_Quality == ItemQuality.Exceptional)
+            {
                 return 200;
+            }
 
             return 100;
         }
@@ -123,31 +129,31 @@ namespace Server.Items
             from.Target = new InternalTarget(this);
         }
 
-        #region ICraftable Members
         public int OnCraft(int quality, bool makersMark, Mobile from, CraftSystem craftSystem, Type typeRes, ITool tool, CraftItem craftItem, int resHue)
         {
             Quality = (ItemQuality)quality;
 
             if (makersMark)
+            {
                 Crafter = from;
+            }
 
             return quality;
         }
-        #endregion
 
         private class InternalTarget : Target
         {
-            private readonly Scissors m_Item;
+            private readonly Scissors _Item;
 
             public InternalTarget(Scissors item)
                 : base(2, false, TargetFlags.None)
             {
-                m_Item = item;
+                _Item = item;
             }
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Item.Deleted)
+                if (_Item.Deleted)
                 {
                     return;
                 }
@@ -164,25 +170,25 @@ namespace Server.Items
                 }
                 else if (targeted is Item item && !item.Movable)
                 {
-                    if (item is IScissorable obj && (obj is PlagueBeastInnard || obj is PlagueBeastMutationCore) && obj.Scissor(from, m_Item))
+                    if (item is IScissorable obj && obj is PlagueBeastInnard && obj.Scissor(from, _Item))
                     {
                         from.PlaySound(0x248);
 
                         if (Siege.SiegeShard)
                         {
-                            Siege.CheckUsesRemaining(from, m_Item);
+                            Siege.CheckUsesRemaining(from, _Item);
                         }
                     }
                 }
                 else if (targeted is IScissorable obj)
                 {
-                    if (obj.Scissor(from, m_Item))
+                    if (obj.Scissor(from, _Item))
                     {
                         from.PlaySound(0x248);
 
                         if (Siege.SiegeShard)
                         {
-                            Siege.CheckUsesRemaining(from, m_Item);
+                            Siege.CheckUsesRemaining(from, _Item);
                         }
                     }
                 }
@@ -194,9 +200,9 @@ namespace Server.Items
 
             protected override void OnNonlocalTarget(Mobile from, object targeted)
             {
-                if (targeted is IScissorable obj && (obj is PlagueBeastInnard || obj is PlagueBeastMutationCore))
+                if (targeted is IScissorable obj && obj is PlagueBeastInnard)
                 {
-                    if (obj.Scissor(from, m_Item))
+                    if (obj.Scissor(from, _Item))
                     {
                         from.PlaySound(0x248);
                     }

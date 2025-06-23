@@ -536,19 +536,6 @@ namespace Server.Items
             AddComponent(new PlagueBeastComponent(0x1363, 0x1), 0, 22);
             AddComponent(new PlagueBeastComponent(0x1D04, 0xD), 0, 22);
 
-            if (Owner != null && Owner.Backpack != null)
-            {
-                PlagueBeastMutationCore core = new PlagueBeastMutationCore();
-                Owner.Backpack.AddItem(core);
-                core.Movable = false;
-                core.Cut = false;
-                core.X = X;
-                core.Y = Y + 34;
-
-                Owner.PlaySound(0x21);
-                Owner.PlaySound(0x166);
-            }
-
             Opened = true;
         }
 

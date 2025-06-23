@@ -596,12 +596,6 @@ namespace Server.Engines.Help
                 AddButton(18, bottom - (buttons * 22), 0xFA5, 0xFA7, 3, GumpButtonType.Reply, 0);
                 AddLabel(52, bottom - (buttons++ * 22), 2100, "Go to Page Location");
 
-                if (entry.SpeechLog != null)
-                {
-                    AddButton(18, bottom - (buttons * 22), 0xFA5, 0xFA7, 10, GumpButtonType.Reply, 0);
-                    AddLabel(52, bottom - (buttons++ * 22), 2100, "View Speech Log");
-                }
-
                 AddLabel(18, 98, 2100, "Page Type:");
                 AddLabelCropped(128, 98, 264, 20, 2100, PageQueue.GetPageTypeName(entry.Type));
 
@@ -840,18 +834,6 @@ namespace Server.Engines.Help
                     {
                         Resend(state);
                         state.Mobile.SendGump(new PredefGump(state.Mobile, null));
-
-                        break;
-                    }
-                case 10: // View Speech Log
-                    {
-                        Resend(state);
-
-                        if (m_Entry.SpeechLog != null)
-                        {
-                            Gump gump = new SpeechLogGump(m_Entry.Sender, m_Entry.SpeechLog);
-                            state.Mobile.SendGump(gump);
-                        }
 
                         break;
                     }

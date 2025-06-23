@@ -176,8 +176,6 @@ namespace Server.Items
 
             ItemFlags.SetTaken(dropped, true);
 
-            EventSink.InvokeContainerDroppedTo(new ContainerDroppedToEventArgs(from, this, dropped));
-
             if (!EnchantedHotItemSocket.CheckDrop(from, this, dropped))
             {
                 return false;
@@ -222,8 +220,6 @@ namespace Server.Items
             from.SendSound(GetDroppedSound(item), GetWorldLocation());
 
             ItemFlags.SetTaken(item, true);
-
-            EventSink.InvokeContainerDroppedTo(new ContainerDroppedToEventArgs(from, this, item));
 
             if (!EnchantedHotItemSocket.CheckDrop(from, this, item))
             {

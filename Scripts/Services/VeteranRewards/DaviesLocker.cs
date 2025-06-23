@@ -130,7 +130,7 @@ namespace Server.Engines.VeteranRewards
                 return false;
             }
 
-            for (var index = 0; index < Components.Count; index++)
+            for (int index = 0; index < Components.Count; index++)
             {
                 AddonComponent c = Components[index];
 
@@ -157,13 +157,17 @@ namespace Server.Engines.VeteranRewards
             writer.Write((int)Level);
 
             writer.Write(Entries.Count);
-            for (var index = 0; index < Entries.Count; index++)
+            for (int index = 0; index < Entries.Count; index++)
             {
                 DaviesLockerEntry entry = Entries[index];
                 if (entry is SOSEntry)
+                {
                     writer.Write(0);
+                }
                 else if (entry is TreasureMapEntry)
+                {
                     writer.Write(1);
+                }
                 else
                 {
                     writer.Write(2);
@@ -290,9 +294,13 @@ namespace Server.Engines.VeteranRewards
         public DaviesLockerAddonDeed(List<DaviesLockerEntry> list)
         {
             if (list == null)
+            {
                 Entries = new List<DaviesLockerEntry>();
+            }
             else
+            {
                 Entries = list;
+            }
 
             LootType = LootType.Blessed;
         }
@@ -315,7 +323,9 @@ namespace Server.Engines.VeteranRewards
             South = choice == 0;
 
             if (!Deleted)
+            {
                 base.OnDoubleClick(from);
+            }
         }
 
         public DaviesLockerAddonDeed(Serial serial)
@@ -331,13 +341,17 @@ namespace Server.Engines.VeteranRewards
             writer.Write(South);
 
             writer.Write(Entries.Count);
-            for (var index = 0; index < Entries.Count; index++)
+            for (int index = 0; index < Entries.Count; index++)
             {
                 DaviesLockerEntry entry = Entries[index];
                 if (entry is SOSEntry)
+                {
                     writer.Write(0);
+                }
                 else if (entry is TreasureMapEntry)
+                {
                     writer.Write(1);
+                }
                 else
                 {
                     writer.Write(2);
@@ -379,8 +393,6 @@ namespace Server.Engines.VeteranRewards
         public Point3D Location { get; }
         public int Level { get; }
 
-        public bool QuestItem { get; set; }
-
         public DaviesLockerEntry(Map map, Point3D location, int level)
         {
             Map = map;
@@ -390,26 +402,16 @@ namespace Server.Engines.VeteranRewards
 
         public DaviesLockerEntry(GenericReader reader)
         {
-            int v = reader.ReadInt();
+            reader.ReadInt(); // version
 
-            switch (v)
-            {
-                case 1:
-                    QuestItem = reader.ReadBool();
-                    goto case 0;
-                case 0:
-                    Map = reader.ReadMap();
-                    Location = reader.ReadPoint3D();
-                    Level = reader.ReadInt();
-                    break;
-            }
+            Map = reader.ReadMap();
+            Location = reader.ReadPoint3D();
+            Level = reader.ReadInt();
         }
 
         public virtual void Serialize(GenericWriter writer)
         {
-            writer.Write(1);
-
-            writer.Write(QuestItem);
+            writer.Write(0); // version
 
             writer.Write(Map);
             writer.Write(Location);
@@ -429,9 +431,6 @@ namespace Server.Engines.VeteranRewards
             Opened = false;
             IsAncient = false;
             MessageIndex = -1;
-
-            if (mib is SaltySeaMIB)
-                QuestItem = true;
         }
 
         public SOSEntry(SOS sos)
@@ -440,15 +439,12 @@ namespace Server.Engines.VeteranRewards
             Opened = true;
             IsAncient = sos.IsAncient;
             MessageIndex = sos.MessageIndex;
-
-            if (sos is SaltySeaSOS)
-                QuestItem = true;
         }
 
         public SOSEntry(GenericReader reader)
             : base(reader)
         {
-            int v = reader.ReadInt();
+            reader.ReadInt(); // version
 
             IsAncient = reader.ReadBool();
             MessageIndex = reader.ReadInt();
@@ -458,7 +454,7 @@ namespace Server.Engines.VeteranRewards
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0);
+            writer.Write(0); // version
 
             writer.Write(IsAncient);
             writer.Write(MessageIndex);
@@ -482,41 +478,25 @@ namespace Server.Engines.VeteranRewards
             Decoder = map.Decoder;
             NextReset = map.NextReset;
             Package = map.Package;
-
-            if (map is HiddenTreasuresTreasureMap)
-                QuestItem = true;
         }
 
         public TreasureMapEntry(GenericReader reader) : base(reader)
         {
-            int v = reader.ReadInt();
+            reader.ReadInt(); // version
 
-            switch (v)
-            {
-                case 1:
-                    Package = (TreasurePackage)reader.ReadInt();
-                    goto case 0;
-                case 0:
-                    Completed = reader.ReadBool();
-                    CompletedBy = reader.ReadMobile();
-                    Decoder = reader.ReadMobile();
-                    NextReset = reader.ReadDateTime();
-                    break;
-            }
-
-            if (v == 0)
-            {
-                Package = (TreasurePackage)Utility.RandomMinMax(0, 4);
-            }
+            Package = (TreasurePackage)reader.ReadInt();
+            Completed = reader.ReadBool();
+            CompletedBy = reader.ReadMobile();
+            Decoder = reader.ReadMobile();
+            NextReset = reader.ReadDateTime();
         }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1);
+            writer.Write(0); // version
 
             writer.Write((int)Package);
-
             writer.Write(Completed);
             writer.Write(CompletedBy);
             writer.Write(Decoder);
@@ -543,7 +523,9 @@ namespace Server.Engines.VeteranRewards
             : base(100, 100)
         {
             if (addon == null || addon.Deleted)
+            {
                 return;
+            }
 
             AddImage(0, 0, 0x5C1);
             m_List = addon.Entries;
@@ -561,13 +543,19 @@ namespace Server.Engines.VeteranRewards
             int totalPages = (int)Math.Ceiling(m_List.Count / 10.0);
 
             if (totalPages < 1)
+            {
                 totalPages = 1;
+            }
 
             if (page < 0)
+            {
                 page = 0;
+            }
 
             if (page + 1 > totalPages)
+            {
                 page = totalPages - 1;
+            }
 
             m_Page = page;
 
@@ -636,7 +624,9 @@ namespace Server.Engines.VeteranRewards
             Mobile from = state.Mobile;
 
             if (!m_Addon.CanUse(from))
+            {
                 return;
+            }
 
             switch (info.ButtonID)
             {
@@ -668,7 +658,9 @@ namespace Server.Engines.VeteranRewards
                             DaviesLockerEntry entry = m_List[index];
 
                             if (entry != null)
+                            {
                                 ConstructEntry(from, entry);
+                            }
                         }
                     }
                     break;
@@ -721,17 +713,34 @@ namespace Server.Engines.VeteranRewards
             Map map = entry.Map;
 
             if (map == Map.Felucca)
+            {
                 return 1012001; // Felucca
+            }
+
             if (map == Map.Trammel)
+            {
                 return 1012000; // Trammel
+            }
+
             if (map == Map.Ilshenar)
+            {
                 return 1012002; // Ilshenar
+            }
+
             if (map == Map.Malas)
+            {
                 return 1060643; // Malas
+            }
+
             if (map == Map.Tokuno)
+            {
                 return 1063258; // Tokuno Islands
+            }
+
             if (map == Map.TerMur)
+            {
                 return 1112178; // Ter Mur
+            }
 
             return 1074235; // Unknown
         }
@@ -777,32 +786,16 @@ namespace Server.Engines.VeteranRewards
 
             if (entry.Opened)
             {
-                SOS sos;
-
-                if (entry.QuestItem)
+                SOS sos = new SOS(entry.Map, entry.Level)
                 {
-                    sos = new SaltySeaSOS(entry.Map, entry.Level);
-                }
-                else
-                {
-                    sos = new SOS(entry.Map, entry.Level);
-                }
+                    MessageIndex = entry.MessageIndex,
+                    TargetLocation = entry.Location
+                };
 
-                sos.MessageIndex = entry.MessageIndex;
-                sos.TargetLocation = entry.Location;
                 return sos;
             }
 
-            MessageInABottle mib;
-
-            if (entry.QuestItem)
-            {
-                mib = new SaltySeaMIB(entry.Map, entry.Level);
-            }
-            else
-            {
-                mib = new MessageInABottle(entry.Map, entry.Level);
-            }
+            MessageInABottle mib = new MessageInABottle(entry.Map, entry.Level);
 
             return mib;
         }
@@ -814,22 +807,13 @@ namespace Server.Engines.VeteranRewards
                 return null;
             }
 
-            TreasureMap map;
-
-            if (entry.QuestItem)
+            TreasureMap map = new TreasureMap
             {
-                map = new HiddenTreasuresTreasureMap(entry.Level, entry.Map, new Point2D(entry.Location.X, entry.Location.Y));
-            }
-            else
-            {
-                map = new TreasureMap
-                {
-                    Facet = entry.Map,
-                    Level = entry.Level,
-                    Package = entry.Package,
-                    ChestLocation = new Point2D(entry.Location.X, entry.Location.Y)
-                };
-            }
+                Facet = entry.Map,
+                Level = entry.Level,
+                Package = entry.Package,
+                ChestLocation = new Point2D(entry.Location.X, entry.Location.Y)
+            };
 
             bool eodon = map.TreasureFacet == TreasureFacet.Eodon;
 
@@ -877,9 +861,14 @@ namespace Server.Engines.VeteranRewards
         private int GetLevel(DaviesLockerEntry entry)
         {
             if (entry is SOSEntry)
+            {
                 return 1153568; // S-O-S
+            }
+
             if (entry is TreasureMapEntry)
+            {
                 return 1153572 + entry.Level;
+            }
 
             return 1153569; // Unknown
         }

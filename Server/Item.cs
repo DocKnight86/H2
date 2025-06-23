@@ -3960,8 +3960,6 @@ namespace Server
 					socket.Remove();
 				});
 			}
-
-			Timer.DelayCall(EventSink.InvokeItemDeleted, new ItemDeletedEventArgs(this));
 		}
 
 		public virtual void RemoveItem(Item item)

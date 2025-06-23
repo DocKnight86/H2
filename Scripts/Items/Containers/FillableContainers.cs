@@ -1201,7 +1201,6 @@ namespace Server.Items
             new[]
             {
                 typeof(Mage),
-                typeof(HolyMage),
                 typeof(MageGuildmaster)
             },
             new[]

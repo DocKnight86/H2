@@ -122,15 +122,6 @@ namespace Server
             CheckTime();
         }
 
-        public static void OnLogin(Mobile m)
-        {
-            if (m is PlayerMobile pm && pm.Map == Map.Trammel && pm.AccessLevel == AccessLevel.Player)
-            {
-                pm.MoveToWorld(new Point3D(989, 519, -50), Map.Malas);
-                pm.SendMessage("You have been removed from Trammel.");
-            }
-        }
-
         public static void Initialize()
         {
             if (SiegeShard)

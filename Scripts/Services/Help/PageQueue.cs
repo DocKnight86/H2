@@ -1,37 +1,21 @@
-#region References
-using Server.Accounting;
 using Server.Commands;
 using Server.Gumps;
-using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
-#endregion
 
 namespace Server.Engines.Help
 {
     public enum PageType
     {
-        Bug,
-        Stuck,
-        Account,
-        Question,
-        Suggestion,
-        Other,
-        VerbalHarassment,
-        PhysicalHarassment
+        Account
     }
 
     public class PageEntry
     {
-        // What page types should have a speech log as attachment?
-        public static readonly PageType[] SpeechLogAttachment = new[] { PageType.VerbalHarassment };
-
         private readonly Mobile m_Sender;
         private Mobile m_Handler;
         private DateTime m_Sent;
@@ -39,7 +23,6 @@ namespace Server.Engines.Help
         private PageType m_Type;
         private Point3D m_PageLocation;
         private Map m_PageMap;
-        private readonly List<SpeechLogEntry> m_SpeechLog;
 
         public static readonly string SupportEmail = Config.Get("General.SupportEmail", default(string));
         public static readonly string SupportWebsite = Config.Get("General.SupportWebsite", default(string));
@@ -86,8 +69,6 @@ namespace Server.Engines.Help
             set { m_PageMap = value; }
         }
 
-        public List<SpeechLogEntry> SpeechLog => m_SpeechLog;
-
         private Timer m_Timer;
 
         public void Stop()
@@ -108,12 +89,6 @@ namespace Server.Engines.Help
             m_Type = type;
             m_PageLocation = sender.Location;
             m_PageMap = sender.Map;
-
-            if (sender is PlayerMobile pm && pm.SpeechLog != null && Array.IndexOf(SpeechLogAttachment, type) >= 0)
-            {
-                m_SpeechLog = new List<SpeechLogEntry>(pm.SpeechLog);
-            }
-
             m_Timer = new InternalTimer(this);
             m_Timer.Start();
         }
@@ -288,29 +263,13 @@ namespace Server.Engines.Help
                 from.SendLocalizedMessage(500182); // You cannot request help while customizing a house or transferring a character.
                 return false;
             }
-            else if (pm.PagingSquelched)
-            {
-                from.SendMessage("You cannot request help, sorry.");
-                return false;
-            }
 
             return true;
         }
 
         public static string GetPageTypeName(PageType type)
         {
-            if (type == PageType.VerbalHarassment)
-            {
-                return "Verbal Harassment";
-            }
-            else if (type == PageType.PhysicalHarassment)
-            {
-                return "Physical Harassment";
-            }
-            else
-            {
-                return type.ToString();
-            }
+            return type.ToString();
         }
 
         public static void OnHandlerChanged(Mobile old, Mobile value, PageEntry entry)
@@ -381,11 +340,6 @@ namespace Server.Engines.Help
             return m_List.IndexOf(e);
         }
 
-        public static void Cancel(Mobile sender)
-        {
-            Remove((PageEntry)m_KeyedBySender[sender]);
-        }
-
         public static void Remove(PageEntry e)
         {
             if (e == null)
@@ -407,11 +361,6 @@ namespace Server.Engines.Help
         public static PageEntry GetEntry(Mobile sender)
         {
             return (PageEntry)m_KeyedBySender[sender];
-        }
-
-        public static void Remove(Mobile sender)
-        {
-            Remove(GetEntry(sender));
         }
 
         public static ArrayList List => m_List;
@@ -448,70 +397,6 @@ namespace Server.Engines.Help
                 entry.Sender.SendMessage(
                     "We are sorry, but no staff members are currently available to assist you.  Your page will remain in the queue until one becomes available, or until you cancel it manually.");
             }
-
-            if (Email.FromAddress != null && Email.SpeechLogPageAddresses != null && entry.SpeechLog != null)
-            {
-                SendEmail(entry);
-            }
-        }
-
-        private static void SendEmail(PageEntry entry)
-        {
-            Mobile sender = entry.Sender;
-            DateTime time = DateTime.UtcNow;
-
-            MailMessage mail = new MailMessage(Email.FromAddress, Email.SpeechLogPageAddresses)
-            {
-                Subject = "ServUO Speech Log Page Forwarding"
-            };
-
-            using (StringWriter writer = new StringWriter())
-            {
-                writer.WriteLine("ServUO Speech Log Page - {0}", GetPageTypeName(entry.Type));
-                writer.WriteLine();
-
-                writer.WriteLine(
-                    "From: '{0}', Account: '{1}'", sender.RawName, sender.Account is Account ? sender.Account.Username : "???");
-                writer.WriteLine("Location: {0} [{1}]", sender.Location, sender.Map);
-                writer.WriteLine(
-                    "Sent on: {0}/{1:00}/{2:00} {3}:{4:00}:{5:00}",
-                    time.Year,
-                    time.Month,
-                    time.Day,
-                    time.Hour,
-                    time.Minute,
-                    time.Second);
-                writer.WriteLine();
-
-                writer.WriteLine("Message:");
-                writer.WriteLine("'{0}'", entry.Message);
-                writer.WriteLine();
-
-                writer.WriteLine("Speech Log");
-                writer.WriteLine("==========");
-
-                foreach (SpeechLogEntry logEntry in entry.SpeechLog)
-                {
-                    Mobile from = logEntry.From;
-                    string fromName = from.RawName;
-                    string fromAccount = from.Account is Account ? from.Account.Username : "???";
-                    DateTime created = logEntry.Created;
-                    string speech = logEntry.Speech;
-
-                    writer.WriteLine(
-                        "{0}:{1:00}:{2:00} - {3} ({4}): '{5}'",
-                        created.Hour,
-                        created.Minute,
-                        created.Second,
-                        fromName,
-                        fromAccount,
-                        speech);
-                }
-
-                mail.Body = writer.ToString();
-            }
-
-            Email.AsyncSend(mail);
         }
     }
 

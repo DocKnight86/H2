@@ -60,7 +60,7 @@ namespace Server.Mobiles
         ToggleMiningStone = 0x00000010,
         KarmaLocked = 0x00000020,
         UseOwnFilter = 0x00000040,
-        PagingSquelched = 0x00000080,
+        UNUSED1 = 0x00000080,
         AcceptGuildInvites = 0x00000100,
         DisplayChampionTitle = 0x00000200,
         HasStatReward = 0x00000400,
@@ -280,9 +280,6 @@ namespace Server.Mobiles
 
         #region PlayerFlags
         public PlayerFlag Flags { get => m_Flags; set => m_Flags = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool PagingSquelched { get => GetFlag(PlayerFlag.PagingSquelched); set => SetFlag(PlayerFlag.PagingSquelched, value); }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool Glassblowing { get => GetFlag(PlayerFlag.Glassblowing); set => SetFlag(PlayerFlag.Glassblowing, value); }
@@ -1057,14 +1054,12 @@ namespace Server.Mobiles
             HouseRegion.OnLogin(this);
             LampRoomRegion.OnLogin(this);
             LightCycle.OnLogin(this);
-            LoginStats.OnLogin(this);
             MaginciaLottoSystem.OnLogin(this);
             MasteryInfo.OnLogin(this);
             PlantSystem.OnLogin(this);
             QuestSystem.OnLogin(this);
             ResponseEntry.OnLogin(this);
             ShadowguardController.OnLogin(this);
-            ShardPoller.OnLogin(this);
             StormLevelGump.OnLogin(this);
             Strandedness.OnLogin(this);
             TwistedWealdDesert.OnLogin(this);
@@ -1091,9 +1086,9 @@ namespace Server.Mobiles
                 ViceVsVirtueSystem.OnLogin(this);
             }
 
-            if (Siege.SiegeShard)
+            if (IsStaff())
             {
-                Siege.OnLogin(this);
+                PageQueue.Pages_OnCalled(this);
             }
 
             ResendBuffs();
@@ -1386,7 +1381,6 @@ namespace Server.Mobiles
 
                 QuestHelper.StopTimer(pm);
 
-                pm.m_SpeechLog = null;
                 pm.LastOnline = DateTime.UtcNow;
 
                 pm.AutoStablePets();
@@ -4173,26 +4167,10 @@ namespace Server.Mobiles
         #endregion
 
         #region Speech
-        private SpeechLog m_SpeechLog;
         private bool m_TempSquelched;
-
-        public SpeechLog SpeechLog => m_SpeechLog;
 
         [CommandProperty(AccessLevel.Administrator)]
         public bool TempSquelched { get => m_TempSquelched; set => m_TempSquelched = value; }
-
-        public override void OnSpeech(SpeechEventArgs e)
-        {
-            if (SpeechLog.Enabled && NetState != null)
-            {
-                if (m_SpeechLog == null)
-                {
-                    m_SpeechLog = new SpeechLog();
-                }
-
-                m_SpeechLog.Add(e.Mobile, e.Speech);
-            }
-        }
 
         public override void OnSaid(SpeechEventArgs e)
         {
