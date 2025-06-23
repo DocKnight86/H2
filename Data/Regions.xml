@@ -1466,12 +1466,6 @@
         <region name="the New Haven Farm">
           <rect x="3703" y="2567" width="40" height="110" />
         </region>
-        <region type="ApprenticeRegion" name="Old Haven Training">
-          <rect x="3589" y="2443" width="115" height="100" />
-        </region>
-        <region type="ApprenticeRegion" name="Haven Mountains">
-          <rect x="3426" y="2732" width="110" height="50" />
-        </region>
         <region type="GuardedRegion" name="Haven Moongate">
           <rect x="3755" y="2763" width="17" height="13" />
         </region>
@@ -1511,18 +1505,6 @@
           </region>
           <region name="the New Haven Bank">
             <rect x="3479" y="2565" width="13" height="15" />
-          </region>
-          <region type="ApprenticeRegion" name="Springs And Things Workshop">
-            <rect x="3455" y="2523" width="9" height="10" />
-          </region>
-          <region type="ApprenticeRegion" name="Haven Dojo">
-            <rect x="3415" y="2513" width="11" height="11" />
-          </region>
-          <region type="ApprenticeRegion" name="Gorge's Shop">
-            <rect x="3465" y="2535" width="7" height="8" />
-          </region>
-          <region type="ApprenticeRegion" name="Haven Library">
-            <rect x="3464" y="2488" width="16" height="11" />
           </region>
         </region>
       </region>
@@ -2629,10 +2611,6 @@
       <go x="320" y="408" z="32" />
       <smartNoHousing active="true" />
     </region>
-	<region type="TokunoDocksRegion" priority="50" name="Tokuno Docks">
-      <rect x="650" y="1350" width="100" height="50" />
-      <go x="713" y="1360" z="26" />
-    </region>
   </Facet>
   <Facet name="TerMur">
     <region name="World" priority="1">
@@ -2906,10 +2884,6 @@
     <region type="DungeonRegion" priority="100" name="MyrmidexQueenLair">
       <rect x="704" y="2248" width="124" height="115" zmin="-25" />
       <go x="766" y="2306" z="0" />
-    </region>
-    <region type="BattleRegion" priority="100" name="MyrmidexBattleground">
-      <rect x="828" y="1762" width="195" height="158" zmin="-25" />
-      <go x="853" y="1784" z="0" />
     </region>
     <region type="DungeonRegion" priority="50" name="KotlCity">
       <rect x="435" y="2270" width="240" height="220" zmin="-25" />

@@ -32,14 +32,15 @@ namespace Server.Engines.VvV
 
     public class ViceVsVirtueSystem : PointsSystem
     {
+        public static bool Enabled = false; // Turn ON and OFF here.
+
+        public static int StartSilver = 0;
+        public static bool EnhancedRules = true;
+
         public static int VirtueHue = 2124;
         public static int ViceHue = 2118;
 
         public static readonly Map Facet = Map.Felucca;
-
-        public static bool Enabled = Config.Get("VvV.Enabled", true);
-        public static int StartSilver = Config.Get("VvV.StartSilver", 2000);
-        public static bool EnhancedRules = Config.Get("VvV.EnhancedRules", false);
 
         public static ViceVsVirtueSystem Instance { get; set; }
 
