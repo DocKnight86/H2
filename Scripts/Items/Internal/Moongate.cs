@@ -108,7 +108,7 @@ namespace Server.Items
             {
                 m.SendLocalizedMessage(1151733); // You cannot do that while carrying a Trade Order.
             }
-            else if (SpellHelper.RestrictRedTravel && m.Murderer && TargetMap != Map.Felucca && !Siege.SiegeShard ||
+            else if (SpellHelper.RestrictRedTravel && m.Murderer && TargetMap != Map.Felucca ||
                      TargetMap == Map.Tokuno && (flags & ClientFlags.Tokuno) == 0 ||
                      TargetMap == Map.Malas && (flags & ClientFlags.Malas) == 0 ||
                      TargetMap == Map.Ilshenar && (flags & ClientFlags.Ilshenar) == 0)

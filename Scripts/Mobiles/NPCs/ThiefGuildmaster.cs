@@ -26,8 +26,9 @@ namespace Server.Mobiles
         }
 
         public override NpcGuild NpcGuild => NpcGuild.ThievesGuild;
-        public override TimeSpan JoinAge => Siege.SiegeShard ? TimeSpan.FromDays(0.0) : TimeSpan.FromDays(7.0);
-        public override TimeSpan JoinGameAge => Siege.SiegeShard ? TimeSpan.FromDays(0.0) : TimeSpan.FromDays(2.0);
+        public override TimeSpan JoinAge => TimeSpan.FromDays(7.0);
+        public override TimeSpan JoinGameAge => TimeSpan.FromDays(2.0);
+
         public override void InitOutfit()
         {
             base.InitOutfit();
@@ -46,7 +47,7 @@ namespace Server.Mobiles
                 return false;
             }
 
-            if (pm.Skills[SkillName.Stealing].Base < 60.0 && !Siege.SiegeShard)
+            if (pm.Skills[SkillName.Stealing].Base < 60.0)
             {
                 SayTo(pm, 501051); // You must be at least a journeyman pickpocket to join this elite organization.
                 return false;

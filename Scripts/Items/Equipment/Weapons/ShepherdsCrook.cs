@@ -106,10 +106,14 @@ namespace Server.Items
             private static bool IsHerdable(BaseCreature bc)
             {
                 if (bc.IsParagon)
+                {
                     return false;
+                }
 
                 if (bc.Tamable)
+                {
                     return true;
+                }
 
                 Map map = bc.Map;
 
@@ -165,12 +169,6 @@ namespace Server.Items
                         }
 
                         m_Creature.TargetLocation = p;
-
-                        if (Siege.SiegeShard && m_Crook != null)
-                        {
-                            Siege.CheckUsesRemaining(from, m_Crook);
-                        }
-
                     }
                 }
             }

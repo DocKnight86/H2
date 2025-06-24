@@ -18,8 +18,7 @@ namespace Server.Items
             Attributes.SpellChanneling = 1;
             Attributes.WeaponSpeed = 30;
 
-            if (!Siege.SiegeShard)
-                LootType = LootType.Blessed;
+            LootType = LootType.Blessed;
         }
 
         public override int InitMinHits => 255;

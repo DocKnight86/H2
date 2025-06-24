@@ -1761,7 +1761,7 @@ namespace Server.Items
             // Arms Lore Bonus - Verified on EA
             if (from != null)
             {
-                double div = Siege.SiegeShard ? 12.5 : 20;
+                double div = 20;
                 int bonus = (int)Math.Min(4, (from.Skills.ArmsLore.Value / div));
 
                 for (int i = 0; i < bonus; i++)

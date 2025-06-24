@@ -142,7 +142,7 @@ namespace Server.Mobiles
 
     public abstract class BaseVendor : BaseCreature, IVendor
     {
-        public static bool UseVendorEconomy = !Siege.SiegeShard;
+        public static bool UseVendorEconomy = true;
         public static int BuyItemChange = Config.Get("Vendors.BuyItemChange", 1000);
         public static int SellItemChange = Config.Get("Vendors.SellItemChange", 1000);
         public static int EconomyStockAmount = Config.Get("Vendors.EconomyStockAmount", 500);
@@ -652,11 +652,6 @@ namespace Server.Mobiles
                 GenericBuyInfo gbi = (GenericBuyInfo)buyItem;
                 IEntity disp = gbi.GetDisplayEntity();
 
-                if (Siege.SiegeShard && !Siege.VendorCanSell(gbi.Type))
-                {
-                    continue;
-                }
-
                 list.Add(
                     new BuyItemState(
                         buyItem.Name,
@@ -703,11 +698,6 @@ namespace Server.Mobiles
             for (int i = 0; i < playerItems.Count; ++i)
             {
                 Item item = playerItems[i];
-
-                if (Siege.SiegeShard && !Siege.VendorCanSell(item.GetType()))
-                {
-                    continue;
-                }
 
                 int price = 0;
                 string name = null;

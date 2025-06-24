@@ -221,7 +221,7 @@ namespace Server.Items
                 return false;
             }
 
-            if (!CheckDestination(m) || Siege.SiegeShard && m_MapDest == Map.Trammel)
+            if (!CheckDestination(m))
             {
                 return false;
             }

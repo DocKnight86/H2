@@ -2549,7 +2549,7 @@ namespace Server.Items
         {
             int amount = runic ? 6 : 15;
 
-            return Siege.SiegeShard ? amount + (int)(from.Skills[SkillName.ArmsLore].Value / 12.5) : amount + (int)(from.Skills[SkillName.ArmsLore].Value / 20.0);
+            return amount + (int)(from.Skills[SkillName.ArmsLore].Value / 20.0);
         }
 
         protected virtual void ApplyResourceResistances(CraftResource oldResource)

@@ -15,8 +15,6 @@ namespace Server.Misc
         private static readonly int _PlayerChanceToGainStats;
         private static readonly int _PetChanceToGainStats;
 
-        public static bool GGSActive => !Siege.SiegeShard;
-
         static SkillCheck()
         {
             _PlayerChanceToGainStats = Config.Get("PlayerCaps.PlayerChanceToGainStats", 5);
@@ -40,23 +38,31 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             double value = skill.Value;
 
             //TODO: Is there any other place this can go?
             if (skillName == SkillName.Fishing && BaseGalleon.FindGalleonAt(from, from.Map) is TokunoGalleon)
+            {
                 value += 1;
+            }
 
             double chance = (value - minSkill) / (maxSkill - minSkill);
 
             CrystalBallOfKnowledge.TellSkillDifficulty(from, skillName, chance);
 
             if (value < minSkill)
+            {
                 return false; // Too difficult
+            }
 
             if (value >= maxSkill)
+            {
                 return true; // No challenge
+            }
 
             return CheckSkill(from, skill, chance);
         }
@@ -66,15 +72,21 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             CrystalBallOfKnowledge.TellSkillDifficulty(from, skillName, chance);
 
             if (chance < 0.0)
+            {
                 return false; // Too difficult
+            }
 
             if (chance >= 1.0)
+            {
                 return true; // No challenge
+            }
 
             return CheckSkill(from, skill, chance);
         }
@@ -92,7 +104,9 @@ namespace Server.Misc
         public static bool CheckSkill(Mobile from, SkillName sk, double minSkill, double maxSkill, int amount)
         {
             if (from.Skills.Cap == 0)
+            {
                 return false;
+            }
 
             Skill skill = from.Skills[sk];
             double value = skill.Value;
@@ -105,12 +119,10 @@ namespace Server.Misc
 
                 if (AllowGain(from, skill))
                 {
-                    if (from.Alive && (skill.Base + (value - skill.Value) < 10.0 || Utility.RandomDouble() <= gc || CheckGGS(from, skill)))
+                    if (from.Alive && (skill.Base + (value - skill.Value) < 10.0 || Utility.RandomDouble() <= gc))
                     {
                         gains++;
                         value += 0.1;
-
-                        UpdateGGS(from, skill);
                     }
                 }
 
@@ -128,14 +140,16 @@ namespace Server.Misc
         public static bool CheckSkill(Mobile from, Skill skill, double chance)
         {
             if (from.Skills.Cap == 0)
+            {
                 return false;
+            }
 
             bool success = Utility.Random(100) <= (int)(chance * 100);
             double gc = GetGainChance(from, skill, chance, success);
 
             if (AllowGain(from, skill))
             {
-                if (from.Alive && (skill.Base < 10.0 || Utility.RandomDouble() <= gc || CheckGGS(from, skill)))
+                if (from.Alive && (skill.Base < 10.0 || Utility.RandomDouble() <= gc))
                 {
                     Gain(from, skill);
                 }
@@ -157,14 +171,20 @@ namespace Server.Misc
             gc *= skill.Info.GainFactor;
 
             if (gc < 0.01)
+            {
                 gc = 0.01;
+            }
 
             // Pets get a 100% bonus
             if (from is BaseCreature bc && bc.Controlled)
+            {
                 gc += gc * 1.00;
+            }
 
             if (gc > 1.00)
+            {
                 gc = 1.00;
+            }
 
             return gc;
         }
@@ -179,15 +199,21 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             double value = skill.Value;
 
             if (value < minSkill)
+            {
                 return false; // Too difficult
+            }
 
             if (value >= maxSkill)
+            {
                 return true; // No challenge
+            }
 
             double chance = (value - minSkill) / (maxSkill - minSkill);
 
@@ -201,15 +227,21 @@ namespace Server.Misc
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
+            {
                 return false;
+            }
 
             CrystalBallOfKnowledge.TellSkillDifficulty(from, skillName, chance);
 
             if (chance < 0.0)
+            {
                 return false; // Too difficult
+            }
 
             if (chance >= 1.0)
+            {
                 return true; // No challenge
+            }
 
             return CheckSkill(from, skill, chance);
         }
@@ -217,7 +249,9 @@ namespace Server.Misc
         private static bool AllowGain(Mobile from, Skill skill)
         {
             if (Engines.VvV.ViceVsVirtueSystem.InSkillLoss(from))
+            {
                 return false;
+            }
 
             if (from is PlayerMobile)
             {
@@ -245,37 +279,23 @@ namespace Server.Misc
         public static void Gain(Mobile from, Skill skill, int toGain)
         {
             if (from.Region.IsPartOf<Jail>())
+            {
                 return;
+            }
 
             if (from is BaseCreature creature && creature.IsDeadPet)
+            {
                 return;
+            }
 
             if (skill.SkillName == SkillName.Focus && from is BaseCreature baseCreature && !baseCreature.Controlled)
+            {
                 return;
+            }
 
             if (skill.Base < skill.Cap && skill.Lock == SkillLock.Up)
             {
                 Skills skills = from.Skills;
-
-                if (from is PlayerMobile mobile && Siege.SiegeShard)
-                {
-                    int minsPerGain = Siege.MinutesPerGain(mobile, skill);
-
-                    if (minsPerGain > 0)
-                    {
-                        if (Siege.CheckSkillGain(mobile, minsPerGain, skill))
-                        {
-                            CheckReduceSkill(skills, toGain, skill);
-
-                            if (skills.Total + toGain <= skills.Cap)
-                            {
-                                skill.BaseFixedPoint += toGain;
-                            }
-                        }
-
-                        return;
-                    }
-                }
 
                 if (toGain == 1 && skill.Base <= 10.0)
                 {
@@ -303,11 +323,6 @@ namespace Server.Misc
                 if (!from.Player || (skills.Total + toGain <= skills.Cap))
                 {
                     skill.BaseFixedPoint = Math.Min(skill.CapFixedPoint, skill.BaseFixedPoint + toGain);
-
-                    if (from is PlayerMobile)
-                    {
-                        UpdateGGS(from, skill);
-                    }
                 }
             }
 
@@ -388,16 +403,24 @@ namespace Server.Misc
             if (primaryLock == StatLockType.Up && secondaryLock == StatLockType.Up)
             {
                 if (Utility.Random(4) == 0)
+                {
                     GainStat(from, (Stat)info.Secondary);
+                }
                 else
+                {
                     GainStat(from, (Stat)info.Primary);
+                }
             }
             else // Will not do anything if neither are selected to gain
             {
                 if (primaryLock == StatLockType.Up)
+                {
                     GainStat(from, (Stat)info.Primary);
+                }
                 else if (secondaryLock == StatLockType.Up)
+                {
                     GainStat(from, (Stat)info.Secondary);
+                }
             }
         }
 
@@ -478,9 +501,13 @@ namespace Server.Misc
                             if (atTotalCap)
                             {
                                 if (CanLower(from, Stat.Dex) && (from.RawDex < from.RawInt || !CanLower(from, Stat.Int)))
+                                {
                                     --from.RawDex;
+                                }
                                 else if (CanLower(from, Stat.Int))
+                                {
                                     --from.RawInt;
+                                }
                             }
 
                             ++from.RawStr;
@@ -488,11 +515,6 @@ namespace Server.Misc
                             if (from is BaseCreature creature && creature.HitsMaxSeed > -1 && creature.HitsMaxSeed < creature.StrCap)
                             {
                                 creature.HitsMaxSeed++;
-                            }
-
-                            if (Siege.SiegeShard && from is PlayerMobile mobile)
-                            {
-                                Siege.IncreaseStat(mobile);
                             }
                         }
 
@@ -505,9 +527,13 @@ namespace Server.Misc
                             if (atTotalCap)
                             {
                                 if (CanLower(from, Stat.Str) && (from.RawStr < from.RawInt || !CanLower(from, Stat.Int)))
+                                {
                                     --from.RawStr;
+                                }
                                 else if (CanLower(from, Stat.Int))
+                                {
                                     --from.RawInt;
+                                }
                             }
 
                             ++from.RawDex;
@@ -515,11 +541,6 @@ namespace Server.Misc
                             if (from is BaseCreature creature && creature.StamMaxSeed > -1 && creature.StamMaxSeed < creature.DexCap)
                             {
                                 creature.StamMaxSeed++;
-                            }
-
-                            if (Siege.SiegeShard && from is PlayerMobile mobile)
-                            {
-                                Siege.IncreaseStat(mobile);
                             }
                         }
 
@@ -532,9 +553,13 @@ namespace Server.Misc
                             if (atTotalCap)
                             {
                                 if (CanLower(from, Stat.Str) && (from.RawStr < from.RawDex || !CanLower(from, Stat.Dex)))
+                                {
                                     --from.RawStr;
+                                }
                                 else if (CanLower(from, Stat.Dex))
+                                {
                                     --from.RawDex;
+                                }
                             }
 
                             ++from.RawInt;
@@ -542,11 +567,6 @@ namespace Server.Misc
                             if (from is BaseCreature creature && creature.ManaMaxSeed > -1 && creature.ManaMaxSeed < creature.IntCap)
                             {
                                 creature.ManaMaxSeed++;
-                            }
-
-                            if (Siege.SiegeShard && from is PlayerMobile mobile)
-                            {
-                                Siege.IncreaseStat(mobile);
                             }
                         }
 
@@ -558,7 +578,9 @@ namespace Server.Misc
         public static void GainStat(Mobile from, Stat stat)
         {
             if (!CheckStatTimer(from, stat))
+            {
                 return;
+            }
 
             IncreaseStat(from, stat);
         }
@@ -572,10 +594,14 @@ namespace Server.Misc
                         if (from is BaseCreature creature && creature.Controlled)
                         {
                             if (creature.LastStrGain + _PetStatGainDelay >= DateTime.UtcNow)
+                            {
                                 return false;
+                            }
                         }
                         else if (from.LastStrGain + _StatGainDelay >= DateTime.UtcNow)
+                        {
                             return false;
+                        }
 
                         from.LastStrGain = DateTime.UtcNow;
                         break;
@@ -585,10 +611,14 @@ namespace Server.Misc
                         if (from is BaseCreature creature && creature.Controlled)
                         {
                             if (creature.LastDexGain + _PetStatGainDelay >= DateTime.UtcNow)
+                            {
                                 return false;
+                            }
                         }
                         else if (from.LastDexGain + _StatGainDelay >= DateTime.UtcNow)
+                        {
                             return false;
+                        }
 
                         from.LastDexGain = DateTime.UtcNow;
                         break;
@@ -598,10 +628,14 @@ namespace Server.Misc
                         if (from is BaseCreature creature && creature.Controlled)
                         {
                             if (creature.LastIntGain + _PetStatGainDelay >= DateTime.UtcNow)
+                            {
                                 return false;
+                            }
                         }
                         else if (from.LastIntGain + _StatGainDelay >= DateTime.UtcNow)
+                        {
                             return false;
+                        }
 
                         from.LastIntGain = DateTime.UtcNow;
                         break;
@@ -609,39 +643,5 @@ namespace Server.Misc
             }
             return true;
         }
-
-        private static bool CheckGGS(Mobile from, Skill skill)
-        {
-            if (!GGSActive)
-                return false;
-
-            if (from is PlayerMobile && skill.NextGGSGain < DateTime.UtcNow)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public static void UpdateGGS(Mobile from, Skill skill)
-        {
-            if (!GGSActive)
-                return;
-
-            int list = (int)Math.Min(GGSTable.Length - 1, skill.Base / 5);
-            int column = from.Skills.Total >= 7000 ? 2 : from.Skills.Total >= 3500 ? 1 : 0;
-
-            skill.NextGGSGain = DateTime.UtcNow + TimeSpan.FromMinutes(GGSTable[list][column]);
-        }
-
-        private static readonly int[][] GGSTable =
-        {
-            new[] {1, 3, 5}, // 0.0 - 4.9
-			new[] {4, 10, 18}, new[] {7, 17, 30}, new[] {9, 24, 44}, new[] {12, 31, 57}, new[] {14, 38, 90}, new[] {17, 45, 84},
-            new[] {20, 52, 96}, new[] {23, 60, 106}, new[] {25, 66, 120}, new[] {27, 72, 138}, new[] {33, 90, 162},
-            new[] {55, 150, 264}, new[] {78, 216, 390}, new[] {114, 294, 540}, new[] {144, 384, 708}, new[] {180, 492, 900},
-            new[] {228, 606, 1116}, new[] {276, 744, 1356}, new[] {336, 894, 1620}, new[] {396, 1056, 1920},
-            new[] {468, 1242, 2280}, new[] {540, 1440, 2580}, new[] {618, 1662, 3060}
-        };
     }
 }
