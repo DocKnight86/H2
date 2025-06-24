@@ -47,7 +47,6 @@ namespace Server.Mobiles
         {
         }
 
-        public override bool CanTeach => true;
         public override bool ClickTitle => false;
 
         public override void Serialize(GenericWriter writer)

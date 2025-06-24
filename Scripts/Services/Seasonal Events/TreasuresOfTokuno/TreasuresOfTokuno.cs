@@ -291,7 +291,6 @@ namespace Server.Mobiles
         public override bool IsInvulnerable => true;
         public override bool DisallowAllMoves => true;
         public override bool ClickTitle => true;
-        public override bool CanTeach => false;
 
         protected List<SBInfo> m_SBInfos = new List<SBInfo>();
         protected override List<SBInfo> SBInfos => m_SBInfos;
@@ -386,10 +385,6 @@ namespace Server.Mobiles
                     pm.CloseGump(typeof(ToTTurnInGump));
                 }
             }
-        }
-
-        public override void TurnToTokuno()
-        {
         }
     }
 }

@@ -31,15 +31,10 @@ namespace Server.Engines.Quests
         {
         }
 
-        public override void CheckMorph()
-        {
-            // Don't morph me!
-        }
         public override bool IsActiveVendor => false;
         public override bool IsInvulnerable => true;
         public override bool DisallowAllMoves => false;
         public override bool ClickTitle => false;
-        public override bool CanTeach => true;
         public virtual int AutoTalkRange => -1;
         public virtual int AutoSpeakRange => 10;
         public virtual TimeSpan SpeakDelay => TimeSpan.FromMinutes(1);

@@ -10,7 +10,6 @@ namespace Server.Engines.VvV
         public override bool IsActiveVendor => false;
         public override bool DisallowAllMoves => true;
         public override bool ClickTitle => true;
-        public override bool CanTeach => false;
 
         protected List<SBInfo> m_SBInfos = new List<SBInfo>();
         protected override List<SBInfo> SBInfos => m_SBInfos;

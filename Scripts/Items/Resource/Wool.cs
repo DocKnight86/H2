@@ -53,7 +53,9 @@ namespace Server.Items
         public bool Dye(Mobile from, DyeTub sender)
         {
             if (Deleted)
+            {
                 return false;
+            }
 
             Hue = sender.DyedHue;
 
@@ -75,26 +77,31 @@ namespace Server.Items
 
         private class PickWheelTarget : Target
         {
-            private readonly Wool m_Wool;
+            private readonly Wool _Wool;
+
             public PickWheelTarget(Wool wool)
                 : base(3, false, TargetFlags.None)
             {
-                m_Wool = wool;
+                _Wool = wool;
             }
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Wool.Deleted)
+                if (_Wool.Deleted)
+                {
                     return;
+                }
 
                 ISpinningWheel wheel = targeted as ISpinningWheel;
 
                 if (wheel == null && targeted is AddonComponent component)
+                {
                     wheel = component.Addon as ISpinningWheel;
+                }
 
                 if (wheel is Item)
                 {
-                    if (!m_Wool.IsChildOf(from.Backpack))
+                    if (!_Wool.IsChildOf(from.Backpack))
                     {
                         from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                     }
@@ -104,11 +111,15 @@ namespace Server.Items
                     }
                     else
                     {
-                        m_Wool.Consume();
-                        if (m_Wool is TaintedWool)
-                            wheel.BeginSpin(TaintedWool.OnSpun, from, m_Wool.Hue);
+                        _Wool.Consume();
+                        if (_Wool is TaintedWool)
+                        {
+                            wheel.BeginSpin(TaintedWool.OnSpun, from, _Wool.Hue);
+                        }
                         else
-                            wheel.BeginSpin(OnSpun, from, m_Wool.Hue);
+                        {
+                            wheel.BeginSpin(OnSpun, from, _Wool.Hue);
+                        }
                     }
                 }
                 else

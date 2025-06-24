@@ -19,17 +19,9 @@ namespace Server.Mobiles
         {
         }
 
-        public override bool CanTeach => true;
         public override bool AlwaysMurderer => true;
         public override bool IsActiveVendor => true;
-        public override bool CheckTeach(SkillName skill, Mobile from)
-        {
-            if (!base.CheckTeach(skill, from))
-                return false;
-
-            return skill == SkillName.Forensics || skill == SkillName.Healing || skill == SkillName.SpiritSpeak || skill == SkillName.Swords;
-        }
-
+        
         public override void InitSBInfo()
         {
             SBInfos.Add(new SBHealer());
