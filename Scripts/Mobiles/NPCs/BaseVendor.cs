@@ -142,7 +142,7 @@ namespace Server.Mobiles
 
     public abstract class BaseVendor : BaseCreature, IVendor
     {
-        public static bool UseVendorEconomy = !Siege.SiegeShard;
+        public static bool UseVendorEconomy = true;
         public static int BuyItemChange = Config.Get("Vendors.BuyItemChange", 1000);
         public static int SellItemChange = Config.Get("Vendors.SellItemChange", 1000);
         public static int EconomyStockAmount = Config.Get("Vendors.EconomyStockAmount", 500);
@@ -162,8 +162,6 @@ namespace Server.Mobiles
         private readonly ArrayList m_ArmorSellInfo = new ArrayList();
 
         private DateTime m_LastRestock;
-
-        public override bool CanTeach => true;
 
         public override bool BardImmune => true;
 
@@ -282,8 +280,6 @@ namespace Server.Mobiles
 
         public abstract void InitSBInfo();
 
-        public virtual bool IsTokunoVendor => Map == Map.Tokuno;
-
         protected void LoadSBInfo()
         {
             if (SBInfos == null)
@@ -371,122 +367,11 @@ namespace Server.Mobiles
 
         public virtual VendorShoeType ShoeType => VendorShoeType.Shoes;
 
-        public virtual void CheckMorph()
-        {
-            if (CheckNecromancer())
-            {
-                return;
-            }
-
-            if (CheckTokuno())
-            {
-                return;
-            }
-        }
-
-        public virtual bool CheckTokuno()
-        {
-            if (Map != Map.Tokuno)
-            {
-                return false;
-            }
-
-            NameList n;
-
-            if (Female)
-            {
-                n = NameList.GetNameList("tokuno female");
-            }
-            else
-            {
-                n = NameList.GetNameList("tokuno male");
-            }
-
-            if (!n.ContainsName(Name))
-            {
-                TurnToTokuno();
-            }
-
-            return true;
-        }
-
-        public virtual void TurnToTokuno()
-        {
-            if (Female)
-            {
-                Name = NameList.RandomName("tokuno female");
-            }
-            else
-            {
-                Name = NameList.RandomName("tokuno male");
-            }
-        }      
-
-        public virtual bool CheckNecromancer()
-        {
-            Map map = Map;
-
-            if (map != Map.Malas)
-            {
-                return false;
-            }
-
-            if (!Region.IsPartOf("Umbra"))
-            {
-                return false;
-            }
-
-            if (Hue != 0x83E8)
-            {
-                TurnToNecromancer();
-            }
-
-            return true;
-        }
-
-        public override void OnAfterSpawn()
-        {
-            CheckMorph();
-        }
-
         protected override void OnMapChange(Map oldMap)
         {
             base.OnMapChange(oldMap);
 
-            CheckMorph();
-
             LoadSBInfo();
-        }
-
-        public virtual int GetRandomNecromancerHue()
-        {
-            switch (Utility.Random(20))
-            {
-                case 0:
-                    return 0;
-                case 1:
-                    return 0x4E9;
-                default:
-                    return Utility.RandomList(0x485, 0x497);
-            }
-        }
-
-        public virtual void TurnToNecromancer()
-        {
-            for (int i = 0; i < Items.Count; ++i)
-            {
-                Item item = Items[i];
-
-                if (item is BaseClothing || item is BaseWeapon || item is BaseArmor || item is BaseTool)
-                {
-                    item.Hue = GetRandomNecromancerHue();
-                }
-            }
-
-            HairHue = 0;
-            FacialHairHue = 0;
-
-            Hue = 0x83E8;
         }
 
         public virtual int GetHairHue()
@@ -654,11 +539,6 @@ namespace Server.Mobiles
                 GenericBuyInfo gbi = (GenericBuyInfo)buyItem;
                 IEntity disp = gbi.GetDisplayEntity();
 
-                if (Siege.SiegeShard && !Siege.VendorCanSell(gbi.Type))
-                {
-                    continue;
-                }
-
                 list.Add(
                     new BuyItemState(
                         buyItem.Name,
@@ -705,11 +585,6 @@ namespace Server.Mobiles
             for (int i = 0; i < playerItems.Count; ++i)
             {
                 Item item = playerItems[i];
-
-                if (Siege.SiegeShard && !Siege.VendorCanSell(item.GetType()))
-                {
-                    continue;
-                }
 
                 int price = 0;
                 string name = null;
@@ -1851,13 +1726,6 @@ namespace Server.Mobiles
                         break;
                     }
             }
-
-            if (IsParagon)
-            {
-                IsParagon = false;
-            }
-
-            Timer.DelayCall(TimeSpan.Zero, CheckMorph);
         }
 
         public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)

@@ -15,8 +15,6 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
-                Add(new GenericBuyInfo("1060834", typeof(Engines.Plants.PlantBowl), 2, 20, 0x15FD, 0));
-
                 Add(new GenericBuyInfo(typeof(Arrow), 2, 20, 0xF3F, 0, true));
                 Add(new GenericBuyInfo(typeof(Bolt), 5, 20, 0x1BFB, 0, true));
 
@@ -28,20 +26,6 @@ namespace Server.Mobiles
                 Add(new GenericBuyInfo(typeof(Torch), 8, 20, 0xF6B, 0));
                 Add(new GenericBuyInfo(typeof(Lantern), 2, 20, 0xA25, 0));
                 Add(new GenericBuyInfo(typeof(OilFlask), 10, 20, 0x1C18, 0));
-
-                Add(new GenericBuyInfo(typeof(Lockpick), 12, 20, 0x14FC, 0, true));
-
-                Add(new GenericBuyInfo(typeof(FloppyHat), 7, 20, 0x1713, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(WideBrimHat), 8, 20, 0x1714, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(Cap), 10, 20, 0x1715, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(TallStrawHat), 8, 20, 0x1716, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(StrawHat), 7, 20, 0x1717, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(WizardsHat), 11, 20, 0x1718, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(LeatherCap), 10, 20, 0x1DB9, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(FeatheredHat), 10, 20, 0x171A, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(TricorneHat), 8, 20, 0x171B, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(Bandana), 6, 20, 0x1540, Utility.RandomDyedHue()));
-                Add(new GenericBuyInfo(typeof(SkullCap), 7, 20, 0x1544, Utility.RandomDyedHue()));
 
                 Add(new GenericBuyInfo(typeof(BreadLoaf), 6, 10, 0x103B, 0, true));
                 Add(new GenericBuyInfo(typeof(LambLeg), 8, 20, 0x160A, 0, true));
@@ -72,12 +56,7 @@ namespace Server.Mobiles
                 Add(new GenericBuyInfo(typeof(Bedroll), 5, 20, 0xA59, 0));
                 Add(new GenericBuyInfo(typeof(Kindling), 2, 20, 0xDE1, 0, true));
 
-                Add(new GenericBuyInfo("1041205", typeof(Multis.SmallBoatDeed), 10177, 20, 0x14F2, 0));
                 Add(new GenericBuyInfo("1041060", typeof(HairDye), 60, 20, 0xEFF, 0));
-                Add(new GenericBuyInfo("1016450", typeof(Chessboard), 2, 20, 0xFA6, 0));
-                Add(new GenericBuyInfo("1016449", typeof(CheckerBoard), 2, 20, 0xFA6, 0));
-                Add(new GenericBuyInfo(typeof(Backgammon), 2, 20, 0xE1C, 0));
-                Add(new GenericBuyInfo(typeof(Engines.Mahjong.MahjongGame), 6, 20, 0xFAA, 0));
                 Add(new GenericBuyInfo(typeof(Dices), 2, 20, 0xFA7, 0));
                 Add(new GenericBuyInfo("1079931", typeof(SalvageBag), 1255, 20, 0xE76, Utility.RandomBlueHue()));
                 Add(new GenericBuyInfo("1114770", typeof(SkinTingeingTincture), 1255, 20, 0xEFF, 90));

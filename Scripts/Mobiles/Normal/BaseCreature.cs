@@ -148,15 +148,6 @@ namespace Server.Mobiles
         Barbed
     }
 
-    public enum FurType
-    {
-        None,
-        Green,
-        LightBrown,
-        Yellow,
-        Brown
-    }
-
     public enum TribeType
     {
         None,
@@ -1971,11 +1962,10 @@ namespace Server.Mobiles
             int hides = Hides;
             int scales = Scales;
             int dragonblood = DragonBlood;
-            int fur = Fur;
 
             bool special = with is HarvestersBlade;
 
-            if (feathers == 0 && wool == 0 && meat == 0 && hides == 0 && scales == 0 && fur == 0 || Summoned || IsBonded || corpse.Animated)
+            if (feathers == 0 && wool == 0 && meat == 0 && hides == 0 && scales == 0 || Summoned || IsBonded || corpse.Animated)
             {
                 if (corpse.Animated)
                 {
@@ -2204,14 +2194,6 @@ namespace Server.Mobiles
                     {
                         from.SendLocalizedMessage(1114100); // You take some blood off the corpse and put it in your backpack.
                     }
-                }
-
-                if (fur != 0)
-                {
-                    Item _fur = new Fur(FurType, fur);
-
-                    corpse.AddCarvedItem(_fur, from);
-                    from.SendLocalizedMessage(1112765); // You shear it, and the fur is now on the corpse.
                 }
 
                 corpse.Carved = true;
@@ -2835,15 +2817,7 @@ namespace Server.Mobiles
 
         public virtual bool OnGoldGiven(Mobile from, Gold dropped)
         {
-            if (CheckTeachingMatch(from))
-            {
-                if (Teach(m_Teaching, from, dropped.Amount, true))
-                {
-                    dropped.Delete();
-                    return true;
-                }
-            }
-            else if (IsHumanInTown())
+            if (IsHumanInTown())
             {
                 Direction = GetDirectionTo(from);
 
@@ -3668,9 +3642,6 @@ namespace Server.Mobiles
         public virtual int Feathers => 0;
         public virtual int Wool => 0;
 
-        public virtual int Fur => 0;
-        public virtual FurType FurType => FurType.Green;
-
         public virtual MeatType MeatType => MeatType.Ribs;
         public virtual int Meat => 0;
 
@@ -3982,241 +3953,6 @@ namespace Server.Mobiles
             }
         }
 
-        #region Teaching
-        public virtual bool CanTeach => false;
-
-        public virtual bool CheckTeach(SkillName skill, Mobile from)
-        {
-            if (!CanTeach || Siege.SiegeShard)
-            {
-                return false;
-            }
-
-            if (skill == SkillName.Stealth && from.Skills[SkillName.Hiding].Base < Stealth.HidingRequirement)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public enum TeachResult
-        {
-            Success,
-            Failure,
-            KnowsMoreThanMe,
-            KnowsWhatIKnow,
-            SkillNotRaisable,
-            NotEnoughFreePoints
-        }
-
-        public virtual TeachResult CheckTeachSkills(
-            SkillName skill, Mobile m, int maxPointsToLearn, ref int pointsToLearn, bool doTeach)
-        {
-            if (!CheckTeach(skill, m) || !m.CheckAlive())
-            {
-                return TeachResult.Failure;
-            }
-
-            Skill ourSkill = Skills[skill];
-            Skill theirSkill = m.Skills[skill];
-
-            if (ourSkill == null || theirSkill == null)
-            {
-                return TeachResult.Failure;
-            }
-
-            int baseToSet = ourSkill.BaseFixedPoint / 3;
-
-            if (baseToSet > 420)
-            {
-                baseToSet = 420;
-            }
-            else if (baseToSet < 200)
-            {
-                return TeachResult.Failure;
-            }
-
-            if (baseToSet > theirSkill.CapFixedPoint)
-            {
-                baseToSet = theirSkill.CapFixedPoint;
-            }
-
-            pointsToLearn = baseToSet - theirSkill.BaseFixedPoint;
-
-            if (maxPointsToLearn > 0 && pointsToLearn > maxPointsToLearn)
-            {
-                pointsToLearn = maxPointsToLearn;
-                baseToSet = theirSkill.BaseFixedPoint + pointsToLearn;
-            }
-
-            if (pointsToLearn < 0)
-            {
-                return TeachResult.KnowsMoreThanMe;
-            }
-
-            if (pointsToLearn == 0)
-            {
-                return TeachResult.KnowsWhatIKnow;
-            }
-
-            if (theirSkill.Lock != SkillLock.Up)
-            {
-                return TeachResult.SkillNotRaisable;
-            }
-
-            int freePoints = m.Skills.Cap - m.Skills.Total;
-            int freeablePoints = 0;
-
-            if (freePoints < 0)
-            {
-                freePoints = 0;
-            }
-
-            for (int i = 0; freePoints + freeablePoints < pointsToLearn && i < m.Skills.Length; ++i)
-            {
-                Skill sk = m.Skills[i];
-
-                if (sk == theirSkill || sk.Lock != SkillLock.Down)
-                {
-                    continue;
-                }
-
-                freeablePoints += sk.BaseFixedPoint;
-            }
-
-            if (freePoints + freeablePoints == 0)
-            {
-                return TeachResult.NotEnoughFreePoints;
-            }
-
-            if (freePoints + freeablePoints < pointsToLearn)
-            {
-                pointsToLearn = freePoints + freeablePoints;
-                baseToSet = theirSkill.BaseFixedPoint + pointsToLearn;
-            }
-
-            if (doTeach)
-            {
-                int need = pointsToLearn - freePoints;
-
-                for (int i = 0; need > 0 && i < m.Skills.Length; ++i)
-                {
-                    Skill sk = m.Skills[i];
-
-                    if (sk == theirSkill || sk.Lock != SkillLock.Down)
-                    {
-                        continue;
-                    }
-
-                    if (sk.BaseFixedPoint < need)
-                    {
-                        need -= sk.BaseFixedPoint;
-                        sk.BaseFixedPoint = 0;
-                    }
-                    else
-                    {
-                        sk.BaseFixedPoint -= need;
-                        need = 0;
-                    }
-                }
-
-                /* Sanity check */
-                if (baseToSet > theirSkill.CapFixedPoint || m.Skills.Total - theirSkill.BaseFixedPoint + baseToSet > m.Skills.Cap)
-                {
-                    // Full refund
-                    m.Backpack.TryDropItem(m, new Gold(maxPointsToLearn), false);
-                    return TeachResult.NotEnoughFreePoints;
-                }
-
-                // Partial refund if needed
-                if (maxPointsToLearn > pointsToLearn)
-                {
-                    m.Backpack.TryDropItem(m, new Gold(maxPointsToLearn - pointsToLearn), false);
-                }
-                theirSkill.BaseFixedPoint = baseToSet;
-            }
-
-            return TeachResult.Success;
-        }
-
-        public virtual bool CheckTeachingMatch(Mobile m)
-        {
-            if (m_Teaching == (SkillName)(-1))
-            {
-                return false;
-            }
-
-            if (m is PlayerMobile pm)
-            {
-                return pm.Learning == m_Teaching;
-            }
-
-            return true;
-        }
-
-        private SkillName m_Teaching = (SkillName)(-1);
-
-        public virtual bool Teach(SkillName skill, Mobile m, int maxPointsToLearn, bool doTeach)
-        {
-            int pointsToLearn = 0;
-            TeachResult res = CheckTeachSkills(skill, m, maxPointsToLearn, ref pointsToLearn, doTeach);
-
-            switch (res)
-            {
-                case TeachResult.KnowsMoreThanMe:
-                    {
-                        Say(501508); // I cannot teach thee, for thou knowest more than I!
-                        break;
-                    }
-                case TeachResult.KnowsWhatIKnow:
-                    {
-                        Say(501509); // I cannot teach thee, for thou knowest all I can teach!
-                        break;
-                    }
-                case TeachResult.NotEnoughFreePoints:
-                case TeachResult.SkillNotRaisable:
-                    {
-                        // Make sure this skill is marked to raise. If you are near the skill cap (700 points) you may need to lose some points in another skill first.
-                        m.SendLocalizedMessage(501510, "", 0x22);
-                        break;
-                    }
-                case TeachResult.Success:
-                    {
-                        if (doTeach)
-                        {
-                            Say(501539); // Let me show thee something of how this is done.
-                            m.SendLocalizedMessage(501540); // Your skill level increases.
-
-                            m_Teaching = (SkillName)(-1);
-
-                            if (m is PlayerMobile pm)
-                            {
-                                pm.Learning = (SkillName)(-1);
-                            }
-                        }
-                        else
-                        {
-                            // I will teach thee all I know, if paid the amount in full.  The price is:
-                            Say(1019077, AffixType.Append, string.Format(" {0}", pointsToLearn), "");
-                            Say(1043108); // For less I shall teach thee less.
-
-                            m_Teaching = skill;
-
-                            if (m is PlayerMobile mobile)
-                            {
-                                mobile.Learning = skill;
-                            }
-                        }
-
-                        return true;
-                    }
-            }
-
-            return false;
-        }
-        #endregion
-
         public override void AggressiveAction(Mobile aggressor, bool criminal)
         {
             if (ControlMaster != null && ControlMaster != aggressor)
@@ -4392,30 +4128,6 @@ namespace Server.Mobiles
             }
 
             AddCustomContextEntries(from, list);
-
-            if (CanTeach && from.Alive)
-            {
-                Skills ourSkills = Skills;
-                Skills theirSkills = from.Skills;
-
-                for (int i = 0; i < ourSkills.Length && i < theirSkills.Length; ++i)
-                {
-                    Skill skill = ourSkills[i];
-                    Skill theirSkill = theirSkills[i];
-
-                    if (skill != null && theirSkill != null && skill.Base >= 60.0 && CheckTeach(skill.SkillName, from))
-                    {
-                        int toTeach = skill.BaseFixedPoint / 3;
-
-                        if (toTeach > 420)
-                        {
-                            toTeach = 420;
-                        }
-
-                        list.Add(new TeachEntry((SkillName)i, this, from, toTeach > theirSkill.BaseFixedPoint));
-                    }
-                }
-            }
         }
 
         public override bool HandlesOnSpeech(Mobile from)
@@ -5353,21 +5065,7 @@ namespace Server.Mobiles
                     }
                     else if (TreasureMapChance >= Utility.RandomDouble())
                     {
-                        Map map = Map;
-
-                        if (map == Map.Trammel && Siege.SiegeShard)
-                        {
-                            map = Map.Felucca;
-                        }
-
-                        Region r = Region;
-
-                        if (r.IsPartOf("Yomotsu Mines") || r.IsPartOf("Fan Dancer's Dojo") || r.IsPartOf("TheCitadel"))
-                        {
-                            map = Map.Tokuno; // Tokuno Dungeons are on the Malas Map.
-                        }
-
-                        PackItem(new TreasureMap(treasureLevel, map, SpellHelper.IsEodon(map, Location)));
+                        PackItem(new TreasureMap(treasureLevel, Map.Felucca));
                     }
                 }
             }

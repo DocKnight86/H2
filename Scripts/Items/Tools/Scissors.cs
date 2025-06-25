@@ -10,33 +10,16 @@ namespace Server.Items
     }
 
     [Flipable(0xf9f, 0xf9e)]
-    public class Scissors : Item, IQuality, IUsesRemaining
+    public class Scissors : Item, IQuality
     {
-        private int m_UsesRemaining;
         private Mobile m_Crafter;
         private ItemQuality m_Quality;
-        private bool m_ShowUsesRemaining;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int UsesRemaining { get => m_UsesRemaining; set { m_UsesRemaining = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile Crafter { get => m_Crafter; set { m_Crafter = value; InvalidateProperties(); } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool ShowUsesRemaining { get => m_ShowUsesRemaining; set { m_ShowUsesRemaining = value; InvalidateProperties(); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public ItemQuality Quality
-        {
-            get => m_Quality;
-            set
-            {
-                UnscaleUses();
-                m_Quality = value;
-                ScaleUses();
-            }
-        }
+        public ItemQuality Quality { get => m_Quality; set => m_Quality = value; }
 
         public bool PlayerConstructed => false;
 
@@ -45,13 +28,6 @@ namespace Server.Items
             : base(0xF9F)
         {
             Weight = 1.0;
-
-            m_UsesRemaining = 50;
-
-            if (Siege.SiegeShard)
-            {
-                m_ShowUsesRemaining = true;
-            }
         }
 
         public override void AddCraftedProperties(ObjectPropertyList list)
@@ -67,14 +43,6 @@ namespace Server.Items
             }
         }
 
-        public override void AddUsesRemainingProperties(ObjectPropertyList list)
-        {
-            if (Siege.SiegeShard)
-            {
-                list.Add(1060584, m_UsesRemaining.ToString()); // uses remaining: ~1_val~
-            }
-        }
-
         public Scissors(Serial serial)
             : base(serial)
         { }
@@ -84,8 +52,6 @@ namespace Server.Items
             base.Serialize(writer);
             writer.Write(0); // version
 
-            writer.Write(m_ShowUsesRemaining);
-            writer.Write(m_UsesRemaining);
             writer.Write(m_Crafter);
             writer.Write((int)m_Quality);
         }
@@ -95,31 +61,8 @@ namespace Server.Items
             base.Deserialize(reader);
             reader.ReadInt();
 
-            m_ShowUsesRemaining = reader.ReadBool();
-            m_UsesRemaining = reader.ReadInt();
             m_Crafter = reader.ReadMobile();
             m_Quality = (ItemQuality)reader.ReadInt();
-        }
-
-        public void ScaleUses()
-        {
-            m_UsesRemaining = m_UsesRemaining * GetUsesScalar() / 100;
-            InvalidateProperties();
-        }
-
-        public void UnscaleUses()
-        {
-            m_UsesRemaining = m_UsesRemaining * 100 / GetUsesScalar();
-        }
-
-        public int GetUsesScalar()
-        {
-            if (m_Quality == ItemQuality.Exceptional)
-            {
-                return 200;
-            }
-
-            return 100;
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -173,11 +116,6 @@ namespace Server.Items
                     if (item is IScissorable obj && obj is PlagueBeastInnard && obj.Scissor(from, _Item))
                     {
                         from.PlaySound(0x248);
-
-                        if (Siege.SiegeShard)
-                        {
-                            Siege.CheckUsesRemaining(from, _Item);
-                        }
                     }
                 }
                 else if (targeted is IScissorable obj)
@@ -185,11 +123,6 @@ namespace Server.Items
                     if (obj.Scissor(from, _Item))
                     {
                         from.PlaySound(0x248);
-
-                        if (Siege.SiegeShard)
-                        {
-                            Siege.CheckUsesRemaining(from, _Item);
-                        }
                     }
                 }
                 else

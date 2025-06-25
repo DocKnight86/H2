@@ -28,6 +28,7 @@ namespace Server.Items
         public override CraftResource DefaultResource => CraftResource.RegularLeather;
         public override ArmorMeditationAllowance DefMedAllowance => ArmorMeditationAllowance.All;
         public override int LabelNumber => 1045122;// leather blacksmith gloves of mining
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -37,7 +38,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -67,6 +68,7 @@ namespace Server.Items
         public override ArmorMaterialType MaterialType => ArmorMaterialType.Studded;
         public override CraftResource DefaultResource => CraftResource.RegularLeather;
         public override int LabelNumber => 1045123;// studded leather blacksmith gloves of mining
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -76,7 +78,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -105,6 +107,7 @@ namespace Server.Items
         public override int StrReq => 40;
         public override ArmorMaterialType MaterialType => ArmorMaterialType.Ringmail;
         public override int LabelNumber => 1045124;// ringmail blacksmith gloves of mining
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -114,7 +117,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 
@@ -138,10 +141,7 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public int Bonus
         {
-            get
-            {
-                return m_Bonus;
-            }
+            get => m_Bonus;
             set
             {
                 m_Bonus = value;
@@ -150,7 +150,9 @@ namespace Server.Items
                 if (m_Bonus == 0)
                 {
                     if (m_SkillMod != null)
+                    {
                         m_SkillMod.Remove();
+                    }
 
                     m_SkillMod = null;
                 }
@@ -172,7 +174,9 @@ namespace Server.Items
             if (m_Bonus != 0 && parent is Mobile mobile)
             {
                 if (m_SkillMod != null)
+                {
                     m_SkillMod.Remove();
+                }
 
                 m_SkillMod = new DefaultSkillMod(SkillName.Mining, true, m_Bonus);
                 mobile.AddSkillMod(m_SkillMod);
@@ -184,7 +188,9 @@ namespace Server.Items
             base.OnRemoved(parent);
 
             if (m_SkillMod != null)
+            {
                 m_SkillMod.Remove();
+            }
 
             m_SkillMod = null;
         }
@@ -194,13 +200,14 @@ namespace Server.Items
             base.GetProperties(list);
 
             if (m_Bonus != 0)
+            {
                 list.Add(1062005, m_Bonus.ToString()); // mining bonus +~1_val~
+            }
         }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(0); // version
 
             writer.Write(m_Bonus);
@@ -209,22 +216,16 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            reader.ReadInt();
 
-            int version = reader.ReadInt();
-
-            switch (version)
-            {
-                case 0:
-                    {
-                        m_Bonus = reader.ReadInt();
-                        break;
-                    }
-            }
+            m_Bonus = reader.ReadInt();
 
             if (m_Bonus != 0 && Parent is Mobile)
             {
                 if (m_SkillMod != null)
+                {
                     m_SkillMod.Remove();
+                }
 
                 m_SkillMod = new DefaultSkillMod(SkillName.Mining, true, m_Bonus);
                 ((Mobile)Parent).AddSkillMod(m_SkillMod);

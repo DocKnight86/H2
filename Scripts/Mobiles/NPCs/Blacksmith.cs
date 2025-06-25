@@ -23,11 +23,6 @@ namespace Server.Mobiles
         public override void InitSBInfo()
         {
             m_SBInfos.Add(new SBBlacksmith());
-            if (IsTokunoVendor)
-            {
-                m_SBInfos.Add(new SBSEArmor());
-                m_SBInfos.Add(new SBSEWeapons());
-            }
         }
 
         public override VendorShoeType ShoeType => Utility.RandomBool() ? VendorShoeType.Sandals : VendorShoeType.Shoes;

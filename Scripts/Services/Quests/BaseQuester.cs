@@ -43,16 +43,10 @@ namespace Server.Engines.Quests
         {
         }
 
-        public override void CheckMorph()
-        {
-            // Don't morph me!
-        }
-
         public override bool IsActiveVendor => false;
         public override bool IsInvulnerable => true;
         public override bool DisallowAllMoves => true;
         public override bool ClickTitle => false;
-        public override bool CanTeach => false;
         public virtual int TalkNumber => 6146;// Talk
         protected override List<SBInfo> SBInfos => m_SBInfos;
         public static Container GetNewContainer()

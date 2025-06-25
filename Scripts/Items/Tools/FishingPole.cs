@@ -12,7 +12,7 @@ namespace Server.Items
         bool EnhancedBait { get; }
     }
 
-    public class FishingPole : Item, IUsesRemaining, IResource, IQuality, IBaitable
+    public class FishingPole : Item, IResource, IQuality, IBaitable
     {
         private Type m_BaitType;
         private bool m_EnhancedBait;
@@ -27,9 +27,6 @@ namespace Server.Items
         private AosSkillBonuses m_AosSkillBonuses;
         private CraftResource m_Resource;
         private bool m_PlayerConstructed;
-
-        private int m_UsesRemaining;
-        private bool m_ShowUsesRemaining;
 
         private int m_LowerStatReq;
 
@@ -119,30 +116,7 @@ namespace Server.Items
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public ItemQuality Quality
-        {
-            get => m_Quality;
-            set
-            {
-                UnscaleUses();
-                m_Quality = value;
-                ScaleUses();
-            }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int UsesRemaining
-        {
-            get => m_UsesRemaining;
-            set { m_UsesRemaining = value; InvalidateProperties(); }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool ShowUsesRemaining
-        {
-            get => m_ShowUsesRemaining;
-            set { m_ShowUsesRemaining = value; InvalidateProperties(); }
-        }
+        public ItemQuality Quality { get => m_Quality; set => m_Quality = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int LowerStatReq
@@ -164,29 +138,6 @@ namespace Server.Items
 
             m_AosAttributes = new AosAttributes(this);
             m_AosSkillBonuses = new AosSkillBonuses(this);
-
-            UsesRemaining = 150;
-        }
-
-        public void ScaleUses()
-        {
-            m_UsesRemaining = m_UsesRemaining * GetUsesScalar() / 100;
-            InvalidateProperties();
-        }
-
-        public void UnscaleUses()
-        {
-            m_UsesRemaining = m_UsesRemaining * 100 / GetUsesScalar();
-        }
-
-        public int GetUsesScalar()
-        {
-            if (m_Quality == ItemQuality.Exceptional)
-            {
-                return 200;
-            }
-
-            return 100;
         }
 
         public int GetStrRequirement()
@@ -312,14 +263,6 @@ namespace Server.Items
             if (m_Quality == ItemQuality.Exceptional)
             {
                 list.Add(1060636); // exceptional
-            }
-        }
-
-        public override void AddUsesRemainingProperties(ObjectPropertyList list)
-        {
-            if (Siege.SiegeShard && m_ShowUsesRemaining)
-            {
-                list.Add(1060584, UsesRemaining.ToString()); // uses remaining: ~1_val~
             }
         }
 
@@ -499,14 +442,10 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(5); // version
 
             writer.Write(m_PlayerConstructed);
             writer.Write(m_LowerStatReq);
-
-            writer.Write(m_UsesRemaining);
-            writer.Write(m_ShowUsesRemaining);
 
             writer.Write(m_OriginalHue);
 
@@ -547,9 +486,6 @@ namespace Server.Items
                     m_LowerStatReq = reader.ReadInt();
                     goto case 3;
                 case 3:
-                    m_UsesRemaining = reader.ReadInt();
-                    m_ShowUsesRemaining = reader.ReadBool();
-                    goto case 2;
                 case 2:
                     m_OriginalHue = reader.ReadInt();
 
@@ -558,11 +494,6 @@ namespace Server.Items
                     m_BaitType = idx == -1 ? null : FishInfo.GetTypeFromIndex(idx);
                     m_HookType = (HookType)reader.ReadInt();
                     m_HookUses = reader.ReadInt();
-
-                    if (version < 5)
-                    {
-                        reader.ReadInt();
-                    }
 
                     m_EnhancedBait = reader.ReadBool();
 

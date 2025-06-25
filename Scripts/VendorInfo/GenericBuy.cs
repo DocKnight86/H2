@@ -58,11 +58,6 @@ namespace Server.Mobiles
                 m_MaxAmount = m_Amount = amount;
             }
 
-            if (Siege.SiegeShard)
-            {
-                m_Price *= 3;
-            }
-
             if (name == null)
             {
                 m_Name = itemID < 0x4000 ? (1020000 + itemID).ToString() : (1078872 + itemID).ToString();

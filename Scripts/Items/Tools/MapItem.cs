@@ -30,7 +30,7 @@ namespace Server.Items
 
         [Constructable]
         public MapItem()
-            : this(Siege.SiegeShard ? Map.Felucca : Map.Trammel)
+            : this(Map.Felucca)
         {
         }
 

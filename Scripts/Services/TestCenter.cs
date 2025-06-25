@@ -6,9 +6,6 @@ using Server.Network;
 using System;
 using System.Text;
 using Server.Engines.Points;
-using Server.SkillHandlers;
-using Server.Engines.Craft;
-using Server.Engines.Plants;
 using Server.Accounting;
 
 namespace Server.Misc
@@ -19,13 +16,15 @@ namespace Server.Misc
 
         static TestCenter()
         {
-            Enabled = Config.Get("TestCenter.Enabled", false);
+            Enabled = false; // turn ON and OFF here.
         }
 
         public static void Initialize()
         {
             if (Enabled)
+            {
                 EventSink.Speech += EventSink_Speech;
+            }
         }
 
         private static void EventSink_Speech(SpeechEventArgs args)
@@ -46,13 +45,21 @@ namespace Server.Misc
                             double value = Convert.ToDouble(split[2]);
 
                             if (Insensitive.Equals(name, "str"))
+                            {
                                 ChangeStrength(from, (int)value);
+                            }
                             else if (Insensitive.Equals(name, "dex"))
+                            {
                                 ChangeDexterity(from, (int)value);
+                            }
                             else if (Insensitive.Equals(name, "int"))
+                            {
                                 ChangeIntelligence(from, (int)value);
+                            }
                             else
+                            {
                                 ChangeSkill(from, name, value);
+                            }
                         }
                         catch (Exception e)
                         {
@@ -86,14 +93,6 @@ namespace Server.Misc
                                 from.SendMessage("Artifacts have been added to your bank");
                             }
                         }
-                        else if (Insensitive.Equals(name, "seeds"))
-                        {
-                            if (CanGive(from, "Seeds"))
-                            {
-                                GiveSeeds(from);
-                                from.SendMessage("Seeds have been added to your bank.");
-                            }
-                        }
                     }
                 }
                 else if (Insensitive.Equals(args.Speech, "help"))
@@ -109,7 +108,7 @@ namespace Server.Misc
         {
             if (m.Account is Account a)
             {
-                var tag = a.GetTag(m.Serial.ToString() + ' ' + tagName);
+                string tag = a.GetTag(m.Serial.ToString() + ' ' + tagName);
 
                 if (tag == null)
                 {
@@ -222,7 +221,7 @@ namespace Server.Misc
 
         public static void GiveResources(Mobile from)
         {
-            var box = new WoodenBox
+            WoodenBox box = new WoodenBox
             {
                 Hue = 1193,
                 Name = "General Resources"
@@ -230,71 +229,7 @@ namespace Server.Misc
 
             PlaceItemIn(box, 115, 63, new PowderOfTemperament(30000));
 
-            Container bag = new Bag
-            {
-                Hue = 75,
-                Name = "Bag of Imbuing Materials"
-            };
-
-            for (int i = 0; i < Imbuing.IngredTypes.Length; i++)
-            {
-                var item = Loot.Construct(Imbuing.IngredTypes[i]);
-
-                if (item != null)
-                {
-                    if (item.Stackable)
-                    {
-                        item.Amount = 1000;
-                        bag.DropItem(item);
-                    }
-                    else
-                    {
-                        bag.DropItem(item);
-
-                        for (int j = 0; j < 10; j++)
-                        {
-                            bag.DropItem(Loot.Construct(Imbuing.IngredTypes[j]));
-                        }
-                    }
-                }
-            }
-
-            PlaceItemIn(box, 17, 67, bag);
-
-            bag = new Bag
-            {
-                Hue = 1195,
-                Name = "Bag of Elven Materials"
-            };
-
-            for (int i = 0; i < Loot.RareGemTypes.Length; i++)
-            {
-                var item = Loot.Construct(Loot.RareGemTypes[i]);
-                item.Amount = 200;
-
-                bag.DropItem(item);
-            }
-
-            bag.DropItem(new LardOfParoxysmus(200));
-            bag.DropItem(new CapturedEssence(200));
-            bag.DropItem(new LuminescentFungi(200));
-            bag.DropItem(new Putrefaction(200));
-            bag.DropItem(new Blight(200));
-            bag.DropItem(new LardOfParoxysmus(200));
-            bag.DropItem(new Taint(200));
-            bag.DropItem(new Corruption(200));
-            bag.DropItem(new BarkFragment(200));
-            bag.DropItem(new Corruption(200));
-            bag.DropItem(new ParasiticPlant(200));
-            bag.DropItem(new Muculent(200));
-            bag.DropItem(new PristineDreadHorn(200));
-            bag.DropItem(new EyeOfTheTravesty(200));
-            bag.DropItem(new GrizzledBones(200));
-            bag.DropItem(new Scourge(200));
-
-            PlaceItemIn(box, 40, 67, bag);
-
-            bag = new Backpack
+            Container bag = new Backpack
             {
                 Name = "Runic Tool Bag"
             };
@@ -389,19 +324,6 @@ namespace Server.Misc
 
             bag = new Bag
             {
-                Name = "Bag of Recipes",
-                Hue = 2301
-            };
-
-            foreach (var recipe in Recipe.Recipes.Values)
-            {
-                bag.DropItem(new RecipeScroll(recipe));
-            }
-
-            PlaceItemIn(box, 115, 93, bag);
-
-            bag = new Bag
-            {
                 Name = "Bag of Wood",
                 Hue = 1321
             };
@@ -422,7 +344,7 @@ namespace Server.Misc
 
         public static void GiveArtifacts(Mobile from)
         {
-            var box = new WoodenBox
+            WoodenBox box = new WoodenBox
             {
                 Hue = 1170,
                 Name = "Artifacts"
@@ -445,106 +367,7 @@ namespace Server.Misc
 
             PlaceItemIn(box, 65, 57, bag);
 
-            bag = new Bag
-            {
-                Hue = 1281,
-                Name = "Tokuno Major Artifacts"
-            };
-
-            bag.DropItem(new SwordOfTheStampede());
-            bag.DropItem(new WindsEdge());
-            bag.DropItem(new DarkenedSky());
-            bag.DropItem(new KasaOfTheRajin());
-            bag.DropItem(new TomeOfLostKnowledge());
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.ParagonGold));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.VioletCouragePurple));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.InvulnerabilityBlue));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.LunaWhite));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.DryadGreen));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.ShadowDancerBlack));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.BerserkerRed));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.NoxGreen));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.RumRed));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.FireOrange));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.FadedCoal));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.Coal));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.FadedGold));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.StormBronze));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.Rose));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.MidnightCoal));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.FadedBronze));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.FadedRose));
-            bag.DropItem(new PigmentsOfTokuno(PigmentType.DeepRose));
-
-            PlaceItemIn(box, 115, 57, bag);
-
-            bag = new Bag
-            {
-                Hue = 1167,
-                Name = "Minor Artifacts"
-            };
-
-            for (int i = 0; i < MondainsLegacy.Artifacts.Length; i++)
-            {
-                bag.DropItem(Loot.Construct(MondainsLegacy.Artifacts[i]));
-            }
-
-            PlaceItemIn(box, 90, 57, bag);
-
             PlaceItemIn(from.BankBox, 63, 106, box);
-        }
-
-        public static void GiveSeeds(Mobile from)
-        {
-            var box = new WoodenBox
-            {
-                Hue = 578,
-                Name = "Box of Seeds"
-            };
-
-            box.DropItem(new FertileDirt(5000));
-            box.DropItem(new GreenThorns(15));
-
-            Container bag = new Bag();
-
-            for (int i = 0; i < 10; i++)
-            {
-                bag.DropItem(new Seed(PlantType.CocoaTree, PlantHue.Plain, false));
-            }
-
-            PlaceItemIn(box, 47, 83, bag);
-
-            bag = new Bag();
-
-            for (int i = 0; i < 10; i++)
-            {
-                bag.DropItem(Seed.RandomPeculiarSeed(Utility.Random(3)));
-            }
-
-            PlaceItemIn(box, 78, 83, bag);
-
-            bag = new Bag();
-
-            for (int i = 0; i < 5; i++)
-            {
-                bag.DropItem(new Seed(PlantTypeInfo.RandomFirstGeneration(), PlantHue.White, false));
-            }
-
-            for (int i = 0; i < 5; i++)
-            {
-                bag.DropItem(new Seed(PlantTypeInfo.RandomFirstGeneration(), PlantHue.Black, false));
-            }
-
-            for (int i = 0; i < 5; i++)
-            {
-                bag.DropItem(new Seed(PlantTypeInfo.RandomFirstGeneration(), PlantHue.FireRed, false));
-            }
-
-            // TODO: Plant Spawners
-
-            PlaceItemIn(box, 109, 83, bag);
-
-            PlaceItemIn(from.BankBox, 83, 106, box);
         }
 
         private static void PlaceItemIn(Container parent, int x, int y, Item item)
@@ -570,21 +393,11 @@ namespace Server.Misc
             BankBox bank = m.BankBox;
 
             for (int i = 0; i < PowerScroll.Skills.Count; ++i)
+            {
                 m.Skills[PowerScroll.Skills[i]].Cap = 120.0;
+            }
 
             m.StatCap = 250;
-
-            var book = new Runebook(9999);
-            book.CurCharges = book.MaxCharges;
-            book.Entries.Add(new RunebookEntry(new Point3D(1438, 1695, 0), Map.Trammel, "Britain Bank", null));
-            book.Entries.Add(new RunebookEntry(new Point3D(1821, 2821, 0), Map.Trammel, "Trinsic Bank", null));
-            book.Entries.Add(new RunebookEntry(new Point3D(1492, 1628, 13), Map.Trammel, "Britain Sweet Dreams", null));
-            book.Entries.Add(new RunebookEntry(new Point3D(1388, 1507, 10), Map.Trammel, "Britain Graveyard", null));
-            book.Entries.Add(new RunebookEntry(new Point3D(1300, 1080, 0), Map.Trammel, "Dungeon Despise", null));
-            book.Entries.Add(new RunebookEntry(new Point3D(1171, 2639, 0), Map.Trammel, "Dungeon Destard", null));
-            book.Entries.Add(new RunebookEntry(new Point3D(1260, 2296, 0), Map.Trammel, "Hedge Maze", null));
-
-            m.AddToBackpack(book);
 
             #region Gold
             if (m.Account is Account account && account.GetTag("TCGold") == null)
@@ -647,7 +460,7 @@ namespace Server.Misc
 
             PlaceItemIn(cont, 102, 90, new CrystallineRing());
 
-            var brac = new GoldBracelet
+            GoldBracelet brac = new GoldBracelet
             {
                 Name = "Farmer's Bank of Mastery"
             };
@@ -662,13 +475,6 @@ namespace Server.Misc
             };
 
             PlaceItemIn(bag, 45, 107, new Spellbook(ulong.MaxValue));
-            PlaceItemIn(bag, 65, 107, new NecromancerSpellbook((ulong)0xFFFF));
-            PlaceItemIn(bag, 85, 107, new BookOfChivalry((ulong)0x3FF));
-            PlaceItemIn(bag, 105, 107, new BookOfBushido());	//Default ctor = full
-            PlaceItemIn(bag, 125, 107, new BookOfNinjitsu()); //Default ctor = full
-
-            PlaceItemIn(bag, 102, 122, new SpellweavingBook((1ul << 16) - 1));
-            PlaceItemIn(bag, 122, 122, new MysticBook((1ul << 16) - 1));
 
             Runebook runebook = new Runebook(20);
             runebook.CurCharges = runebook.MaxCharges;
@@ -693,7 +499,9 @@ namespace Server.Misc
             PlaceItemIn(bag, 141, 128, toHue);
 
             for (int i = 0; i < 9; ++i)
+            {
                 PlaceItemIn(bag, 45 + (i * 10), 74, new RecallRune());
+            }
 
             PlaceItemIn(cont, 47, 91, bag);
 
@@ -713,14 +521,6 @@ namespace Server.Misc
             PlaceItemIn(cont, 53, 169, bag);
 
             PlaceItemIn(bank, 63, 142, cont);
-            #endregion
-
-            #region Silver - No Mas Silver
-            /*cont = new WoodenBox();
-            cont.Hue = 1161;
-
-            PlaceItemIn(cont, 47, 91, new Silver(9000));
-            PlaceItemIn(bank, 38, 142, cont);*/
             #endregion
 
             #region Ethys
@@ -783,7 +583,9 @@ namespace Server.Misc
                             StringBuilder sb = new StringBuilder();
 
                             if (strings.Length > 0)
+                            {
                                 sb.Append(strings[0]);
+                            }
 
                             for (int i = 1; i < strings.Length; ++i)
                             {

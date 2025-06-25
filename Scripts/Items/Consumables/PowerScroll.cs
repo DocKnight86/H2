@@ -28,18 +28,10 @@ namespace Server.Items
             SkillName.Provocation,
             SkillName.Discordance,
             SkillName.Peacemaking,
-            SkillName.Chivalry,
             SkillName.Focus,
-            SkillName.Necromancy,
             SkillName.Stealing,
             SkillName.Stealth,
-            SkillName.SpiritSpeak,
-            SkillName.Ninjitsu,
-            SkillName.Bushido,
-            SkillName.Spellweaving,
-            SkillName.Throwing,
-            SkillName.Mysticism,
-            SkillName.Imbuing
+            SkillName.SpiritSpeak
         };
 
         private static readonly List<SkillName> _Skills = new List<SkillName>();

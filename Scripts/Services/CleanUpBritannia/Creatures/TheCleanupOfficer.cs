@@ -10,8 +10,7 @@ namespace Server.Engines.CleanUpBritannia
         public override bool IsInvulnerable => true;
         public override bool DisallowAllMoves => true;
         public override bool ClickTitle => true;
-        public override bool CanTeach => false;
-
+        
         protected List<SBInfo> m_SBInfos = new List<SBInfo>();
         protected override List<SBInfo> SBInfos => m_SBInfos;
         public override void InitSBInfo() { }

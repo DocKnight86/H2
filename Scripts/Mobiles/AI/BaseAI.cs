@@ -361,20 +361,6 @@ namespace Server.Mobiles
             return from.Alive && from.InRange(m_Mobile.Location, 3) && m_Mobile.IsHumanInTown();
         }
 
-        private static readonly SkillName[] m_KeywordTable =
-        {
-            SkillName.Parry, SkillName.Healing, SkillName.Hiding, SkillName.Stealing, SkillName.Alchemy, SkillName.AnimalLore,
-            SkillName.ItemID, SkillName.ArmsLore, SkillName.Begging, SkillName.Blacksmith, SkillName.Fletching,
-            SkillName.Peacemaking, SkillName.Camping, SkillName.Carpentry, SkillName.Cartography, SkillName.Cooking,
-            SkillName.DetectHidden, SkillName.Discordance, //??
-			SkillName.EvalInt, SkillName.Fishing, SkillName.Provocation, SkillName.Lockpicking, SkillName.Magery,
-            SkillName.MagicResist, SkillName.Tactics, SkillName.Snooping, SkillName.RemoveTrap, SkillName.Musicianship,
-            SkillName.Poisoning, SkillName.Archery, SkillName.SpiritSpeak, SkillName.Tailoring, SkillName.AnimalTaming,
-            SkillName.TasteID, SkillName.Tinkering, SkillName.Veterinary, SkillName.Forensics, SkillName.Herding,
-            SkillName.Tracking, SkillName.Stealth, SkillName.Inscribe, SkillName.Swords, SkillName.Macing, SkillName.Fencing,
-            SkillName.Wrestling, SkillName.Lumberjacking, SkillName.Mining, SkillName.Meditation
-        };
-
         public virtual void OnSpeech(SpeechEventArgs e)
         {
             if (e.Mobile.Alive && e.Mobile.InRange(m_Mobile.Location, 3) && m_Mobile.IsHumanInTown())
@@ -408,107 +394,6 @@ namespace Server.Mobiles
                         Clock.GetTime(m_Mobile, out generalNumber, out exactTime);
 
                         m_Mobile.PublicOverheadMessage(MessageType.Regular, 0x3B2, generalNumber);
-                    }
-                }
-                else if (e.HasKeyword(0x6C) && WasNamed(e.Speech)) // *train
-                {
-                    if (m_Mobile.Combatant != null)
-                    {
-                        // I am too busy fighting to deal with thee!
-                        m_Mobile.PublicOverheadMessage(MessageType.Regular, 0x3B2, 501482);
-                    }
-                    else
-                    {
-                        bool foundSomething = false;
-
-                        Skills ourSkills = m_Mobile.Skills;
-                        Skills theirSkills = e.Mobile.Skills;
-
-                        for (int i = 0; i < ourSkills.Length && i < theirSkills.Length; ++i)
-                        {
-                            Skill skill = ourSkills[i];
-                            Skill theirSkill = theirSkills[i];
-
-                            if (skill != null && theirSkill != null && skill.Base >= 60.0 && m_Mobile.CheckTeach(skill.SkillName, e.Mobile))
-                            {
-                                double toTeach = skill.Base / 3.0;
-
-                                if (toTeach > 42.0)
-                                {
-                                    toTeach = 42.0;
-                                }
-
-                                if (toTeach > theirSkill.Base)
-                                {
-                                    int number = 1043059 + i;
-
-                                    if (number > 1043107)
-                                    {
-                                        continue;
-                                    }
-
-                                    if (!foundSomething)
-                                    {
-                                        m_Mobile.Say(1043058); // I can train the following:
-                                    }
-
-                                    m_Mobile.Say(number);
-
-                                    foundSomething = true;
-                                }
-                            }
-                        }
-
-                        if (!foundSomething)
-                        {
-                            m_Mobile.Say(501505); // Alas, I cannot teach thee anything.
-                        }
-                    }
-                }
-                else
-                {
-                    SkillName toTrain = (SkillName)(-1);
-
-                    for (int i = 0; toTrain == (SkillName)(-1) && i < e.Keywords.Length; ++i)
-                    {
-                        int keyword = e.Keywords[i];
-
-                        if (keyword == 0x154)
-                        {
-                            toTrain = SkillName.Anatomy;
-                        }
-                        else if (keyword >= 0x6D && keyword <= 0x9C)
-                        {
-                            int index = keyword - 0x6D;
-
-                            if (index >= 0 && index < m_KeywordTable.Length)
-                            {
-                                toTrain = m_KeywordTable[index];
-                            }
-                        }
-                    }
-
-                    if (toTrain != (SkillName)(-1) && WasNamed(e.Speech))
-                    {
-                        if (m_Mobile.Combatant != null)
-                        {
-                            // I am too busy fighting to deal with thee!
-                            m_Mobile.PublicOverheadMessage(MessageType.Regular, 0x3B2, 501482);
-                        }
-                        else
-                        {
-                            Skills skills = m_Mobile.Skills;
-                            Skill skill = skills[toTrain];
-
-                            if (skill == null || skill.Base < 60.0 || !m_Mobile.CheckTeach(toTrain, e.Mobile))
-                            {
-                                m_Mobile.Say(501507); // 'Tis not something I can teach thee of.
-                            }
-                            else
-                            {
-                                m_Mobile.Teach(toTrain, e.Mobile, 0, false);
-                            }
-                        }
                     }
                 }
             }

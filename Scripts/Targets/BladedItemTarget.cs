@@ -25,13 +25,17 @@ namespace Server.Targets
                 }
             }
             else
+            {
                 base.OnTargetOutOfRange(from, targeted);
+            }
         }
 
         protected override void OnTarget(Mobile from, object targeted)
         {
             if (m_Item.Deleted)
+            {
                 return;
+            }
 
             if (targeted is ICarvable carvable)
             {
@@ -49,15 +53,12 @@ namespace Server.Targets
             else if (targeted is SwampDragon pet && pet.HasBarding)
             {
                 if (!pet.Controlled || pet.ControlMaster != from)
+                {
                     from.SendLocalizedMessage(1053022); // You cannot remove barding from a swamp dragon you do not own.
+                }
                 else
                 {
                     pet.HasBarding = false;
-
-                    if (Siege.SiegeShard && m_Item is IUsesRemaining)
-                    {
-                        Siege.CheckUsesRemaining(from, m_Item);
-                    }
                 }
             }
             else
@@ -88,7 +89,9 @@ namespace Server.Targets
                     HarvestBank bank = def.GetBank(map, loc.X, loc.Y);
 
                     if (bank == null)
+                    {
                         return;
+                    }
 
                     if (bank.Current < 5)
                     {
@@ -110,11 +113,6 @@ namespace Server.Targets
                             from.SendLocalizedMessage(500490); // You can't place any kindling into your backpack!
 
                             item.Delete();
-                        }
-
-                        if (Siege.SiegeShard && m_Item is IUsesRemaining)
-                        {
-                            Siege.CheckUsesRemaining(from, m_Item);
                         }
                     }
                 }

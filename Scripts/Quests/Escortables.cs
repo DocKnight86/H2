@@ -498,8 +498,6 @@ namespace Server.Engines.Quests
         {
         }
 
-        public override bool CanTeach => true;
-
         public override bool ClickTitle => false;
 
         public override void InitOutfit()
@@ -548,7 +546,6 @@ namespace Server.Engines.Quests
         {
         }
 
-        public override bool CanTeach => true;
         public override bool ClickTitle => false;
         public override void InitOutfit()
         {
@@ -714,7 +711,6 @@ namespace Server.Engines.Quests
         {
         }
 
-        public override bool CanTeach => true;
         public override bool ClickTitle => false;
         public override void InitOutfit()
         {
@@ -918,16 +914,8 @@ namespace Server.Engines.Quests
         }
 
         public override bool ClickTitle => false;
-        public override bool CanTeach => true;
         public virtual bool HealsPlayers => true;
-        public override bool CheckTeach(SkillName skill, Mobile from)
-        {
-            if (!base.CheckTeach(skill, from))
-                return false;
-
-            return skill == SkillName.Anatomy || skill == SkillName.Camping || skill == SkillName.Forensics || skill == SkillName.Healing || skill == SkillName.SpiritSpeak;
-        }
-
+        
         public override void InitOutfit()
         {
             AddItem(new Sandals(GetShoeHue()));

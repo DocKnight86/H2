@@ -19,13 +19,11 @@ namespace Server.Mobiles
             Name = "a blade spirit";
             Body = 574;
 
-            bool weak = summoned && Siege.SiegeShard;
-
-            SetStr(weak ? 100 : 150);
-            SetDex(weak ? 100 : 150);
+            SetStr(150);
+            SetDex(150);
             SetInt(100);
 
-            SetHits(!weak ? 160 : 80);
+            SetHits(160);
             SetStam(250);
             SetMana(0);
 

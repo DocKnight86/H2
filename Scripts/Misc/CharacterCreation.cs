@@ -204,7 +204,7 @@ namespace Server.Misc
             }
 
             CityInfo city = args.City;
-            Map map = Siege.SiegeShard && city.Map == Map.Trammel ? Map.Felucca : city.Map;
+            Map map = city.Map;
 
             newChar.MoveToWorld(city.Location, map);
 

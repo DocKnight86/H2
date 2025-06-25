@@ -815,8 +815,6 @@ namespace Server.Engines.VeteranRewards
                 ChestLocation = new Point2D(entry.Location.X, entry.Location.Y)
             };
 
-            bool eodon = map.TreasureFacet == TreasureFacet.Eodon;
-
             map.Completed = entry.Completed;
             map.CompletedBy = entry.CompletedBy;
             map.Decoder = entry.Decoder;
@@ -845,7 +843,7 @@ namespace Server.Engines.VeteranRewards
                 y1 = 0;
             }
 
-            map.AdjustMap(facet, out int x2, out int y2, x1, y1, width, height, eodon);
+            map.AdjustMap(facet, out int x2, out int y2, x1, y1, width, height);
 
             x1 = x2 - width;
             y1 = y2 - height;

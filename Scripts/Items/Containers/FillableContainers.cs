@@ -1415,9 +1415,7 @@ namespace Server.Items
             2,
             new[]
             {
-                typeof(Tanner),
-                typeof(LeatherWorker),
-                typeof(Furtrader)
+                typeof(Tanner)
             },
             new[]
             {

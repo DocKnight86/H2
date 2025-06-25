@@ -23,7 +23,7 @@ namespace Server.Regions
             {
                 WorldLocation first = null;
 
-                foreach (var l in points.Keys)
+                foreach (WorldLocation l in points.Keys)
                 {
                     if (l.Location != Point3D.Zero)
                     {
@@ -61,7 +61,7 @@ namespace Server.Regions
         {
             WorldLocation loc = null;
 
-            foreach (var l in TeleLocs.Keys)
+            foreach (WorldLocation l in TeleLocs.Keys)
             {
                 if (l.Location.X == m.X && l.Location.Y == m.Y && l.Location.Z >= m.Z - 5 && l.Location.Z <= m.Z + 5 && l.Map == m.Map)
                 {
@@ -72,8 +72,8 @@ namespace Server.Regions
 
             if (loc != null)
             {
-                var destinationPoint = TeleLocs[loc].Location;
-                var destinationMap = TeleLocs[loc].Map;
+                Point3D destinationPoint = TeleLocs[loc].Location;
+                Map destinationMap = TeleLocs[loc].Map;
 
                 if (destinationPoint != Point3D.Zero && destinationMap != null && destinationMap != Map.Internal)
                 {
@@ -108,14 +108,9 @@ namespace Server.Regions
                 doc.Load(filePath);
 
                 XmlElement root = doc["TeleporterRegions"];
-                var unique = 1;
+                int unique = 1;
 
                 BuildTeleporters("Teleporter", root, ref unique);
-
-                if (Siege.SiegeShard)
-                {
-                    BuildTeleporters("SiegeTeleporter", root, ref unique);
-                }
 
                 Console.WriteLine("Initialized {0} Teleporter Regions.", (unique - 1).ToString());
             });
@@ -123,21 +118,21 @@ namespace Server.Regions
 
         private static void BuildTeleporters(string elementName, XmlElement root, ref int unique)
         {
-            var name = root.GetElementsByTagName(elementName);
+            XmlNodeList name = root.GetElementsByTagName(elementName);
 
-            for (var index = 0; index < name.Count; index++)
+            for (int index = 0; index < name.Count; index++)
             {
-                var region = (XmlElement) name[index];
-                var list = new Dictionary<WorldLocation, WorldLocation>();
+                XmlElement region = (XmlElement) name[index];
+                Dictionary<WorldLocation, WorldLocation> list = new Dictionary<WorldLocation, WorldLocation>();
 
                 Map locMap = null;
                 Map teleMap = null;
 
-                var tiles = region.GetElementsByTagName("tiles");
+                XmlNodeList tiles = region.GetElementsByTagName("tiles");
 
-                for (var i = 0; i < tiles.Count; i++)
+                for (int i = 0; i < tiles.Count; i++)
                 {
-                    var tile = (XmlElement) tiles[i];
+                    XmlElement tile = (XmlElement) tiles[i];
                     Point3D from = Point3D.Parse(Utility.GetAttribute(tile, "from", "(0, 0, 0)"));
                     Map fromMap = Map.Parse(Utility.GetAttribute(tile, "frommap", null));
 
@@ -174,7 +169,7 @@ namespace Server.Regions
                     {
                         bool any = false;
 
-                        foreach (var s in fromMap.FindItems<Static>(from, 0))
+                        foreach (Static s in fromMap.FindItems<Static>(from, 0))
                         {
                             if (s.ItemID == id)
                             {
@@ -185,7 +180,7 @@ namespace Server.Regions
 
                         if (!any)
                         {
-                            var st = new Static(id);
+                            Static st = new Static(id);
 
                             if (hue > -1)
                             {
@@ -200,9 +195,9 @@ namespace Server.Regions
                 if (list.Count > 0)
                 {
                     Rectangle3D[] recs = new Rectangle3D[list.Count];
-                    var i = 0;
+                    int i = 0;
 
-                    foreach (var kvp in list)
+                    foreach (KeyValuePair<WorldLocation, WorldLocation> kvp in list)
                     {
                         recs[i++] = new Rectangle3D(kvp.Key.Location.X, kvp.Key.Location.Y, kvp.Key.Location.Z - 5, 1, 1, 10);
                     }

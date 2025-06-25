@@ -9,7 +9,6 @@ namespace Server.Engines.ArenaSystem
         public override bool IsActiveVendor => false;
         public override bool IsActiveBuyer => false;
         public override bool IsActiveSeller => false;
-        public override bool CanTeach => false;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public PVPArena Arena { get; set; }

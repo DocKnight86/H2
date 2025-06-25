@@ -176,12 +176,12 @@ namespace Server.Items
 
             ResolveDest(e.Mobile, e.Speech.Trim(), ref loc, ref map);
 
-            if (loc == Point3D.Zero || map == null || map == Map.Internal || (Siege.SiegeShard && map == Map.Trammel))
+            if (loc == Point3D.Zero || map == null || map == Map.Internal)
             {
                 return;
             }
 
-            if (SpellHelper.RestrictRedTravel && !Siege.SiegeShard && e.Mobile.Murderer && map != Map.Felucca)
+            if (SpellHelper.RestrictRedTravel && e.Mobile.Murderer && map != Map.Felucca)
             {
                 e.Mobile.SendLocalizedMessage(1019004); // You are not allowed to travel there.
                 return;

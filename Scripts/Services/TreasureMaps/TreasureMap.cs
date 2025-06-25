@@ -1,4 +1,3 @@
-#region References
 using Server.ContextMenus;
 using Server.Engines.CannedEvil;
 using Server.Engines.Harvest;
@@ -6,11 +5,9 @@ using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Regions;
-using Server.Spells;
 using Server.Targeting;
 using System;
 using System.Collections.Generic;
-#endregion
 
 namespace Server.Items
 {
@@ -77,8 +74,7 @@ namespace Server.Items
         }
         #endregion
 
-        #region Spawn Types
-        private static readonly Type[][] m_SpawnTypes =
+        private static readonly Type[][] _SpawnTypes =
         {
             new[]{ typeof(Mongbat), typeof(Ratman), typeof(HeadlessOne), typeof(Skeleton), typeof(Zombie) },
             new[]{ typeof(AirElemental), typeof(DreadSpider), typeof(EarthElemental), typeof(FireElemental), typeof(Gargoyle), typeof(Gazer), typeof(HellHound), typeof(Lich), typeof(EvilMage), typeof(OgreLord), typeof(Orc) },
@@ -87,144 +83,10 @@ namespace Server.Items
             new[]{ typeof(AncientWyrm), typeof(Balron), typeof(BloodElemental), typeof(PoisonElemental), typeof(Titan), typeof(GreaterDragon), typeof(ColdDrake), typeof(FrostDragon) },
         };
 
-        private static readonly Type[][] m_TokunoSpawnTypes =
+        private static readonly Rectangle2D[] _FelTramWrap =
         {
-            new[]{ typeof(Mongbat), typeof(Ratman), typeof(HeadlessOne), typeof(Skeleton), typeof(Zombie)  },
-            new[]{ typeof(AirElemental), typeof(DreadSpider), typeof(EarthElemental), typeof(FireElemental), typeof(Gargoyle), typeof(Gazer), typeof(HellHound), typeof(Lich), typeof(EvilMage), typeof(OgreLord), typeof(Orc) },
-            new[]{ typeof(Daemon), typeof(Devourer), typeof(DreadSpider), typeof(ElderGazer), typeof(FanDancer), typeof(LichLord), typeof(OgreLord), typeof(RevenantLion), typeof(Ronin), typeof(RuneBeetle) },
-            new[]{ typeof(RuneBeetle), typeof(LadyOfTheSnow), typeof(YomotsuElder), typeof(YomotsuPriest), typeof(YomotsuWarrior), typeof(Hiryu), typeof(Oni), typeof(DragonWolf) },
-            new[]{ typeof(RuneBeetle), typeof(LadyOfTheSnow), typeof(YomotsuElder), typeof(YomotsuPriest), typeof(YomotsuWarrior), typeof(Hiryu), typeof(Oni), typeof(Yamandon) }
+            new(0, 0, 5119, 4095)
         };
-
-        private static readonly Type[][] m_MalasSpawnTypes =
-        {
-            new[]{ typeof(Mongbat), typeof(Ratman), typeof(HeadlessOne), typeof(Skeleton), typeof(Zombie) },
-            new[]{ typeof(AirElemental), typeof(DreadSpider), typeof(EarthElemental), typeof(FireElemental), typeof(Gargoyle), typeof(Gazer), typeof(HellHound), typeof(Lich), typeof(EvilMage), typeof(OgreLord), typeof(Orc) },
-            new[]{ typeof(Daemon), typeof(DreadSpider), typeof(ElderGazer), typeof(LichLord), typeof(OgreLord), typeof(Ravager), typeof(WandererOfTheVoid) },
-            new[]{ typeof(Devourer), typeof(RottingCorpse), typeof(WandererOfTheVoid), typeof(MinotaurCaptain), typeof(MinotaurScout), typeof(DragonWolf)  },
-            new[]{ typeof(Devourer), typeof(RottingCorpse), typeof(WandererOfTheVoid), typeof(MinotaurCaptain), typeof(MinotaurScout), typeof(MinotaurGeneral) }
-        };
-
-        private static readonly Type[][] m_IlshenarSpawnTypes =
-        {
-            new[]{ typeof(Mongbat), typeof(Ratman), typeof(HeadlessOne), typeof(Skeleton), typeof(Zombie) },
-            new[]{ typeof(AirElemental), typeof(DreadSpider), typeof(EarthElemental), typeof(FireElemental), typeof(Gargoyle), typeof(Gazer), typeof(HellHound), typeof(Lich), typeof(EvilMage), typeof(OgreLord), typeof(Orc) },
-            new[]{ typeof(Daemon), typeof(DarkGuardian), typeof(DreadSpider), typeof(ElderGazer), typeof(ExodusMinion), typeof(GargoyleDestroyer), typeof(GargoyleEnforcer), typeof(LichLord), typeof(OgreLord), typeof(PoisonElemental) },
-            new[]{ typeof(ExodusMinion), typeof(GargoyleDestroyer), typeof(Titan), typeof(Changeling), typeof(EnslavedSatyr), typeof(DragonWolf) },
-            new[]{ typeof(ExodusMinion), typeof(GargoyleDestroyer), typeof(Titan), typeof(RenegadeChangeling), typeof(EnslavedSatyr) }
-        };
-
-        private static readonly Type[][] m_TerMurSpawnTypes =
-        {
-            new[]{ typeof(Mongbat), typeof(Ratman), typeof(HeadlessOne), typeof(Skeleton), typeof(ClockworkScorpion), typeof(CorrosiveSlime)  },
-            new[]{ typeof(AcidSlug), typeof(Slith), typeof(WaterElemental), typeof(LeatherWolf), typeof(StoneSlith), typeof(ToxicSlith) },
-            new[]{ typeof(BloodWorm), typeof(FireAnt), typeof(Kepetch), typeof(LavaElemental), typeof(MaddeningHorror), typeof(StoneSlith), typeof(ToxicSlith) },
-            new[]{ typeof(LavaElemental), typeof(GreaterPoisonElemental), typeof(EnragedEarthElemental), typeof(FireDaemon) },
-            new[]{ typeof(LavaElemental), typeof(GreaterPoisonElemental), typeof(EnragedEarthElemental), typeof(FireDaemon), typeof(EnragedColossus) }
-        };
-
-        private static readonly Type[][] m_EodonSpawnTypes =
-        {
-            new[] { typeof(MyrmidexLarvae), typeof(SilverbackGorilla), typeof(Panther), typeof(WildTiger) },
-            new[] { typeof(AcidElemental), typeof(SandVortex), typeof(Lion), typeof(SabreToothedTiger) },
-            new[] { typeof(Infernus), typeof(FireElemental), typeof(Dimetrosaur), typeof(Saurosaurus) },
-            new[] { typeof(KotlAutomaton), typeof(MyrmidexDrone), typeof(Allosaurus), typeof(Triceratops) },
-            new[] { typeof(Anchisaur), typeof(Allosaurus), typeof(SandVortex) }
-        };
-        #endregion
-
-        #region Spawn Locations
-        private static readonly Rectangle2D[] m_FelTramWrap =
-        {
-            new Rectangle2D(0, 0, 5119, 4095)
-        };
-
-        private static readonly Rectangle2D[] m_TokunoWrap =
-        {
-            new Rectangle2D(155, 207, 30, 40),
-            new Rectangle2D(280, 230, 157, 45),
-            new Rectangle2D(445, 215, 30, 35 ),
-            new Rectangle2D(447, 53, 58, 40),
-            new Rectangle2D(612, 240, 20, 17),
-            new Rectangle2D(167, 275, 53, 60),
-            new Rectangle2D(734, 407, 14, 22),
-            new Rectangle2D(753, 489, 8, 30),
-            new Rectangle2D(624, 619, 20, 24),
-            new Rectangle2D(624, 725, 8, 8),
-            new Rectangle2D(574, 734, 20, 16),
-            new Rectangle2D(431, 752, 25, 27),
-            new Rectangle2D(348, 968, 52, 135),
-            new Rectangle2D(282, 1188, 90, 100),
-            new Rectangle2D(348, 1335, 50, 50),
-
-            new Rectangle2D(228, 284, 500, 316),
-            new Rectangle2D(95, 600, 345, 243),
-            new Rectangle2D(155, 842, 146, 1358),
-            new Rectangle2D(495, 812, 435, 350),
-            new Rectangle2D(501, 1156, 100, 150),
-            new Rectangle2D(876, 1156, 90, 150),
-
-            new Rectangle2D(970, 1159, 14, 25),
-            new Rectangle2D(990, 1151, 5, 15),
-            new Rectangle2D(1004, 1120, 16, 30),
-            new Rectangle2D(1008, 1032, 12, 15),
-            new Rectangle2D(1163, 383, 20, 20),
-
-            new Rectangle2D(839, 30, 168, 120),
-            new Rectangle2D(707, 150, 307, 250),
-            new Rectangle2D(845, 397, 179, 75),
-            new Rectangle2D(1068, 382, 60, 80),
-            new Rectangle2D(787, 687, 60, 72),
-            new Rectangle2D(848, 473, 557, 655)
-        };
-
-        private static readonly Rectangle2D[] m_MalasWrap =
-        {
-            new Rectangle2D(611, 67, 1862, 705),
-            new Rectangle2D(1540, 852, 286, 182),
-            new Rectangle2D(602, 784, 546, 746),
-            new Rectangle2D(1160, 1035, 1299, 871)
-        };
-
-        private static readonly Rectangle2D[] m_IlshenarWrap =
-        {
-            new Rectangle2D(221, 314, 657, 286),
-            new Rectangle2D(530, 600, 212, 205),
-            new Rectangle2D(261, 805, 495, 655),
-            new Rectangle2D(908, 925, 90, 170),
-            new Rectangle2D(1031, 904, 730, 450),
-            new Rectangle2D(1028, 630, 318, 161),
-            new Rectangle2D(1205, 368, 265, 237),
-            new Rectangle2D(1551, 516, 200, 130)
-        };
-
-        private static readonly Rectangle2D[] m_TerMurWrap =
-        {
-            new Rectangle2D(535, 2895, 85, 117),
-            new Rectangle2D(525, 3085, 115, 70),
-            new Rectangle2D(755, 2860, 400, 270),
-            new Rectangle2D(1025, 3280, 190, 100 ),
-            new Rectangle2D(305, 3445, 175, 255),
-            new Rectangle2D(480, 3540, 90, 110),
-            new Rectangle2D(605, 3880, 200, 170),
-            new Rectangle2D(750, 3830, 80, 80)
-        };
-
-        private static readonly Rectangle2D[] m_EodonWrap =
-        {
-            new Rectangle2D(259, 1400, 354, 510),
-            new Rectangle2D(259, 1400, 354, 510),
-            new Rectangle2D(259, 1400, 354, 510),
-            new Rectangle2D(688, 1440, 46, 88),
-            new Rectangle2D(613, 1466, 65, 139),
-            new Rectangle2D(678, 1568, 43, 40),
-            new Rectangle2D(613, 1720, 91, 72),
-            new Rectangle2D(618, 1792, 44, 273),
-            new Rectangle2D(662, 1969, 84, 166),
-            new Rectangle2D(754, 1963, 100, 65),
-            new Rectangle2D(174, 1540, 85, 420)
-        };
-        #endregion
 
         private int m_Level;
         private bool m_Completed;
@@ -300,12 +162,6 @@ namespace Server.Items
 
         [Constructable]
         public TreasureMap(int level, Map map)
-            : this(level, map, false)
-        {
-        }
-
-        [Constructable]
-        public TreasureMap(int level, Map map, bool eodon)
         {
             Level = level;
 
@@ -313,11 +169,11 @@ namespace Server.Items
 
             if (map == Map.Internal)
             {
-                map = GetRandomMap();
+                map = Map.Felucca;
             }
 
             Facet = map;
-            ChestLocation = GetRandomLocation(map, eodon);
+            ChestLocation = GetRandomLocation(map);
 
             Width = 300;
             Height = 300;
@@ -329,15 +185,19 @@ namespace Server.Items
             int y1 = ChestLocation.Y - Utility.RandomMinMax(height / 4, height / 4 * 3);
 
             if (x1 < 0)
+            {
                 x1 = 0;
+            }
 
             if (y1 < 0)
+            {
                 y1 = 0;
+            }
 
             int x2;
             int y2;
 
-            AdjustMap(map, out x2, out y2, x1, y1, width, height, eodon);
+            AdjustMap(map, out x2, out y2, x1, y1, width, height);
 
             x1 = x2 - width;
             y1 = y2 - height;
@@ -350,32 +210,11 @@ namespace Server.Items
             NextReset = DateTime.UtcNow + ResetTime;
         }
 
-        public Map GetRandomMap()
-        {
-            switch (Utility.Random(8))
-            {
-                default:
-                case 0: return Map.Trammel;
-                case 1: return Map.Felucca;
-                case 2:
-                case 3: return Map.Ilshenar;
-                case 4:
-                case 5: return Map.Malas;
-                case 6:
-                case 7: return Map.Tokuno;
-            }
-        }
-
-        public static Point2D GetRandomLocation(Map map)
-        {
-            return GetRandomLocation(map, false);
-        }
-
         public static bool IsTameable(BaseCreature bc)
         {
-            for (var index = 0; index < m_TameableCreatures.Length; index++)
+            for (int index = 0; index < m_TameableCreatures.Length; index++)
             {
-                var t = m_TameableCreatures[index];
+                Type t = m_TameableCreatures[index];
 
                 if (t == bc.GetType())
                 {
@@ -393,25 +232,12 @@ namespace Server.Items
             typeof(FrostDragon)
         };
 
-        public static Point2D GetRandomLocation(Map map, bool eodon)
+        public static Point2D GetRandomLocation(Map map)
         {
-            Rectangle2D[] recs;
-
             int x = 0;
             int y = 0;
 
-            if (map == Map.Trammel || map == Map.Felucca)
-                recs = m_FelTramWrap;
-            else if (map == Map.Tokuno)
-                recs = m_TokunoWrap;
-            else if (map == Map.Malas)
-                recs = m_MalasWrap;
-            else if (map == Map.Ilshenar)
-                recs = m_IlshenarWrap;
-            else if (eodon)
-                recs = m_EodonWrap;
-            else
-                recs = m_TerMurWrap;
+            Rectangle2D[] recs = _FelTramWrap;
 
             while (true)
             {
@@ -421,7 +247,9 @@ namespace Server.Items
                 y = Utility.Random(rec.Y, rec.Height);
 
                 if (ValidateLocation(x, y, map))
+                {
                     return new Point2D(x, y);
+                }
             }
         }
 
@@ -464,9 +292,9 @@ namespace Server.Items
             }
 
             //Rare occrunces where a static tile needs to be checked
-            var tiles = map.Tiles.GetStaticTiles(x, y, true);
+            StaticTile[] tiles = map.Tiles.GetStaticTiles(x, y, true);
 
-            for (var index = 0; index < tiles.Length; index++)
+            for (int index = 0; index < tiles.Length; index++)
             {
                 StaticTile tile = tiles[index];
                 ItemData td = TileData.ItemTable[tile.ID & TileData.MaxItemValue];
@@ -506,11 +334,6 @@ namespace Server.Items
                 width = 600;
                 height = 600;
             }
-            else if (map == Map.TerMur)
-            {
-                width = 200;
-                height = 200;
-            }
             else
             {
                 width = 300;
@@ -520,93 +343,19 @@ namespace Server.Items
 
         public void AdjustMap(Map map, out int x2, out int y2, int x1, int y1, int width, int height)
         {
-            AdjustMap(map, out x2, out y2, x1, y1, width, height, false);
-        }
-
-        public void AdjustMap(Map map, out int x2, out int y2, int x1, int y1, int width, int height, bool eodon)
-        {
             x2 = x1 + width;
             y2 = y1 + height;
 
             if (map == Map.Trammel || map == Map.Felucca)
             {
                 if (x2 >= 5120)
+                {
                     x2 = 5119;
+                }
 
                 if (y2 >= 4096)
+                {
                     y2 = 4095;
-            }
-            else if (map == Map.Ilshenar)
-            {
-                if (x2 >= 1890)
-                    x2 = 1889;
-
-                if (x2 <= 120)
-                    x2 = 121;
-
-                if (y2 >= 1465)
-                    y2 = 1464;
-
-                if (y2 <= 105)
-                    y2 = 106;
-            }
-            else if (map == Map.Malas)
-            {
-                if (x2 >= 2522)
-                    x2 = 2521;
-
-                if (x2 <= 515)
-                    x2 = 516;
-
-                if (y2 >= 1990)
-                    y2 = 1989;
-
-                if (y2 <= 0)
-                    y2 = 1;
-            }
-            else if (map == Map.Tokuno)
-            {
-                if (x2 >= 1428)
-                    x2 = 1427;
-
-                if (x2 <= 0)
-                    x2 = 1;
-
-                if (y2 >= 1420)
-                    y2 = 1419;
-
-                if (y2 <= 0)
-                    y2 = 1;
-            }
-            else if (map == Map.TerMur)
-            {
-                if (eodon)
-                {
-                    if (x2 <= 62)
-                        x2 = 63;
-
-                    if (x2 >= 960)
-                        x2 = 959;
-
-                    if (y2 <= 1343)
-                        y2 = 1344;
-
-                    if (y2 >= 2240)
-                        y2 = 2239;
-                }
-                else
-                {
-                    if (x2 >= 1271)
-                        x2 = 1270;
-
-                    if (x2 <= 260)
-                        x2 = 261;
-
-                    if (y2 >= 4094)
-                        y2 = 4083;
-
-                    if (y2 <= 2760)
-                        y2 = 2761;
                 }
             }
         }
@@ -625,27 +374,7 @@ namespace Server.Items
 
         public static BaseCreature Spawn(int level, Point3D p, Map map, bool guardian)
         {
-            Type[][] spawns;
-
-            if (map == Map.Trammel || map == Map.Felucca)
-                spawns = m_SpawnTypes;
-            else if (map == Map.Tokuno)
-                spawns = m_TokunoSpawnTypes;
-            else if (map == Map.Ilshenar)
-                spawns = m_IlshenarSpawnTypes;
-            else if (map == Map.Malas)
-                spawns = m_MalasSpawnTypes;
-            else
-            {
-                if (SpellHelper.IsEodon(map, p))
-                {
-                    spawns = m_EodonSpawnTypes;
-                }
-                else
-                {
-                    spawns = m_TerMurSpawnTypes;
-                }
-            }
+            Type[][] spawns = _SpawnTypes;
 
             if (level >= 0 && level < spawns.Length)
             {
@@ -679,7 +408,9 @@ namespace Server.Items
         public static BaseCreature Spawn(int level, Point3D p, Map map, Mobile target, bool guardian)
         {
             if (map == null)
+            {
                 return null;
+            }
 
             BaseCreature bc = Spawn(level, p, map, guardian);
 
@@ -728,7 +459,9 @@ namespace Server.Items
                     int z = map.GetAverageZ(x, y);
 
                     if (map.CanSpawnMobile(x, y, z))
+                    {
                         return new Point3D(x, y, z);
+                    }
                 }
             }
 
@@ -744,7 +477,7 @@ namespace Server.Items
 
             List<BaseHarvestTool> items = m.Backpack.FindItemsByType<BaseHarvestTool>();
 
-            for (var index = 0; index < items.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
                 BaseHarvestTool tool = items[index];
 
@@ -842,7 +575,7 @@ namespace Server.Items
                 ClearPins();
                 LootType = LootType.Regular;
                 m_Decoder = null;
-                GetRandomLocation(Facet, TreasureFacet == TreasureFacet.Eodon);
+                GetRandomLocation(Facet);
                 InvalidateProperties();
                 NextReset = DateTime.UtcNow + ResetTime;
             }
@@ -909,10 +642,6 @@ namespace Server.Items
                 case TreasureFacet.Trammel: list.Add(1041503); break;
                 case TreasureFacet.Felucca: list.Add(1041502); break;
                 case TreasureFacet.Ilshenar: list.Add(1060850); break;
-                case TreasureFacet.Malas: list.Add(1060851); break;
-                case TreasureFacet.Tokuno: list.Add(1115645); break;
-                case TreasureFacet.TerMur: list.Add(1115646); break;
-                case TreasureFacet.Eodon: list.Add(1158985); break;
             }
 
             if (m_Completed)
@@ -935,7 +664,9 @@ namespace Server.Items
             writer.Write(ChestLocation);
 
             if (!Completed && NextReset != DateTime.MinValue && NextReset < DateTime.UtcNow)
+            {
                 Timer.DelayCall(TimeSpan.FromSeconds(30), ResetLocation);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1319,9 +1050,9 @@ namespace Server.Items
                     }
                     else
                     {
-                        for (var index = 0; index < m_Chest.Guardians.Count; index++)
+                        for (int index = 0; index < m_Chest.Guardians.Count; index++)
                         {
-                            var bc = m_Chest.Guardians[index];
+                            Mobile bc = m_Chest.Guardians[index];
 
                             if (!bc.InRange(m_Chest, 25))
                             {
@@ -1333,7 +1064,7 @@ namespace Server.Items
 
                 private void ReturnToHome(Mobile m)
                 {
-                    var loc = GetRandomSpawnLocation(m_Chest.Location, m_Chest.Map);
+                    Point3D loc = GetRandomSpawnLocation(m_Chest.Location, m_Chest.Map);
 
                     if (loc != Point3D.Zero)
                     {

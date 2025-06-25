@@ -42,11 +42,6 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (Siege.SiegeShard)
-            {
-                return;
-            }
-
             if (from is PlayerMobile mobile && mobile.Items.Contains(this))
             {
                 if (Pending != null)
