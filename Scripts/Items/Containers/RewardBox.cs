@@ -38,7 +38,6 @@ namespace Server.Items
         {
         }
 
-        public virtual int ItemAmount => 6;
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
