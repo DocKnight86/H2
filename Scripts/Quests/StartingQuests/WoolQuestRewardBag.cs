@@ -1,39 +1,44 @@
 namespace Server.Items
 {
-    public class AverageImbuingBag : BaseRewardBag
+    public class WoolQuestRewardBag : BaseRewardBag
     {
-        [Constructable]
-        public AverageImbuingBag()
+        public static Item Clothing()
         {
+            BaseClothing item = Loot.RandomClothing();
 
+            item.Attributes.BonusHits = 1;
+
+            return item;
+        }
+
+        [Constructable]
+        public WoolQuestRewardBag()
+        {
             switch (Utility.Random(2))
             {
                 case 0:
-                    DropItem(new SpiderCarapace());
+                    DropItem(Clothing());
                     break;
                 case 1:
-                    DropItem(new SilverSnakeSkin());
+                    DropItem(Clothing());
                     break;
             }
         }
 
-        public AverageImbuingBag(Serial serial)
+        public WoolQuestRewardBag(Serial serial)
             : base(serial)
         {
         }
 
-        public override int LabelNumber => 1113768; //Average Imbuing Bag
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write(0); // version 
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
         }
     }

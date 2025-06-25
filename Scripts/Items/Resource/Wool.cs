@@ -112,14 +112,8 @@ namespace Server.Items
                     else
                     {
                         _Wool.Consume();
-                        if (_Wool is TaintedWool)
-                        {
-                            wheel.BeginSpin(TaintedWool.OnSpun, from, _Wool.Hue);
-                        }
-                        else
-                        {
-                            wheel.BeginSpin(OnSpun, from, _Wool.Hue);
-                        }
+
+                        wheel.BeginSpin(OnSpun, from, _Wool.Hue);
                     }
                 }
                 else
@@ -127,52 +121,6 @@ namespace Server.Items
                     from.SendLocalizedMessage(502658); // Use that on a spinning wheel.
                 }
             }
-        }
-    }
-
-    public class TaintedWool : Wool
-    {
-        [Constructable]
-        public TaintedWool()
-            : this(1)
-        {
-        }
-
-        [Constructable]
-        public TaintedWool(int amount)
-            : base(0x101F)
-        {
-            Stackable = true;
-            Weight = 4.0;
-            Amount = amount;
-        }
-
-        public TaintedWool(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public new static void OnSpun(ISpinningWheel wheel, Mobile from, int hue)
-        {
-            Item item = new DarkYarn(1)
-            {
-                Hue = hue
-            };
-
-            from.AddToBackpack(item);
-            from.SendLocalizedMessage(1010574); // You put a ball of yarn in your backpack.
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write(0); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-            reader.ReadInt();
         }
     }
 }

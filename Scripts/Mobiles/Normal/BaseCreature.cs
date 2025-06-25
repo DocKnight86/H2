@@ -2006,7 +2006,7 @@ namespace Server.Mobiles
 
                 if (wool != 0)
                 {
-                    Item w = new TaintedWool(wool);
+                    Item w = new Wool(wool);
 
                     if (!special || !from.AddToBackpack(w))
                     {

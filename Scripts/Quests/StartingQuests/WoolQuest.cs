@@ -1,4 +1,5 @@
 using Server.Items;
+using Server.Mobiles;
 
 namespace Server.Engines.Quests
 {
@@ -6,12 +7,12 @@ namespace Server.Engines.Quests
     {
         public WoolQuest()
         {
+            AddObjective(new SlayObjective(typeof(Sheep), "Sheep", 10));
             AddObjective(new ObtainObjective(typeof(Wool), "Wool", 5, 0xDF8));
 
-            AddReward(new BaseReward(typeof(CandlewoodTorch), "Candlewood Torch"));
+            AddReward(new BaseReward(typeof(WoolQuestRewardBag), "Reward Bag"));
         }
 
-        /* Missing */
         public override object Title => 1094949;
 
         public override object Description => 1094951;
