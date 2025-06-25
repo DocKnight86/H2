@@ -504,14 +504,18 @@ namespace Server
         RegenHits = 0x00000001,
         RegenStam = 0x00000002,
         RegenMana = 0x00000004,
+
         DefendChance = 0x00000008,
         AttackChance = 0x00000010,
+
         BonusStr = 0x00000020,
         BonusDex = 0x00000040,
         BonusInt = 0x00000080,
+
         BonusHits = 0x00000100,
         BonusStam = 0x00000200,
         BonusMana = 0x00000400,
+
         WeaponDamage = 0x00000800,
         WeaponSpeed = 0x00001000,
         SpellDamage = 0x00002000,

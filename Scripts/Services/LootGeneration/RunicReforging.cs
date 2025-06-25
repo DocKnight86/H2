@@ -50,13 +50,9 @@ namespace Server.Items
     public enum ItemPower
     {
         None,
-        Minor,
         Lesser,
         Greater,
         Major,
-        LesserArtifact,
-        GreaterArtifact,
-        MajorArtifact,
         LegendaryArtifact
     }
 
@@ -1324,17 +1320,6 @@ namespace Server.Items
 
                 ItemPower power = ApplyItemPower(item, false);
 
-                if (artifact && power < ItemPower.LesserArtifact)
-                {
-                    int extra = 5000;
-
-                    do
-                    {
-                        ApplyRandomProperty(item, props, perclow, perchigh, ref extra, powerful);
-                    }
-                    while (ApplyItemPower(item, false) < ItemPower.LesserArtifact);
-                }
-
                 // hues
                 if (power == ItemPower.LegendaryArtifact && (item is BaseArmor || item is BaseClothing))
                 {
@@ -1639,20 +1624,6 @@ namespace Server.Items
             ItemPower power = GetItemPower(item, Imbuing.GetTotalWeight(item, -1, false, false), Imbuing.GetTotalMods(item));
             double chance = Utility.RandomDouble();
 
-            if (item is BaseJewel && power >= ItemPower.MajorArtifact)
-            {
-                if (chance > 0.25)
-                {
-                    neg.Antique = 1;
-                }
-                else
-                {
-                    item.LootType = LootType.Cursed;
-                }
-
-                return 100;
-            }
-
             switch (power)
             {
                 default:
@@ -1744,32 +1715,6 @@ namespace Server.Items
                         neg.Brittle = 1;
                         return 150;
                     }
-                case ItemPower.LesserArtifact: // lesser arty
-                case ItemPower.GreaterArtifact: // greater arty
-                    {
-                        if (0.001 > chance)
-                        {
-                            return 0;
-                        }
-
-                        chance = Utility.RandomDouble();
-
-                        if (0.33 > chance && !(item is BaseJewel))
-                        {
-                            neg.Brittle = 1;
-                            return 150;
-                        }
-
-                        if (0.66 > chance)
-                        {
-                            item.LootType = LootType.Cursed;
-                            return 150;
-                        }
-
-                        neg.Antique = 1;
-                        return 150;
-                    }
-                case ItemPower.MajorArtifact:
                 case ItemPower.LegendaryArtifact:
                     {
                         if (0.0001 > Utility.RandomDouble())
@@ -1819,11 +1764,6 @@ namespace Server.Items
                 return ItemPower.None;
             }
 
-            if (weight < preArty * .4)
-            {
-                return ItemPower.Minor;
-            }
-
             if (weight < preArty * .6)
             {
                 return ItemPower.Lesser;
@@ -1837,21 +1777,6 @@ namespace Server.Items
             if (weight <= preArty)
             {
                 return ItemPower.Major;
-            }
-
-            if (weight < preArty + arty * .2)
-            {
-                return ItemPower.LesserArtifact;
-            }
-
-            if (weight < preArty + arty * .4)
-            {
-                return ItemPower.GreaterArtifact;
-            }
-
-            if (weight < preArty + arty * .7 || totalMods <= 5)
-            {
-                return ItemPower.MajorArtifact;
             }
 
             return ItemPower.LegendaryArtifact;

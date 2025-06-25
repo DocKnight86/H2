@@ -259,6 +259,11 @@ namespace Server.Misc
                 {
                     return false;
                 }
+
+                if (skill.Info.SkillID == (int)SkillName.Focus)
+                {
+                    return false;
+                }
             }
 
             return true;
