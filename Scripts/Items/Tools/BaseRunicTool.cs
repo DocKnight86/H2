@@ -29,14 +29,9 @@ namespace Server.Items
             SkillName.Provocation,
             SkillName.Discordance,
             SkillName.Peacemaking,
-            SkillName.Chivalry,
-            SkillName.Focus,
-            SkillName.Necromancy,
             SkillName.Stealing,
             SkillName.Stealth,
             SkillName.SpiritSpeak,
-            SkillName.Bushido,
-            SkillName.Ninjitsu
         };
 
         private static readonly SkillName[] m_PossibleSpellbookSkills =

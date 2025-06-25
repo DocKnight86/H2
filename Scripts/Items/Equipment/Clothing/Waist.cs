@@ -33,6 +33,10 @@ namespace Server.Items
     [Flipable(0x153b, 0x153c)]
     public class HalfApron : BaseWaist
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public HalfApron()
             : this(0)
@@ -67,6 +71,10 @@ namespace Server.Items
     [Flipable(0x27A0, 0x27EB)]
     public class Obi : BaseWaist
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
+
         [Constructable]
         public Obi()
             : this(0)
@@ -101,6 +109,10 @@ namespace Server.Items
     [Flipable(0x2B68, 0x315F)]
     public class WoodlandBelt : BaseWaist
     {
+        public override int InitMinHits => 50;
+        public override int InitMaxHits => 75;
+
+        public override int BasePhysicalResistance => Quality == ItemQuality.Exceptional ? 2 : 1;
         [Constructable]
         public WoodlandBelt()
             : this(0)
