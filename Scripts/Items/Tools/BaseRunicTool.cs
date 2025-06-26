@@ -170,17 +170,17 @@ namespace Server.Items
 
             if (weapon is BaseRanged)
             {
-                m_Props.Set(2, true); // ranged weapons cannot be ubws or mageweapon
+                m_Props.Set(2, true); // ranged weapons cannot be mageweapon
             }
             else
             {
-                m_Props.Set(23, true); // Only bows can be Balanced
-                m_Props.Set(24, true); // Only bows have Velocity
+                m_Props.Set(18, true); // Only bows can be Balanced
+                m_Props.Set(19, true); // Only bows have Velocity
             }
 
             for (int i = 0; i < attributeCount; ++i)
             {
-                int random = GetUniqueRandom(25);
+                int random = GetUniqueRandom(20);
 
                 if (random == -1)
                 {
@@ -234,15 +234,7 @@ namespace Server.Items
                         }
                     case 2:
                         {
-                            switch (Utility.Random(2))
-                            {
-                                case 0:
-                                    ApplyAttribute(secondary, min, max, AosWeaponAttribute.UseBestSkill, 1, 1);
-                                    break;
-                                case 1:
-                                    ApplyAttribute(secondary, min, max, AosWeaponAttribute.MageWeapon, 1, 10);
-                                    break;
-                            }
+                            ApplyAttribute(secondary, min, max, AosWeaponAttribute.MageWeapon, 1, 10);
 
                             break;
                         }
@@ -289,30 +281,15 @@ namespace Server.Items
                         ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistPhysicalBonus, 1, 15);
                         break;
                     case 16:
-                        ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistFireBonus, 1, 15);
-                        break;
-                    case 17:
-                        ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistColdBonus, 1, 15);
-                        break;
-                    case 18:
-                        ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistPoisonBonus, 1, 15);
-                        break;
-                    case 19:
-                        ApplyAttribute(secondary, min, max, AosWeaponAttribute.ResistEnergyBonus, 1, 15);
-                        break;
-                    case 20:
-                        ApplyAttribute(secondary, min, max, AosWeaponAttribute.DurabilityBonus, 10, 100, 10);
-                        break;
-                    case 21:
                         weapon.Slayer = GetRandomSlayer();
                         break;
-                    case 22:
+                    case 17:
                         ApplyElementalDamage(weapon, min, max);
                         break;
-                    case 23:
+                    case 18:
                         ((BaseRanged)weapon).Balanced = true;
                         break;
-                    case 24:
+                    case 19:
                         ApplyVelocityAttribute((BaseRanged)weapon, min, max, 2, 50, 2);
                         break;
                 }
@@ -375,7 +352,7 @@ namespace Server.Items
             m_Props.SetAll(false);
 
             bool isShield = (armor is BaseShield);
-            int baseCount = isShield ? 6 : 17;
+            int baseCount = isShield ? 5 : 16;
             int baseOffset = isShield ? 0 : 4;
 
             if (armor.Resource >= CraftResource.RegularLeather && armor.Resource <= CraftResource.BarbedLeather)
@@ -413,53 +390,50 @@ namespace Server.Items
                     case 4:
                         ApplyAttribute(secondary, min, max, AosArmorAttribute.SelfRepair, 1, 5);
                         break;
-                    case 5:
-                        ApplyAttribute(secondary, min, max, AosArmorAttribute.DurabilityBonus, 10, 100, 10);
-                        break;
                     /* End Shields */
-                    case 6:
+                    case 5:
                         ApplyAttribute(primary, min, max, AosAttribute.RegenHits, 1, 2);
                         break;
-                    case 7:
+                    case 6:
                         ApplyAttribute(primary, min, max, AosAttribute.RegenStam, 1, 3);
                         break;
-                    case 8:
+                    case 7:
                         ApplyAttribute(primary, min, max, AosAttribute.RegenMana, 1, 2);
                         break;
-                    case 9:
+                    case 8:
                         ApplyAttribute(primary, min, max, AosAttribute.NightSight, 1, 1);
                         break;
-                    case 10:
+                    case 9:
                         ApplyAttribute(primary, min, max, AosAttribute.BonusHits, 1, 5);
                         break;
-                    case 11:
+                    case 10:
                         ApplyAttribute(primary, min, max, AosAttribute.BonusStam, 1, 8);
                         break;
-                    case 12:
+                    case 11:
                         ApplyAttribute(primary, min, max, AosAttribute.BonusMana, 1, 8);
                         break;
-                    case 13:
+                    case 12:
                         ApplyAttribute(primary, min, max, AosAttribute.LowerManaCost, 1, 8);
                         break;
-                    case 14:
+                    case 13:
                         ApplyAttribute(primary, min, max, AosAttribute.LowerRegCost, 1, 20);
                         break;
-                    case 15:
+                    case 14:
                         ApplyAttribute(primary, min, max, AosAttribute.ReflectPhysical, 1, 15);
                         break;
-                    case 16:
+                    case 15:
                         ApplyResistance(armor, min, max, ResistanceType.Physical, 1, 15);
                         break;
-                    case 17:
+                    case 16:
                         ApplyResistance(armor, min, max, ResistanceType.Fire, 1, 15);
                         break;
-                    case 18:
+                    case 17:
                         ApplyResistance(armor, min, max, ResistanceType.Cold, 1, 15);
                         break;
-                    case 19:
+                    case 18:
                         ApplyResistance(armor, min, max, ResistanceType.Poison, 1, 15);
                         break;
-                    case 20:
+                    case 19:
                         ApplyResistance(armor, min, max, ResistanceType.Energy, 1, 15);
                         break;
                         /* End Armor */
@@ -499,7 +473,7 @@ namespace Server.Items
 
             for (int i = 0; i < attributeCount; ++i)
             {
-                int random = GetUniqueRandom(17);
+                int random = GetUniqueRandom(16);
 
                 if (random == -1)
                 {
@@ -542,21 +516,18 @@ namespace Server.Items
                         ApplyAttribute(secondary, min, max, AosArmorAttribute.SelfRepair, 1, 5);
                         break;
                     case 11:
-                        ApplyAttribute(secondary, min, max, AosArmorAttribute.DurabilityBonus, 10, 100, 10);
-                        break;
-                    case 12:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Physical, 1, 15);
                         break;
-                    case 13:
+                    case 12:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Fire, 1, 15);
                         break;
-                    case 14:
+                    case 13:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Cold, 1, 15);
                         break;
-                    case 15:
+                    case 14:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Poison, 1, 15);
                         break;
-                    case 16:
+                    case 15:
                         ApplyAttribute(resists, min, max, AosElementAttribute.Energy, 1, 15);
                         break;
                 }

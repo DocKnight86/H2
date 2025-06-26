@@ -33,7 +33,7 @@ namespace Server.Misc
         private static readonly Type[] m_LesserArtifactsTotal =
         {
             typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence), typeof(BlackLotusHood),
-            typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
+            typeof(Exiler), typeof(GlovesOfTheSun),
             typeof(HanzosBow), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
             typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords), typeof(PigmentsOfTokuno), typeof(FluteOfRenewal),
             typeof(LesserPigmentsOfTokuno), typeof(MetalPigmentsOfTokuno), typeof(ChestOfHeirlooms)
@@ -54,7 +54,7 @@ namespace Server.Misc
             new[]
             {
                 typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence), typeof(BlackLotusHood),
-                typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
+                typeof(Exiler), typeof(GlovesOfTheSun),
                 typeof(HanzosBow), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
                 typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords), typeof(PigmentsOfTokuno),
                 typeof(FluteOfRenewal), typeof(ChestOfHeirlooms)
@@ -63,8 +63,8 @@ namespace Server.Misc
             new[]
             {
                 typeof(MetalPigmentsOfTokuno), typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence),
-                typeof(MetalPigmentsOfTokuno), typeof(BlackLotusHood), typeof(DemonForks),
-                typeof(MetalPigmentsOfTokuno), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun), typeof(HanzosBow),
+                typeof(MetalPigmentsOfTokuno), typeof(BlackLotusHood), 
+                typeof(MetalPigmentsOfTokuno), typeof(Exiler), typeof(GlovesOfTheSun), typeof(HanzosBow),
                 typeof(MetalPigmentsOfTokuno), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
                 typeof(MetalPigmentsOfTokuno), typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords),
                 typeof(MetalPigmentsOfTokuno), typeof(FluteOfRenewal), typeof(ChestOfHeirlooms)
@@ -74,7 +74,7 @@ namespace Server.Misc
             {
                 typeof(LesserPigmentsOfTokuno), typeof(AncientFarmersKasa), typeof(ArmsOfTacticalExcellence),
                 typeof(LesserPigmentsOfTokuno), typeof(BlackLotusHood), typeof(HanzosBow),
-                typeof(LesserPigmentsOfTokuno), typeof(DemonForks), typeof(DragonNunchaku), typeof(Exiler), typeof(GlovesOfTheSun),
+                typeof(LesserPigmentsOfTokuno), typeof(Exiler), typeof(GlovesOfTheSun),
                 typeof(LesserPigmentsOfTokuno), typeof(PeasantsBokuto), typeof(PilferedDancerFans), typeof(TheDestroyer),
                 typeof(LesserPigmentsOfTokuno), typeof(TomeOfEnlightenment), typeof(AncientUrn), typeof(HonorableSwords), typeof(FluteOfRenewal),
                 typeof(LesserPigmentsOfTokuno), typeof(ChestOfHeirlooms)

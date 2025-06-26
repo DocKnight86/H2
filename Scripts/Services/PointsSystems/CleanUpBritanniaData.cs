@@ -407,9 +407,7 @@ namespace Server.Engines.Points
             Entries[typeof(ArmsOfTacticalExcellence)] = 100.0;
             Entries[typeof(BlackLotusHood)] = 100.0;
             Entries[typeof(ChestOfHeirlooms)] = 100.0;
-            Entries[typeof(DemonForks)] = 100.0;
             Entries[typeof(TheDestroyer)] = 100.0;
-            Entries[typeof(DragonNunchaku)] = 100.0;
             Entries[typeof(Exiler)] = 100.0;
             Entries[typeof(FluteOfRenewal)] = 100.0;
             Entries[typeof(GlovesOfTheSun)] = 100.0;
@@ -429,7 +427,6 @@ namespace Server.Engines.Points
             //Major Artifacts
             Entries[typeof(TheDryadBow)] = 5500.0;
             Entries[typeof(ArcaneShield)] = 5500.0;
-            Entries[typeof(SerpentsFang)] = 5500.0;
             Entries[typeof(OrnamentOfTheMagician)] = 5500.0;
             Entries[typeof(BoneCrusher)] = 5500.0;
             Entries[typeof(OrnateCrownOfTheHarrower)] = 5500.0;
@@ -477,7 +474,6 @@ namespace Server.Engines.Points
             Entries[typeof(Cauldron)] = 200.0;
             Entries[typeof(ChampionSkull)] = 1000.0;
             Entries[typeof(ClockworkAssembly)] = 50.0;
-            Entries[typeof(ConjurersTrinket)] = 10000.0;
             Entries[typeof(CorgulsHandbookOnMysticism)] = 250.0;
             Entries[typeof(DeadWood)] = 1.0;
             Entries[typeof(DustyPillow)] = 250.0;

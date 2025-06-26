@@ -8,7 +8,7 @@ namespace Server.Items
         [Constructable]
         public Glenda()
         {
-            ExtendedWeaponAttributes.BoneBreaker = 1;
+            WeaponAttributes.BoneBreaker = 1;
             WeaponAttributes.HitLeechMana = 20;
             WeaponAttributes.HitLowerDefend = 70;
             Attributes.BonusStr = 16;

@@ -11,7 +11,6 @@ namespace Server.Items
             Slayer = SlayerName.Silver;
             Attributes.WeaponDamage = 40;
             WeaponAttributes.SelfRepair = 10;
-            WeaponAttributes.UseBestSkill = 1;
         }
 
         public HolySword(Serial serial)

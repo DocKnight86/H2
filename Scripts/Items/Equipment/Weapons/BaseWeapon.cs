@@ -171,10 +171,6 @@ namespace Server.Items
         public virtual bool CanFortify => !IsImbued && NegativeAttributes.Antique < 4;
 
         public override int PhysicalResistance => m_AosWeaponAttributes.ResistPhysicalBonus;
-        public override int FireResistance => m_AosWeaponAttributes.ResistFireBonus;
-        public override int ColdResistance => m_AosWeaponAttributes.ResistColdBonus;
-        public override int PoisonResistance => m_AosWeaponAttributes.ResistPoisonBonus;
-        public override int EnergyResistance => m_AosWeaponAttributes.ResistEnergyBonus;
 
         public override double DefaultWeight
         {
@@ -598,8 +594,6 @@ namespace Server.Items
                 bonus += 20;
             }
 
-            bonus += m_AosWeaponAttributes.DurabilityBonus;
-
             if (m_Resource == CraftResource.Heartwood)
             {
                 return bonus;
@@ -893,27 +887,7 @@ namespace Server.Items
         {
             SkillName sk;
 
-            if (checkSkillAttrs && m_AosWeaponAttributes.UseBestSkill != 0)
-            {
-                double swrd = m.Skills[SkillName.Swords].Value;
-                double fenc = m.Skills[SkillName.Fencing].Value;
-                double mcng = m.Skills[SkillName.Macing].Value;
-                double val;
-
-                sk = SkillName.Swords;
-                val = swrd;
-
-                if (fenc > val)
-                {
-                    sk = SkillName.Fencing;
-                    val = fenc;
-                }
-                if (mcng > val)
-                {
-                    sk = SkillName.Macing;
-                }
-            }
-            else if (m_AosWeaponAttributes.MageWeapon != 0)
+            if (m_AosWeaponAttributes.MageWeapon != 0)
             {
                 if (m.Skills[SkillName.Magery].Value > m.Skills[Skill].Value)
                 {
@@ -1276,7 +1250,7 @@ namespace Server.Items
 
             if (!(defender.Weapon is Fists) && !(defender.Weapon is BaseRanged) && defender.Weapon is BaseWeapon weapon)
             {
-                if (weapon.Attributes.BalancedWeapon > 0)
+                if (weapon.WeaponAttributes.BalancedWeapon > 0)
                 {
                     return false;
                 }
@@ -2014,17 +1988,17 @@ namespace Server.Items
             bool sparks = false;
             if (a == null && move == null)
             {
-                if (m_ExtendedWeaponAttributes.BoneBreaker > 0 && !AnimalForm.UnderTransformation(attacker))
+                if (m_AosWeaponAttributes.BoneBreaker > 0 && !AnimalForm.UnderTransformation(attacker))
                 {
                     BoneBreakerContext.CheckHit(attacker, defender);
                 }
 
-                if (m_ExtendedWeaponAttributes.HitSwarm > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSwarm)
+                if (m_AosWeaponAttributes.HitSwarm > 0 && Utility.Random(100) < m_AosWeaponAttributes.HitSwarm)
                 {
                     SwarmContext.CheckHit(attacker, defender);
                 }
 
-                if (m_ExtendedWeaponAttributes.HitSparks > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSparks)
+                if (m_AosWeaponAttributes.HitSparks > 0 && Utility.Random(100) < m_AosWeaponAttributes.HitSparks)
                 {
                     SparksContext.CheckHit(attacker, defender);
                     sparks = true;
@@ -2062,7 +2036,7 @@ namespace Server.Items
             SkillMasterySpell.OnHit(attacker, defender, ref damage);
 
             // Bane
-            if (m_ExtendedWeaponAttributes.Bane > 0 && defender.Hits < defender.HitsMax / 2)
+            if (m_AosWeaponAttributes.Bane > 0 && defender.Hits < defender.HitsMax / 2)
             {
                 double inc = Math.Min(350, defender.HitsMax * .3);
                 inc -= defender.Hits / (double)defender.HitsMax * inc;
@@ -3097,16 +3071,46 @@ namespace Server.Items
             switch (Animation)
             {
                 default:
-                case WeaponAnimation.Wrestle: return 0;
-                case WeaponAnimation.Bash1H: return 3;
-                case WeaponAnimation.Pierce1H: return 5;
-                case WeaponAnimation.Slash1H: return 4;
-                case WeaponAnimation.Bash2H: return 6;
-                case WeaponAnimation.Pierce2H: return 8;
-                case WeaponAnimation.Slash2H: return 7;
-                case WeaponAnimation.ShootBow: return 1;
-                case WeaponAnimation.ShootXBow: return 2;
-                case WeaponAnimation.Throwing: return 9;
+                case WeaponAnimation.Wrestle:
+                {
+                    return 0;
+                }
+                case WeaponAnimation.Bash1H:
+                {
+                    return 3;
+                }
+                case WeaponAnimation.Pierce1H:
+                {
+                    return 5;
+                }
+                case WeaponAnimation.Slash1H:
+                {
+                    return 4;
+                }
+                case WeaponAnimation.Bash2H:
+                {
+                    return 6;
+                }
+                case WeaponAnimation.Pierce2H:
+                {
+                    return 8;
+                }
+                case WeaponAnimation.Slash2H:
+                {
+                    return 7;
+                }
+                case WeaponAnimation.ShootBow:
+                {
+                    return 1;
+                }
+                case WeaponAnimation.ShootXBow:
+                {
+                    return 2;
+                }
+                case WeaponAnimation.Throwing:
+                {
+                    return 9;
+                }
             }
         }
 
@@ -4069,78 +4073,126 @@ namespace Server.Items
             switch (m_Resource)
             {
                 case CraftResource.DullCopper:
+                {
                     oreType = 1053108;
                     break; // dull copper
+                }
                 case CraftResource.ShadowIron:
+                {
                     oreType = 1053107;
                     break; // shadow iron
+                }
                 case CraftResource.Copper:
+                {
                     oreType = 1053106;
                     break; // copper
+                }
                 case CraftResource.Bronze:
+                {
                     oreType = 1053105;
                     break; // bronze
+                }
                 case CraftResource.Gold:
+                {
                     oreType = 1053104;
                     break; // golden
+                }
                 case CraftResource.Agapite:
+                {
                     oreType = 1053103;
                     break; // agapite
+                }
                 case CraftResource.Verite:
+                {
                     oreType = 1053102;
                     break; // verite
+                }
                 case CraftResource.Valorite:
+                {
                     oreType = 1053101;
                     break; // valorite
+                }
                 case CraftResource.SpinedLeather:
+                {
                     oreType = 1061118;
                     break; // spined
+                }
                 case CraftResource.HornedLeather:
+                {
                     oreType = 1061117;
                     break; // horned
+                }
                 case CraftResource.BarbedLeather:
+                {
                     oreType = 1061116;
                     break; // barbed
+                }
                 case CraftResource.RedScales:
+                {
                     oreType = 1060814;
                     break; // red
+                }
                 case CraftResource.YellowScales:
+                {
                     oreType = 1060818;
                     break; // yellow
+                }
                 case CraftResource.BlackScales:
+                {
                     oreType = 1060820;
                     break; // black
+                }
                 case CraftResource.GreenScales:
+                {
                     oreType = 1060819;
                     break; // green
+                }
                 case CraftResource.WhiteScales:
+                {
                     oreType = 1060821;
                     break; // white
+                }
                 case CraftResource.BlueScales:
+                {
                     oreType = 1060815;
                     break; // blue
+                }
                 case CraftResource.OakWood:
+                {
                     oreType = 1072533;
                     break; // oak
+                }
                 case CraftResource.AshWood:
+                {
                     oreType = 1072534;
                     break; // ash
+                }
                 case CraftResource.YewWood:
+                {
                     oreType = 1072535;
                     break; // yew
+                }
                 case CraftResource.Heartwood:
+                {
                     oreType = 1072536;
                     break; // heartwood
+                }
                 case CraftResource.Bloodwood:
+                {
                     oreType = 1072538;
                     break; // bloodwood
+                }
                 case CraftResource.Frostwood:
+                {
                     oreType = 1072539;
                     break; // frostwood
+                }
 
                 default:
+                {
                     oreType = 0;
                     break;
+                }
             }
 
             if (m_ReforgedPrefix != ReforgedPrefix.None || m_ReforgedSuffix != ReforgedSuffix.None)
@@ -4392,27 +4444,22 @@ namespace Server.Items
             int prop;
             double fprop;
 
-            if ((prop = m_AosWeaponAttributes.DurabilityBonus) != 0)
-            {
-                list.Add(1151780, prop.ToString()); // durability +~1_VAL~%
-            }
-
-            if (m_ExtendedWeaponAttributes.Bane > 0)
+            if (m_AosWeaponAttributes.Bane > 0)
             {
                 list.Add(1154671); // Bane
             }
 
-            if (m_ExtendedWeaponAttributes.BoneBreaker > 0)
+            if (m_AosWeaponAttributes.BoneBreaker > 0)
             {
                 list.Add(1157318); // Bone Breaker
             }
 
-            if ((prop = m_ExtendedWeaponAttributes.HitSwarm) != 0)
+            if ((prop = m_AosWeaponAttributes.HitSwarm) != 0)
             {
                 list.Add(1157325, prop.ToString()); // Swarm ~1_val~%
             }
 
-            if ((prop = m_ExtendedWeaponAttributes.HitSparks) != 0)
+            if ((prop = m_AosWeaponAttributes.HitSparks) != 0)
             {
                 list.Add(1157326, prop.ToString()); // Sparks ~1_val~%
             }
@@ -4596,7 +4643,7 @@ namespace Server.Items
                 list.Add(1060438, (30 - prop).ToString()); // mage weapon -~1_val~ skill
             }
 
-            if (m_AosAttributes.BalancedWeapon > 0 && Layer == Layer.TwoHanded)
+            if (m_AosWeaponAttributes.BalancedWeapon > 0 && Layer == Layer.TwoHanded)
             {
                 list.Add(1072792); // Balanced
             }
@@ -4711,30 +4758,9 @@ namespace Server.Items
                 list.Add(1075210, prop.ToString()); // Increased Karma Loss ~1val~%
             }
 
-            #region Stygian Abyss
             if ((prop = m_SAAbsorptionAttributes.CastingFocus) != 0)
             {
                 list.Add(1113696, prop.ToString()); // Casting Focus ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterFire) != 0)
-            {
-                list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterCold) != 0)
-            {
-                list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterPoison) != 0)
-            {
-                list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterEnergy) != 0)
-            {
-                list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
             }
 
             if ((prop = m_SAAbsorptionAttributes.EaterKinetic) != 0)
@@ -4747,38 +4773,7 @@ namespace Server.Items
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
             }
 
-            if ((prop = m_SAAbsorptionAttributes.ResonanceFire) != 0)
-            {
-                list.Add(1113691, prop.ToString()); // Fire Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceCold) != 0)
-            {
-                list.Add(1113692, prop.ToString()); // Cold Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonancePoison) != 0)
-            {
-                list.Add(1113693, prop.ToString()); // Poison Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceEnergy) != 0)
-            {
-                list.Add(1113694, prop.ToString()); // Energy Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceKinetic) != 0)
-            {
-                list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
-            }
-            #endregion
-
             base.AddResistanceProperties(list);
-
-            if ((prop = m_AosWeaponAttributes.UseBestSkill) != 0)
-            {
-                list.Add(1060400); // use best weapon skill
-            }
 
             int phys, fire, cold, pois, nrgy, chaos, direct;
 
@@ -4856,25 +4851,32 @@ namespace Server.Items
                 list.Add(1061824); // one-handed weapon
             }
 
-            if (m_AosWeaponAttributes.UseBestSkill == 0)
+            switch (Skill)
             {
-                switch (Skill)
+                case SkillName.Swords:
                 {
-                    case SkillName.Swords:
-                        list.Add(1061172);
-                        break; // skill required: swordsmanship
-                    case SkillName.Macing:
-                        list.Add(1061173);
-                        break; // skill required: mace fighting
-                    case SkillName.Fencing:
-                        list.Add(1061174);
-                        break; // skill required: fencing
-                    case SkillName.Archery:
-                        list.Add(1061175);
-                        break; // skill required: archery
-                    case SkillName.Throwing:
-                        list.Add(1112075); // skill required: throwing
-                        break;
+                    list.Add(1061172);
+                    break; // skill required: swordsmanship
+                }
+                case SkillName.Macing:
+                {
+                    list.Add(1061173);
+                    break; // skill required: mace fighting
+                }
+                case SkillName.Fencing:
+                {
+                    list.Add(1061174);
+                    break; // skill required: fencing
+                }
+                case SkillName.Archery:
+                {
+                    list.Add(1061175);
+                    break; // skill required: archery
+                }
+                case SkillName.Throwing:
+                {
+                    list.Add(1112075); // skill required: throwing
+                    break;
                 }
             }
 
@@ -5026,10 +5028,22 @@ namespace Server.Items
             {
                 switch (Utility.Random(4))
                 {
-                    case 0: m_AosAttributes.WeaponDamage += attrInfo.WeaponDamage; break;
-                    case 1: m_AosAttributes.WeaponSpeed += attrInfo.WeaponSwingSpeed; break;
-                    case 2: m_AosAttributes.AttackChance += attrInfo.WeaponHitChance; break;
-                    case 3: m_AosWeaponAttributes.HitLeechHits = attrInfo.WeaponHitLifeLeech; break;
+                    case 0:
+                    {
+                        m_AosAttributes.WeaponDamage += attrInfo.WeaponDamage; break;
+                    }
+                    case 1:
+                    {
+                        m_AosAttributes.WeaponSpeed += attrInfo.WeaponSwingSpeed; break;
+                    }
+                    case 2:
+                    {
+                        m_AosAttributes.AttackChance += attrInfo.WeaponHitChance; break;
+                    }
+                    case 3:
+                    {
+                        m_AosWeaponAttributes.HitLeechHits = attrInfo.WeaponHitLifeLeech; break;
+                    }
                 }
             }
         }
@@ -5167,11 +5181,26 @@ namespace Server.Items
         {
             switch (resist)
             {
-                case ResistanceType.Physical: return PhysicalResistance;
-                case ResistanceType.Fire: return FireResistance;
-                case ResistanceType.Cold: return ColdResistance;
-                case ResistanceType.Poison: return PoisonResistance;
-                case ResistanceType.Energy: return EnergyResistance;
+                case ResistanceType.Physical:
+                {
+                    return PhysicalResistance;
+                }
+                case ResistanceType.Fire:
+                {
+                    return FireResistance;
+                }
+                case ResistanceType.Cold:
+                {
+                    return ColdResistance;
+                }
+                case ResistanceType.Poison:
+                {
+                    return PoisonResistance;
+                }
+                case ResistanceType.Energy:
+                {
+                    return EnergyResistance;
+                }
             }
 
             return 0;

@@ -104,7 +104,7 @@ namespace Server.Engines.Points
             typeof(OrnamentOfTheMagician),      typeof(RingOfTheVile),
             typeof(Aegis),                      typeof(ArcaneShield),               typeof(AxeOfTheHeavens),
             typeof(BladeOfInsanity),            typeof(BoneCrusher),                typeof(BreathOfTheDead),
-            typeof(Frostbringer),               typeof(SerpentsFang),               typeof(StaffOfTheMagi),
+            typeof(Frostbringer),               typeof(StaffOfTheMagi),
             typeof(TheBeserkersMaul),           typeof(TheDryadBow),                typeof(DivineCountenance),
             typeof(HatOfTheMagi),               typeof(HuntersHeaddress),           typeof(SpiritOfTheTotem)
         };
@@ -127,7 +127,7 @@ namespace Server.Engines.Points
                 typeof(RingOfTheVile),              typeof(BraceletOfHealth),
                 typeof(Aegis),                      typeof(ArcaneShield),
                 typeof(BladeOfInsanity),            typeof(BoneCrusher),
-                typeof(Frostbringer),               typeof(SerpentsFang),
+                typeof(Frostbringer),               
                 typeof(TheBeserkersMaul),           typeof(TheDryadBow),
                 typeof(HuntersHeaddress),           typeof(SpiritOfTheTotem),
                 typeof(AxeOfTheHeavens),            typeof(BreathOfTheDead),

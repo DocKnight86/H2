@@ -15,7 +15,6 @@ namespace Server.Engines.VvV
 
         public VvVStuddedChest()
         {
-            AbsorptionAttributes.EaterEnergy = 15;
             Attributes.BonusStr = 3;
             Attributes.BonusStam = 10;
             Attributes.RegenStam = 3;

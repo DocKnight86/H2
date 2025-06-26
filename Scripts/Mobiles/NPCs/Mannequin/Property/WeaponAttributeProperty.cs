@@ -219,18 +219,6 @@ namespace Server.Mobiles.MannequinProperty
         public override int SpriteH => 150;
     }
 
-    public class UseBestWeaponSkillProperty : WeaponAttr
-    {
-        public override Catalog Catalog => Catalog.Combat1;
-        public override bool IsBoolen => true;
-        public override int LabelNumber => 1079592;  // Use Best Weapon Skill
-        public override int Description => 1152393;  // This property allows a player to use a weapon as long as they have a weapon skill (fencing, mace fighting or swordsmanship).  The weapon functions as if the player’s highest weapon skill is the appropriate skill.  The wrestling, archery and throwing skills are excluded from this property.  This property is only found on melee weapons.
-        public override AosWeaponAttribute Attribute => AosWeaponAttribute.UseBestSkill;
-        public override int Hue => 0x5E5D;
-        public override int SpriteW => 30;
-        public override int SpriteH => 330;
-    }
-
     public class MageWeaponProperty : WeaponAttr
     {
         public override Catalog Catalog => Catalog.Casting;
@@ -308,6 +296,42 @@ namespace Server.Mobiles.MannequinProperty
         public override AosWeaponAttribute Attribute => AosWeaponAttribute.ReactiveParalyze;
         public override int Hue => 0x5E5D;
         public override int SpriteW => 270;
+        public override int SpriteH => 120;
+    }
+
+    public class BoneBreakerProperty : WeaponAttr
+    {
+        public override Catalog Catalog => Catalog.HitEffects;
+        public override bool IsBoolen => true;
+        public override int LabelNumber => 1157320;  // Bone Breaker
+        public override int Description => 1157319;  // This property provides a chance to cause a loss of stamina over time and prevent the use of refreshment potions for a period of time to the target.  This property can be found on select artifacts.
+        public override AosWeaponAttribute Attribute => AosWeaponAttribute.BoneBreaker;
+        public override int Hue => 0x43FF;
+        public override int SpriteW => 90;
+        public override int SpriteH => 300;
+    }
+
+    public class BaneProperty : WeaponAttr
+    {
+        public override Catalog Catalog => Catalog.HitEffects;
+        public override bool IsBoolen => true;
+        public override int LabelNumber => 1154671;  // Bane
+        public override int Description => 1154570;  // This property provides a chance to inflict additional damage when the targets health is below 50%.  As the target's health decreases the chance for the property to fire will increase along with the damage inflicted. The damage inflicted is physical damage that can be lessened by a targets physical resistance. Bane has the potential to damage the target for up to 30% of its maximum hit points however this damage cannot exceed 350 points of damage.
+        public override AosWeaponAttribute Attribute => AosWeaponAttribute.Bane;
+        public override int Hue => 0x43FF;
+        public override int SpriteW => 120;
+        public override int SpriteH => 210;
+    }
+
+    public class BalancedWeaponProperty : WeaponAttr
+    {
+        public override Catalog Catalog => Catalog.Combat1;
+        public override bool IsBoolen => true;
+        public override int LabelNumber => 1072792;  // Balanced
+        public override int Description => 1152384;  // This property is only available on archery weapons.  This property allows a player to use a two handed weapon as if it were a one handed weapon.  You can perform any action that normally requires a free hand, such as drinking a potion or throwing a shuriken.  
+        public override AosWeaponAttribute Attribute => AosWeaponAttribute.BalancedWeapon;
+        public override int Hue => 0x5E5D;
+        public override int SpriteW => 180;
         public override int SpriteH => 120;
     }
 

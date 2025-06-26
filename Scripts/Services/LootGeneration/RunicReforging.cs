@@ -590,23 +590,20 @@ namespace Server.Items
                     new[] // Weapon
                     {
                         new NamedInfoCol(AosWeaponAttribute.SelfRepair, SelfRepairTable),
-                        new NamedInfoCol(AosWeaponAttribute.DurabilityBonus, DurabilityTable),
                         new NamedInfoCol("Slayer", 1),
                         new NamedInfoCol(AosWeaponAttribute.MageWeapon, MageWeaponTable),
                         new NamedInfoCol(AosAttribute.SpellChanneling, 1),
-                        new NamedInfoCol(AosAttribute.BalancedWeapon, 1),
+                        new NamedInfoCol(AosWeaponAttribute.BalancedWeapon, 1),
                         new NamedInfoCol("WeaponVelocity", WeaponVelocityTable),
                         new NamedInfoCol("ElementalDamage", ElementalDamageTable)
                     },
                     new[] // armor
                     {
-                        new NamedInfoCol(AosArmorAttribute.SelfRepair, SelfRepairTable),
-                        new NamedInfoCol(AosArmorAttribute.DurabilityBonus, DurabilityTable)
+                        new NamedInfoCol(AosArmorAttribute.SelfRepair, SelfRepairTable)
                     },
                     new[] // shield
                     {
-                        new NamedInfoCol(AosArmorAttribute.SelfRepair, SelfRepairTable),
-                        new NamedInfoCol(AosArmorAttribute.DurabilityBonus, DurabilityTable)
+                        new NamedInfoCol(AosArmorAttribute.SelfRepair, SelfRepairTable)
                     },
 
                     Array.Empty<NamedInfoCol>()
@@ -663,11 +660,7 @@ namespace Server.Items
 				{
                     new[] // Weapon
                     {
-                        new NamedInfoCol(AosWeaponAttribute.ResistPhysicalBonus, ResistTable),
-                        new NamedInfoCol(AosWeaponAttribute.ResistFireBonus, ResistTable),
-                        new NamedInfoCol(AosWeaponAttribute.ResistColdBonus, ResistTable),
-                        new NamedInfoCol(AosWeaponAttribute.ResistPoisonBonus, ResistTable),
-                        new NamedInfoCol(AosWeaponAttribute.ResistEnergyBonus, ResistTable)
+                        new NamedInfoCol(AosWeaponAttribute.ResistPhysicalBonus, ResistTable)
                     },
                     new[] // armor
                     {
@@ -704,7 +697,7 @@ namespace Server.Items
                     new[] // Weapon
                     {
                         new NamedInfoCol(AosAttribute.EnhancePotions, WeaponEnhancePots),
-                        new NamedInfoCol(AosAttribute.BalancedWeapon, 1)
+                        new NamedInfoCol(AosWeaponAttribute.BalancedWeapon, 1)
                     },
                     new[] // armor
                     {
@@ -850,15 +843,11 @@ namespace Server.Items
 
         private static object GetRandomEater()
         {
-            switch (Utility.Random(6))
+            switch (Utility.Random(2))
             {
                 default:
                 case 0: return SAAbsorptionAttribute.EaterKinetic;
-                case 1: return SAAbsorptionAttribute.EaterFire;
-                case 2: return SAAbsorptionAttribute.EaterCold;
-                case 3: return SAAbsorptionAttribute.EaterPoison;
-                case 4: return SAAbsorptionAttribute.EaterEnergy;
-                case 5: return SAAbsorptionAttribute.EaterDamage;
+                case 1: return SAAbsorptionAttribute.EaterDamage;
             }
         }
 
@@ -2151,16 +2140,6 @@ namespace Server.Items
             new[] { 5, 5, 0, 0, 0, 0, 0 },
             new[] { 5, 5, 0, 0, 0, 0, 0 },
             new[] { 7, 7, 0, 0, 0, 0, 0 }
-        };
-
-        public static readonly int[][] DurabilityTable =
-        {
-            new[] { 90, 100, 0, 0, 0, 0, 0 },
-            new[] { 110, 140, 0, 0, 0, 0, 0 },
-            new[] { 150, 150, 0, 0, 0, 0, 0 },
-            new[] { 100, 140, 0, 0, 0, 0, 0 },
-            new[] { 110, 140, 0, 0, 0, 0, 0 },
-            new[] { 150, 150, 0, 0, 0, 0, 0 }
         };
 
         public static readonly int[][] ResistTable =

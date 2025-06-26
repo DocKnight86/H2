@@ -42,18 +42,6 @@ namespace Server.Mobiles.MannequinProperty
         }
     }
 
-    public class BaneProperty : ExtendedWeaponAttr
-    {
-        public override Catalog Catalog => Catalog.HitEffects;
-        public override bool IsBoolen => true;
-        public override int LabelNumber => 1154671;  // Bane
-        public override int Description => 1154570;  // This property provides a chance to inflict additional damage when the targets health is below 50%.  As the target's health decreases the chance for the property to fire will increase along with the damage inflicted. The damage inflicted is physical damage that can be lessened by a targets physical resistance. Bane has the potential to damage the target for up to 30% of its maximum hit points however this damage cannot exceed 350 points of damage.
-        public override ExtendedWeaponAttribute Attribute => ExtendedWeaponAttribute.Bane;
-        public override int Hue => 0x43FF;
-        public override int SpriteW => 120;
-        public override int SpriteH => 210;
-    }
-
     public class AssassinHonedProperty : ExtendedWeaponAttr
     {
         public override Catalog Catalog => Catalog.HitEffects;
@@ -76,17 +64,5 @@ namespace Server.Mobiles.MannequinProperty
         public override int Hue => 0x43FF;
         public override int SpriteW => 270;
         public override int SpriteH => 240;
-    }
-
-    public class BoneBreakerProperty : ExtendedWeaponAttr
-    {
-        public override Catalog Catalog => Catalog.HitEffects;
-        public override bool IsBoolen => true;
-        public override int LabelNumber => 1157320;  // Bone Breaker
-        public override int Description => 1157319;  // This property provides a chance to cause a loss of stamina over time and prevent the use of refreshment potions for a period of time to the target.  This property can be found on select artifacts.
-        public override ExtendedWeaponAttribute Attribute => ExtendedWeaponAttribute.BoneBreaker;
-        public override int Hue => 0x43FF;
-        public override int SpriteW => 90;
-        public override int SpriteH => 300;
     }
 }

@@ -808,30 +808,9 @@ namespace Server.Items
                 }
             }
 
-            #region SA
             if ((prop = m_SAAbsorptionAttributes.CastingFocus) != 0)
             {
                 list.Add(1113696, prop.ToString()); // Casting Focus ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterFire) != 0)
-            {
-                list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterCold) != 0)
-            {
-                list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterPoison) != 0)
-            {
-                list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterEnergy) != 0)
-            {
-                list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
             }
 
             if ((prop = m_SAAbsorptionAttributes.EaterKinetic) != 0)
@@ -843,33 +822,6 @@ namespace Server.Items
             {
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
             }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceFire) != 0)
-            {
-                list.Add(1113691, prop.ToString()); // Fire Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceCold) != 0)
-            {
-                list.Add(1113692, prop.ToString()); // Cold Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonancePoison) != 0)
-            {
-                list.Add(1113693, prop.ToString()); // Poison Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceEnergy) != 0)
-            {
-                list.Add(1113694, prop.ToString()); // Energy Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceKinetic) != 0)
-            {
-                list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
-            }
-
-            #endregion
 
             if ((prop = m_AosAttributes.BonusDex) != 0)
             {

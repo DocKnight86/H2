@@ -750,8 +750,6 @@ namespace Server.Items
                 bonus += 20;
             }
 
-            bonus += m_AosArmorAttributes.DurabilityBonus;
-
             if (m_Resource == CraftResource.Heartwood)
             {
                 return bonus;
@@ -2192,11 +2190,6 @@ namespace Server.Items
                 list.Add(1060430, prop.ToString()); // hit stamina leech ~1_val~%
             }
 
-            if ((prop = m_AosArmorAttributes.DurabilityBonus) != 0)
-            {
-                list.Add(1151780, prop.ToString()); // durability +~1_VAL~%
-            }
-
             if (m_TalismanProtection != null && !m_TalismanProtection.IsEmpty && m_TalismanProtection.Amount > 0)
             {
                 list.Add(1072387, $"{(m_TalismanProtection.Name != null ? m_TalismanProtection.Name.ToString() : "Unknown")}\t{m_TalismanProtection.Amount}"); // ~1_NAME~ Protection: +~2_val~%
@@ -2212,26 +2205,6 @@ namespace Server.Items
                 list.Add(1112364); // reactive paralyze
             }
 
-            if ((prop = m_SAAbsorptionAttributes.EaterFire) != 0)
-            {
-                list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterCold) != 0)
-            {
-                list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterPoison) != 0)
-            {
-                list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterEnergy) != 0)
-            {
-                list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
-            }
-
             if ((prop = m_SAAbsorptionAttributes.EaterKinetic) != 0)
             {
                 list.Add(1113597, prop.ToString()); // Kinetic Eater ~1_Val~%
@@ -2240,31 +2213,6 @@ namespace Server.Items
             if ((prop = m_SAAbsorptionAttributes.EaterDamage) != 0)
             {
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceFire) != 0)
-            {
-                list.Add(1113691, prop.ToString()); // Fire Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceCold) != 0)
-            {
-                list.Add(1113692, prop.ToString()); // Cold Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonancePoison) != 0)
-            {
-                list.Add(1113693, prop.ToString()); // Poison Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceEnergy) != 0)
-            {
-                list.Add(1113694, prop.ToString()); // Energy Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceKinetic) != 0)
-            {
-                list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
             }
 
             if ((prop = m_SAAbsorptionAttributes.CastingFocus) != 0)

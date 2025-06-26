@@ -8,7 +8,7 @@ namespace Server.Items
         [Constructable]
         public BowOfTheInfiniteSwarm()
         {
-            ExtendedWeaponAttributes.HitSwarm = 20;
+            WeaponAttributes.HitSwarm = 20;
             WeaponAttributes.HitLeechMana = 50;
             WeaponAttributes.HitLeechStam = 50;
             Attributes.BonusStam = 8;

@@ -9,7 +9,7 @@ namespace Server.Items
         [Constructable]
         public TheDeceiver()
         {
-            ExtendedWeaponAttributes.HitSparks = 20;
+            WeaponAttributes.HitSparks = 20;
             WeaponAttributes.HitLowerAttack = 20;
             WeaponAttributes.HitEnergyArea = 75;
             WeaponAttributes.HitLowerDefend = 20;

@@ -14,7 +14,7 @@ namespace Server.Items
             WeaponAttributes.HitLowerDefend = 20;
             Attributes.WeaponSpeed = 35;
             Attributes.WeaponDamage = 50;
-            ExtendedWeaponAttributes.Bane = 1;
+            WeaponAttributes.Bane = 1;
             Hue = 1910;
         }
 

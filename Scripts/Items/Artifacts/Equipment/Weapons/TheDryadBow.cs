@@ -17,6 +17,7 @@ namespace Server.Items
             SkillName.Chivalry,
             SkillName.Ninjitsu
         };
+
         [Constructable]
         public TheDryadBow()
         {
@@ -25,7 +26,6 @@ namespace Server.Items
             WeaponAttributes.SelfRepair = 5;
             Attributes.WeaponSpeed = 50;
             Attributes.WeaponDamage = 35;
-            WeaponAttributes.ResistPoisonBonus = 15;
         }
 
         public TheDryadBow(Serial serial)
@@ -36,13 +36,13 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1);
+            writer.Write(0);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

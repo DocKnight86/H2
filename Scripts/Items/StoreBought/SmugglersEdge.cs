@@ -14,11 +14,8 @@ namespace Server.Items
         {
             Hue = 1461;
 
-            WeaponAttributes.UseBestSkill = 1;
             Attributes.SpellChanneling = 1;
             Attributes.WeaponSpeed = 30;
-
-            LootType = LootType.Blessed;
         }
 
         public override int InitMinHits => 255;
@@ -57,13 +54,13 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1); // version
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }
