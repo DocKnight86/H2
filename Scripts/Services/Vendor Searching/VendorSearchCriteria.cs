@@ -52,7 +52,7 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry("SearingWeapon", 1151183),
                 new SearchCriterionEntry(AosWeaponAttribute.BloodDrinker, 1113591),
                 new SearchCriterionEntry(AosWeaponAttribute.BattleLust, 1113710),
-                new SearchCriterionEntry(AosAttribute.BalancedWeapon, 1072792),
+                new SearchCriterionEntry(AosWeaponAttribute.BalancedWeapon, 1072792),
                 new SearchCriterionEntry(ExtendedWeaponAttribute.Focus, 1150018),
                 new SearchCriterionEntry(SAAbsorptionAttribute.EaterKinetic, 1154666, 1113597),
                 new SearchCriterionEntry(SAAbsorptionAttribute.EaterDamage, 1154667, 1113598)

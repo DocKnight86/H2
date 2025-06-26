@@ -524,8 +524,7 @@ namespace Server
         SpellChanneling = 0x00100000,
         NightSight = 0x00200000,
         IncreasedKarmaLoss = 0x00400000,
-        LowerAmmoCost = 0x00800000,
-        BalancedWeapon = 0x01000000
+        LowerAmmoCost = 0x00800000
     }
 
     public sealed class AosAttributes : BaseAttributes
@@ -1085,9 +1084,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int LowerAmmoCost { get => this[AosAttribute.LowerAmmoCost]; set => this[AosAttribute.LowerAmmoCost] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int BalancedWeapon { get => this[AosAttribute.BalancedWeapon]; set => this[AosAttribute.BalancedWeapon] = value; }
     }
 
     [Flags]
@@ -1120,7 +1116,8 @@ namespace Server
         BoneBreaker = 0x01000000,
         HitSwarm = 0x02000000,
         HitSparks = 0x04000000,
-        Bane = 0x08000000
+        Bane = 0x08000000,
+        BalancedWeapon = 0x10000000
     }
 
     public sealed class AosWeaponAttributes : BaseAttributes
@@ -1343,6 +1340,9 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int Bane { get => this[AosWeaponAttribute.Bane]; set => this[AosWeaponAttribute.Bane] = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int BalancedWeapon { get => this[AosWeaponAttribute.BalancedWeapon]; set => this[AosWeaponAttribute.BalancedWeapon] = value; }
     }
 
     [Flags]

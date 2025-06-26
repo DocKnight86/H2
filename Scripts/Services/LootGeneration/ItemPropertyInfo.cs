@@ -393,13 +393,13 @@ namespace Server.Items
             Register(60, new ItemPropertyInfo("WeaponVelocity", 1080416, 140, typeof(RelicFragment), typeof(Tourmaline), typeof(EssenceDirection), 1, 11, 50, 1112048,
                 new PropInfo(2, 50, 50)));
 
-            Register(61, new ItemPropertyInfo(AosAttribute.BalancedWeapon, 1072792, 150, typeof(RelicFragment), typeof(Amber), typeof(EssenceBalance), 0, 1, 1, 1112047,
+            Register(61, new ItemPropertyInfo(AosWeaponAttribute.BalancedWeapon, 1072792, 150, typeof(RelicFragment), typeof(Amber), typeof(EssenceBalance), 0, 1, 1, 1112047,
                new PropInfo(2, 1, 1)));            
 
             // Non-Imbuable, Non-Loot
             Register(62, new ItemPropertyInfo("SearingWeapon", 1151183, 150, 0, 1, 1));
 
-            Register(63, new ItemPropertyInfo(AosAttribute.BalancedWeapon, 1072792, 100, typeof(RelicFragment), typeof(Amber), typeof(EssenceBalance), 0, 1, 1, 1153740,
+            Register(63, new ItemPropertyInfo(AosWeaponAttribute.BalancedWeapon, 1072792, 100, typeof(RelicFragment), typeof(Amber), typeof(EssenceBalance), 0, 1, 1, 1153740,
                 new PropInfo(1, 1, 1)));
 
             // Slayers

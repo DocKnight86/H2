@@ -88,11 +88,16 @@ namespace Server.Items
             Item handTwo = m.FindItemOnLayer(Layer.TwoHanded);
 
             if (handTwo is BaseWeapon)
+            {
                 handOne = handTwo;
+            }
+
             if (handTwo is BaseWeapon wep)
             {
-                if (wep.Attributes.BalancedWeapon > 0)
+                if (wep.WeaponAttributes.BalancedWeapon > 0)
+                {
                     return true;
+                }
             }
 
             return handOne == null || handTwo == null;
@@ -101,7 +106,9 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             if (!Movable)
+            {
                 return;
+            }
 
             if (from.InRange(GetWorldLocation(), 1))
             {
@@ -145,7 +152,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(1); // version
+            writer.Write(0); // version
 
             writer.Write((int)m_PotionEffect);
         }
@@ -173,7 +180,9 @@ namespace Server.Items
             int skillBonus = m.Skills.Alchemy.Fixed / 330 * 10;
 
             if (EP > 50 && m.IsPlayer())
+            {
                 EP = 50;
+            }
 
             return EP + skillBonus;
         }
@@ -211,7 +220,9 @@ namespace Server.Items
                 if (pack != null)
                 {
                     if ((int)PotionEffect >= (int)PotionEffect.Invisibility)
+                    {
                         return 1;
+                    }
 
                     List<PotionKeg> kegs = pack.FindItemsByType<PotionKeg>();
 
@@ -220,13 +231,19 @@ namespace Server.Items
                         PotionKeg keg = kegs[i];
 
                         if (keg == null)
+                        {
                             continue;
+                        }
 
                         if (keg.Held <= 0 || keg.Held >= 100)
+                        {
                             continue;
+                        }
 
                         if (keg.Type != PotionEffect)
+                        {
                             continue;
+                        }
 
                         ++keg.Held;
 

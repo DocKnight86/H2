@@ -24,13 +24,17 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public bool Balanced
         {
-            get => Attributes.BalancedWeapon > 0;
+            get => WeaponAttributes.BalancedWeapon > 0;
             set
             {
                 if (value)
-                    Attributes.BalancedWeapon = 1;
+                {
+                    WeaponAttributes.BalancedWeapon = 1;
+                }
                 else
-                    Attributes.BalancedWeapon = 0;
+                {
+                    WeaponAttributes.BalancedWeapon = 0;
+                }
             }
         }
 
@@ -58,9 +62,13 @@ namespace Server.Items
             long nextShoot;
 
             if (attacker is PlayerMobile mobile)
+            {
                 nextShoot = mobile.NextMovementTime + 250;
+            }
             else
+            {
                 nextShoot = attacker.LastMoveTime + attacker.ComputeMovementSpeed();
+            }
 
             // Make sure we've been standing still for .25/.5/1 second depending on Era
             if (nextShoot <= Core.TickCount || WeaponAbility.GetCurrentAbility(attacker) is MovingShot)
@@ -189,7 +197,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(4); // version
+            writer.Write(0); // version
 
             writer.Write(m_Velocity);
         }

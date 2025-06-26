@@ -1250,7 +1250,7 @@ namespace Server.Items
 
             if (!(defender.Weapon is Fists) && !(defender.Weapon is BaseRanged) && defender.Weapon is BaseWeapon weapon)
             {
-                if (weapon.Attributes.BalancedWeapon > 0)
+                if (weapon.WeaponAttributes.BalancedWeapon > 0)
                 {
                     return false;
                 }
@@ -4643,7 +4643,7 @@ namespace Server.Items
                 list.Add(1060438, (30 - prop).ToString()); // mage weapon -~1_val~ skill
             }
 
-            if (m_AosAttributes.BalancedWeapon > 0 && Layer == Layer.TwoHanded)
+            if (m_AosWeaponAttributes.BalancedWeapon > 0 && Layer == Layer.TwoHanded)
             {
                 list.Add(1072792); // Balanced
             }
@@ -4758,30 +4758,9 @@ namespace Server.Items
                 list.Add(1075210, prop.ToString()); // Increased Karma Loss ~1val~%
             }
 
-            #region Stygian Abyss
             if ((prop = m_SAAbsorptionAttributes.CastingFocus) != 0)
             {
                 list.Add(1113696, prop.ToString()); // Casting Focus ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterFire) != 0)
-            {
-                list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterCold) != 0)
-            {
-                list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterPoison) != 0)
-            {
-                list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterEnergy) != 0)
-            {
-                list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
             }
 
             if ((prop = m_SAAbsorptionAttributes.EaterKinetic) != 0)
@@ -4793,12 +4772,6 @@ namespace Server.Items
             {
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
             }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceKinetic) != 0)
-            {
-                list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
-            }
-            #endregion
 
             base.AddResistanceProperties(list);
 
