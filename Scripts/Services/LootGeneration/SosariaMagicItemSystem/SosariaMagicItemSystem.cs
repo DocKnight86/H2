@@ -32,14 +32,14 @@ namespace Server.Items
         public static Item SosariaMagicClothing(int itemPower)
         {
             BaseClothing item = Loot.RandomClothing();
-            item.Hue = Utility.RandomDyedHue();
+            //item.Hue = Utility.RandomDyedHue();
 
             switch (itemPower)
             {
-                // 1 = LESSER
+                // 1 = MINOR
                 case 1:
                 {
-                    item.ItemPower = ItemPower.Lesser;
+                    item.ItemPower = ItemPower.Minor;
 
                     switch (Utility.Random(3))
                     {
@@ -101,8 +101,73 @@ namespace Server.Items
 
                     break;
                 }
-                // 2 = GREATER
+                // 5 = LESSER
                 case 2:
+                {
+                    item.ItemPower = ItemPower.Lesser;
+
+                    switch (Utility.Random(3))
+                    {
+                        case 0:
+                        {
+                            item.Attributes.BonusHits = Utility.Random(1, 3);
+                            break;
+                        }
+                        case 1:
+                        {
+                            item.Attributes.BonusStam = Utility.Random(1, 3);
+                            break;
+                        }
+                        case 2:
+                        {
+                            item.Attributes.BonusMana = Utility.Random(1, 3);
+                            break;
+                        }
+                    }
+
+                    if (0.05 >= Utility.RandomDouble())
+                    {
+                        switch (Utility.Random(3))
+                        {
+                            case 0:
+                            {
+                                item.Attributes.RegenHits = Utility.Random(1, 2);
+                                break;
+                            }
+                            case 1:
+                            {
+                                item.Attributes.RegenStam = Utility.Random(1, 2);
+                                break;
+                            }
+                            case 2:
+                            {
+                                item.Attributes.RegenMana = Utility.Random(1, 2);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (0.01 >= Utility.RandomDouble())
+                    {
+                        switch (Utility.Random(2))
+                        {
+                            case 0:
+                            {
+                                item.Attributes.EnhancePotions = Utility.Random(1, 3);
+                                break;
+                            }
+                            case 1:
+                            {
+                                item.SkillBonuses.SetValues(0, _PossibleSkills[Utility.Random(_PossibleSkills.Length)], Utility.Random(1, 2));
+                                break;
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                // 3 = GREATER
+                case 3:
                 {
                     item.ItemPower = ItemPower.Greater;
 
@@ -110,8 +175,8 @@ namespace Server.Items
 
                     break;
                 }
-                // 3 = MAJOR
-                case 3:
+                // 4 = MAJOR
+                case 4:
                 {
                     item.ItemPower = ItemPower.Major;
 
@@ -119,8 +184,8 @@ namespace Server.Items
 
                     break;
                 }
-                // 4 = LEGENDARY ARTIFACT
-                case 4:
+                // 5 = LEGENDARY ARTIFACT
+                case 5:
                 {
                     item.ItemPower = ItemPower.LegendaryArtifact;
 
@@ -133,20 +198,184 @@ namespace Server.Items
             return item;
         }
 
+        public static Item SosariaMagicWeapon(int itemPower)
+        {
+            BaseClothing item = Loot.RandomClothing();
+
+            switch (itemPower)
+            {
+                // 1 = MINOR
+                case 1:
+                    {
+                        item.ItemPower = ItemPower.Minor;
+
+                        switch (Utility.Random(3))
+                        {
+                            case 0:
+                                {
+                                    item.Attributes.BonusHits = Utility.Random(1, 3);
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    item.Attributes.BonusStam = Utility.Random(1, 3);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    item.Attributes.BonusMana = Utility.Random(1, 3);
+                                    break;
+                                }
+                        }
+
+                        if (0.05 >= Utility.RandomDouble())
+                        {
+                            switch (Utility.Random(3))
+                            {
+                                case 0:
+                                    {
+                                        item.Attributes.RegenHits = Utility.Random(1, 2);
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        item.Attributes.RegenStam = Utility.Random(1, 2);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        item.Attributes.RegenMana = Utility.Random(1, 2);
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (0.01 >= Utility.RandomDouble())
+                        {
+                            switch (Utility.Random(2))
+                            {
+                                case 0:
+                                    {
+                                        item.Attributes.EnhancePotions = Utility.Random(1, 3);
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        item.SkillBonuses.SetValues(0, _PossibleSkills[Utility.Random(_PossibleSkills.Length)], Utility.Random(1, 2));
+                                        break;
+                                    }
+                            }
+                        }
+
+                        break;
+                    }
+                // 5 = LESSER
+                case 2:
+                    {
+                        item.ItemPower = ItemPower.Lesser;
+
+                        switch (Utility.Random(3))
+                        {
+                            case 0:
+                                {
+                                    item.Attributes.BonusHits = Utility.Random(1, 3);
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    item.Attributes.BonusStam = Utility.Random(1, 3);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    item.Attributes.BonusMana = Utility.Random(1, 3);
+                                    break;
+                                }
+                        }
+
+                        if (0.05 >= Utility.RandomDouble())
+                        {
+                            switch (Utility.Random(3))
+                            {
+                                case 0:
+                                    {
+                                        item.Attributes.RegenHits = Utility.Random(1, 2);
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        item.Attributes.RegenStam = Utility.Random(1, 2);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        item.Attributes.RegenMana = Utility.Random(1, 2);
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (0.01 >= Utility.RandomDouble())
+                        {
+                            switch (Utility.Random(2))
+                            {
+                                case 0:
+                                    {
+                                        item.Attributes.EnhancePotions = Utility.Random(1, 3);
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        item.SkillBonuses.SetValues(0, _PossibleSkills[Utility.Random(_PossibleSkills.Length)], Utility.Random(1, 2));
+                                        break;
+                                    }
+                            }
+                        }
+
+                        break;
+                    }
+                // 3 = GREATER
+                case 3:
+                    {
+                        item.ItemPower = ItemPower.Greater;
+
+                        item.Attributes.BonusHits = Utility.Random(2, 4);
+
+                        break;
+                    }
+                // 4 = MAJOR
+                case 4:
+                    {
+                        item.ItemPower = ItemPower.Major;
+
+                        item.Attributes.BonusHits = Utility.Random(3, 5);
+
+                        break;
+                    }
+                // 5 = LEGENDARY ARTIFACT
+                case 5:
+                    {
+                        item.ItemPower = ItemPower.LegendaryArtifact;
+
+                        item.Attributes.BonusHits = Utility.Random(4, 6);
+
+                        break;
+                    }
+            }
+
+            return item;
+        }
+
         public class TestBag : Bag
         {
             [Constructable]
             public TestBag()
             {
-                switch (Utility.Random(2))
-                {
-                    case 0:
-                        DropItem(SosariaMagicClothing(1));
-                        break;
-                    case 1:
-                        DropItem(SosariaMagicClothing(1));
-                        break;
-                }
+                DropItem(SosariaMagicClothing(1));
+                DropItem(SosariaMagicClothing(1));
+                DropItem(SosariaMagicClothing(1));
+                DropItem(SosariaMagicClothing(1));
+                DropItem(SosariaMagicClothing(1));
             }
 
             public TestBag(Serial serial)

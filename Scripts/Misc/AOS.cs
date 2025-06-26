@@ -1547,7 +1547,8 @@ namespace Server
                     continue;
                 }
 
-                list.Add(1060451 + i, $"#{GetLabel(skill)}\t{bonus}");
+                list.Add($"<basefont color=#5CDAF7>{skill} +{bonus}<basefont color=#FFFFFF>");
+                //list.Add(1060451 + i, $"#{GetLabel(skill)}\t{bonus}");
             }
         }
 
