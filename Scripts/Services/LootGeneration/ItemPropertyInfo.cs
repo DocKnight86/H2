@@ -368,17 +368,8 @@ namespace Server.Items
             Register(39, new ItemPropertyInfo(AosWeaponAttribute.HitDispel, 1079702, 100, typeof(MagicalResidue), typeof(Amber), typeof(SlithTongue), 1, 2, 50, 1111959,
                 new PropInfo(1, 2, 50, 50, new[] { 55, 60, 65, 70 }), new PropInfo(2, 2, 50, 50, new[] { 55, 60, 65, 70 })));
 
-            Register(40, new ItemPropertyInfo(AosWeaponAttribute.UseBestSkill, 1079592, 150, typeof(EnchantedEssence), typeof(Amber), typeof(DelicateScales), 0, 1, 1, 1111946,
-                new PropInfo(1, 1, 1)));
-
             Register(41, new ItemPropertyInfo(AosWeaponAttribute.MageWeapon, 1079759, 100, typeof(EnchantedEssence), typeof(Emerald), typeof(ArcanicRuneStone), 1, 1, 10, 1112001,
                 new PropInfo(1, 10, 10, new[] { 11, 12, 13, 14, 15 }), new PropInfo(2, 10, 10, new[] { 11, 12, 13, 14, 15 })));
-
-            Register(42, new ItemPropertyInfo(AosWeaponAttribute.DurabilityBonus, 1017323, 100, typeof(EnchantedEssence), typeof(Diamond), typeof(PowderedIron), 10, 10, 100, 1111949,
-                new PropInfo(1, 0, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(2, 0, 100, new[] { 110, 120, 130, 140, 150 })));
-
-            Register(43, new ItemPropertyInfo(AosArmorAttribute.DurabilityBonus, 1017323, 100, typeof(EnchantedEssence), typeof(Diamond), typeof(PowderedIron), 10, 10, 100, 1111949,
-               new PropInfo(3, 0, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(4, 100, 100, new[] { 110, 120, 130, 140, 150 }), new PropInfo(5, 0, 100, new[] { 110, 120, 130, 140, 150 })));
 
             Register(51, new ItemPropertyInfo(AosElementAttribute.Physical, 1061158, 100, typeof(MagicalResidue), typeof(Diamond), typeof(BouraPelt), 1, 1, 15, 1112010,
                 new PropInfo(1, 10, 100, 100), new PropInfo(2, 10, 100, 100), new PropInfo(3, 15, 15, new[] { 20, 25, 30 }), new PropInfo(4, 15, 15), new PropInfo(5, 15, 15, new[] { 20, 25, 30 }), new PropInfo(6, 15, 15, new[] { 20 })));
@@ -520,30 +511,6 @@ namespace Server.Items
             Register(233, new ItemPropertyInfo(AosWeaponAttribute.ResistPhysicalBonus, 1061158, 100, typeof(MagicalResidue), typeof(Diamond), typeof(BouraPelt), 1, 1, 15, 1112010,
                 new PropInfo(1, 15, 15, new[] { 20 }), new PropInfo(2, 15, 15, new[] { 20 })));
 
-            Register(234, new ItemPropertyInfo(AosWeaponAttribute.ResistFireBonus, 1061159, 100, typeof(MagicalResidue), typeof(Ruby), typeof(BouraPelt), 1, 1, 15, 1112009,
-                new PropInfo(1, 15, 15, new[] { 20 }), new PropInfo(2, 15, 15, new[] { 20 })));
-
-            Register(235, new ItemPropertyInfo(AosWeaponAttribute.ResistColdBonus, 1061160, 100, typeof(MagicalResidue), typeof(Sapphire), typeof(BouraPelt), 1, 1, 15, 1112007,
-                new PropInfo(1, 15, 15, new[] { 20 }), new PropInfo(2, 15, 15, new[] { 20 })));
-
-            Register(236, new ItemPropertyInfo(AosWeaponAttribute.ResistPoisonBonus, 1061161, 100, typeof(MagicalResidue), typeof(Emerald), typeof(BouraPelt), 1, 1, 15, 1112011,
-                new PropInfo(1, 15, 15, new[] { 20 }), new PropInfo(2, 15, 15, new[] { 20 })));
-
-            Register(237, new ItemPropertyInfo(AosWeaponAttribute.ResistEnergyBonus, 1061162, 100, typeof(MagicalResidue), typeof(Amethyst), typeof(BouraPelt), 1, 1, 15, 1112008,
-                new PropInfo(1, 15, 15, new[] { 20 }), new PropInfo(2, 15, 15, new[] { 20 })));
-
-            Register(208, new ItemPropertyInfo(SAAbsorptionAttribute.EaterFire, 1154662, 140, 1, 1, 15, 1152390,
-                new PropInfo(3, 0, 15), new PropInfo(4, 0, 15), new PropInfo(5, 0, 15)));
-
-            Register(209, new ItemPropertyInfo(SAAbsorptionAttribute.EaterCold, 1154663, 140, 1, 1, 15, 1152390,
-                new PropInfo(3, 0, 15), new PropInfo(4, 0, 15), new PropInfo(5, 0, 15)));
-
-            Register(210, new ItemPropertyInfo(SAAbsorptionAttribute.EaterPoison, 1154664, 140, 1, 1, 15, 1152390,
-                new PropInfo(3, 0, 15), new PropInfo(4, 0, 15), new PropInfo(5, 0, 15)));
-
-            Register(211, new ItemPropertyInfo(SAAbsorptionAttribute.EaterEnergy, 1154665, 140, 1, 1, 15, 1152390,
-                new PropInfo(3, 0, 15), new PropInfo(4, 0, 15), new PropInfo(5, 0, 15)));
-
             Register(212, new ItemPropertyInfo(SAAbsorptionAttribute.EaterKinetic, 1154666, 140, 1, 1, 15, 1152390,
                 new PropInfo(3, 0, 15), new PropInfo(4, 0, 15), new PropInfo(5, 0, 15)));
 
@@ -551,12 +518,6 @@ namespace Server.Items
                 new PropInfo(3, 0, 15), new PropInfo(4, 0, 15), new PropInfo(5, 0, 15)));
 
             // Non-Imbuable, non-loot
-            Register(214, new ItemPropertyInfo(SAAbsorptionAttribute.ResonanceFire, 1154655, 140, 1, 1, 20, 1152391));
-            Register(215, new ItemPropertyInfo(SAAbsorptionAttribute.ResonanceCold, 1154656, 140, 1, 1, 20, 1152391));
-            Register(216, new ItemPropertyInfo(SAAbsorptionAttribute.ResonancePoison, 1154657, 140, 1, 1, 20, 1152391));
-            Register(217, new ItemPropertyInfo(SAAbsorptionAttribute.ResonanceEnergy, 1154658, 140, 1, 1, 20, 1152391));
-            Register(218, new ItemPropertyInfo(SAAbsorptionAttribute.ResonanceKinetic, 1154659, 140, 1, 1, 20, 1152391));
-
             Register(219, new ItemPropertyInfo(SAAbsorptionAttribute.CastingFocus, 1116535, 140, 1, 1, 3, 1116535,
                 new PropInfo(3, 0, 3), new PropInfo(5, 0, 3)));
 
@@ -573,10 +534,10 @@ namespace Server.Items
                 new PropInfo(1, 5, 5), new PropInfo(2, 5, 5)));
 
             // Non-Imbuable, non-loot
-            Register(600, new ItemPropertyInfo(ExtendedWeaponAttribute.BoneBreaker, 1157318, 140, 1, 1, 1, 1157319));
-            Register(601, new ItemPropertyInfo(ExtendedWeaponAttribute.HitSwarm, 1157328, 140, 1, 1, 20, 1157327));
-            Register(602, new ItemPropertyInfo(ExtendedWeaponAttribute.HitSparks, 1157330, 140, 1, 1, 20, 1157329));
-            Register(603, new ItemPropertyInfo(ExtendedWeaponAttribute.Bane, 1154671, 140, 1, 1, 1, 1154570));
+            Register(600, new ItemPropertyInfo(AosWeaponAttribute.BoneBreaker, 1157318, 140, 1, 1, 1, 1157319));
+            Register(601, new ItemPropertyInfo(AosWeaponAttribute.HitSwarm, 1157328, 140, 1, 1, 20, 1157327));
+            Register(602, new ItemPropertyInfo(AosWeaponAttribute.HitSparks, 1157330, 140, 1, 1, 20, 1157329));
+            Register(603, new ItemPropertyInfo(AosWeaponAttribute.Bane, 1154671, 140, 1, 1, 1, 1154570));
 
             BuildLootTables();
         }
@@ -1309,7 +1270,7 @@ namespace Server.Items
         {
             SAAbsorptionAttributes attr = RunicReforging.GetSAAbsorptionAttributes(item);
 
-            return attr != null && (attr.EaterKinetic > 0 || attr.EaterFire > 0 || attr.EaterCold > 0 || attr.EaterPoison > 0 || attr.EaterEnergy > 0 || attr.EaterDamage > 0);
+            return attr != null && (attr.EaterKinetic > 0 || attr.EaterDamage > 0);
         }
         #endregion
     }

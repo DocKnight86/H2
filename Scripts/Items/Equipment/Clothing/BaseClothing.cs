@@ -647,20 +647,20 @@ namespace Server.Items
 
         public void UnscaleDurability()
         {
-            int scale = 100 + m_AosClothingAttributes.DurabilityBonus;
+            const int scale = 100;
 
-            m_HitPoints = ((m_HitPoints * 100) + (scale - 1)) / scale;
-            m_MaxHitPoints = ((m_MaxHitPoints * 100) + (scale - 1)) / scale;
+            m_HitPoints = (m_HitPoints * 100 + (scale - 1)) / scale;
+            m_MaxHitPoints = (m_MaxHitPoints * 100 + (scale - 1)) / scale;
 
             InvalidateProperties();
         }
 
         public void ScaleDurability()
         {
-            int scale = 100 + m_AosClothingAttributes.DurabilityBonus;
+            const int scale = 100;
 
-            m_HitPoints = ((m_HitPoints * scale) + 99) / 100;
-            m_MaxHitPoints = ((m_MaxHitPoints * scale) + 99) / 100;
+            m_HitPoints = (m_HitPoints * scale + 99) / 100;
+            m_MaxHitPoints = (m_MaxHitPoints * scale + 99) / 100;
 
             if (m_MaxHitPoints > 255)
             {
@@ -903,26 +903,6 @@ namespace Server.Items
                 list.Add(1061078, prop.ToString()); // artifact rarity ~1_val~
             }
 
-            if ((prop = m_SAAbsorptionAttributes.EaterFire) != 0)
-            {
-                list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterCold) != 0)
-            {
-                list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterPoison) != 0)
-            {
-                list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.EaterEnergy) != 0)
-            {
-                list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
-            }
-
             if ((prop = m_SAAbsorptionAttributes.EaterKinetic) != 0)
             {
                 list.Add(1113597, prop.ToString()); // Kinetic Eater ~1_Val~%
@@ -931,31 +911,6 @@ namespace Server.Items
             if ((prop = m_SAAbsorptionAttributes.EaterDamage) != 0)
             {
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceFire) != 0)
-            {
-                list.Add(1113691, prop.ToString()); // Fire Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceCold) != 0)
-            {
-                list.Add(1113692, prop.ToString()); // Cold Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonancePoison) != 0)
-            {
-                list.Add(1113693, prop.ToString()); // Poison Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceEnergy) != 0)
-            {
-                list.Add(1113694, prop.ToString()); // Energy Resonance ~1_val~%
-            }
-
-            if ((prop = m_SAAbsorptionAttributes.ResonanceKinetic) != 0)
-            {
-                list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
             }
 
             if ((prop = m_SAAbsorptionAttributes.CastingFocus) != 0)
@@ -1168,11 +1123,6 @@ namespace Server.Items
             if ((prop = ComputeStatReq(StatType.Str)) > 0)
             {
                 list.Add(1061170, prop.ToString()); // strength requirement ~1_val~
-            }
-
-            if ((prop = m_AosClothingAttributes.DurabilityBonus) > 0)
-            {
-                list.Add(1151780, prop.ToString()); // durability +~1_VAL~%
             }
 
             if (m_HitPoints >= 0 && m_MaxHitPoints > 0)
@@ -1728,7 +1678,7 @@ namespace Server.Items
 
                     Item res = (Item)Activator.CreateInstance(resourceType);
 
-                    ScissorHelper(from, res, PlayerConstructed ? (item.Resources.GetAt(0).Amount / 2) : 1);
+                    ScissorHelper(from, res, PlayerConstructed ? item.Resources.GetAt(0).Amount / 2 : 1);
 
                     res.LootType = LootType.Regular;
 
@@ -1762,7 +1712,7 @@ namespace Server.Items
             if (from != null)
             {
                 double div = 20;
-                int bonus = (int)Math.Min(4, (from.Skills.ArmsLore.Value / div));
+                int bonus = (int)Math.Min(4, from.Skills.ArmsLore.Value / div);
 
                 for (int i = 0; i < bonus; i++)
                 {

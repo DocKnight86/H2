@@ -387,7 +387,7 @@ namespace Server
 
             if (m.Spell != null)
             {
-                ((Spell)m.Spell).CheckCasterDisruption(true, phys, fire, cold, pois, nrgy);
+                ((Spell)m.Spell).CheckCasterDisruption(phys, fire, cold, pois, nrgy);
             }
 
             BattleLust.IncreaseBattleLust(m, totalDamage);
@@ -504,18 +504,14 @@ namespace Server
         RegenHits = 0x00000001,
         RegenStam = 0x00000002,
         RegenMana = 0x00000004,
-
         DefendChance = 0x00000008,
         AttackChance = 0x00000010,
-
         BonusStr = 0x00000020,
         BonusDex = 0x00000040,
         BonusInt = 0x00000080,
-
         BonusHits = 0x00000100,
         BonusStam = 0x00000200,
         BonusMana = 0x00000400,
-
         WeaponDamage = 0x00000800,
         WeaponSpeed = 0x00001000,
         SpellDamage = 0x00002000,
@@ -1097,37 +1093,34 @@ namespace Server
     [Flags]
     public enum AosWeaponAttribute : long
     {
-        UNUSED = 0x00000001,
-        SelfRepair = 0x00000002,
-        HitLeechHits = 0x00000004,
-        HitLeechStam = 0x00000008,
-        HitLeechMana = 0x00000010,
-        HitLowerAttack = 0x00000020,
-        HitLowerDefend = 0x00000040,
-        HitMagicArrow = 0x00000080,
-        HitHarm = 0x00000100,
-        HitFireball = 0x00000200,
-        HitLightning = 0x00000400,
-        HitDispel = 0x00000800,
-        HitColdArea = 0x00001000,
-        HitFireArea = 0x00002000,
-        HitPoisonArea = 0x00004000,
-        HitEnergyArea = 0x00008000,
-        HitPhysicalArea = 0x00010000,
-        ResistPhysicalBonus = 0x00020000,
-        ResistFireBonus = 0x00040000,
-        ResistColdBonus = 0x00080000,
-        ResistPoisonBonus = 0x00100000,
-        ResistEnergyBonus = 0x00200000,
-        UseBestSkill = 0x00400000,
-        MageWeapon = 0x00800000,
-        DurabilityBonus = 0x01000000,
-        BloodDrinker = 0x02000000,
-        BattleLust = 0x04000000,
-        HitCurse = 0x08000000,
-        HitFatigue = 0x10000000,
-        HitManaDrain = 0x20000000,
-        ReactiveParalyze = 0x40000000
+        SelfRepair = 0x00000001,
+        HitLeechHits = 0x00000002,
+        HitLeechStam = 0x00000004,
+        HitLeechMana = 0x00000008,
+        HitLowerAttack = 0x00000010,
+        HitLowerDefend = 0x00000020,
+        HitMagicArrow = 0x00000040,
+        HitHarm = 0x00000080,
+        HitFireball = 0x00000100,
+        HitLightning = 0x00000200,
+        HitDispel = 0x00000400,
+        HitColdArea = 0x00000800,
+        HitFireArea = 0x00001000,
+        HitPoisonArea = 0x00002000,
+        HitEnergyArea = 0x00004000,
+        HitPhysicalArea = 0x00008000,
+        ResistPhysicalBonus = 0x00010000,
+        MageWeapon = 0x00020000,
+        BloodDrinker = 0x00040000,
+        BattleLust = 0x00080000,
+        HitCurse = 0x00100000,
+        HitFatigue = 0x00200000,
+        HitManaDrain = 0x00400000,
+        ReactiveParalyze = 0x00800000,
+        BoneBreaker = 0x01000000,
+        HitSwarm = 0x02000000,
+        HitSparks = 0x04000000,
+        Bane = 0x08000000
     }
 
     public sealed class AosWeaponAttributes : BaseAttributes
@@ -1178,9 +1171,7 @@ namespace Server
 
             int value = 0;
 
-            #region Enhancement
             value += Enhancement.GetValue(m, attribute);
-            #endregion
 
             for (int i = 0; i < m.Items.Count; ++i)
             {
@@ -1193,21 +1184,6 @@ namespace Server
             }
 
             return value;
-        }
-
-        public override void SetValue(int bitmask, int value)
-        {
-            if (bitmask == (int)AosWeaponAttribute.DurabilityBonus && Owner is BaseWeapon weapon)
-            {
-                weapon.UnscaleDurability();
-            }
-
-            base.SetValue(bitmask, value);
-
-            if (bitmask == (int)AosWeaponAttribute.DurabilityBonus && Owner is BaseWeapon baseWeapon)
-            {
-                baseWeapon.ScaleDurability();
-            }
         }
 
         public AosWeaponAttributes(Item owner)
@@ -1336,25 +1312,7 @@ namespace Server
         public int ResistPhysicalBonus { get => this[AosWeaponAttribute.ResistPhysicalBonus]; set => this[AosWeaponAttribute.ResistPhysicalBonus] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int ResistFireBonus { get => this[AosWeaponAttribute.ResistFireBonus]; set => this[AosWeaponAttribute.ResistFireBonus] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResistColdBonus { get => this[AosWeaponAttribute.ResistColdBonus]; set => this[AosWeaponAttribute.ResistColdBonus] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResistPoisonBonus { get => this[AosWeaponAttribute.ResistPoisonBonus]; set => this[AosWeaponAttribute.ResistPoisonBonus] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResistEnergyBonus { get => this[AosWeaponAttribute.ResistEnergyBonus]; set => this[AosWeaponAttribute.ResistEnergyBonus] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int UseBestSkill { get => this[AosWeaponAttribute.UseBestSkill]; set => this[AosWeaponAttribute.UseBestSkill] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int MageWeapon { get => this[AosWeaponAttribute.MageWeapon]; set => this[AosWeaponAttribute.MageWeapon] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int DurabilityBonus { get => this[AosWeaponAttribute.DurabilityBonus]; set => this[AosWeaponAttribute.DurabilityBonus] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int BloodDrinker { get => this[AosWeaponAttribute.BloodDrinker]; set => this[AosWeaponAttribute.BloodDrinker] = value; }
@@ -1373,19 +1331,27 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int ReactiveParalyze { get => this[AosWeaponAttribute.ReactiveParalyze]; set => this[AosWeaponAttribute.ReactiveParalyze] = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int BoneBreaker { get => this[AosWeaponAttribute.BoneBreaker]; set => this[AosWeaponAttribute.BoneBreaker] = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int HitSwarm { get => this[AosWeaponAttribute.HitSwarm]; set => this[AosWeaponAttribute.HitSwarm] = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int HitSparks { get => this[AosWeaponAttribute.HitSparks]; set => this[AosWeaponAttribute.HitSparks] = value; }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Bane { get => this[AosWeaponAttribute.Bane]; set => this[AosWeaponAttribute.Bane] = value; }
     }
 
     [Flags]
     public enum ExtendedWeaponAttribute
     {
-        BoneBreaker = 0x00000001,
-        HitSwarm = 0x00000002,
-        HitSparks = 0x00000004,
-        Bane = 0x00000008,
-        MysticWeapon = 0x00000010,
-        AssassinHoned = 0x00000020,
-        Focus = 0x00000040,
-        HitExplosion = 0x00000080
+        MysticWeapon = 0x00000001,
+        AssassinHoned = 0x00000002,
+        Focus = 0x00000004,
+        HitExplosion = 0x00000008
     }
 
     public sealed class ExtendedWeaponAttributes : BaseAttributes
@@ -1437,18 +1403,6 @@ namespace Server
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int BoneBreaker { get => this[ExtendedWeaponAttribute.BoneBreaker]; set => this[ExtendedWeaponAttribute.BoneBreaker] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int HitSwarm { get => this[ExtendedWeaponAttribute.HitSwarm]; set => this[ExtendedWeaponAttribute.HitSwarm] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int HitSparks { get => this[ExtendedWeaponAttribute.HitSparks]; set => this[ExtendedWeaponAttribute.HitSparks] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int Bane { get => this[ExtendedWeaponAttribute.Bane]; set => this[ExtendedWeaponAttribute.Bane] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int MysticWeapon { get => this[ExtendedWeaponAttribute.MysticWeapon]; set => this[ExtendedWeaponAttribute.MysticWeapon] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1465,9 +1419,8 @@ namespace Server
     public enum AosArmorAttribute
     {
         SelfRepair = 0x00000001,
-        DurabilityBonus = 0x00000002,
-        ReactiveParalyze = 0x00000004,
-        SoulCharge = 0x00000008
+        ReactiveParalyze = 0x00000002,
+        SoulCharge = 0x00000004
     }
 
     public sealed class AosArmorAttributes : BaseAttributes
@@ -1531,35 +1484,6 @@ namespace Server
             return value;
         }
 
-        public override void SetValue(int bitmask, int value)
-        {
-            if (bitmask == (int)AosArmorAttribute.DurabilityBonus)
-            {
-                if (Owner is BaseArmor armor)
-                {
-                    armor.UnscaleDurability();
-                }
-                else if (Owner is BaseClothing clothing)
-                {
-                    clothing.UnscaleDurability();
-                }
-            }
-
-            base.SetValue(bitmask, value);
-
-            if (bitmask == (int)AosArmorAttribute.DurabilityBonus)
-            {
-                if (Owner is BaseArmor armor)
-                {
-                    armor.ScaleDurability();
-                }
-                else if (Owner is BaseClothing clothing)
-                {
-                    clothing.ScaleDurability();
-                }
-            }
-        }
-
         public AosArmorAttributes(Item owner)
             : base(owner)
         {
@@ -1584,9 +1508,6 @@ namespace Server
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int SelfRepair { get => this[AosArmorAttribute.SelfRepair]; set => this[AosArmorAttribute.SelfRepair] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int DurabilityBonus { get => this[AosArmorAttribute.DurabilityBonus]; set => this[AosArmorAttribute.DurabilityBonus] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int ReactiveParalyze { get => this[AosArmorAttribute.ReactiveParalyze]; set => this[AosArmorAttribute.ReactiveParalyze] = value; }
@@ -1892,18 +1813,9 @@ namespace Server
     [Flags]
     public enum SAAbsorptionAttribute
     {
-        EaterFire = 0x00000001,
-        EaterCold = 0x00000002,
-        EaterPoison = 0x00000004,
-        EaterEnergy = 0x00000008,
-        EaterKinetic = 0x00000010,
-        EaterDamage = 0x00000020,
-        ResonanceFire = 0x00000040,
-        ResonanceCold = 0x00000080,
-        ResonancePoison = 0x00000100,
-        ResonanceEnergy = 0x00000200,
-        ResonanceKinetic = 0x00000400,
-        CastingFocus = 0x00000800
+        EaterKinetic = 0x00000001,
+        EaterDamage = 0x00000002,
+        CastingFocus = 0x00000004
     }
 
     public sealed class SAAbsorptionAttributes : BaseAttributes
@@ -1994,37 +1906,10 @@ namespace Server
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int EaterFire { get => this[SAAbsorptionAttribute.EaterFire]; set => this[SAAbsorptionAttribute.EaterFire] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int EaterCold { get => this[SAAbsorptionAttribute.EaterCold]; set => this[SAAbsorptionAttribute.EaterCold] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int EaterPoison { get => this[SAAbsorptionAttribute.EaterPoison]; set => this[SAAbsorptionAttribute.EaterPoison] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int EaterEnergy { get => this[SAAbsorptionAttribute.EaterEnergy]; set => this[SAAbsorptionAttribute.EaterEnergy] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public int EaterKinetic { get => this[SAAbsorptionAttribute.EaterKinetic]; set => this[SAAbsorptionAttribute.EaterKinetic] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int EaterDamage { get => this[SAAbsorptionAttribute.EaterDamage]; set => this[SAAbsorptionAttribute.EaterDamage] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResonanceFire { get => this[SAAbsorptionAttribute.ResonanceFire]; set => this[SAAbsorptionAttribute.ResonanceFire] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResonanceCold { get => this[SAAbsorptionAttribute.ResonanceCold]; set => this[SAAbsorptionAttribute.ResonanceCold] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResonancePoison { get => this[SAAbsorptionAttribute.ResonancePoison]; set => this[SAAbsorptionAttribute.ResonancePoison] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResonanceEnergy { get => this[SAAbsorptionAttribute.ResonanceEnergy]; set => this[SAAbsorptionAttribute.ResonanceEnergy] = value; }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int ResonanceKinetic { get => this[SAAbsorptionAttribute.ResonanceKinetic]; set => this[SAAbsorptionAttribute.ResonanceKinetic] = value; }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int CastingFocus { get => this[SAAbsorptionAttribute.CastingFocus]; set => this[SAAbsorptionAttribute.CastingFocus] = value; }

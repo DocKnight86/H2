@@ -38,7 +38,6 @@ namespace Server.Engines.Quests
             {
                 QuestItem = true
             };
-            Dagger.WeaponAttributes.UseBestSkill = 1;
 
             if (Owner.PlaceInBackpack(Dagger))
             {
@@ -58,7 +57,6 @@ namespace Server.Engines.Quests
             if (Dagger != null && !Dagger.Deleted && Dagger.RootParent == Owner)
             {
                 Dagger.Name = "Misericord";
-                Dagger.WeaponAttributes.UseBestSkill = 0;
                 Dagger.QuestItem = false;
                 Dagger.Slayer3 = TalismanSlayerName.Wolf;
             }
@@ -67,21 +65,17 @@ namespace Server.Engines.Quests
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
+            writer.Write(0); // version
 
-            writer.Write(1); // version
             writer.WriteItem(Dagger);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            reader.ReadInt();
 
-            int version = reader.ReadInt();
-
-            if (version > 0)
-            {
-                Dagger = reader.ReadItem<Dagger>();
-            }
+            Dagger = reader.ReadItem<Dagger>();
         }
     }
 

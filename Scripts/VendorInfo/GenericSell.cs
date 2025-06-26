@@ -77,8 +77,6 @@ namespace Server.Mobiles
                     price = (int) (price * 1.25);
                 }
 
-                price += 5 * armor.ArmorAttributes.DurabilityBonus;
-
                 if (price < 1)
                 {
                     price = 1;
@@ -94,8 +92,6 @@ namespace Server.Mobiles
                 {
                     price = (int) (price * 1.25);
                 }
-
-                price += 100 * weapon.WeaponAttributes.DurabilityBonus;
 
                 price += 10 * weapon.Attributes.WeaponDamage;
 

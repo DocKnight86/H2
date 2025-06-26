@@ -1,4 +1,3 @@
-#region References
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
@@ -14,8 +13,6 @@ using Server.Spells.Second;
 using Server.Targeting;
 using System;
 using System.Collections.Generic;
-
-#endregion
 
 namespace Server.Spells
 {
@@ -187,7 +184,9 @@ namespace Server.Spells
             if (d is Mobile mobile)
             {
                 if (mobile != m_Caster)
+                {
                     NegativeAttributes.OnCombatAction(mobile);
+                }
 
                 EvilOmenSpell.TryEndEffect(mobile);
             }
@@ -245,7 +244,7 @@ namespace Server.Spells
             CheckCasterDisruption();
         }
 
-        public virtual void CheckCasterDisruption(bool checkElem = false, int phys = 0, int fire = 0, int cold = 0, int pois = 0, int nrgy = 0)
+        public virtual void CheckCasterDisruption(int phys = 0, int fire = 0, int cold = 0, int pois = 0, int nrgy = 0)
         {
             if (!Caster.Player || Caster.AccessLevel > AccessLevel.Player)
             {
@@ -258,45 +257,26 @@ namespace Server.Spells
 
                 bool disturb = !(o is double d && d > Utility.RandomDouble() * 100.0);
 
-                #region Stygian Abyss
-                int focus = SAAbsorptionAttributes.GetValue(Caster, SAAbsorptionAttribute.CastingFocus);
+                int castingFocus = SAAbsorptionAttributes.GetValue(Caster, SAAbsorptionAttribute.CastingFocus);
 
                 if (BaseFishPie.IsUnderEffects(m_Caster, FishPieEffect.CastFocus))
-                    focus += 2;
+                {
+                    castingFocus += 2;
+                }
 
-                if (focus > 12)
-                    focus = 12;
+                // cap is 12%
+                if (castingFocus > 12)
+                {
+                    castingFocus = 12;
+                }
 
-                focus += m_Caster.Skills[SkillName.Inscribe].Value >= 50 ? GetInscribeFixed(m_Caster) / 200 : 0;
+                castingFocus += m_Caster.Skills[SkillName.Inscribe].Value >= 50 ? GetInscribeFixed(m_Caster) / 200 : 0;
 
-                if (focus > 0 && focus > Utility.Random(100))
+                if (castingFocus > 0 && castingFocus > Utility.Random(100))
                 {
                     disturb = false;
                     Caster.SendLocalizedMessage(1113690); // You regain your focus and continue casting the spell.
                 }
-                else if (checkElem)
-                {
-                    int res = 0;
-
-                    if (phys == 100)
-                        res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceKinetic));
-
-                    else if (fire == 100)
-                        res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceFire));
-
-                    else if (cold == 100)
-                        res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceCold));
-
-                    else if (pois == 100)
-                        res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonancePoison));
-
-                    else if (nrgy == 100)
-                        res = Math.Min(40, SAAbsorptionAttributes.GetValue(m_Caster, SAAbsorptionAttribute.ResonanceEnergy));
-
-                    if (res > Utility.Random(100))
-                        disturb = false;
-                }
-                #endregion
 
                 if (disturb)
                 {
@@ -438,7 +418,9 @@ namespace Server.Spells
             double scalar = 1.0;
 
             if (target == null)
+            {
                 return scalar;
+            }
 
             if (target is BaseCreature targetCreature)
             {
@@ -484,9 +466,13 @@ namespace Server.Spells
                     bool isSuper = false;
 
                     if (atkSlayer != null && atkSlayer == atkSlayer.Group.Super && atkSlayer.Group != SlayerGroup.Groups[6]) //Fey Slayers give 300% damage
+                    {
                         isSuper = true;
+                    }
                     else if (atkSlayer2 != null && atkSlayer2 == atkSlayer2.Group.Super && atkSlayer2.Group != SlayerGroup.Groups[6])
+                    {
                         isSuper = true;
+                    }
 
                     scalar = isSuper ? 2.0 : 3.0;
                 }
@@ -495,10 +481,14 @@ namespace Server.Spells
                 TransformContext context = TransformationSpellHelper.GetContext(defender);
 
                 if ((atkBook.Slayer == SlayerName.Silver || atkBook.Slayer2 == SlayerName.Silver) && context != null && context.Type != typeof(HorrificBeastSpell))
+                {
                     scalar += .25; // Every necromancer transformation other than horrific beast take an additional 25% damage
+                }
 
                 if (scalar != 1.0)
+                {
                     return scalar;
+                }
             }
 
             ISlayer defISlayer = Spellbook.FindEquippedSpellbook(defender);
@@ -644,7 +634,9 @@ namespace Server.Spells
             {
                 if (TransformationSpellHelper.UnderTransformation(Caster, typeof(HorrificBeastSpell)) &&
                     SpellHelper.HasSpellFocus(Caster, CastSkill))
+                {
                     return false;
+                }
 
                 return true;
             }
@@ -1117,7 +1109,9 @@ namespace Server.Spells
         public bool ValidateBeneficial(Mobile target)
         {
             if (target == null)
+            {
                 return true;
+            }
 
             if (this is HealSpell || this is GreaterHealSpell || this is CloseWoundsSpell)
             {

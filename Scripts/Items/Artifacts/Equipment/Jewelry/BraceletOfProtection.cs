@@ -19,14 +19,10 @@ namespace Server.Items
             Attributes.RegenHits = 10;
             Attributes.DefendChance = 5;
 
-            switch (Utility.Random(6))
+            switch (Utility.Random(2))
             {
                 case 0: AbsorptionAttributes.EaterKinetic = 15; break;
-                case 1: AbsorptionAttributes.EaterFire = 15; break;
-                case 2: AbsorptionAttributes.EaterCold = 15; break;
-                case 3: AbsorptionAttributes.EaterPoison = 15; break;
-                case 4: AbsorptionAttributes.EaterEnergy = 15; break;
-                case 5: AbsorptionAttributes.EaterDamage = 15; break;
+                case 1: AbsorptionAttributes.EaterDamage = 15; break;
             }
 
             if (antique)

@@ -692,27 +692,6 @@ namespace Server.Items
                 list.Add(1072387, "{0}\t{1}", _TalismanProtection.Name != null ? _TalismanProtection.Name.ToString() : "Unknown", _TalismanProtection.Amount); // ~1_NAME~ Protection: +~2_val~%
             }
 
-            #region SA
-            if ((prop = _SAAbsorptionAttributes.EaterFire) != 0)
-            {
-                list.Add(1113593, prop.ToString()); // Fire Eater ~1_Val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.EaterCold) != 0)
-            {
-                list.Add(1113594, prop.ToString()); // Cold Eater ~1_Val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.EaterPoison) != 0)
-            {
-                list.Add(1113595, prop.ToString()); // Poison Eater ~1_Val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.EaterEnergy) != 0)
-            {
-                list.Add(1113596, prop.ToString()); // Energy Eater ~1_Val~%
-            }
-
             if ((prop = _SAAbsorptionAttributes.EaterKinetic) != 0)
             {
                 list.Add(1113597, prop.ToString()); // Kinetic Eater ~1_Val~%
@@ -723,37 +702,10 @@ namespace Server.Items
                 list.Add(1113598, prop.ToString()); // Damage Eater ~1_Val~%
             }
 
-            if ((prop = _SAAbsorptionAttributes.ResonanceFire) != 0)
-            {
-                list.Add(1113691, prop.ToString()); // Fire Resonance ~1_val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.ResonanceCold) != 0)
-            {
-                list.Add(1113692, prop.ToString()); // Cold Resonance ~1_val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.ResonancePoison) != 0)
-            {
-                list.Add(1113693, prop.ToString()); // Poison Resonance ~1_val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.ResonanceEnergy) != 0)
-            {
-                list.Add(1113694, prop.ToString()); // Energy Resonance ~1_val~%
-            }
-
-            if ((prop = _SAAbsorptionAttributes.ResonanceKinetic) != 0)
-            {
-                list.Add(1113695, prop.ToString()); // Kinetic Resonance ~1_val~%
-            }
-
             if ((prop = _SAAbsorptionAttributes.CastingFocus) != 0)
             {
                 list.Add(1113696, prop.ToString()); // Casting Focus ~1_val~%
             }
-
-            #endregion
 
             if ((prop = m_AosAttributes.SpellChanneling) != 0)
             {

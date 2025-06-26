@@ -47,7 +47,6 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(AosAttribute.AttackChance, 1075616, 1060415),
                 new SearchCriterionEntry(AosAttribute.WeaponSpeed, 1075629, 1060486),
                 new SearchCriterionEntry(AosArmorAttribute.SoulCharge, 1116536, 1113630),
-                new SearchCriterionEntry(AosWeaponAttribute.UseBestSkill, 1079592),
                 new SearchCriterionEntry(AosWeaponAttribute.ReactiveParalyze, 1154660),
                 new SearchCriterionEntry(ExtendedWeaponAttribute.AssassinHoned, 1152206),
                 new SearchCriterionEntry("SearingWeapon", 1151183),
@@ -55,20 +54,11 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(AosWeaponAttribute.BattleLust, 1113710),
                 new SearchCriterionEntry(AosAttribute.BalancedWeapon, 1072792),
                 new SearchCriterionEntry(ExtendedWeaponAttribute.Focus, 1150018),
-                new SearchCriterionEntry(SAAbsorptionAttribute.EaterFire, 1154662, 1113593),
-                new SearchCriterionEntry(SAAbsorptionAttribute.EaterCold, 1154663, 1113594),
-                new SearchCriterionEntry(SAAbsorptionAttribute.EaterPoison, 1154664, 1113595),
-                new SearchCriterionEntry(SAAbsorptionAttribute.EaterEnergy, 1154665, 1113596),
                 new SearchCriterionEntry(SAAbsorptionAttribute.EaterKinetic, 1154666, 1113597),
                 new SearchCriterionEntry(SAAbsorptionAttribute.EaterDamage, 1154667, 1113598)
             }),
             new SearchCriteriaCategory(Category.Casting, 5, 1154538, new[] // Casting
             { 
-				new SearchCriterionEntry(SAAbsorptionAttribute.ResonanceFire, 1154655, 1113691),
-                new SearchCriterionEntry(SAAbsorptionAttribute.ResonanceCold, 1154656, 1113692),
-                new SearchCriterionEntry(SAAbsorptionAttribute.ResonancePoison, 1154657, 1113693),
-                new SearchCriterionEntry(SAAbsorptionAttribute.ResonanceEnergy, 1154658, 1113692),
-                new SearchCriterionEntry(SAAbsorptionAttribute.ResonanceKinetic, 1154659, 1113695),
                 new SearchCriterionEntry(AosAttribute.SpellDamage, 1075628, 1060483),
                 new SearchCriterionEntry(SAAbsorptionAttribute.CastingFocus, 1116535, 1113696),
                 new SearchCriterionEntry(AosAttribute.CastRecovery, 1075618, 1060412),
@@ -119,7 +109,7 @@ namespace Server.Engines.VendorSearching
                 new SearchCriterionEntry(AosWeaponAttribute.HitLeechStam, 1079707, 1060430),
                 new SearchCriterionEntry(AosWeaponAttribute.HitFatigue, 1154668, 1113700),
                 new SearchCriterionEntry(AosWeaponAttribute.HitManaDrain, 1154669, 1113699),
-                new SearchCriterionEntry(ExtendedWeaponAttribute.Bane, 1154671)
+                new SearchCriterionEntry(AosWeaponAttribute.Bane, 1154671)
             }),
             new SearchCriteriaCategory(Category.HitArea, 11, 1154537, new[] // Hit Area
             {

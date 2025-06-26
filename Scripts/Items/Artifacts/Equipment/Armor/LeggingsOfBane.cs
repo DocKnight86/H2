@@ -13,7 +13,6 @@ namespace Server.Items
         public LeggingsOfBane()
         {
             Hue = 0x4F5;
-            ArmorAttributes.DurabilityBonus = 100;
             Attributes.BonusStam = 8;
             Attributes.AttackChance = 20;
         }
