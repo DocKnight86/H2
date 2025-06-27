@@ -1,7 +1,5 @@
-#region References
 using Server.Items;
 using System;
-#endregion
 
 namespace Server
 {
@@ -13,7 +11,8 @@ namespace Server
 		private static readonly Type[] m_ClothingTypes =
         {
             typeof(Cloak), typeof(Bonnet), typeof(Cap), typeof(FeatheredHat), typeof(FloppyHat), typeof(JesterHat),
-            typeof(Surcoat), typeof(SkullCap), typeof(StrawHat), typeof(TallStrawHat), typeof(TricorneHat), typeof(WideBrimHat),
+            typeof(Surcoat), typeof(SkullCap), typeof(StrawHat), typeof(TallStrawHat), typeof(TricorneHat),
+            typeof(WideBrimHat), typeof(Bandana),typeof(OrcMask), typeof(TribalMask), typeof(BearMask), typeof(DeerMask),
             typeof(WizardsHat), typeof(BodySash), typeof(Doublet), typeof(Boots), typeof(FullApron), typeof(JesterSuit),
             typeof(Sandals), typeof(Tunic), typeof(Shoes), typeof(Shirt), typeof(Kilt), typeof(Skirt), typeof(FancyShirt),
             typeof(FancyDress), typeof(ThighBoots), typeof(LongPants), typeof(PlainDress), typeof(Robe), typeof(ShortPants),
@@ -21,24 +20,15 @@ namespace Server
         };
         public static Type[] ClothingTypes => m_ClothingTypes;
 		
-		private static readonly Type[] m_HatTypes =
-        {
-            typeof(SkullCap), typeof(Bandana), typeof(FloppyHat), typeof(Cap), typeof(WideBrimHat), typeof(StrawHat),
-            typeof(TallStrawHat), typeof(WizardsHat), typeof(Bonnet), typeof(FeatheredHat), typeof(TricorneHat),
-            typeof(JesterHat), typeof(OrcMask), typeof(TribalMask), typeof(FlowerGarland), typeof(BearMask), typeof(DeerMask)
-        };
-        public static Type[] HatTypes => m_HatTypes;
-		
 		private static readonly Type[] m_WeaponTypes =
         {
-            typeof(Axe), typeof(BattleAxe), typeof(DoubleAxe), typeof(ExecutionersAxe), typeof(Hatchet), typeof(LargeBattleAxe),
-            typeof(TwoHandedAxe), typeof(WarAxe), typeof(Club), typeof(Mace), typeof(Maul), typeof(WarHammer), typeof(WarMace),
-            typeof(Bardiche), typeof(Halberd), typeof(Spear), typeof(ShortSpear), typeof(Pitchfork), typeof(WarFork),
-            typeof(BlackStaff), typeof(GnarledStaff), typeof(QuarterStaff), typeof(Broadsword), typeof(Cutlass), typeof(Katana),
-            typeof(Kryss), typeof(Longsword), typeof(Scimitar), typeof(VikingSword), typeof(Pickaxe), typeof(HammerPick),
-            typeof(ButcherKnife), typeof(Cleaver), typeof(Dagger), typeof(SkinningKnife), typeof(ShepherdsCrook),
-			typeof(Scythe), typeof(BoneHarvester), typeof(Scepter), typeof(BladedStaff), typeof(Pike), typeof(DoubleBladedStaff),
-            typeof(Lance), typeof(CrescentBlade), typeof(SmithyHammer), typeof(SledgeHammer)
+            typeof(Axe), typeof(BattleAxe), typeof(DoubleAxe), typeof(ExecutionersAxe), typeof(Hatchet),
+            typeof(LargeBattleAxe), typeof(TwoHandedAxe), typeof(WarAxe), typeof(Club), typeof(Mace), typeof(Maul),
+            typeof(WarHammer), typeof(WarMace), typeof(Bardiche), typeof(Halberd), typeof(Spear), typeof(ShortSpear),
+            typeof(Pitchfork), typeof(WarFork), typeof(BlackStaff), typeof(GnarledStaff), typeof(QuarterStaff),
+            typeof(Broadsword), typeof(Cutlass), typeof(Katana), typeof(Kryss), typeof(Longsword), typeof(Scimitar),
+            typeof(VikingSword), typeof(Pickaxe), typeof(HammerPick), typeof(ButcherKnife), typeof(Cleaver), typeof(Dagger),
+            typeof(SkinningKnife), typeof(ShepherdsCrook), typeof(Bow), typeof(Crossbow), typeof(HeavyCrossbow)
         };	
         public static Type[] WeaponTypes => m_WeaponTypes;
 
@@ -281,11 +271,6 @@ namespace Server
             return Construct(m_ArmorTypes) as BaseArmor;
         }
 
-        public static BaseHat RandomHat()
-        {
-            return Construct(m_HatTypes) as BaseHat;
-        }
-
         public static BaseShield RandomShield()
         {
             return Construct(m_ShieldTypes) as BaseShield;
@@ -296,25 +281,15 @@ namespace Server
             return Construct(m_ArmorTypes, m_ShieldTypes) as BaseArmor;
         }
 
-        public static Item RandomArmorOrShieldOrJewelry()
-        {
-            return Construct(m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes);
-        }
-
-        public static Item RandomArmorOrShieldOrWeapon()
-        {
-            return Construct(m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes);
-        }
-
         public static Item RandomArmorOrShieldOrWeaponOrJewelry()
         {
-            return Construct(m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes);
+            return Construct(m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_ShieldTypes, m_JewelryTypes);
         }
 
         #region Chest of Heirlooms
         public static Item ChestOfHeirloomsContains()
         {
-            return Construct(m_ArmorTypes, m_HatTypes, m_WeaponTypes, m_RangedWeaponTypes, m_JewelryTypes);
+            return Construct(m_ArmorTypes, m_WeaponTypes, m_RangedWeaponTypes, m_JewelryTypes);
         }
         #endregion
 

@@ -783,14 +783,7 @@ namespace Server
                 }
                 else if (Type == typeof(BaseArmor))
                 {
-                    if (0.80 > Utility.RandomDouble())
-                    {
-                        item = Loot.RandomArmor();
-                    }
-                    else
-                    {
-                        item = Loot.RandomHat();
-                    }
+                    item = Loot.RandomArmor();
                 }
                 else if (Type == typeof(BaseShield))
                 {
