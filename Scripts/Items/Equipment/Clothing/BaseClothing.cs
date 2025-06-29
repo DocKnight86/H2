@@ -1025,37 +1025,44 @@ namespace Server.Items
 
             if ((prop = m_AosAttributes.BonusHits) != 0)
             {
-                list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
+                list.Add($"<basefont color=#5CDAF7>Hit Point Increase {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060431, prop.ToString()); // hit point increase ~1_val~
             }
 
             if ((prop = m_AosAttributes.BonusStam) != 0)
             {
-                list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
+                list.Add($"<basefont color=#5CDAF7>Stamina Increase {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060484, prop.ToString()); // stamina increase ~1_val~
             }
 
             if ((prop = m_AosAttributes.BonusMana) != 0)
             {
-                list.Add(1060439, prop.ToString()); // mana increase ~1_val~
+                list.Add($"<basefont color=#5CDAF7>Mana Increase {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060439, prop.ToString()); // mana increase ~1_val~
             }
 
             if ((prop = m_AosAttributes.RegenHits) != 0)
             {
-                list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
+                list.Add($"<basefont color=#5CDAF7>Hit Point Regeneration {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060444, prop.ToString()); // hit point regeneration ~1_val~
             }
 
             if ((prop = m_AosAttributes.RegenStam) != 0)
             {
-                list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
+                list.Add($"<basefont color=#5CDAF7>Stamina Regeneration {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060443, prop.ToString()); // stamina regeneration ~1_val~
             }
 
             if ((prop = m_AosAttributes.RegenMana) != 0)
             {
-                list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
+                list.Add($"<basefont color=#5CDAF7>Mana Regeneration {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
             }
 
             if ((prop = m_AosAttributes.EnhancePotions) != 0)
             {
-                list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
+                list.Add($"<basefont color=#5CDAF7>Enhance Potions {prop.ToString()}<basefont color=#FFFFFF>");
+                //list.Add(1060411, prop.ToString()); // enhance potions ~1_val~%
             }
 
             if ((prop = m_AosAttributes.ReflectPhysical) != 0)

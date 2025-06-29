@@ -4366,9 +4366,7 @@ namespace Server.Items
 
             if (m_Poison != null && m_PoisonCharges > 0 && CanShowPoisonCharges())
             {
-                #region Mondain's Legacy mod
                 list.Add(m_Poison.LabelNumber, m_PoisonCharges.ToString());
-                #endregion
             }
 
             if (m_Slayer != SlayerName.None)
@@ -4416,7 +4414,6 @@ namespace Server.Items
             SpecialMove move = null;
             AosWeaponAttribute bonus = AosWeaponAttribute.HitColdArea;
 
-            #region Focus Attack
             if (FocusWeilder != null)
             {
                 move = SpecialMove.GetCurrentMove(FocusWeilder);
@@ -4427,9 +4424,7 @@ namespace Server.Items
                     damBonus = (int)(move.GetDamageScalar(FocusWeilder, null) * 100) - 100;
                 }
             }
-            #endregion
 
-            #region Stygian Abyss
             if (EnchantedWeilder != null)
             {
                 if (Spells.Mysticism.EnchantSpell.IsUnderSpellEffects(EnchantedWeilder, this))
@@ -4439,7 +4434,6 @@ namespace Server.Items
                     fcMalus = Spells.Mysticism.EnchantSpell.CastingMalus(EnchantedWeilder, this);
                 }
             }
-            #endregion
 
             int prop;
             double fprop;

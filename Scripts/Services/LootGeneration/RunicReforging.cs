@@ -50,6 +50,7 @@ namespace Server.Items
     public enum ItemPower
     {
         None,
+        Minor,
         Lesser,
         Greater,
         Major,

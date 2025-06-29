@@ -76,6 +76,9 @@ namespace Server.Items
 
             owner.SendLocalizedMessage(1042763, Amount.ToString("#,0"));
 
+            // Added to update gold display title in PlayerMobile.
+            owner.InvalidateProperties();
+
             Delete();
 
             ((Container)parent).UpdateTotals();
