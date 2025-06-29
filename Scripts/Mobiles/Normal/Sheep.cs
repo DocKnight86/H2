@@ -47,6 +47,12 @@ namespace Server.Mobiles
         {
         }
 
+        public override void GenerateLoot()
+        {
+            AddLoot(LootPack.LootItem<Gold>(1));
+            AddLoot(LootPack.LootItemCallback(Loot.DropMinorMagicClothing));
+        }
+
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NextWoolTime
         {

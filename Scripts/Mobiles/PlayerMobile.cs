@@ -3415,6 +3415,8 @@ namespace Server.Mobiles
                 }
             }
 
+            list.Add(1060659, $"Gold\t{AccountGold.TotalCurrency:##,###}");
+
             if (TestCenter.Enabled)
             {
                 VvVPlayerEntry entry = PointsSystem.ViceVsVirtue.GetPlayerEntry<VvVPlayerEntry>(this);

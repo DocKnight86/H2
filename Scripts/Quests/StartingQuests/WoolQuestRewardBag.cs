@@ -1,28 +1,11 @@
 namespace Server.Items
 {
-    public class WoolQuestRewardBag : BaseRewardBag
+    public class WoolQuestRewardBag : Bag
     {
-        public static Item Clothing()
-        {
-            BaseClothing item = Loot.RandomClothing();
-
-            item.Attributes.BonusHits = 1;
-
-            return item;
-        }
-
         [Constructable]
         public WoolQuestRewardBag()
         {
-            switch (Utility.Random(2))
-            {
-                case 0:
-                    DropItem(Clothing());
-                    break;
-                case 1:
-                    DropItem(Clothing());
-                    break;
-            }
+            DropItem(Loot.MagicClothing(1));
         }
 
         public WoolQuestRewardBag(Serial serial)
@@ -39,7 +22,7 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }
